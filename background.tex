@@ -1,15 +1,17 @@
-\subsection{Domain Generalisation}
+\chapter{Background}\label{ch:background}
 
-\subsubsection{Supervised Learning}
 
-\subsubsubsection{I.I.D Learning}
+\section{Supervised Learning}
+...
+
+\subsection{I.I.D Learning}
 
 Traditional learning algorithms usually assume (or are only optimal for) that the training and test
 samples are \emph{both} variables  identically-and-independently distributed (i.i.d) random
 variables, such that one has $P_{tr}}(X, Y) \approx P_{te}(X, Y)$.
 Based on this assumption, the method of Empirical Risk Minimisation (ERM; \citet{vapnik1991principles}) seeks the
 hypothesis $f: X \rightarrow Y$ that is minimiser, $f^\ast$ of the \emph{expected risk},
-\emph{risk}, $\gR$, defined s the expectation of the loss,$\ell: \theta \times \gY \rightarrow
+\emph{risk}, $\gR$, defined s the expectation of the loss,$\ell: \gY \times \gY \rightarrow
 \mathbb{R}_\+$, over the training distribution, $P_{tr}(X, Y)$.
 Formally, the risk is defined by: $\allall f \in \gF$,
 
@@ -30,11 +32,19 @@ $\hat{\gR}$ and uses this a proxy for the aforementioned true risk:
 that of its weighted counterpart, also \citep{wang2021importance, semenova2019study,
 zhai2022understanding, idrissi2022simple} 
 
-\subsubsubsection{Importance weighting}
+\subsection{Importance weighting}
 \citep{wang2021importance, } 
 
 
-\subsubsection{In Search of Lost Domain Generalization \citep{gulrajani2020search}}
+\section{Domain Generalisation}
+
+For references re the general problem setup and theory see:
+\citet{gulrajani2020search, krueger2021out, arjovskyinvariant, ahuja2020invariant,
+weber2022certifying, rosenfeld2020risks}
+
+For a comprehensive survey on OOD generalisation see  \citet{shen2021towards}.
+
+\subsection{In Search of Lost Domain Generalization \citep{gulrajani2020search}}
 Machine learning systems often fail to generalise out-of-distribution (OOD), crashing in 
 spectacular way when tested outside the domain of training examples.
 
@@ -60,7 +70,7 @@ existence of some statistical invariances across training and testing domains.
 DG differs from Domain Adaptation (DA) in that the latter assumes that the unlabelled data derived 
 from the test domain is available during training.
 
-\subsubsection{Simplicity Bias \citep{shah2020pitfalls}}
+\subsection{Simplicity Bias \citep{shah2020pitfalls}}
 \begin{itemize}
   \item In stationary settings where there is no mismatch between the training and test 
     distributions, generalisation is usually maximised by selecting models according to the 
@@ -104,7 +114,7 @@ secondary parameter of $\phi$. This generalised form is then given as
 \end{align*}
 
 
-\subsection{Fairness as an Domain Generalisation problem}
+\subsection{Connection betweeen Fairness and DG}
 \citet{creager2021environment} cast the problem fair machine learning as one of DG,
 where the protected groups takes the role of the different domains/environments. In fairness
 literature, the learning objectives represent context-specific fairness notions,
@@ -116,3 +126,6 @@ When protected attributes are unknown, DRO and adversarially learning can be app
 \citet{hashimoto2018fairness} and \citet{lahoti2020fairness}, respectively, to obtain a 
 distributionally robust predictor and minimizing the worst-subgroup performance; the former can
 also be adapted to cases in which such information is known as in \citet{sagawa2019distributionally} 
+
+(\citep{krueger2021out} provide a good (albeit brief) discussion of the parallels between fairness and OOD
+generalization)
