@@ -36,6 +36,23 @@ zhai2022understanding, idrissi2022simple}
 \citep{wang2021importance, } 
 
 
+\section{Types of Distribution Shift in Classification}
+
+See \cite{moreno2012unifying} and \cite{castro2020causality} for terminology for describing
+different types of distribution shift for classification tasks.
+See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing}, for example, for causal treatments of the
+problem, the latter focussing on fairness under different manifestations of distribution shift.
+\itemi\begin{itemize}
+        \item Covariate Shift
+        \item Label Shift -- can be decomposed further, per \cite{castro2020causality}, into
+          \item Prevalence shift
+          \item Annotation shift
+        \item Compound Shifts
+\end{itemize}
+
+% TODO: Construct a causal diagram based on JCI to illustrate the different problems considered in
+% this thesis.
+
 \section{Domain Generalisation}
 
 For references re the general problem setup and theory see:
@@ -114,7 +131,8 @@ secondary parameter of $\phi$. This generalised form is then given as
 \end{align*}
 
 
-\subsection{Connection betweeen Fairness and DG}
+
+\subsection{Connection between Fairness and DG}
 \citet{creager2021environment} cast the problem fair machine learning as one of DG,
 where the protected groups takes the role of the different domains/environments. In fairness
 literature, the learning objectives represent context-specific fairness notions,
@@ -129,3 +147,13 @@ also be adapted to cases in which such information is known as in \citet{sagawa2
 
 (\citep{krueger2021out} provide a good (albeit brief) discussion of the parallels between fairness and OOD
 generalization)
+
+Recent trend in the fairness literature is to consider how fairness behaves under distribution
+shift.
+\begin{itemize}
+  \item \cite{schrouff2022diagnosing}
+  \item \cite{schrouff2022maintaining}
+  \item \cite{singh2021fairness}
+  \item \cite{slack2020fairness}
+
+\end{itemize}

@@ -57,7 +57,7 @@ titlepage,numbers=noenddot,%1headlines,
 % ****************************************************************************************************
 % 2. Personal data and user ad-hoc commands (insert your own data here)
 % ****************************************************************************************************
-\newcommand{\myTitle}{Learning with Biased Data:\\Invariant Representations and Target Labels\xspace}
+\newcommand{\myTitle}{Semi-supervised Methods for Distributional Robustness}
 % \newcommand{\mySubtitle}{\xspace}
 \newcommand{\myDegree}{A thesis submitted for the degree of Doctor of Philosophy.\xspace}
 \newcommand{\myName}{Myles Bartlett \xspace}
@@ -80,7 +80,6 @@ titlepage,numbers=noenddot,%1headlines,
 \newcommand{\eg}{e.\,g.}
 \newcommand{\Eg}{E.\,g.}
 \def\wrt{w.r.t\onedot}
-\newcommand{\msb}[1]{\textcolor{red}{\textbf{MSB:} #1}}
 % ****************************************************************************************************
 
 
@@ -127,6 +126,7 @@ titlepage,numbers=noenddot,%1headlines,
   {\item}
 
 \usepackage{amsmath}
+\usepackage{import}
   
 % ********************************************************************
 % General useful packages
@@ -227,10 +227,10 @@ titlepage,numbers=noenddot,%1headlines,
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{TeX Gyre Pagella} % Palatino clone
 \linespread{1.05} % a bit more for Palatino
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{Linux Libertine O}
-\setmainfont[Ligatures=TeX]{Libertinus Serif} % fork of Linux Libertine O
+% \setmainfont[Ligatures=TeX]{Libertinus Serif} % fork of Linux Libertine O
 \usepackage{unicode-math}
-\setmathfont{Libertinus Math}
-\setmathfont[version=bold,FakeBold=3.5]{Libertinus Math}
+% \setmathfont{Libertinus Math}
+% \setmathfont[version=bold,FakeBold=3.5]{Libertinus Math}
 % \setmathfont{XITS Math}
 % \setmathfont{TeX Gyre Pagella Math} % this font seems quite incomplete
 \newfontfamily\boxedsymbols{DejaVu Sans}
@@ -441,6 +441,9 @@ titlepage,numbers=noenddot,%1headlines,
 \newtheorem{example}{Example}[chapter]
 \usepackage{algorithm}
 \usepackage{algorithmic}
+% \usepackage[ruled]{algorithm2e} % http://www.ctan.org/pkg/algorithm2e
+\usepackage[outputdir=latexmk,finalizecache=false, frozencache=true]{minted} 
+\usemintedstyle{vs}
 \renewcommand{\algorithmicrequire}{\textsc{Input:}}
 \renewcommand{\algorithmicensure}{\textsc{Output:}}
 \usepackage{nicefrac}
@@ -460,8 +463,9 @@ titlepage,numbers=noenddot,%1headlines,
 % \includeonly{ch/2-related-work}
 % \includeonly{ch/3-structure}
 % \includeonly{paper1/paper1}
-% \includeonly{paper2/paper2}
-% \includeonly{paper3/paper3}
+\includeonly{nifr/main}
+% \includeonly{okapi/main}
+% \includeonly{FrontBackmatter/Bibliography}
 % \includeonly{ch/7-discussion}
 
 
@@ -509,9 +513,9 @@ titlepage,numbers=noenddot,%1headlines,
   This part covers the introduction, the related work and a summary of the work presented in part~\ref{pt:main}.
 }
 \part{Preliminaries}\label{pt:intro}
-\include{ch/1-introduction}
-\include{ch/2-related-work}
-\include{ch/3-structure}
+% \include{ch/1-introduction}
+% \include{ch/2-related-work}
+% \include{ch/3-structure}
 
 \cleardoublepage
 \ctparttext{
@@ -519,13 +523,12 @@ titlepage,numbers=noenddot,%1headlines,
   They are reproduced here with minimal changes.
 }
 \part{Publications}\label{pt:main}
-\include{paper1/paper1}
-\include{paper2/paper2}
-\include{paper3/paper3}
+\include{nifr/main}
+\include{okapi/main}
 
 \cleardoublepage
 \part{Conclusion}\label{pt:end}
-\include{ch/7-discussion}
+% \include{ch/7-discussion}
 
 % ********************************************************************
 % Appendix
