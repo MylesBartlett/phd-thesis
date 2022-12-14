@@ -1,0 +1,103 @@
+\paragraph{Domain Generalisation} 
+The goal of domain generalisation (DG) is to produce models that are robust to a wide range of
+distribution shifts (including those outside the training distribution), given a training set
+consisting of samples sourced from multiple domains.
+%
+Despite the various techniques (many well theoretically-motivated) designed to improve the
+generalisation of deep neural networks current methods continue to fall short in the face of
+natural distribution shifts \citep{gulrajani2020search, koh2021wilds}.
+%
+Indeed, ERM has repeatedly shown to be a strong baseline -- frequently outperforming dedicated
+methods that leverage domain information or additional unlabelled data -- for DG
+\citep{gulrajani2020search, SagWeiLeeGaoetal22}, despite the theoretical problems associated with
+using it when the training and test sets are misaligned.
+%
+Until now, only pre-training on larger, more diverse datasets (with harder examples), has
+consistently proven to improve OOD generalisation, yet allowing pre-trained models to fit the ID
+data too closely can undo any such benefit conferred by the pre-training
+\citep{andreassen2021evolution, kim2022broad, taori2020measuring, wiles2022a}.
+%
+% In this work we challenge this conjecture and establish that one can effectively
+% leverage only the labelled and unlabelled from a given dataset to create models that are more
+% robust to unseen variations of it, given that the data is sufficiently diverse.
+%
+Similar to Okapi, MatchDG \citep{mahajan2021domain} draws upon causal matching to tackle DG.
+Despite the surface-level similarity, there are a number of significant differences, principally in the
+respects that we consider semi-supervised DG (whereas MatchDG requires full-labeling w.r.t.
+$y$) and employ an augmented form of k-NN for bias-reduction in the absence of $y$.
+% , and bootstrap the matches continually rather than periodically.
+% in the respects that: 1) we consider the problem of
+% semi-supervised DG whereas \cite{mahajan2021domain} consider the fully-supervised case and require
+% the class labels to be known to compute class-conditional matches; 2) we bootstrap continually
+% through use of the memory-bank rather than computing the matches iteratively after every fixed
+% number of epochs; 3) we use propensity score matching over standard k-NN for bias reduction.
+
+\paragraph{Self-Supervised Learning} 
+In self-supervised learning (SelfSL), models are trained to solve pretext tasks constructed from
+the input data.
+%
+This learning paradigm has led to significant breakthroughs in unsupervised learning in recent
+years, with performance now approaching (or even surpassing, along some axes such as adversarial
+robustness) that of supervised methods for many tasks while requiring significantly less labelled data.
+%
+Due to its generality, SelfSL has seen use across the complete spectrum of applications and
+modalities and underlies many of the foundation models \citep{bommasani2021opportunities} that have
+emerged in NLP \citep{brown2020language, chowdhery2022palm, devlin2018bert}, Computer Vision
+\citep{goyal2022vision}, and at their intersection \citep{alayrac2022flamingo, yu2022coca}.
+%
+Common pretext tasks include those based on the masked-language-modelling approach -- originally
+popularised by BERT \citep{devlin2018bert} and recently generalised to other modalities
+\citep{baevski2022data2vec, bao2021beit} -- \citep{chen2020simple, he2020momentum}, contrastive
+captioning  \citep{radford2021learning, yu2022coca}, and instance discrimination and
+self-distillation \citep{caron2021emerging, grill2020bootstrap} which rely on transformations of
+the data to generate multi-view inputs.
+%
+Approaches belonging to the latter two categories were originally limited by the fact that the
+transforms had to be tailored for a particular modality and for some modalities, such as tabular
+data, there is no obvious way to define them.
+%
+A number of recent works have sought to obviate this problem through the use of  MixUp
+\citep{verma2021towards}, masking \citep{baevski2022data2vec, MaskedAutoencoders2021}, and k-NN
+\citep{dwibedi2021little, koohpayegani2021mean, van2021revisiting}, the latter of which is directly
+relevant to our work.
+%
+Okapi bears closest resemblance to \cite{koohpayegani2021mean} in combining momentum-encoding with
+nearest-neighbours lookup to generate the views for a BYOL-style \citep{grill2020bootstrap}
+consistency loss. 
+%
+However, a key distinction lies in the use of an augmented form of nearest-neighbours, \CNN, which
+both constrains pairs of samples to being from \emph{different} domains and filters out any queries
+or keys deemed outliers according to a learned \emph{propensity score}. 
+
+\paragraph{Semi-Supervised Learning}  
+Semi-supervised learning (SemiSL) encompasses a broad class of algorithms that combine unsupervised
+learning with supervised learning in order to improve the performance of the latter, especially
+when labelled data is limited.
+%
+Many SemiSL methods are based on the self-training paradigm which can trace its roots back decades
+to the early work in pattern recognition by \cite{scudder1965probability} and continues to be
+relevant in the modern era due to its generality, both within SemiSL itself and in related fields
+such as domain adaptation \citep{ganin2016domain}, and fledgling field of SelfSL
+\citep{caron2021emerging} discussed above.
+%
+Self-training applies to any framework predicated on using a model's own predictions to produce
+pseudo-labels for the unlabelled data which can either be used as targets for self-distillation
+\citep{xie2020self} or enforcing consistency between predictions that themselves have been
+perturbed \citep{bachman2014learning, xie2020self} or that have been generated from
+perturbed/multi-view inputs \citep{sohn2020fixmatch}.
+%
+FixMatch \citep{sohn2020fixmatch} is one example of a consistency-based method which has proven
+effective for semi-supervised classification, despite its simplicity, and various works
+\citep{gong2021alphamatch, lienen2021credal} have since built on the its framework prescribing the
+use of weakly- and strongly-augmented inputs to generate the targets and predictions, respectively.
+%
+Like these methods, Okapi also makes use of a cross-view consistency loss, however, the alternative
+views for a given sample are generated not through data-augmentation but through statistical
+matching \citep{rosenbaum1983central}, with the aim being to achieve invariance to the domain
+rather than a particular series of perturbations.
+%
+Another example of particular relevance to our work is \cite{tarvainen2017mean}, which uses a copy
+of the model with exponentially-averaged weights to generate the targets for the unlabelled data.
+Okapi also uses such a model to produce the targets for its consistency loss, but is more akin to
+momentum-encoding \citep{he2020momentum} in the respect that the loss is imposed on the latent
+space.

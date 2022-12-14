@@ -1,0 +1,67 @@
+\begin{algorithm}[ht]
+     \caption{
+         Pytorch-style pseudocode for the online learning algorithm for the special case where the
+         labelled and unlabelled datasets are treated as the domains. The algorithm generalises
+         freely to arbitrary numbers of domains however we restrict ourselves to the binary version
+         here for illustrative purposes.
+    }
+    \label{alg:ol_pc}
+    \begin{minted}{python}
+    # online_encoder: online encoder
+    # predictor_head: online predictor head
+    # propensity_scorer: online propensity scorer
+    # target_encoder momentum encoder (frozen)
+    # n_m: memory-bank capacity
+    # zeta: decay rate of the EMA updates
+    # tau: temperature-scaling parameter for the propensity scores.
+    # t_f: fixed caliper threshold for CaliperNN
+    # t_sigma: number of standard deviations at which to threshold in CaliperNN
+    # l_sup: supervised loss function
+    # k: number of matches to retrieve per query
+    # lambda_: loss pre-factor for the unsupervised loss
+    # D: Dimensionality of the encodings.
+
+    feature_mb = empty(n_m, D) # memory bank storing momentum-encoded features
+    label_mb = empty(n_m) # memory bank storing domain labels associated with feature_mb
+     # load minibatches with B_l labelled samples and B_u unlabelled samples
+    for x_l, y, x_u in train_loader:
+        # EMA update: \theta^\prime_t = \zeta \theta^\prime_{t - 1} + (1 - \zeta) \theta_t
+        ema_update(target_encoder, online_encoder, zeta)
+        features_o_l = online_encoder(x_l) # f_\theta(x_l) -> z_l
+        features_t = target_encoder(cat([x_l, x_u])) # f_\theta(x_l \cup x_u) -> z_q^\prime
+        y_hat = predictor_head(features_o_l) # g_\phi(z_l) -> \hat{y}
+        features_o_u = online_encoder(x_u) # f(x_u) -> z_u
+        features_o = cat([features_o_l, features_o_u]) # z_q := z_l \cup z_u
+        # normalize the encodings to unit vectors.
+        features_o_n = normalize(features_o, p=2, dim=1)
+        queries = normalize(features_t, p=2, dim=1)
+        # we treat x_l and x_u as coming from domains indexed by 0 and 1, respectively
+        labels_l_q = ones(len(x_l)) # ones-vector of size B_l
+        labels_u_q = zeros(len(x_u)) # zeros-vector of size B_u
+        labels_q = cat([labels_l_q, labels_u_q])
+        mb_mask = is_empty(label_mb) # mask indicating which elements of the MB are filled
+        labels_k = cat([labels_q, label_mb[mb_mask].clone()])
+        # keys are the union of the queries and the memory-bank-stored features
+        keys = cat((queries, feature_mb[mb_mask].clone()), dim=0)
+        feature_mb.push(queries) # update the feature memory bank
+        label_mb.push(labels_q) # update the label memory bank
+        logits_ps_k = propensity_scorer(keys) # h_\psi(z_k) -> e_k
+        loss_ps = xent(logits_ps_k, labels_k) # (binary) cross-entropy loss
+        # tempered logistic function: 1 / (1 + exp(-logits_ps_k / tau))
+        logits_ps_k = sigmoid(logits_ps_k / tau) 
+        logits_ps_q = logits_ps_k[:len(queries)]
+        # filter and match queries with (binary) CaliperNN
+        inds_a, inds_p = binary_caliper_nn(
+            features_t_n, labels_q, keys, labels_k,
+            logits_ps_q, logits_ps_k, t_f, t_sigma, k
+        )
+        # compute the unsupervised loss (d(z_q, z_n)) for all matched queries
+        z_q, v_k = features_o[inds_a], keys[inds_p]
+        match_rate = len(z_q) / len(features_o)
+        loss_u = match_rate * (z_q.unsqueeze(1) - v_q).pow(2).sum(-1).mean()
+        loss = l_sup(y_hat, y) + lambda_ * loss_u + loss_ps # aggregate loss
+        loss.backward() # compute gradients
+        update(online_encoder, predictor_head, propensity_scorer) # optimizer updates
+
+    \end{minted}
+\end{algorithm}

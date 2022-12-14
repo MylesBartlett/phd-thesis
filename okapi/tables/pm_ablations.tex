@@ -1,0 +1,45 @@
+\begin{table}[ht!]
+	\centering
+ 	\caption{Ablation experiments for Okapi conducted using the PovertyMap-WILDS dataset. Specifically, we assess the importance of four elements of our proposed method: the number of nearest neighbours used in computing $\mc{L}_\mr{unsup}$ ($k$), the use (enabled/disabled) of the fixed- and std-calipers in $\mr{\CNN}$ (considering these to be separate components), and which encoder (online or target) is used to generate the queries for statistical matching (with use of the target encoder `TE queries' being the default and `OE queries' denoting the alternative). Both ID and OOD performances are reported. The results are computed by aggregating over the results for each of the 5 pre-defined cross-validation folds. We report the average and standard deviation value across replicates of the metric of interest.}
+	\begin{subtable}[t]{\textwidth}
+    	\centering
+    	\caption{$\mr{\CNN}$ ablations.}
+    	\scalebox{1}{
+    	\begin{tabular}{lllll}
+    		\toprule
+    		\textbf{Method} & \multicolumn{4}{c}{\textbf{PovertyMap}} \\
+    		& \multicolumn{2}{c}{worst U/R corr. $\uparrow$} & \multicolumn{2}{c}{worst U/R MSE $\downarrow$} \\
+    		\midrule
+            & ID & OOD & ID & OOD \\
+            Okapi (k=1) & 0.72 (0.02) & 0.55 (0.10) & 0.22 (0.02) & 0.33 (0.10) \\
+            Okapi (k=5) & 0.72 (0.02) & 0.55 (0.10) & 0.22 (0.02) & 0.33 (0.10)\\
+            Okapi (k=10) & 0.72 (0.02) & 0.55 (0.09) & 0.22 (0.02) & 0.33 (0.10)\\
+            Okapi (k=5, no calipers) & 0.72 (0.02) & 0.54 (0.12) & 0.22 (0.02) & 0.36 (0.14) \\
+            Okapi (k=5, no std caliper) & 0.72 (0.02) & 0.54 (0.12) & 0.22 (0.02) & 0.35 (0.14) \\
+            Okapi (k=5, no fixed caliper) & 0.72 (0.02) & 0.55 (0.10) & 0.22 (0.02) & 0.33 (0.10) \\
+            % Okapi (k=5, OE queries) & 0.72 (0.02) & 0.55 (0.10) & 0.23 (0.02) & 0.34 (0.10) \\
+    		\bottomrule
+    	\end{tabular}}
+	\end{subtable}
+	
+	\vspace{5mm}
+	
+	\begin{subtable}[t]{\textwidth}
+    	\centering
+    	\caption{Query-generator ablation (target encoder (TE) vs. online encoder (OE)).}
+    	\scalebox{1}{
+    	\begin{tabular}{lllll}
+    		\toprule
+    		\textbf{Method} & \multicolumn{4}{c}{\textbf{PovertyMap}} \\
+    		& \multicolumn{2}{c}{worst U/R corr. $\uparrow$} & \multicolumn{2}{c}{worst U/R MSE $\downarrow$} \\
+    		\midrule
+            & ID & OOD & ID & OOD \\
+            Okapi (TE queries) & 0.72 (0.02) & 0.55 (0.10) & 0.22 (0.02) & 0.33 (0.10)\\
+            Okapi (OE queries) & 0.72 (0.02) & 0.55 (0.10) & 0.23 (0.02) & 0.34 (0.10) \\
+    		\bottomrule
+    	\end{tabular}}
+	\end{subtable}
+	
+	 \label{tab:ablations}
+\end{table}
+

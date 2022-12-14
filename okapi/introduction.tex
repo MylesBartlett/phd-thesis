@@ -1,0 +1,101 @@
+Machine learning models have been deployed for safety-critical applications such as disease
+diagnosis \citep{watson2019clinical} and self-driving cars \citep{yu2020bdd100k}, and in socially
+important contexts such as the allocation of healthcare, education, and credit (e.g.
+\cite{DunYiLanReetal19, HurAde17}). 
+%
+% Efficiency can be improved, costs can be reduced, and personalisation of services and products
+% can be greatly enhanced -- these are some of the drivers for the rapid development and deployment
+% of machine learning algorithms. 
+%
+Many machine learning algorithms, however, rely on supervision from a large amount of labelled
+data, and are typically trained to exploit complex relationships and distant correlations present
+in the training dataset. 
+%
+This strategy has proven to be effective in the setting when we have training (source) and test
+(target) data that are i.i.d.
+
+In reality, machine learning models are often deployed on target data whose distribution is
+different from the source distribution they were trained on. 
+%
+For example, in the task of classifying animal species in a camera trap image, one aims to learn a
+model that can generalise to new camera trap locations despite variations in illumination,
+background, and label frequencies, given training examples from a limited set of camera trap
+locations.
+%
+Exploiting correlations that only hold in these limited locations but not in the new locations can
+hurt out-of-distribution (OOD) generalisation.
+%
+While we only have a small subset of camera traps that have their images labelled, we have a large
+amount of unlabelled data from the other camera traps that capture diverse operating conditions. 
+%
+In general, unlabelled data is much more readily available than labelled data and can often be
+obtained from distributions beyond the source distribution.
+%
+Taking advantage of these unlabelled data during training is a key element to build robust models
+that have good OOD performance without sacrificing in-distribution (ID) performance.
+%
+%It therefore seems natural to exploit as many data from different domains as possible, even if
+%that data is partially or completely unlabelled. 
+
+Our work is a direct response to the empirical conclusions of \cite{SagWeiLeeGaoetal22} for the
+WILDS 2.0 dataset, which extends the WILDS benchmark datasets of \cite{koh2021wilds} through the
+addition of unlabelled data. %
+In \citet{SagWeiLeeGaoetal22} a variety of state-of-the-art methods leveraging unlabelled data, including
+domain-invariant, self-training, and self-supervised methods were evaluated for their ability to
+improve OOD generalisation.
+In the all but a few cases, however, these methods failed to outperform the combination of effective
+data-augmentation and standard empirical risk minimisation (ERM), and among those select cases
+none persisted across datasets.
+
+We show that it is possible to make effective use of large volumes of unlabelled data
+as supplement to a smaller set of labelled data, from a limited set of domains, to achieve
+strong generalisation to data from domains outside the training distribution.
+% Given full access to the class labels, one can consider the causal matching approach of
+% \cite{mahajan2021domain} boasts both intuitiveness and rigorous grounding in causal theory. 
+% In the absence of object identifiers, MatchDG dictates matching pairs of samples
+% belonging to the same class that are close in representation space to serve as inputs to a
+% contrastive loss.
+% In the absence of class labels, however, as in the semi-supervised regime posed by the WILDS 2.0
+% dataset, such an approach does not hold and matching unconditionally without constraint can yield
+% poor matches, the detriment of which is greatly amplified when the matches are obtained via, and in
+% turn used for, bootstrapping.
+% Large unlabelled data offer diverse operating conditions but might dilute the information
+% We need to find a way to identify and link labelled and unlabelled data that correspond to similar
+% statistical units but that need not be the same real-world entity.
+%
+We turn to a statistical matching (SM) framework \cite{RomInsShaQua22,rosenbaum1985constructing, rubin1973matching}, a model-based approach for providing joint information on variables and
+indicators collected through multiple sources. 
+%
+SM has been widely utilised to assess the effect of interventions in numerous fields, such as
+education, medical and community policies (e.g. \cite{biglan2000value, christian2010prenatal}).  
+%
+In SM, intervened units are paired with control units and those units without a sufficiently-good
+match according to a given statistical criteria are excluded when estimating the treatment effect.
+%
+In the running example of animal-species classification, intervened units may correspond to the
+limited set of camera trap locations that are fully-annotated, while control units refer to the
+many more camera trap locations that are only partially annotated.
+%
+Pairing is beneficial for capturing diverse operating conditions, yet the ability to drop unpaired
+units is crucial for mitigating the risk of statistically-poor matches corrupting the training
+signal.
+
+By developing an online method for statistically matching samples from different domains
+(camera-trap locations) and using this to define a consistency loss, we arrive at our proposed
+semi-supervised method, \emph{Okapi}. 
+%
+This consistency loss is predicated on the simple idea of pulling together similar samples from
+different domains within the latent space of the encoder, and using this to bootstrap said encoder
+such that the distributions become progressively more aligned over the course of training. 
+%
+Since matching samples using the full dataset at each step of training is computationally
+infeasible, we instead approximate it using a combination of momentum-encoding and a memory-bank
+that has been well-proven in self-supervised learning \citep{he2020momentum, koohpayegani2021mean}.
+%
+Compared with other consistency-based methods such as FixMatch \citep{sohn2020fixmatch}, Okapi has
+the advantage of being agnostic to both the task and the modality, in addition to being
+distributionally robust.
+%
+Contrary, to \citet{SagWeiLeeGaoetal22}, we show that the supplementary unlabelled data and domain
+information can be leveraged by Okapi to improve upon standard ERM on datasets from the WILDS 2.0
+benchmark.

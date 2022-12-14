@@ -1,0 +1,78 @@
+\paragraph{Data Augmentation} We follow \cite{SagWeiLeeGaoetal22} when defining the augmentations
+for the the WILDS datasets.
+%
+In the case of PovertyMap-WILDS we corroborate the original finding that data-augmentation
+adversely affects performance, and, in light of this, elect only to use data-augmentation for
+FixMatch where it is needed to generate the weak and strong views used in computing the consistency
+loss.
+%
+Since Okapi uses an NN-based approach for generating these views, it is decoupled from the
+augmentation strategy and problems that can arise from its misspecification.
+
+\paragraph{Architecture} For our image experiments, contrary to \cite{SagWeiLeeGaoetal22}, we
+opt to use the recently proposed ConvNeXt architecture \citep{liu2022convnet}, finding this change
+to provide large performance gains and to be crucial in enabling semi-supervised methods to surpass
+the ERM baseline.
+%
+This is in line with \cite{kim2022broad} who similarly found that a change of architecture
+(combined with large-scale pre-training) could greatly bolster performance on the iWildCam dataset.
+%
+More precisely, we use the \emph{tiny} variant of ConvNeXt, pre-trained on ImageNet 1k, as the
+initial backbone for our models. We compose this with a single fully-connected layer to construct
+the complete predictor both for the target and the propensity score. For our CivilComments
+experiments, in contrast, we do not diverge from \cite{SagWeiLeeGaoetal22} in our choice of
+architecture, with all models trained with a pre-trained DistilBERT \citep{sanh2019distilbert}.
+
+\paragraph{Optimisation} For
+optimising all models, we use the AdamW optimiser \citep{loshchilov2018decoupled} coupled with a
+cosine annealing schedule without warm restarts \citep{DBLP:conf/iclr/LoshchilovH17}.
+%
+We set the initial learning to be $1 \times 10^{-4}$ across the board, and forgo the use of weight
+decay. 
+%
+Models are trained for $120$K, $30$K, and $20$K iterations for iWildCam, PovertyMap, and
+CivilComments, respectively.
+%
+ The decay coefficient, $\zeta$, for the target encoder's exponential moving average is initialised
+ to $\zeta_{\mr{start}}$ and is linearly increased to $\zeta_{\mr{end}}$ over the course of
+ training. For PovertyMap we set $\zeta_{\mr{start}}$ and $\zeta_{\mr{end}}$ to be $0.996$ and
+ $1.0$, respectively;
+ for iWildCam, we set $\zeta_{\mr{start}}$ and $\zeta_{\mr{end}}$ to be
+ $0.999$ and $0.999$, respectively, resulting in a fixed value of $\zeta$; 
+ $1.0$, respectively; 
+ for CivilComments, we set $\zeta_{\mr{start}}$ and $\zeta_{\mr{end}}$ to be
+ $0.996$ and $0.996$, respectively, again resulting in a fixed value of $\zeta$. 
+ %
+We similarly warm up the pre-factor for the consistency loss, $\lambda$, according to a linear
+schedule during the first $10\%$ of training to allow a period for the encoder to learn meaningful
+relations between samples through the supervised loss before bootstrapping with the consistency
+loss, with a final value of $1$.
+
+\paragraph{Matching}\label{matching_imp} In order to determine suitable hyperparameters, $\xi$, for
+\CNN, we perform a grid-search in the static setting, using a fixed model. Specifically, we use the
+backbone of an ERM-trained model as the encoder with which to generate the queries and keys for
+matching.
+%
+The quality of matching with a given instantiation of $\xi$ is measured using two metrics commonly
+used in the statistical matching literature: \emph{Variance Ratio} (VR) and \emph{Standard Mean
+Differences} (SMD) \citep{rubin2001using}. 
+%
+Both metrics operate on pairs of domains, but can be generalised to work when $s$ is
+non-binary by simply aggregating over all pairwise results.
+%
+For a given pair of domains, VR is defined as the ratio of the variances of the covariates between
+the two domains, with an ideal value of $1$, while SMD is defined as the difference in their
+covariate means, normalised by the standard deviation for each covariate, and is to be minimised.
+%
+While our proposed method is applicable whether $S$ is binary or categorical, for the experiments
+in this paper we take advantage of the fact that the WILDS datasets specify splits with
+non-overlapping domains and match from $\D_l \rightarrow \D_u$ and in the reverse direction (from
+$\D_u \rightarrow \D_l$). This decision was based on preliminary experiments which found the binary
+variant generally enjoyed more stable optimisation, something which future work should seek to
+rectify.
+%
+In the case of PovertyMap, however, the training splits themselves do not satisfy the
+aforementioned requirement of being sourced from mutually exclusive sets of domains and we instead
+treat the OOD validation set as $\D_u$ (and treat it as being unlabelled w.r.t. $y$, in that it is
+only used for $\mc{L}_\mr{unsup}$).
+

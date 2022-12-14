@@ -1,0 +1,52 @@
+\begin{algorithm}[ht]
+     \caption{
+         Pytorch-style pseudocode for the \CNN\ matching algorithm for the special case where the
+         domain is binary. The algorithm generalises freely to arbitrary numbers of domains however
+         we restrict ourselves to the binary version here for illustrative purposes.
+}
+    \label{alg:calipernn_pc}
+    \begin{minted}{python}
+
+    def binary_caliper_nn(
+        x_query, # samples to be used as the queries for matching
+        s_query, # binary labels indicating the domain of x_query
+        x_key, # samples to which the query samples may be matched to.
+        s_key, # binary labels indicating the domain of x_key
+        ps_query, # propensity scores associated with x_query
+        ps_key, # propensity scores associated with x_key
+        t_f, # threshold for the fixed caliper
+        t_sigma, # number of standard deviations at which to threshold
+        k # number of neighbours to attempt to retrieve per query
+    ):
+        anchor_inds, positive_inds = [], []
+        for direction in (0, 1): # which domain (0 or 1) to treat as the 'anchor'
+            key_mask = s_key != direction
+            # exclude samples with propensity scores outside the valid range
+            # determined by t_f: (1 - t_f, t_f)
+            fc_mask = (ps_query > (1 - t_f)) &  (ps_query < t_f)
+            anchor_mask = fc_mask & (s_query == direction)
+            queries_x_filtered = queries.x[anchor_mask]
+            ps_query_filtered = ps_query[anchor_mask]
+            fc_mask = (ps_key > (1 - t_f)) & (ps_key < t_f)
+            key_mask &= fc_mask
+            ps_key_filtered = ps_key[key_mask]
+            # 2-norm distance between unfiltered propensity scores
+            dists_ps = cdist(ps_query_filtered, ps_key_filtered, p=2) 
+            # 2-norm distance between the filtered anchors and keys
+            dists_x = cdist(queries_x_filtered, x_key[key_mask], p=2)
+            # compute sigma as the mean of the per-domain standard deviations
+            std_ps = (0.5 * (ps_query_filtered.var() + ps_key_filtered.var())).sqrt() 
+            std_threshold = t_sigma * std_ps
+            # filter out any samples that violate the std-caliper
+            dists_x[dists_ps > std_threshold] = float("inf")
+            nbr_dists, nbr_inds = dists_x.topk(dim=1, largest=False, k=k)
+            # filter out queries not yielding the requisite number of matches (k)
+            is_matched = ~nbr_dists.isinf().any(dim=1)
+
+            anchor_inds.append(anchor_mask.nonzero()[is_matched])
+            positive_inds.append(key_mask.nonzero()[nbr_inds[is_matched]])
+
+        return cat(anchor_inds, dim=0), cat(positive_inds, dim=0)
+
+    \end{minted}
+\end{algorithm}

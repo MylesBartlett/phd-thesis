@@ -1,0 +1,66 @@
+We evaluate Okapi using three datasets -- iWildCam, PovertyMap, and CivilComments -- taken from the
+WILDS 2.0 benchmark
+\citep{SagWeiLeeGaoetal22}.
+%
+These datasets were chosen specifically due to the poor performance reported by
+\cite{SagWeiLeeGaoetal22} for semi-supervised and domain adaptation methods across the board, in
+relation to the ERM baselines.
+%
+For PovertyMap in particular, ERM was found to vastly outperform any competing methods utilising
+the unlabelled data and/or domain labels.
+
+
+\textbf{iWildCam-WILDS} is an extension of the iWildCam 2020 Competition Dataset
+\cite{beery2020iwildcam}. 
+%
+The task is multi-class species classification  of animals in camera trap images. The dataset
+contains 1022K images of animals annotated with the domain, $s$, that identifies the camera trap
+that captured it. The target label, $y$, is one of 182 different animal species and it is provided
+solely for the 203K labelled data. The labelled training set contains 130K images taken by 243 camera traps. 
+%
+The out-of-distribution (OOD) validation and target sets include images from 32 and 48 different
+camera traps which are disjoint from the 243 training domains.
+%
+Additionally, 819K unlabelled images from 3215 new domains are available. % As images from
+Different cameras trap differ in characteristics such as illumination, background and relative
+animal frequency, models trained on the source domains might fail to generalise to images taken
+from new locations.
+
+
+\textbf{PovertyMap-WILDS} is a variation of the dataset introduced in 
+% Yeh et al. 
+\cite{yeh2020using}. The task is to predict the wealth index, $y$, from multispectral satellite
+images of 23 African countries. The country the image was taken in as well as whether it was taken
+in a rural or urban area represent the domain $s$. The dataset contains 5 cross-validation (CV)
+folds of roughly equal size, each one dividing the 23 countries differently across the source, OOD
+validation and OOD target splits. In each fold, the labelled training set contains 11K images from
+14 different countries. The OOD validation and target sets include images from 5 different
+countries not represented in the source data.
+%
+The dataset also includes 261K unlabelled images from the same 23 countries. 
+% For each fold, the domains of the source, OOD validation and OOD target correspond to the
+% labelled and unlabelled data.
+
+\textbf{CivilComments-WILDS} is an online-comment dataset adapted from
+\cite{borkan2019nuanced},  comprising 448K online comments
+annotated with both a binary indicator of toxicity ($\{\mathrm{\emph{toxic}, \emph{not toxic}}\}$)
+-- serving as the target label, $y$ -- and the demographic identities mentioned within them --
+serving as the
+domain $s$. 
+Here, $s \in \{0, 1\}^8$ is a binary vector rather than a scalar, with dimensions 
+indicating membership (non-exclusively) to 8 demographic groups, spanning different genders,
+religions and ethnicities.
+For the WILDS 2.0 variant of the dataset, \cite{SagWeiLeeGaoetal22} introduce an additional corpus
+of 1551K
+%$1,551,515$ 
+comments acting as the unlabelled training data belonging to extra domains.
+While the comments are completely unlabelled, w.r.t. both $y$ and $s$ and thus are not
+domain-separable at the sample level, the majority ($92\%$) of the comments are known to be sourced
+from the same documents as those comments comprising the (OOD) labelled test data. 
+As noted in \cite{SagWeiLeeGaoetal22}, CivilComments-WILDS exhibits label imbalance w.r.t. $y$;
+this is amended both therein and herein (as appertains all methods) through the use of
+class-balanced sampling, though with the minor distinction that for our experiments we ensure each
+batch is exactly balanced rather by sampling equally from each class, in contrast to
+\cite{SagWeiLeeGaoetal22} who sample hierarchically -- sampling $y_i$ uniformly from $\{0, \dots,
+|\mc{Y}_l|\}$ and then uniformly from $\mc{D}_l$, conditioned on $y_i$ -- such that balance is
+achieved only in expectation.

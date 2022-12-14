@@ -1,0 +1,20 @@
+\section{Conclusion}\label{sec:conclusion}
+%%%%%%%%%%%%% DISCUSSION %%%%%%%%%%%%%%%
+% Controlling the correlations a computer vision and machine learning system discovers is known to be a difficult problem.
+% Recent work~\cite{JoBen17,GatEckBet17,JacBehZemBet19} has shown that state-of-the-art deep convolutional neural network (CNN) systems strongly rely on \emph{shortcuts}. 
+% Examples of these shortcuts include spectral statistical regularities and stationary statistics such as colours and textures. 
+% Indeed, it has been shown that standard ImageNet-trained classifiers place much more weight on object textures compared to object shapes \cite{Geir18}.  As discussed in \cite{zhang2018examining} the representation flaws that result from these shortcuts can be difficult to pick up on because the test images may exhibit a similar bias.
+% Those systems rely less on higher-level abstract concepts such as shape and appearance than on such details highly-correlated with, but unconnected to the classification.
+% While this may be acceptable, and even desirable in certain cases (e.g. when combining image content and style from two separate images \cite{gatys2016image}), to achieve robustness, machine learning models have to look beyond \emph{spurious} correlations to those that hold true regardless of context.
+% By doing so, the system can learn to produce accurate and reliable predictions, even when deployed in settings radically different from the one in which it was trained.
+% However, if the training set contains spurious correlations, then a computer vision and machine learning system cannot learn the true relations just from that dataset.
+% We either need to supply an inductive bias \cite{locatello2019challenging} or additional information which we can incorporate into learning.
+
+% As a step towards solving these problems,
+We have proposed a general and straightforward framework for producing invariant representations, under the assumption that a representative but partially-labelled \emph{representative} set is available.
+Training consists of two stages:
+an encoder is first trained on the representative set to produce a representation that is invariant to a designated spurious feature. 
+This is then used as input for a downstream task-classifier, the training data for which might exhibit extreme bias with respect to that feature.
+We train both a VAE- and INN-based model according to this procedure, and show that the latter is particularly well-suited to this setting due to its losslessness. 
+The design of the models allows for representations that are in the data domain and therefore exhibit meaningful invariances. 
+We characterise this for synthetic as well as real-world datasets for which we develop a method for simulating sampling bias.
