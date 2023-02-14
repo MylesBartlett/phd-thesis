@@ -26,7 +26,7 @@ there is often not a universally accepted measure. However, \emph{Demographic Pa
 widely used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. Demographic Parity
 demands $\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. In the
 context of fair representations, we measure the Demographic Parity of a downstream classifier,
-$f(\cdot )$, which is trained on the representation $z$, i.e.\  $f: Z \to \hat{Y}$.
+$f(\cdot )$, which is trained on the representation $z$, i.e.\  $f: \gZ \to \hat{\gY}$.
 
 A core principle of all fairness methods is the \emph{accuracy-fairness trade-off}. As previously
 stated, the fair representation should be invariant to $s$ ($\to$ fairness) but still be predictive
@@ -49,7 +49,7 @@ be removed from the methods, but then there is no guarantee that information abo
 % Outside of computer vision, \cite{madras2018learning} have also worked on removing a problematic
 % spurious correlation.
 In addition to producing fair representations, \citet{madras2018learning} want to ensure the
-representations are transferrable. Here, an adversary is used to remove sensitive information from
+representations are transferable. Here, an adversary is used to remove sensitive information from
 a representation $z$. Auxiliary prediction and reconstruction networks, to predict class label $y$
 % to ensure it remains predictive of $y$
 and reconstruct the input $x$ respectively, are trained on top of $z$, with $s$ being ancillary
@@ -72,8 +72,8 @@ manipulable such that the different subspaces can be freely removed and composed
 Zeroing out the dimensions or replacing them with independent noise imparts invariance to the
 corresponding sensitive attribute. This method closely resembles ours when we use an invertible
 encoder. However, the emphasis of our approach is on interpretability, information-preservation,
-and coping with sampling bias - especially extreme cases where $|\, \textrm{supp}(S_{tr} \times
-Y_{tr}) | < |\, \textrm{supp}(S_{te} \times Y_{te}) |$.
+and coping with sampling bias - especially extreme cases where \( |(\gS^{tr} \times \gY^{tr}) | < |
+\gS^{te} \times \gY^{te} | \).
 % Namely, the invertibility of the network means we can optimise for invariance singularly without
 % the burden of a reconstruction loss. While we do not explicitly consider the case of
 % multi-attribute fairness, our method can be easily adapted for this use-case.

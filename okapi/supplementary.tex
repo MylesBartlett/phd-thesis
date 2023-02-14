@@ -74,7 +74,7 @@ to generalise to regression tasks such as PovertyMap.
         matching instead the target encoder while experiencing minimal degradation in performance.
         %
         This is particularly relevant when one wishes to perform the matching in only one direction
-        (e.g. \( \gD_l \rightarrow \gD_l \)) due to the reduction in redundant encoding, with each
+        (e.g. \( \gD_l \to \gD_l \)) due to the reduction in redundant encoding, with each
         encoder only encoding its respective subset of the data (e.g. $f_\theta$ only encodes
         samples from $\gD_l$, \( f_\theta^\prime \) only encodes samples from \( \gD_u \)
 \end{enumerate}
@@ -128,8 +128,8 @@ Similarly, we can retrieve more pairs by reducing the fixed caliper threshold.
 %
 We also analyse the case of matching across the two domains photo and art painting. Using a fixed
 caliper defined defined by a threshold \( t_f = 0.1 \) and no temperature scaling (i.e. $\tau=1$) the
-algorithm retrieves 1,142 pairs matching in the direction photo $\rightarrow$ art and 1,501 in the
-direction art $\rightarrow$ photo. 
+algorithm retrieves 1,142 pairs matching in the direction photo $\to$ art and 1,501 in the
+direction art $\to$ photo. 
 % 
 
 In Fig.~\ref{fig:match_pairs_pa} and Fig.~\ref{fig:match_pairs_ps} we show examples of matching
@@ -192,8 +192,8 @@ preservation in colour and background; while in the photo-sketch case shape and 
 	\scalebox{1.0}{
 	\begin{tabular}{llll} 
 	\toprule 
-    \textbf{Fixed Caliper ($t_f$)}  & \textbf{Temperature ($\tau$)} & \textbf{photo} $\rightarrow$
-    \textbf{sketch} & \textbf{sketch} $\rightarrow$ \textbf{photo} \\
+    \textbf{Fixed Caliper ($t_f$)}  & \textbf{Temperature ($\tau$)} & \textbf{photo} $\to$
+    \textbf{sketch} & \textbf{sketch} $\to$ \textbf{photo} \\
     \midrule
     0.1 & 1 & 0 & 0 \\
     0 & 1 & 1540 & 3929 \\

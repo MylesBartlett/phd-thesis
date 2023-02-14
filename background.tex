@@ -10,7 +10,7 @@ Traditional learning algorithms usually assume (or are only optimal for) that th
 samples are \emph{both} variables  identically-and-independently distributed (i.i.d) random
 variables, such that one has $P_{tr}}(X, Y) \approx P_{te}(X, Y)$.
 Based on this assumption, the method of Empirical Risk Minimisation (ERM; \citet{vapnik1991principles}) seeks the
-hypothesis $f: X \rightarrow Y$ that is minimiser, $f^\ast$ of the \emph{expected risk},
+hypothesis $f: \gX \to \gY$ that is minimiser, $f^\ast$ of the \emph{expected risk},
 \emph{risk}, $\gR$, defined s the expectation of the loss,$\ell: \gY \times \gY \rightarrow
 \mathbb{R}_\+$, over the training distribution, $P_{tr}(X, Y)$.
 Formally, the risk is defined by: $\allall f \in \gF$,
