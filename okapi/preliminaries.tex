@@ -1,20 +1,24 @@
+\section{Preliminaries}\label{sec:prelims}
+% ----------------------------------------
 \subsection{Problem setting}
-
-In the standard supervised setting, one is given a dataset, $\mc{D}_l \triangleq \{x_i,
-y_i\}_{i=1}^{N_l}$, and trains a model, parameterised by $\theta$, to well-approximate the
-empirical distribution as $p_\theta(y | x)$.
+In the standard supervised setting, one is given a dataset, \( \gD_l \triangleq \{x_i,
+y_i\}_{i=1}^{N_l} \), and trains a model, parameterised by \(\theta\), to well-approximate the
+empirical distribution as \( p_\theta(y | x) \).
 %
 Labelled data is limited by the cost of annotation yet one often has access to a far larger corpus
-of unlabelled data, $\D_u \triangleq \{x_i\}_{i=1}^{N_u}$, which can be used to supplement $\D_l$. 
+of unlabelled data, \( \gD_u \triangleq \{x_i\}_{i=1}^{N_u} \), which can be used to supplement
+\(\gD_l\). 
 %
 Semi-supervised learning is motivated by the idea that this additional data can often be used to
-improve the ID and/or OOD performance of $p_\theta(y | x)$.
+improve the ID and/or OOD performance of \(p_\theta(y | x)\).
 %
 We can view unsupervised domain adaptation (UDA) as a special case of semi-supervised learning,
 where there is assumed to be some distribution shift (adverse to a na\"ively-trained predictor)
-between $\D_l$ and $\D_u$. Here, $\D_u$ comes from the domain on which $p_\theta(y | x)$ is to be
-evaluated, such that we have $\mc{D}_u \triangleq \D_\mr{OOD}$, where $\mc{D}_\mr{OOD}$ denotes the
-target domain, that is OOD w.r.t. $D_l$.
+between \( \gD_l \) and \( \gD_u \).
+%
+Here, \( \gD_u \) comes from the domain on which \(p_\theta(y | x)\) is to be evaluated, such that
+we have \( \gD_u \triangleq \gD_\mr{OOD} \), where \( \gD_\mr{OOD} \) denotes the target domain,
+that is OOD w.r.t. \( \gD_l \).
 %
 In the most general sense, a \emph{domain}, or \emph{environment} \citep{arjovsky2019invariant,
 creager2021environment} describes some partitioning of the data according to its source or some
@@ -24,11 +28,13 @@ conditions (e.g. day) would perform with minimal degradation under another set o
 night) when those conditions are irrelevant to the task at hand.
 %
 
-Assuming the data follows the conditional generative distribution $x \sim p(x | s)$, where $s$ is
-the domain label, one would ideally use $\D_{\mr{OOD}}$ to learn invariance to the marginal
-distribution, $p(s)$, and thereby achieve the equivalence $p_\theta(y | x) = p_\theta(y | x, s)$.
+Assuming the data follows the conditional generative distribution \( x \sim p(x | s) \), where
+\(s\) is the domain label, one would ideally use \( \gD_{\mr{OOD}} \) to learn invariance to the
+marginal distribution, \( p(s) \), and thereby achieve the equivalence \( p_\theta(y | x) =
+p_\theta(y | x,
+s) \).
 %
-In practice, one typically does not have access to $\mc{D}_{\mr{OOD}}$ but does have access to
+In practice, one typically does not have access to \( \gD_{\mr{OOD}} \) but does have access to
 training data sourced from a mixture of domains which can be leveraged to learn a more general
 invariance that extends to those domains outside the training distribution
 \cite{arjovsky2019invariant}.
@@ -40,11 +46,13 @@ While some DG works consider the more extreme case of $s$ being unobserved
 krueger2021out, SagWeiLeeGaoetal22} in which the domain(s) associated with each sample (labelled and
 unlabelled) is indicated by the discrete label (set of labels) $s$. 
 %
-We denote the set of possible domains for the in-distribution labelled and unlabeled data, as
-$\mc{S}_l$ and $\mc{S}_u$, respectively, and their union as $\mc{S} \triangleq S_l \cup S_u$.
-Following the setup established in \cite{SagWeiLeeGaoetal22}, $\D_u$ is assumed to be unlabelled
-only w.r.t the targets and not w.r.t the domain labels and thus that both $\D_l$ and $\D_u$ can be
-augmented with the latter to give the re-definitions $\D_l \triangleq \{ x_i, y_i, s_i
-\}_{i=1}^{N_l}$ and $\D_u \triangleq \{x_i, s_i \}_{i=1}^{N_u}$.
+We denote the set of possible domains for the in-distribution labelled and unlabelled data, as \(
+\gS_l$ and $\gS_u \), respectively, and their union as \( \gS \triangleq S_l \cup S_u \).
+%
+Following the setup established in \cite{SagWeiLeeGaoetal22}, \( \gD_u \) is assumed to be unlabelled
+only w.r.t the targets and not w.r.t the domain labels and thus that both \( \gD_l \) and \( \gD_u
+\) can be augmented with the latter to give the re-definitions \( \gD_l \triangleq \{ x_i, y_i, s_i
+\}_{i=1}^{N_l} \) and \( \gD_u \triangleq \{x_i, s_i \}_{i=1}^{N_u} \).
 
-\subsection{Statistical matching} \import{./}{matching.tex}
+\subsection{Statistical matching} 
+\import{./}{matching.tex}

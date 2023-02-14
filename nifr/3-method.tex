@@ -60,7 +60,8 @@ The requirement for $\bm{z}_u$ can be expressed via mutual information:
 However, for the representation to be useful, we need to capture as much relevant information in the data as possible.
 Thus, the combined objective function:
 \begin{align}
-  \min_{\theta} \mathbb{E}_{x \sim X}[-\log p_\theta(\bm{x})] + \lambda I(f_\theta(x);s)
+% TODO: take expectation over s as well as x
+  \min_{\theta} \mathbb{E}_{x \sim X}[-\log p_\theta(x) + \lambda I(f_\theta(x);s)]
   \label{eq:objectivetheory}
 \end{align}
 where $\theta$ refers to the trainable parameters of our model $f_\theta$ and $p_\theta(\bm{x})$ is the likelihood it assigns to the data.
@@ -160,6 +161,7 @@ These flow-based models permit \emph{exact} likelihood estimation \citep{normflo
   \log p(x) &= \log p(z) + 
    \sum \log \left| \det\left( \frac{\diff h_i}{ h_{i-1}}\right) \right|, %\\
   \quad p(z) = \mathcal{N}(z; 0, \mathbb{I})
+  \mathbb{E}
   \label{eq:changeofvariables}
 \end{split}
 \end{align}

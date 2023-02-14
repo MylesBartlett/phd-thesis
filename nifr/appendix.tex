@@ -118,64 +118,64 @@ CelebA    & 32               & 5      & 1       & $\ell_1$ \\
 \end{tabular}
 \end{table}
 
-\subsection{Instructions for potential users}
-The first question a potential user has to ask themselves is
-whether the method is a good fit:
-is the problem that the user faces one of strong spurious correlation
-and is there non-spurious data available that has labels for the spurious variable?
-To investigate the first part of the question,
-the user should first try to train a standard neural network classifier
-and observe the test-set performance.
-Furthermore, one should check
-whether the spurious variable can be removed with data augmentations alone.
+% \subsection{Instructions for potential users}
+% The first question a potential user has to ask themselves is
+% whether the method is a good fit:
+% is the problem that the user faces one of strong spurious correlation
+% and is there non-spurious data available that has labels for the spurious variable?
+% To investigate the first part of the question,
+% the user should first try to train a standard neural network classifier
+% and observe the test-set performance.
+% Furthermore, one should check
+% whether the spurious variable can be removed with data augmentations alone.
 
-If the features of the data are categorical instead of continuous,
-it is best to first produce a continuous representation with an autoencoder.
-This step only has to be done once at the beginning.
+% If the features of the data are categorical instead of continuous,
+% it is best to first produce a continuous representation with an autoencoder.
+% This step only has to be done once at the beginning.
 
-The next question is whether to use the cFlow or cVAE variant of the method.
-For initial experiments, we would recommend the cVAE model as it is quicker to train,
-and will lead to shorter feedback cycles when validating the code.
-If the computational budget allows it,
-we would recommend switching to the cFlow model once cVAE is working
-as it provides better guarantees regarding the retention of information from the input data.
+% The next question is whether to use the cFlow or cVAE variant of the method.
+% For initial experiments, we would recommend the cVAE model as it is quicker to train,
+% and will lead to shorter feedback cycles when validating the code.
+% If the computational budget allows it,
+% we would recommend switching to the cFlow model once cVAE is working
+% as it provides better guarantees regarding the retention of information from the input data.
 
-For choosing the network architecture,
-the only advice we have is to look at what architectures other people have used for similar data.
-Note, however, that encoder-decoder architectures usually differ in some ways
-from classification architectures,
-due to their different goals: the goal of the former is primarily to compress and disentangle,
-while the latter aims to \emph{discard} information unrelated to the prediction task.
-As such, certain layer types, like pooling layers and batch normalisation,
-are only suitable for classifiers and not encoder-decoders.
-For the \ac{INN} architecture, the most import advice is to keep in mind that
-each individual layer is much less expressive than non-invertible layers,
-and so the number of layers required in \acp{INN} is much higher.
-However, the number also should not be \emph{too high} or the model will overfit.
-It is likely that the architecture needs to be adapted during training.
-See also \secref{sec:optimisation-details} and the code we published alongside this paper
-to get inspiration for architectures.
+% For choosing the network architecture,
+% the only advice we have is to look at what architectures other people have used for similar data.
+% Note, however, that encoder-decoder architectures usually differ in some ways
+% from classification architectures,
+% due to their different goals: the goal of the former is primarily to compress and disentangle,
+% while the latter aims to \emph{discard} information unrelated to the prediction task.
+% As such, certain layer types, like pooling layers and batch normalisation,
+% are only suitable for classifiers and not encoder-decoders.
+% For the \ac{INN} architecture, the most import advice is to keep in mind that
+% each individual layer is much less expressive than non-invertible layers,
+% and so the number of layers required in \acp{INN} is much higher.
+% However, the number also should not be \emph{too high} or the model will overfit.
+% It is likely that the architecture needs to be adapted during training.
+% See also \secref{sec:optimisation-details} and the code we published alongside this paper
+% to get inspiration for architectures.
 
-During training, the user should mostly keep an eye on two variables:
-the reconstruction loss and the degree of invariance of \(\bm{z}_u\) w.r.t.\ \(s\),
-which can either be gleaned from looking at reconstructions of \(\bm{z}_u\)
-or from computing the accuracy of a downstream classifier trained on \(\bm{z}_u\).
-The information inherent in the reconstruction loss can also be obtained
-by looking at full reconstructions of \(\bm{z}\).
-If the reconstruction loss does not go down during training,
-some possible reasons are: the dimension of the representation is too small,
-the reconstruction loss weight is too small
-or the network just needs to be trained for longer.
-If the degree of invariance does not increase during training,
-some possible reasons are:
-the network is not expressive enough (\eg\ not deep enough) to disentangle \(\bm{z}_u\) and \(\bm{z}_b\),
-the adversary is not powerful enough,
-the adversarial loss weight is too small
-or the network just needs to be trained for longer.
+% During training, the user should mostly keep an eye on two variables:
+% the reconstruction loss and the degree of invariance of \(\bm{z}_u\) w.r.t.\ \(s\),
+% which can either be gleaned from looking at reconstructions of \(\bm{z}_u\)
+% or from computing the accuracy of a downstream classifier trained on \(\bm{z}_u\).
+% The information inherent in the reconstruction loss can also be obtained
+% by looking at full reconstructions of \(\bm{z}\).
+% If the reconstruction loss does not go down during training,
+% some possible reasons are: the dimension of the representation is too small,
+% the reconstruction loss weight is too small
+% or the network just needs to be trained for longer.
+% If the degree of invariance does not increase during training,
+% some possible reasons are:
+% the network is not expressive enough (\eg\ not deep enough) to disentangle \(\bm{z}_u\) and \(\bm{z}_b\),
+% the adversary is not powerful enough,
+% the adversarial loss weight is too small
+% or the network just needs to be trained for longer.
 
-For \ac{INN} training, there is the additional complication that it can become non-invertible due to numerical problems (\eg\ division by zero).
-If this happens, the losses will quickly diverge and further training will become pointless.
-See \secref{sec:those-darn-coupling-layers} for some ways of preventing this.
+% For \ac{INN} training, there is the additional complication that it can become non-invertible due to numerical problems (\eg\ division by zero).
+% If this happens, the losses will quickly diverge and further training will become pointless.
+% See \secref{sec:those-darn-coupling-layers} for some ways of preventing this.
 
 \subsection{Additional results}\label{sec:additional-results}
 \paragraph{Detailed results for UCI Adult dataset.}

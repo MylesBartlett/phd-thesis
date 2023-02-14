@@ -1,7 +1,10 @@
 %%%%% NEW MATH DEFINITIONS %%%%%
 
-\usepackage{amsmath,amsfonts,bm}
+\usepackage{amsmath,amsfonts,bm,amssymb} 
 
+\def\ci{\perp\!\!\!\perp}
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
 % Mark sections of captions for referring to divisions of figures
 \newcommand{\figleft}{{\em (Left)}}
 \newcommand{\figcenter}{{\em (Center)}}
@@ -13,6 +16,8 @@
 \newcommand{\captionc}{{\em (c)}}
 \newcommand{\captiond}{{\em (d)}}
 
+% `with respect to'
+\def\wrt{{w.r.t.}}
 % Highlight a newly defined term
 \newcommand{\newterm}[1]{{\bf #1}}
 

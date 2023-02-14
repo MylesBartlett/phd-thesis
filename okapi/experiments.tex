@@ -1,3 +1,5 @@
+\section{Experiments}\label{sec:exps}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Datasets}\label{sec:exps_datasets} We evaluate Okapi on three datasets taken from the
 WILDS 2.0 benchmark \cite{SagWeiLeeGaoetal22}. These span a variety of modalities and tasks,
 allowing us to showcase the generality of our proposed method (Okapi): \textbf{iWildCam} (images,
@@ -7,18 +9,18 @@ Details of each dataset can be found in Appendix~\ref{appx:datasets}.
 
 \subsection{Image experiments}
 
-\import{./}{tables/iw_pm_results.tex}
+\import{okapi}{tables/iw_pm_results.tex}
 
-Results of our image-data experiments are summarised in Table~\ref{tab:iw_pm_results}. Due to spacial 
-constraints, we defer the full set of results, including those for the `offline' (w.r.t. the
-matching) version of Okapi to Appendix.~\ref{appx:ext_results}.
-For both datasets in question, we use the same metrics as \cite{SagWeiLeeGaoetal22}: macro-F1 for
-iWildCam and worst-group (with the group defined as urban (U) vs. rural (R)) Pearson correlation
-for Poverty Map. For completeness, we include mean squared error (MSE) as a secondary metric for
-the latter dataset. Following \cite{SagWeiLeeGaoetal22}, we compute the mean and standard deviation
-(shown in parentheses) over multiple runs for both ID and OOD test sets, with these runs conducted
-with 3 different random seeds and 5 pre-defined cross-validation folds for iWildCam and
-PovertyMap, respectively.
+Results of our image-data experiments are summarised in Table~\ref{tab:iw_pm_results}. Due to
+spacial constraints, we defer the full set of results, including those for the `offline' (w.r.t.
+the matching) version of Okapi to Appendix.~\ref{appx:ext_results}. For both datasets in question,
+we use the same metrics as \cite{SagWeiLeeGaoetal22}: macro-F1 for iWildCam and worst-group (with
+the group defined as urban (U) vs. rural (R)) Pearson correlation for Poverty Map. For
+completeness, we include mean squared error (MSE) as a secondary metric for the latter dataset.
+Following \cite{SagWeiLeeGaoetal22}, we compute the mean and standard deviation (shown in
+parentheses) over multiple runs for both ID and OOD test sets, with these runs conducted with 3
+different random seeds and 5 pre-defined cross-validation folds for iWildCam and PovertyMap,
+respectively.
 
 We compare Okapi against two baselines, ERM and FixMatch \citep{sohn2020fixmatch},
 both according to our re-implementation and according to the original implementation given in
@@ -62,8 +64,7 @@ worst results amongst the evaluated methods.
 \subsection{Text classification}
 
 \import{./}{tables/cc_results.tex}
-
-In Table~\ref{tab:cc_results} we summarise the numerical results for the CivilComments dataset.
+We summarise in Table~\ref{tab:cc_results} the numerical results for the CivilComments dataset.
 Remaining consistent with \cite{SagWeiLeeGaoetal22}, we evaluate models according to the
 worst-group accuracy -- the minimum of the conditional accuracies obtained by conditioning on each
 of the 8 dimensions of $s$ -- averaged over 5 replicates. Since there is no canonical ID test split
@@ -87,7 +88,7 @@ with the fully-labelled baseline.
 
 In order to evaluate the importance of the caliper-based filtering to the performance of Okapi, we
 perform an ablation experiment on PovertyMap dataset (Okapi (no calipers)) with said filtering
-disabled (and all else constant), such that instead of \CNN\ we have standard $k$-NN, albeit with
+disabled (and all else constant), such that instead of \CNN{} we have standard $k$-NN, albeit with
 the cross-group constraint still in place (per Eq.~\ref{cgnn}).
 %
 We see that performance degrades according to both metrics of interest, and, crucially, that the
@@ -96,10 +97,10 @@ out poor matches should stabilise optimisation.
 %
 We provide additional ablation experiments in Appendix~\ref{appx:ablations}, exploring the relative
 importance of the two (fixed and std-) calipers, the optimal number of neighbours to use for
-computing $\mc{L}_\mr{unsup}$, and the feasibility of using the online encoder to generate the
-queries for \CNN.
+computing $\gL_\mr{unsup}$, and the feasibility of using the online encoder to generate the
+queries for \CNN{}.
 
-Finally, in Fig. \ref{fig:matches_examples} we show samples of matched pairs retrieved by \CNN\
+Finally, in Fig. \ref{fig:matches_examples} we show samples of matched pairs retrieved by \CNN{}
 from the encodings of the learned encoder for the iWildCam dataset.
 %
 Here, we see that semantic information (encoding the species of animal) is preserved across pairs,
@@ -114,7 +115,10 @@ caliper, can be used to control the filtering rate.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=1.\textwidth]{figures/matches_examples_2.pdf}
-  \caption{Examples of input (labelled) images and their 1-NN matched (unlabelled) images retrieved using \CNN\ on iWildCam dataset. Here, we match images from the labelled-train set to images from the unlabelled-extra set, taking advantage the fact that their domains are disjoint.
+  \caption{
+    Examples of input (labelled) images and their 1-NN matched (unlabelled) images retrieved using
+    \CNN{} on iWildCam dataset. Here, we match images from the labelled-train set to images from
+    the unlabelled-extra set, taking advantage the fact that their domains are disjoint.
   %
   }
   \label{fig:matches_examples}

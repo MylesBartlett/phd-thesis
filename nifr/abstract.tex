@@ -1,0 +1,13 @@
+\section{Abstract}
+\noindent
+We propose to learn invariant representations, in the data domain, to achieve interpretability in
+algorithmic fairness. Invariance implies a selectivity for high level, relevant correlations
+w.r.t.\ class label annotations, and a robustness to irrelevant correlations with protected
+characteristics such as race or gender. We introduce a non-trivial setup in which the training set
+exhibits a strong bias such that class label annotations are irrelevant and spurious correlations
+cannot be distinguished. To address this problem, we introduce an adversarially trained model with
+a \emph{null-sampling} procedure to produce invariant representations in the data domain. To enable
+disentanglement, a partially-labelled \emph{representative} set is used. By placing the
+representations into the data domain, the changes made by the model are easily examinable by human
+auditors. We show the effectiveness of our method on both image and tabular datasets: Coloured
+MNIST, CelebA, and the Adult dataset.

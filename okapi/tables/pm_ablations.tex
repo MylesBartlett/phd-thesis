@@ -1,9 +1,20 @@
 \begin{table}[ht!]
 	\centering
- 	\caption{Ablation experiments for Okapi conducted using the PovertyMap-WILDS dataset. Specifically, we assess the importance of four elements of our proposed method: the number of nearest neighbours used in computing $\mc{L}_\mr{unsup}$ ($k$), the use (enabled/disabled) of the fixed- and std-calipers in $\mr{\CNN}$ (considering these to be separate components), and which encoder (online or target) is used to generate the queries for statistical matching (with use of the target encoder `TE queries' being the default and `OE queries' denoting the alternative). Both ID and OOD performances are reported. The results are computed by aggregating over the results for each of the 5 pre-defined cross-validation folds. We report the average and standard deviation value across replicates of the metric of interest.}
+        \caption{
+                Ablation experiments for Okapi conducted using the PovertyMap-WILDS dataset.
+                Specifically, we assess the importance of four elements of our proposed method: the
+                number of nearest neighbours used in computing $\gL_\mr{unsup}$ ($k$), the use
+                (enabled/disabled) of the fixed- and std-calipers in $\mr{\CNN{}}$ (considering these
+                to be separate components), and which encoder (online or target) is used to
+                generate the queries for statistical matching (with use of the target encoder `TE
+                queries' being the default and `OE queries' denoting the alternative). Both ID and
+                OOD performances are reported. The results are computed by aggregating over the
+                results for each of the 5 pre-defined cross-validation folds. We report the average
+                and standard deviation value across replicates of the metric of interest.
+}
 	\begin{subtable}[t]{\textwidth}
     	\centering
-    	\caption{$\mr{\CNN}$ ablations.}
+        \caption{$\mr{\CNN{}}$ ablations.}
     	\scalebox{1}{
     	\begin{tabular}{lllll}
     		\toprule

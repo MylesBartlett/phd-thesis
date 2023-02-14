@@ -55,6 +55,23 @@ problem, the latter focussing on fairness under different manifestations of dist
 
 \section{Domain Generalisation}
 
+Discuss independence and stability of causal mechanisms, modularity, autonomy of subsystems, etc.
+\citep{scholkopf2021toward, parascandolo2018learning, peters2017elements, scholkopf2012causal} 
+
+\textbf{Independent Causal Mechanisms (ICM) principle:}
+\begin{quotation}
+The causal generative process of a system’s variables is composed of autonomous modules that do not
+inform or influence each other. In the probabilistic case, this means that the conditional
+distribution of each variable given its causes (i.e., its mechanism) does not inform or influence
+the other mechanisms \citep{scholkopf2021toward}
+\end{quotation}}
+
+\textbf{Sparse Mechanism Shift (SMS):}
+\begin{quotation}
+Small distribution changes tend to manifest themselves in a sparse or local way in the causal/disentangled factorization (4), i.e., they should usually not affect all factors simultaneously \citep{scholkopf2021toward}
+\end{quotation}}
+
+
 For references re the general problem setup and theory see:
 \citet{gulrajani2020search, krueger2021out, arjovskyinvariant, ahuja2020invariant,
 weber2022certifying, rosenfeld2020risks}
@@ -86,6 +103,39 @@ domain when no data from the test domain is available during training -- we must
 existence of some statistical invariances across training and testing domains.
 DG differs from Domain Adaptation (DA) in that the latter assumes that the unlabelled data derived 
 from the test domain is available during training.
+
+
+See \cite{valle2018deep, geirhos2020shortcut, scimeca2021shortcut, shah2020pitfalls} for extensive discussion and
+theoretical treatment of shortcut-learning/simplicity bias phenomenon.
+
+Key findings from \cite{scimeca2021shortcut}:
+\\begin{enumerate}
+         \item Certain cues (conducive to the visual recognition problem at hand) are preferred to
+           others
+         \item Solutions biased to the easy-to-learn cues tend to converge to relatively flat minima
+           on the loss surface.
+         \item The solutions focusing on those preferred cues are far more abundant in parameter
+           space.
+         \item Solutions corresponding to Kolmogorov-simple cues are abundant in parameter space
+           and thus preferred by DNNs.
+          \item Devise a setup where multiple cues are equally valid for solving the task at hand;
+            find that DNNs attend to choose cues in a certain order (e.g. colour is preferred to
+            rotation).Simple cues, based on Kolmogorov complexity, are far more frequently
+            represented in the parameter space and thus are far more likely to be adopted by DNNs.
+          
+ \end{enumerate}
+Extended notes on \cite{scimeca2021shortcut}:
+\begin{itemize}
+        \item In some cases, the shortcut bias arises in models that suppress ceertain streams of
+          inputs: visual question answering (VQA) models often neglect whole-image cues, for one
+          does not require images to answer questions like ``what question is the banana in the
+          image?'' \citep{cadene2019rubi}.
+        \item Shortcut biases become problematic when it comes to generalisation to more
+          challenging test-time conditions, where the shortcuts are no longer valid. These biases
+          also cause ethical concerns when the shortcut features correspond to sensitive attributes
+          like gender or race \citep{wang2019balanced}.
+\end{itemize}
+
 
 \subsection{Simplicity Bias \citep{shah2020pitfalls}}
 \begin{itemize}

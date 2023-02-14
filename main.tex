@@ -79,7 +79,6 @@ titlepage,numbers=noenddot,%1headlines,
 \newcommand{\Ie}{I.\,e.}
 \newcommand{\eg}{e.\,g.}
 \newcommand{\Eg}{E.\,g.}
-\def\wrt{w.r.t\onedot}
 % ****************************************************************************************************
 
 
@@ -126,7 +125,9 @@ titlepage,numbers=noenddot,%1headlines,
   {\item}
 
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{import}
+\usepackage{colortbl}
   
 % ********************************************************************
 % General useful packages
@@ -134,7 +135,7 @@ titlepage,numbers=noenddot,%1headlines,
 \usepackage{graphicx} %
 \usepackage{scrhack} % fix warnings when using KOMA with listings package
 \usepackage{xspace} % to get the spacing after macros right
-\PassOptionsToPackage{printonlyused,smaller}{acronym}
+\PassOptionsToPackage{printonlyused,smaller}{allacronym}
   \usepackage{acronym} % nice macros for handling all acronyms in the thesis
   %\renewcommand{\bflabel}[1]{{#1}\hfill} % fix the list of acronyms --> no longer working
   %\renewcommand*{\acsfont}[1]{\textsc{#1}}
@@ -182,8 +183,10 @@ titlepage,numbers=noenddot,%1headlines,
 % \newcommand{\tableheadline}[1]{\multicolumn{1}{l}{\spacedlowsmallcaps{#1}}}
 % \newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
 \usepackage{subcaption}
+\usepackage[rightcaption]{sidecap} % <-- added
+% Undo the hanging-caption format imposed by classicthesis
+\captionsetup{format=plain, font=small, labelfont=bf}
 % ****************************************************************************************************
-
 
 % ****************************************************************************************************
 % 5. Setup code listings
@@ -216,22 +219,20 @@ titlepage,numbers=noenddot,%1headlines,
 % ****************************************************************************************************
 % 6. Last calls before the bar closes
 % ****************************************************************************************************
-% ********************************************************************
-% Her Majesty herself
-% ********************************************************************
 \usepackage{classicthesis}
 % for compatibility with Sussex requirements
 % \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
 % !!! for drafting, I'll use slightly incorrect margins, because it's annoying if the text isn't centered
-% \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt]{geometry}
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{TeX Gyre Pagella} % Palatino clone
 \linespread{1.05} % a bit more for Palatino
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{Linux Libertine O}
-% \setmainfont[Ligatures=TeX]{Libertinus Serif} % fork of Linux Libertine O
-\usepackage{unicode-math}
+\setmainfont[Ligatures=TeX]{Libertinus Serif} % fork of Linux Libertine O
+% \usepackage{unicode-math}
 % \setmathfont{Libertinus Math}
 % \setmathfont[version=bold,FakeBold=3.5]{Libertinus Math}
 % \setmathfont{XITS Math}
+% \setmathfont{Latin Modern Math}
 % \setmathfont{TeX Gyre Pagella Math} % this font seems quite incomplete
 \newfontfamily\boxedsymbols{DejaVu Sans}
 \newcommand{\cmark}{{\boxedsymbols ✓}}%
@@ -395,8 +396,9 @@ titlepage,numbers=noenddot,%1headlines,
 %********************************************************************
 % Bibliographies
 %*******************************************************
-\addbibresource{allreferences.bib}
-% \addbibresource[label=ownpubs]{AMiede_Publications.bib}
+\addbibresource[label=all]{allreferences.bib}
+\addbibresource[label=nifr]{nifr/bibfile.bib}
+\addbibresource[label=okapi]{okapi/bibfile.bib}
 
 %********************************************************************
 % Hyphenation
@@ -409,7 +411,6 @@ titlepage,numbers=noenddot,%1headlines,
 % math commands
 \usepackage{mathtools}
 \usepackage{amsthm}
-
 \input{math_commands.tex}
 
 % Custom theorem style to replace standard bold theorem names by small caps
@@ -439,20 +440,24 @@ titlepage,numbers=noenddot,%1headlines,
 \theoremstyle{capsregular}
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{example}{Example}[chapter]
+
+% Pseudocode-related packages.
+% Note that minted requires the build directory to be set when
+% compiling with lualatex; for the most part the generated
+% code should be left frozen.
 \usepackage{algorithm}
 \usepackage{algorithmic}
-% \usepackage[ruled]{algorithm2e} % http://www.ctan.org/pkg/algorithm2e
-\usepackage[outputdir=latexmk,finalizecache=false, frozencache=true]{minted} 
-\usemintedstyle{vs}
 \renewcommand{\algorithmicrequire}{\textsc{Input:}}
 \renewcommand{\algorithmicensure}{\textsc{Output:}}
+% \usepackage[ruled]{algorithm2e} % http://www.ctan.org/pkg/algorithm2e
+% set `finalizecache' to `true' and `frozencache' to `false' to and compile with vimtex to
+% re-generate pseudocode with minted.
+\usepackage[outputdir=.,finalizecache=false,frozencache=true]{minted} 
+\usemintedstyle{vs}
 \usepackage{nicefrac}
-\def\ci{\perp\!\!\!\perp}
-\newcommand*\diff{\mathop{}\!\mathrm{d}}
-\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+% \usepackage[title,toc,titletoc,page]{appendix}
 
 \AtBeginDocument{\renewcommand{\thepart}{\Roman{part}}}
-
 
 % ************************************
 % only compile a part of the document
@@ -463,7 +468,7 @@ titlepage,numbers=noenddot,%1headlines,
 % \includeonly{ch/2-related-work}
 % \includeonly{ch/3-structure}
 % \includeonly{paper1/paper1}
-\includeonly{nifr/main}
+% \includeonly{nifr/main}
 % \includeonly{okapi/main}
 % \includeonly{FrontBackmatter/Bibliography}
 % \includeonly{ch/7-discussion}
@@ -487,11 +492,11 @@ titlepage,numbers=noenddot,%1headlines,
 \include{FrontBackmatter/Titlepage}
 % \include{FrontBackmatter/Titleback}
 % \cleardoublepage\include{FrontBackmatter/Dedication}
-%\cleardoublepage\include{FrontBackmatter/Foreword}
-\cleardoublepage\include{FrontBackmatter/Abstract}
+% \cleardoublepage\include{FrontBackmatter/Foreword}
+% \cleardoublepage\include{FrontBackmatter/Abstract}
 % \cleardoublepage\include{FrontBackmatter/Publications}
-\cleardoublepage\include{FrontBackmatter/Declaration}
-\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+% \cleardoublepage\include{FrontBackmatter/Declaration}
+% \cleardoublepage\include{FrontBackmatter/Acknowledgments}
 \cleardoublepage\include{FrontBackmatter/Contents}
 %********************************************************************
 % Mainmatter
@@ -512,7 +517,7 @@ titlepage,numbers=noenddot,%1headlines,
 \ctparttext{
   This part covers the introduction, the related work and a summary of the work presented in part~\ref{pt:main}.
 }
-\part{Preliminaries}\label{pt:intro}
+% \part{Preliminaries}\label{pt:intro}
 % \include{ch/1-introduction}
 % \include{ch/2-related-work}
 % \include{ch/3-structure}
@@ -523,11 +528,19 @@ titlepage,numbers=noenddot,%1headlines,
   They are reproduced here with minimal changes.
 }
 \part{Publications}\label{pt:main}
-\include{nifr/main}
-\include{okapi/main}
+
+\begin{refsection}[nifr]
+  \include{nifr/main}
+  \printbibliography
+\end{refsection}
+
+% \begin{refsection}[okapi]
+%   \include{okapi/main}
+%   \printbibliography
+% \end{refsection}
 
 \cleardoublepage
-\part{Conclusion}\label{pt:end}
+% \part{Conclusion}\label{pt:end}
 % \include{ch/7-discussion}
 
 % ********************************************************************
@@ -542,7 +555,7 @@ titlepage,numbers=noenddot,%1headlines,
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
-\cleardoublepage\include{FrontBackmatter/Bibliography}
+% \cleardoublepage\include{FrontBackmatter/Bibliography}
 % \cleardoublepage\include{FrontBackmatter/Colophon}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?
