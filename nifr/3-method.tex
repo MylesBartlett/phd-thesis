@@ -28,27 +28,31 @@
 
 \subsection{Problem Statement}
 %
-\noindent We assume we are given inputs $\bm{x} \in \gX$ and corresponding labels $y \in \gY$.
-Furthermore, there is some spurious variable $s \in \gS$ associated with each input $\bm{x}$ which
+\noindent We assume we are given inputs $x \in \gX$ and corresponding labels $y \in \gY$.
+Furthermore, there is some spurious variable $s \in \gS$ associated with each input $x$ which
 we do \emph{not} want to predict. 
 %
-Let $X$, $S$ and $Y$ be random variables that take on the observed values $\bm{x}$, $s$ and $y$,
+Let $X$, $S$ and $Y$ be the random variables that take on the observed values $x$, $s$ and $y$,
 respectively. 
 %
-The fact that both $y$ and $s$ are predictive of $\bm{x}$ implies that $\gI(X;Y), \gI(X;S) > 0$,
-where $\gI(\cdot ;\cdot)$ denotes mutual information between two variables.
+The fact that both $Y$ and $S$ are predictive of $X$ implies that $\gI(X;Y), \gI(X;S) > 0$,
+where $\gI(\cdot ;\cdot)$ denotes mutual information between two random variables.
 %
-Note, however, that the conditional entropy is non-zero: $H(S|X) > 0$, i.e., $S$ is \emph{not}
+Note, however, that the conditional entropy is non-zero: \( H(S|X) > 0 \), i.e., $S$ is \emph{not}
 completely determined by $X$.
 
 %The difficulty emerges in the construction of the fully-supervised training dataset in which
 %correspondence between $S$ and $Y$ is exaggerated compared to the test set.
-The difficulty of this setup emerges in the training set: there is a close correspondence between
-$S$ and $Y$, such that for a model that sees the data through the lens of the loss function, the
-two are indistinguishable. 
+The difficulty of this setup resides in the fact there is a close correspondence between $S$ and
+$Y$ in the training set such that for a classifier trained via maximum-likelihood estimation, the
+mappings \( \gX \to \gS \) and \(\gX \to \gY \) are functionally equivalent, which implies, through
+transitivity, that \(\gX \to \gS \to \gY \) also is; in many cases, such as those we consider in
+this paper, the first part of the chain, \( \gX \to \gY \), is substantially easier to learn than
+the direct, and, importantly, \emph{causal}, path.
 %
-Furthermore, we assume that this is \emph{not} the case in the test set, meaning the model cannot
-rely on shortcuts provided by $S$ if it is to generalise from the training set.
+This is problematic when we assume that the same correlation does \emph{not} hold in the test set,
+meaning the model cannot rely on shortcuts provided by $S$ if it is to generalise from the training
+set.
 
 We call this scenario where we only have access to the labels of a biasedly-sampled subpopulation
 an \emph{aggravated fairness problem}. 
@@ -62,77 +66,95 @@ model has been deployed.
 In this case, $s$ has the potential to act as a false (or \emph{spurious}) indicator of the class
 label and training a model with such a dataset would limit generalisability. 
 %
-Let $(X^{tr}, S^{tr}, Y^{tr})$ then be the random variables sampled for the training set and
-$(X^{te}, S^{te}, Y^{te})$ be the random variables for the test set. 
+Let \( (X^{tr}, S^{tr}, Y^{tr}) \) then be the random variables sampled from the training set, and
+\( (X^{te}, S^{te}, Y^{te}) \) likewise be the random variables sampled from the test set.
 %
 The training and test sets thus induce the following inequality for their mutual information:
-$\gI(S^{tr}; Y^{tr}) \gg \gI(S^{te}; Y^{te}) \approx 0$.
+\( \gI(S^{tr}; Y^{tr}) \gg \gI(S^{te}; Y^{te}) \approx 0 \).
 
-% \subsection{In an Ideal World} % HEADING IS JUST TO HELP ORGANIZE THOUGHTS, WILL BE DELETED LATER
-Our goal is to learn a representation $\bm{z}_u$ that is independent of $s$ and transferable
-between downstream tasks. 
+Our goal is to learn a representation $Z_u$ (with realisations \(z_u\)), that is independent of $S$
+and transferable between downstream tasks. 
 %
-Complementary to $\bm{z}_u$, we refer to some abstract component of the model that absorbs the
-unwanted information related to $s$ as $\gB$, the realisation of which we define with respect to
-each of the two models to be described.
+Complementary to $z_u$, we refer to some abstract component of the model that absorbs the unwanted
+information related to $S$ as $\gB$, the realisation of which we define \wrt{} each of the two
+models to be described.
 %To satisfy this objective, we introduce an additional regularisation term that can be viewed from
 %an information-theoretic perspective as minimising the mutual information between the random
 %variables:
-The requirement for $\bm{z}_u$ can be expressed via mutual information:
+The requirement for $Z_u$ can be expressed in terms of mutual information as
+%
 \begin{align}
-  \gI(\bm{z}_u;s) \overset{!}{=} 0~.
+  \gI(Z_u; S) \neq 0~,
   \label{eq:migoal}
 \end{align}
 %
-However, for the representation to be useful, we need to capture as much relevant information in
-the data as possible. 
+However, for the representation to be useful, we need to capture as much semantically-relevant
+information from the data as possible. 
 %
-This naturally gives rise to the following objective function:
+Incorporating this requirement naturally gives rise to the following objective function
 %
 \begin{align}
-% TODO: take expectation over s as well as x
-  \min_{\theta} \mathbb{E}_{x \sim X}[-\log p_\theta(x) + \lambda \gI(f_\theta(x);s)]
+  \min_{\theta}
+  \E_{(X,S) \sim P^{tr}_{(X, S)}} [
+  \lambda \gI(f_\theta(X);S) -\log p_\theta(X) 
+  ]
   \label{eq:objectivetheory}
 \end{align}
 %
-where $\theta$ refers to the trainable parameters of our model $f_\theta$ and $p_\theta(\bm{x})$ is
-the likelihood it assigns to the data.
-
-We optimise this loss in an adversarial fashion by playing a minimax game, in which our encoder
-acts as the generative component. 
+where $\theta$ refers to the trainable parameters of our model, \( f_\theta \), and \(
+p_\theta(\cdot) \) is the likelihood it assigns to the training data, and \( P^{tr}_{XS} \) denotes
+the joint distribution over \( X^{tr} \) and \( S^{tr} \).
 %
-The adversary is an auxiliary classifier $g$, which receives $\bm{z}_u$ as input and attempts to
-predict the spurious variable $s$. 
+Note that we have slightly abused notation here in allowing \(f\) (a Borel Measurable function) to
+accept random variables \(X\) and thereby output random variables, \(Z_u\); the mapping \(f(X)\)
+should be understood to mean \( f \circ X(\omega) \) for some event \( \omega \in \Omega \), on
+which basis \( f(x) \) can be reinterpreted as \( f(X=x) \).
 %
-We denote the parameters of the adversary as $\phi$; for the parameters of the encoder we use
-$\theta$, as before. The objective from~\eqref{eq:objectivetheory} is then realised as 
+In practice, we optimise this loss in an adversarial fashion by playing a minimax game, in which
+our encoder acts as the generative component from a GAN \citep{goddfellow2014generative}
+perspective.
+%
+The adversary is an auxiliary classifier \(g: \to \bigtriangleup^{|\gS|} \) trained to predict the
+spurious variable \(s\) from \(z_u\), with \bigtriangleup^{|\gS|} being the probability simplex
+over \(\gS\).
+%
+We denote the trainable parameters of the adversary as $\phi$; for the parameters of the encoder we
+use $\theta$, as before. 
+%
+The theoretical objective from Eq.~\ref{eq:objectivetheory} can then crystallised as
 %
 \begin{align}
-  \min_{ \theta \in \Theta} \max_{\phi \in \Phi} \mathbb{E}_{x \sim X}[\log p_\theta(x)
-  -\lambda \gH ( g_\phi ( f_\theta(x) )); s)] 
+  \min_{ \theta \in \Theta} \max_{\phi \in \Phi}
+  \E_{(x, s) \sim P^{tr}_{(x,s)}}[
+  \log p_\theta(x)
+  -\lambda H( g_\phi ( f_\theta(x) ), e_{s})
+  ],
   \label{eq:objectivepractical}
 \end{align} 
 %
-where \(\gH\) is the cross-entropy between the predictions for $s$ and the provided
-labels.
+where we have substituted \( P^{ tr }_{ (X, S) } \) with the empirical training distribution \( P^{
+tr }_{ (x, s) } \), and \( H(\cdot, \cdot) \) denotes the cross-entropy between the predicted
+probabilities and the degenerate target distribution given by the one-hot-encoded labels, $e_{s}
+\in \{0, 1\}^{|\gS|}$.
 %
-In practice, this adversarial term is realised with a gradient reversal layer (GRL)
-\citep{ganin2016domain} between $\bm{z}_u$ and $g$, as is common for adversarial approaches for
+In practice, this adversarial term is realised using a gradient reversal layer (GRL;
+\cite{ganin2016domain}) between \(z_u\) and \(g\), as is common for adversarial approaches for
 domain adaptation and fair representation learning~\citep{edwards2016censoring}.
-% to fair representation learning
-
+%
 \subsection{The Disentanglement Dilemma}
+%
 The objective in~\eqref{eq:objectivepractical} balances the two desiderata: predicting $y$ and
 being invariant to $s$.
 %
-However, in the training set $(X^{tr}, S^{tr}, Y^{tr})$, $y$ and $s$ are so strongly correlated
-that removing information about $s$ inevitably removes information about $y$.
-This strong correlation causes existing methods fail under this setting.
-% However, this objective is complicated by the desideratum that $\bm{z}_u$ remain predictive of $y$,
-% which precludes us from directly training on the target-labelled dataset $(X^{tr}, S^{tr}, Y^{tr})$,
-%where $y$ and $s$ are so strongly correlated that removing information about $s$ inevitably removes information about $y$.
-%We therefore need
-In order to define the ``right'' learning objective, we require another source of information that
+However, in the training set, $y$ and $s$ are so strongly correlated that removing information
+about $s$ implies removing information about $y$, causing existing methods to fail under this
+setting.
+% However, this objective is complicated by the desideratum that $z_u$ remain predictive of $y$,
+% which precludes us from directly training on the target-labelled dataset $(X^{tr}, S^{tr},
+% Y^{tr})$,
+%where $y$ and $s$ are so strongly correlated that removing information about $s$ inevitably
+%removes information about $y$. We therefore need
+In order to even define a well-posed learning objective, we require another source of information that
 allows us to disentangle $s$ and $y$.
 %
 For this, we assume the existence of another set of samples that follow a similar distribution to
@@ -143,43 +165,44 @@ unlabelled data can be obtained in abundance (with demographic information from 
 electoral rolls, etc.).
 %
 Indeed, treating the data as unlabelled only \wrt{} \(y\), with the $s$ labels intact, is not
-without precedence  in the fairness literature ~\citep{wick2019unlocking}.
+without precedence in the fairness literature (\cite{wick2019unlocking, creager2019flexibly}, inter alia).
 %
 We are restricted only in the sense that the spurious correlations we want to sever are indicated
 in the features.
 %
-We call this the \emph{representative set}, consisting of $X^{rep}$ and $S^{rep}$ and satisfying
-the condition that $\gI(S^{rep}; Y^{rep}) \approx 0$ (or rather, it would, if the class labels
-$Y^{rep}$ were available).
-%{\color{red} justify the existence of such a dataset}
+We call this the \emph{representative set}, with random variables $X^{rep}$ and \( S^{rep} \) and
+satisfying the condition that \( \gI(S^{rep}; Y^{rep}) \approx 0 \) (or rather, it would if the
+class labels \( Y^{rep} \) were available).
 
 We now summarise the training procedure; an outline for the invertible network model (cFlow) can be
 seen in fig.~\ref{fig:inn_diagram}.
 %
-First, the encoder network $f$ is trained on ($X^{rep}, S^{rep}$), during the first
+First, the encoder network $f$ is trained on \( (X^{rep}, S^{rep}) \), during the first
 phase.
 %
-The trained network is then used to encode the training set, taking in $\bm{x}$ and producing the
-representation, $\bm{z}_u$, decorrelated from the spurious variable.
+The trained network is then used to encode the training set, taking in input $x$ and producing the
+representation, $z_u$, decorrelated from the spurious variable.
 %
 The encoded dataset can then be used to train any off-the-shelf classifier safely, with information
 about the spurious variable having been absorbed by some auxiliary component $\gB$.
 %
 In the case of the \acf{cVAE} model, $\gB$ takes the form of the decoder subnetwork, which
 reconstructs the data conditional on a one-hot encoding of $s$, while for the invertible network
-$\gB$ is realised as a partition of the feature map $\bm{z}$ (such that $\bm{z} =
-[\bm{z}_u, \bm{z}_b]$), given the bijective constraint.
+$\gB$ is realised as a partition of the feature map $z$ (such that $z \triangleq [z_u, z_b]$,
+where \( [\cdot] \) denotes concatenation), given the bijective constraint.
 %
 Thus, the classifier cannot take the shortcut of learning $s$ and instead must learn how to predict
 $y$ directly.
 %
-Obtaining the $s$-invariant representations, $\bm{x}_u$, in the data domain is simply a matter of
-replacing the $\gB$ component of the decoder's input for the cVAE, and $\bm{z}_b$ for
+Obtaining the $s$-invariant representations, $x_u$, in the data domain is simply a matter of
+replacing the $\gB$ component of the decoder's input for the cVAE, and $z_b$ for
 cFlow, with a zero vector of equivalent size.
 %
-We refer to this procedure used to generate $\bm{x}_u$ as \emph{null-sampling} (here, with respect to $\bm{z}_b)$.
+We refer to this procedure used to generate $x_u$ as \emph{null-sampling} (here, with respect
+to $z_b)$.
 
-% This That said, we do wish to draw a distinction between null-sampling and the annihilation operation featured in .
+% This That said, we do wish to draw a distinction between null-sampling and the annihilation
+% operation featured in .
 Null-sampling resembles the \emph{annihilation} operation described in \citet{xiao2017dna}, however
 we note that the two serve very different roles.  
 %
@@ -188,6 +211,7 @@ Whereas the annihilation operation serves as a regulariser to prevent trivial so
 post-training.
 
 \subsection{Conditional Decoding}%
+%
 \label{conddec}
 \noindent We first describe a VAE-based model similar to that proposed
 in~\citet{madras2018learning}, before highlighting some of its shortcomings that motivate the
@@ -199,66 +223,68 @@ decoder is conditioned on the spurious attribute.
 We use $\theta_{enc}, \theta_{dec} \in \theta$ to denote the parameters of the encoder and decoder
 sub-networks, respectively. 
 %
-Concretely, the encoder component performs the mapping $x \to{\bm{z}_u}$, while $\gB$ is
+Concretely, the encoder component performs the mapping $x \to{z_u}$, while $\gB$ is
 instantiated as the decoder, $\gB \coloneqq p_{\theta_{dec}}(x|z_u, s)$, which takes in a
-concatenation of the learned non-spurious latent vector $\bm{z}_u$ and a one-hot encoding of the
+concatenation of the learned non-spurious latent vector $z_u$ and a one-hot encoding of the
 spurious label $s$ to produce a reconstruction of the input $\hat{x}$. 
 %
 Conditioning on a one-hot encoding of $s$, rather than a single value, as done in
-\citet{madras2018learning} is the key to visualising invariant representations in the data domain.
+\citet{madras2018learning}, is the key to visualising invariant representations in the data domain.
 %
 If $\gI(z_u; s)$ is properly minimised, the decoder can only derive its information about $s$ from
-the label, thereby freeing up $\bm{z}_u$ from encoding the unwanted information while still
-allowing for reconstruction of the input.
+the label, thereby freeing up $z_u$ from encoding the unwanted information while still allowing for
+reconstruction of the input.
 %
 Thus, by feeding a zero-vector to the decoder we achieve $\hat{x} \perp s$. The full learning
 objective for the cVAE is given as
 %
 \begin{align}
 \begin{split}
-    \gL_{\mathrm{cVAE}} =& \mathbb{E}_{q_{\theta_{enc}}(z_u, b|x)}[\log
-    p_{\theta_{dec}}(x|z, b) - \log p_{\theta_{dec}}(s|z_u)] \\ &- \beta
-    D_{KL}(q_{\theta_{enc}}(z_u |x) \| p(z_u))
+    \gL_{\mathrm{cVAE}} =& 
+    \E_{q_{\theta_{enc}}(z_u, b|x)}[
+    \log
+    p_{\theta_{dec}}(x|z, b) - \log p_{\theta_{dec}}(s|z_u)
+    ] \\ &- \beta \KL(q_{\theta_{enc}}(z_u |x) \| p(z_u))
 \end{split}
 \end{align}
 %
 where $\beta$ is a hyperparameter that determines the trade-off between reconstruction accuracy and
-independence constraints, and $p(\bm{z}_u)$ is the prior imposed on the variational posterior. 
+independence constraints, and $p(z_u)$ is the prior imposed on the variational posterior. 
 %
-For all our experiments, $p(\bm{z}_u)$ is realised as an Isotropic Gaussian.
+For all our experiments, $p(z_u)$ is the standard Isotropic Gaussian prior.
 Fig.~\ref{fig:cvae_diagram} summarises the procedure as a diagram.
 
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to disagreement between the components of the loss.
 %
 Since information about $s$ is only available to the decoder as a binary encoding, if the
-relationship between $s$ and $x$ is highly non-linear and cannot be summarised by a simple on/off
+relationship between $s$ and $x$ is highly non-linear and cannot be summarised by a simple on-off
 mechanism, as is the case if $s$ is an attribute such as gender, off-loading information to the
 decoder by conditioning is no longer possible. 
 %
-As a result, $\bm{z}_u$ is forced to carry information about $s$ in order to minimise the
+As a result, $z_u$ is forced to carry information about $s$ in order to minimise the
 reconstruction error. 
 
 The obvious solution to this is to allow the encoder to store information about $s$ in a partition
 of the latent space as in  \citet{creager2019flexibly}. 
 %
-However, we question whether an \ac{AE} is
-the best choice for this setup, with the view that an invertible model is the better tool for the
-task. 
+However, we question whether an \ac{AE} is the best choice for this setup, with the view that an
+invertible model is the better tool for the task. 
 %
 Using an invertible model has several guarantees, namely complete information-preservation
 and freedom from a reconstruction loss, the importance of which we elaborate on below.
 
 \subsection{Conditional Flow}\label{cflow}
+%
 \paragraph{Invertible Neural Networks.}
-Invertible neural networks are a class of neural network architecture characterised by a bijective
+INNs are a class of neural network architecture characterised by a bijective
 mapping between their inputs and output \citep{Dinh2014}. 
 %
 The transformations are designed such that their inverses and Jacobians are efficiently computable.
 %
 These flow-based models permit \emph{exact} likelihood estimation \citep{normflows2015} through the
 warping of a base density with a series of invertible transformations and computing the resulting,
-highly multi-modal, but still normalised, density, using the celebrated change-of-variable theorem:
+highly multi-modal, but still normalised, density, using the change-of-variable theorem:
 % Flow-GAN \cite{grover2018flowgan} combines the \emph{exact} log-likelihood estimation of the
 % invertible network with the adversarial training of a GAN.
 %
@@ -266,17 +292,16 @@ highly multi-modal, but still normalised, density, using the celebrated change-o
 \begin{split}
   \log p(x) &= \log p(z) + 
    \sum \log \left| \det\left( \frac{\diff h_i}{ h_{i-1}}\right) \right|, %\\
-  \quad p(z) = \gN(z; 0, \mathbb{I})
-  \mathbb{E}
+  \quad p(z) = \gN(z; 0, \sI),
   \label{eq:changeofvariables}
 \end{split}
 \end{align}
 %
 where $h_i$ denotes the output of the \(i\)th layer of the network and $p(z)$ is the base density,
-specifically an Isotropic Gaussian in our case. 
+which is again an Isotropic Gaussian. 
 %
-Training of the invertible neural network is then reduced to maximising $\log p(x)$ over the
-training set, i.e.\ maximising the probability the network assigns to samples in the training set.
+Training the INN then reduces to maximising $\log p(x)$ over the training set, i.e.\ maximising the
+probability the network assigns to samples in the training set.
 
 % The requirement of analytic invertibility and Jacobians demands the use of a specialised subset
 % of neural network layers, but the repertoire of practical invertible transformations has grown
@@ -302,7 +327,8 @@ training set, i.e.\ maximising the probability the network assigns to samples in
 % Each "level" of the network is demarcated by a downsampling operation.
 
 \paragraph{The Benefits of Bijectivity.}
-Using an invertible network to generate our encoding, $\bm{z}_u$, carries a number of advantages
+%
+Using an invertible network to generate our encoding, $z_u$, carries a number of advantages
 over other approaches. Ordinarily, the main benefit of flow-based models is that they permit exact
 density estimation.
 %
@@ -323,48 +349,46 @@ ensuring all relevant information is stored somewhere.
 This opens up the possibility of transfer learning between datasets with a similar manifestation of
 $s$, as we demonstrate in section~\ref{sec:transfer-learning}.
 
-Under our framework, the invertible network $f$ maps the inputs $\bm{x}$ to a representation
-$\bm{z}_u$: $f(\bm{x}) = \bm{z}$. 
+Under our framework, the invertible network $f$ maps the inputs $x$ to a representation
+$z \triangleq f(x)$.
 %
-We interpret the embedding $\bm{z}$ as being the concatenation of two smaller embeddings: $\bm{z} =
-[\bm{z}_u, \bm{z}_b]$. 
+We interpret the representation $z$ as being the concatenation of two subembeddings, namely \( z
+\triangleq [z_u, z_b] \). 
 %
-The dimensionality of $\bm{z}_b$, and $\bm{z}_u$, by complement, is a free parameter (see
+The dimensionality of $z_b$ (and $z_u$, by complement) is a free parameter (see
 section~\ref{sec:optimisation-details} for tuning strategies). 
 %
-As $f$ is invertible, $\bm{x}$ can be recovered as such:
+As $f$ is invertible, $x$ can be recovered as such:
 %
 \begin{align}
-  \bm{x} = f^{-1}([\bm{z}_u, \bm{z}_b])
+  x = f^{-1}([z_u, z_b])
   \label{eq:zreconstruct}
 \end{align}
 %
-where $\bm{z}_b$ is required for equality of the output dimension and input dimension to satisfy
-the bijectivity of the network -- we cannot output $\bm{z}_u$ alone, but have to output $\bm{z}_b$
+where $z_b$ is required for equality of the output dimension and input dimension to satisfy
+the bijectivity of the network -- we cannot output $z_u$ alone, but have to output $z_b$
 as well. 
 %
-In order to generate the pre-image of $\bm{z}_u$, we perform null-sampling \wrt{} $\bm{z}_b$ by
-zeroing-out the elements of $\bm{z}_b$ (such that $\bm{x}_{u} = f^{-1}([\bm{z}_{u}, \vzero])$),
+In order to generate the pre-image of $z_u$, we perform null-sampling \wrt{} $z_b$ by
+zeroing-out the elements of $z_b$ (such that $x_u \triangleq f^{-1}([z_{u}, \vzero])$),
 i.e. setting them to the mean of the prior density, $\gN(z;0, I)$.
 
-How can we be sure that $\bm{z}_u$ contains sufficient information about $y$ to be useful for
-downstream classification?
+How can ensure that $z_u$ contains the information about $y$ necessary for downstream
+classification?
 %
-The importance of the invertible architecture bears out from this consideration. 
-%, as the bijectivity of the network guarantees preservation of all information about the input. %
-% The existence of the inverse, $f^{-1}$,  p $x$ from $z$ because $f^{-1}$ exists and can do just that.
-Namely, so long as $\bm{z}_b$ does not contain the information about $y$, $\bm{z}_u$ necessarily must.
+The importance of the invertible architecture bears out from this consideration, for so long as
+$z_b$ does not contain the information about $y$, $z_u$ necessarily must.
 %
-We can raise or lower the information capacity of $\bm{z}_b$ by adjusting its dimensionality;
-practically, it should be set to the smallest size sufficient to capture all information about $s$,
-so as not to sacrifice class-relevant information. 
+We can then raise or lower the information capacity of $z_b$ by adjusting its dimensionality, \(
+\text{dim}(z_b) \); practically, it should be set to the smallest size sufficient to capture all
+information about $s$, so as not to sacrifice class-relevant information. 
 %
-Section~\ref{sec:additional-results} explores the effects of the \( \mathrm{dim}(\bm{z}_b) \) further.
+Section~\ref{sec:additional-results} explores the influence of \( \mathrm{dim}(z_b) \) empirically.
 
-% Eq~\eqref{eq:zreconstruct} defines how to obtain $\bm{x}$. In order to generate the pre-image of
-% $\bm{z}_u$, we perform null-sampling with respect to $\bm{z}_b$ by zeroing-out its elements --
-% i.e. setting them to the mean of the prior density imposed on $\bm{z}$, $\mathcal{N}(z;0, I)$ --
-% by the operation, $\bm{x}_{u} = f^{-1}([\bm{z}_{u}, \stackrel{\rightarrow}{0}])$.
+% Eq~\eqref{eq:zreconstruct} defines how to obtain $x$. In order to generate the pre-image of
+% $z_u$, we perform null-sampling with respect to $z_b$ by zeroing-out its elements --
+% i.e. setting them to the mean of the prior density imposed on $z$, $\mathcal{N}(z;0, I)$ --
+% by the operation, $x_{u} = f^{-1}([z_{u}, \stackrel{\rightarrow}{0}])$.
 
 % \paragraph{Preprocessing}. Heuristically, we found that preprocessing the data with an
 % autoencoder stabilises and accelerates training of the cFlow model. The autoencoder was

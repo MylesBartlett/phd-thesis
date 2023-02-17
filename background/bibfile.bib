@@ -278,6 +278,25 @@
 }
 
 % -- Fairness --
+@article{mehrabi2021survey,
+  title={A survey on bias and fairness in machine learning},
+  author={Mehrabi, Ninareh and Morstatter, Fred and Saxena, Nripsuta and Lerman, Kristina and Galstyan, Aram},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={54},
+  number={6},
+  pages={1--35},
+  year={2021},
+  publisher={ACM New York, NY, USA}
+}
+
+@article{donini2018empirical,
+  title={Empirical risk minimization under fairness constraints},
+  author={Donini, Michele and Oneto, Luca and Ben-David, Shai and Shawe-Taylor, John S and Pontil, Massimiliano},
+  journal={Advances in Neural Information Processing Systems},
+  volume={31},
+  year={2018}
+}
+
 @article{edwards2015censoring,
   title={Censoring representations with an adversary},
   author={Edwards, Harrison and Storkey, Amos},
@@ -392,7 +411,6 @@ year={2022}
   organization={PMLR}
 }
 
-
 @article{duchi2016statistics,
   title={Statistics of robust optimization: A generalized empirical likelihood approach},
   author={Duchi, John and Glynn, Peter and Namkoong, Hongseok},
@@ -418,4 +436,250 @@ year={2022}
   pages={521--530},
   year={2012},
   publisher={Elsevier}
+}
+
+  -- Adversarial Learning
+@InProceedings{   goodfellow14generative,
+  author        = {Ian J. Goodfellow and Jean Pouget{-}Abadie and Mehdi Mirza and Bing Xu and David
+                  Warde{-}Farley and Sherjil Ozair and Aaron C. Courville and Yoshua Bengio},
+  booktitle     = {Advances in Neural Information Processing Systems (NIPS)},
+  pages         = {2672--2680},
+  title         = {Generative Adversarial Nets},
+  year          = {2014}
+}
+
+@article{oliehoek2017gangs,
+  title={GANGs: Generative adversarial network games},
+  author={Oliehoek, Frans A and Savani, Rahul and Gallego-Posada, Jose and Van der Pol, Elise and De Jong, Edwin D and Gro{\ss}, Roderich},
+  journal={arXiv preprint arXiv:1712.00679},
+  year={2017}
+}
+
+@inproceedings{
+tong2022adversarial,
+title={Adversarial Support Alignment},
+author={Shangyuan Tong and Timur Garipov and Yang Zhang and Shiyu Chang and Tommi S. Jaakkola},
+booktitle={International Conference on Learning Representations},
+year={2022},
+url={https://openreview.net/forum?id=26gKg6x-ie}
+}
+
+
+# --- NF-fairness literature ---
+@article{balunovic2021fair,
+  title={Fair normalizing flows},
+  author={Balunovi{\'c}, Mislav and Ruoss, Anian and Vechev, Martin},
+  journal={arXiv preprint arXiv:2106.05937},
+  year={2021}
+}
+
+@inproceedings{chen2022scalable,
+  title={Scalable Infomin Learning},
+  author={Chen, Yanzhi and Sun, Weihao and Li, Yingzhen and Weller, Adrian},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2022}
+}
+
+@article{cerrato2022fair,
+  title={Fair Group-Shared Representations with Normalizing Flows},
+  author={Cerrato, Mattia and K{\"o}ppel, Marius and Segner, Alexander and Kramer, Stefan},
+  journal={arXiv e-prints},
+  pages={arXiv--2201},
+  year={2022}
+}
+
+
+  -- Domain Adaptation --
+@inproceedings{zhang2013domain,
+  title={Domain adaptation under target and conditional shift},
+  author={Zhang, Kun and Sch{\"o}lkopf, Bernhard and Muandet, Krikamol and Wang, Zhikun},
+  booktitle={International conference on machine learning},
+  pages={819--827},
+  year={2013},
+  organization={PMLR}
+}
+
+@inproceedings{ben2006analysis,
+ author = {Ben-David, Shai and Blitzer, John and Crammer, Koby and Pereira, Fernando},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {B. Sch\"{o}lkopf and J. Platt and T. Hoffman},
+ pages = {},
+ publisher = {MIT Press},
+ title = {Analysis of Representations for Domain Adaptation},
+ url = {https://proceedings.neurips.cc/paper/2006/file/b1b0432ceafb0ce714426e9114852ac7-Paper.pdf},
+ volume = {19},
+ year = {2006}
+}
+
+@article{ben2010theory,
+  title={A theory of learning from different domains},
+  author={Ben-David, Shai and Blitzer, John and Crammer, Koby and Kulesza, Alex and Pereira, Fernando and Vaughan, Jennifer Wortman},
+  journal={Machine learning},
+  volume={79},
+  pages={151--175},
+  year={2010},
+  publisher={Springer}
+}
+
+@article{ganin2016domain,
+  title={Domain-adversarial training of neural networks},
+  author={Ganin, Yaroslav and Ustinova, Evgeniya and Ajakan, Hana and Germain, Pascal and Larochelle, Hugo and Laviolette, Fran{\c{c}}ois and Marchand, Mario and Lempitsky, Victor},
+  journal={The journal of machine learning research},
+  volume={17},
+  number={1},
+  pages={2096--2030},
+  year={2016},
+  publisher={JMLR. org}
+}
+
+@article{liang2021pareto,
+  title={Pareto domain adaptation},
+  author={Liang, Jian and Gong, Kaixiong and Li, Shuang and Liu, Chi Harold and Li, Han and Liu, Di and Wang, Guoren and others},
+  journal={Advances in Neural Information Processing Systems},
+  volume={34},
+  pages={12917--12929},
+  year={2021}
+}
+
+@inproceedings{lee2019sliced,
+  title={Sliced wasserstein discrepancy for unsupervised domain adaptation},
+  author={Lee, Chen-Yu and Batra, Tanmay and Baig, Mohammad Haris and Ulbricht, Daniel},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={10285--10295},
+  year={2019}
+}
+
+@inproceedings{saito2018maximum,
+  title={Maximum classifier discrepancy for unsupervised domain adaptation},
+  author={Saito, Kuniaki and Watanabe, Kohei and Ushiku, Yoshitaka and Harada, Tatsuya},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={3723--3732},
+  year={2018}
+}
+
+@inproceedings{zhao2019learning,
+  title={On learning invariant representations for domain adaptation},
+  author={Zhao, Han and Des Combes, Remi Tachet and Zhang, Kun and Gordon, Geoffrey},
+  booktitle={International Conference on Machine Learning},
+  pages={7523--7532},
+  year={2019},
+  organization={PMLR}
+}
+
+@article{zhao2018adversarial,
+  title={Adversarial multiple source domain adaptation},
+  author={Zhao, Han and Zhang, Shanghang and Wu, Guanhang and Moura, Jos{\'e} MF and Costeira, Joao P and Gordon, Geoffrey J},
+  journal={Advances in neural information processing systems},
+  volume={31},
+  pages={8559--8570},
+  year={2018}
+}
+
+@article{long2018conditional,
+  title={Conditional adversarial domain adaptation},
+  author={Long, Mingsheng and Cao, Zhangjie and Wang, Jianmin and Jordan, Michael I},
+  journal={Advances in neural information processing systems},
+  volume={31},
+  year={2018}
+}
+
+@article{farahani2021brief,
+  title={A brief review of domain adaptation},
+  author={Farahani, Abolfazl and Voghoei, Sahar and Rasheed, Khaled and Arabnia, Hamid R},
+  journal={Advances in Data Science and Information Engineering: Proceedings from ICDATA 2020 and IKE 2020},
+  pages={877--894},
+  year={2021},
+  publisher={Springer}
+}
+
+@inproceedings{blitzer2007learning,
+ author = {Blitzer, John and Crammer, Koby and Kulesza, Alex and Pereira, Fernando and Wortman, Jennifer},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {J. Platt and D. Koller and Y. Singer and S. Roweis},
+ pages = {},
+ publisher = {Curran Associates, Inc.},
+ title = {Learning Bounds for Domain Adaptation},
+ url = {https://proceedings.neurips.cc/paper/2007/file/42e77b63637ab381e8be5f8318cc28a2-Paper.pdf},
+ volume = {20},
+ year = {2007}
+}
+
+@article{tzeng2014deep,
+  title={Deep domain confusion: Maximizing for domain invariance},
+  author={Tzeng, Eric and Hoffman, Judy and Zhang, Ning and Saenko, Kate and Darrell, Trevor},
+  journal={arXiv preprint arXiv:1412.3474},
+  year={2014}
+}
+
+-- Semi-supervised learning (SemiSL) --
+@article{chapelle2009semi,
+  title={Semi-supervised learning (chapelle, o. et al., eds.; 2006)[book reviews]},
+  author={Chapelle, Olivier and Scholkopf, Bernhard and Zien, Alexander},
+  journal={IEEE Transactions on Neural Networks},
+  volume={20},
+  number={3},
+  pages={542--542},
+  year={2009},
+  publisher={IEEE}
+}
+
+@article{sohn2020fixmatch,
+  title={Fixmatch: Simplifying semi-supervised learning with consistency and confidence},
+  author={Sohn, Kihyuk and Berthelot, David and Carlini, Nicholas and Zhang, Zizhao and Zhang, Han and Raffel, Colin A and Cubuk, Ekin Dogus and Kurakin, Alexey and Li, Chun-Liang},
+  journal={Advances in Neural Information Processing Systems},
+  volume={33},
+  pages={596--608},
+  year={2020}
+}
+
+@inproceedings{lienen2021credal,
+ author = {Lienen, Julian and H\"{u}llermeier, Eyke},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {M. Ranzato and A. Beygelzimer and Y. Dauphin and P.S. Liang and J. Wortman Vaughan},
+ pages = {14370--14382},
+ publisher = {Curran Associates, Inc.},
+ title = {Credal Self-Supervised Learning},
+ url = {https://proceedings.neurips.cc/paper/2021/file/7866c91c59f8bffc92a79a7cd09f9af9-Paper.pdf},
+ volume = {34},
+ year = {2021}
+}
+
+@inproceedings{gong2021alphamatch,
+  title={AlphaMatch: Improving Consistency for Semi-supervised Learning with Alpha-divergence},
+  author={Gong, Chengyue and Wang, Dilin and Liu, Qiang},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={13683--13692},
+  year={2021}
+}
+
+@article{zhou2018semi,
+  title={When semi-supervised learning meets transfer learning: Training strategies, models and datasets},
+  author={Zhou, Hong-Yu and Oliver, Avital and Wu, Jianxin and Zheng, Yefeng},
+  journal={arXiv preprint arXiv:1812.05313},
+  year={2018}
+}
+
+@inproceedings{wang2021neighbor,
+title={Neighbor Matching for Semi-supervised Learning},
+author={Wang, Renzhen and Wu, Yichen and Chen, Huai and Wang, Lisheng and Meng, Deyu},
+booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+pages={439--449},
+year={2021},
+organization={Springer}
+}
+
+@article{tarvainen2017mean,
+  title={Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results},
+  author={Tarvainen, Antti and Valpola, Harri},
+  journal={Advances in neural information processing systems},
+  volume={30},
+  year={2017}
+}
+
+@inproceedings{blum1998combining,
+  title={Combining labeled and unlabeled data with co-training},
+  author={Blum, Avrim and Mitchell, Tom},
+  booktitle={Proceedings of the eleventh annual conference on Computational learning theory},
+  pages={92--100},
+  year={1998}
 }

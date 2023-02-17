@@ -8,35 +8,31 @@
 %As we have alluded to, the goal of producing invariant representations is similar to that of
 %producing \emph{fair} representations. In fairness problems, there is usually a \emph{sensitive
 %attribute}, $s$ (for example, gender or race), that should not be used to make decisions.
-Given a sensitive attribute $s$ (for example, gender or race) and inputs $\bm{x}$, a fair
-representation $\bm{z}$ of $\bm{x}$ is then one for which $\bm{z} \perp s$ holds, while ideally
-also being predictive of the class label $y$. \citet{zemel2013learning} was the first to propose
-the learning of fair representations which allow for transfer to new classification tasks. More
-recent methods are often based on
+Given a sensitive attribute $s$ (for example, gender or race) and inputs $x$, a fair
+representation $z$ of $x$ is then one for which $z \perp s$ holds, while ideally
+also being predictive of the class label $y$. 
+%
+\citet{zemel2013learning} was the first to propose the learning of fair representations which allow
+for transfer to new classification tasks. More recent methods are often based on
 \acfp{VAE}~\citep{kingma2013auto,louizos2016variational,edwards2016censoring,beutel2017data}. The
 achieved fairness of the representation can be measured with various fairness metrics. These
 measure, however, usually how fair the predictions of a classifier are and not how fair a
 representation is.
-% defined with respect to predictions and not representations.
 
-% There is not one metric universally best-suited to measuring the invariance (or fairness) of
-% representations.
 The appropriate measure of fairness for a given task is domain-specific \citep{liu2018delayed} and
 there is often not a universally accepted measure. However, \emph{Demographic Parity} is the most
 widely used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. Demographic Parity
 demands $\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. In the
 context of fair representations, we measure the Demographic Parity of a downstream classifier,
-$f(\cdot )$, which is trained on the representation $z$, i.e.\  $f: \gZ \to \hat{\gY}$.
+$f(\cdot )$, which is trained on the representation $z$, i.e.\  $\Gamma: \gZ \to \gY$.
 
 A core principle of all fairness methods is the \emph{accuracy-fairness trade-off}. As previously
 stated, the fair representation should be invariant to $s$ ($\to$ fairness) but still be predictive
 of $y$ ($\to$ accuracy). These desiderata cannot, in general, be simultaneously satisfied if $s$
 and $y$ are correlated.
-% We explore this trade-off with our method as well. % DO WE?!?!?!?!?
-
 
 The majority of existing methods for fair representations also make use of $y$ labels during
-training, in order to ensure that $\bm{z}$ remains predictive of $y$. This aspect can, in theory,
+training, in order to ensure that $z$ remains predictive of $y$. This aspect can, in theory,
 be removed from the methods, but then there is no guarantee that information about $y$ is preserved
 \citep{louizos2016variational}. 
 % Existing methods designed to create fair representations can, in theory, be extended to the
@@ -66,14 +62,20 @@ input to the reconstruction.
 %for evaluation.
 
 Also related is \citet{creager2019flexibly} who employ a FactorVAE \citep{kim2018disentangling}
-regularised for fairness. The idea is to learn a representation that is both disentangled and
-invariant to multiple sensitive attributes. This factorisation makes the latent space easily
-manipulable such that the different subspaces can be freely removed and composed at test time.
-Zeroing out the dimensions or replacing them with independent noise imparts invariance to the
-corresponding sensitive attribute. This method closely resembles ours when we use an invertible
-encoder. However, the emphasis of our approach is on interpretability, information-preservation,
-and coping with sampling bias - especially extreme cases where \( |(\gS^{tr} \times \gY^{tr}) | < |
-\gS^{te} \times \gY^{te} | \).
+regularised for fairness. 
+%
+The idea is to learn a representation that is both disentangled and invariant to multiple sensitive
+attributes. 
+%
+This factorisation makes the latent space easily manipulable such that the different subspaces can
+be freely removed and composed at test time. Zeroing out the dimensions or replacing them with
+independent noise imparts invariance to the corresponding sensitive attribute. 
+%
+This method closely resembles ours when we use an invertible encoder. 
+%
+However, the emphasis of our approach is on interpretability, information-preservation, and coping
+with sampling bias - especially extreme cases where \( |\gS^{tr} \times \gY^{tr}| < | \gS^{te}
+\times \gY^{te} | \).
 % Namely, the invertibility of the network means we can optimise for invariance singularly without
 % the burden of a reconstruction loss. While we do not explicitly consider the case of
 % multi-attribute fairness, our method can be easily adapted for this use-case.

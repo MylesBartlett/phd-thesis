@@ -1,0 +1,28 @@
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\begin{algorithm}
+  \caption{General Algorithm for Gradient-Based Adversarial Learning (with Alternating Updates)}\label{alg:cap} 
+  \begin{algorithmic}
+    \Require Number of encoder updates $N^\text{enc}$, number of discriminator updates $N^\text{disc}$,
+    encoders $f$ and $t$, decoder $r$, discriminator $h$, training set $\gD^{tr}$, deployment set
+    $\gD^{dep}$
+    \Ensure Debiaser $f$ with learned invariance to $s$
+    \\
+
+    \For{$i \gets 1$ to $N^\text{enc}$} \Comment Encoder update loop
+    %
+    \State Sample batch according to strategy \( \Pi \) \( \gB \stackrel{\Pi} \sim \gD \)
+    \State Compute $\gL^\text{defender}$
+    \State Update $f$ by descending in the direction $\nabla \gL^\text{defender}$
+    %
+    \For{$j \gets 1$ to $N^\text{attacker}$} \Comment Discriminator update loop
+    \State Sample batch according to strategy \( \Pi \) \( \gB \stackrel{\Pi} \sim \gD \)
+    \State Compute $\gL^\text{attacker}$
+    \State Update $a$ by ascending in the direction $\nabla \gL^\text{adv}$
+    %
+    \EndFor
+    %
+    \EndFor
+
+  \end{algorithmic}
+\end{algorithm}

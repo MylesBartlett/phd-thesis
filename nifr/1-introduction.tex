@@ -18,9 +18,9 @@ One popular definition of fairness used to guide the training of fair classifier
 \emph{demographic parity}, stating that positive outcome rates should be equalised (or
 \emph{invariant}) across protected groups.
 
-In the typical setup, we have an input $x \in \gX$, a sensitive attribute $s \in \gS$, that
-represents some inadmissible (for prediction) information like gender and a class label $y \in \gY$
-which is the prediction target. 
+In the typical fair-classification setup, we have an input $x \in \gX$, a sensitive attribute $s
+\in \gS$, that represents some inadmissible (for prediction) information like gender and a class
+label $y \in \gY$ which is the prediction target. 
 %
 The idea of fair \emph{representation} learning
 \citep{zemel2013learning,edwards2016censoring,madras2018learning} is then to transform the input
@@ -71,8 +71,8 @@ In order to make our method more widely applicable, we consider an \emph{aggrava
 problem}
 % we allow the case
 in which the training set contains a strong spurious correlation between $s$ and $y$, which makes
-it impossible to learn from it a representation which is invariant to $s$ but not invariant to $y$.
-Non-invariance to $y$ is important in order to be able to predict $y$. 
+it impossible to learn from it a representation which is invariant to $s$ but not invariant to $y$,
+variance to $y$ being important as this is the variable we care about predicting accurately. 
 %
 The training set thus does \emph{not} match the deployment setting, thereby rendering the
 representative set essential for learning the right invariance.
@@ -101,7 +101,7 @@ prediction target that the two are nearly indistinguishable.
 %
 This is the scenario that we are investigating: $s$ and $y$ are so closely correlated in the
 labelled dataset that they cannot be distinguished, but the learning of
-$s$ is favoured due to being the ``path of least resistance''. 
+$s$ is favoured due to its lower complexity.
 %
 The deployment setting (i.e.\ the test set) does not possess this strong correlation and thus a
 na\"ive approach will lead to very unfair predictions. 
@@ -142,10 +142,11 @@ By baking interpretability into our model (by having representations in the data
 still have no better control over what is learned, we can at least diagnose such pathologies.
 
 To render our representations interpretable, we rely on a simple transformation we call
-\emph{null-sampling} to map invariant representations in the data domain. Previous approaches to
-fair representation learning
-\citep{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational} predominantly
-rely upon autoencoder models to jointly minimise reconstruction loss and invariance. 
+\emph{null-sampling} to map invariant representations in the data domain. 
+%
+Previous approaches to fair representation learning
+(\cite{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter alia)
+predominantly rely upon autoencoder models to jointly minimise reconstruction loss and invariance. 
 %
 We discuss first how this can be done with such a model that we refer to as cVAE (conditional VAE),
 before arguing that the bijectivity of invertible neural networks (INNs)~\citep{Dinh2014} makes
@@ -180,8 +181,9 @@ having the ability to easily probe what has been learnt.
 Our contributions are thus two-fold: 
 %
 1) We propose a simple approach to generating representations that are invariant to a feature $s$,
-while having the benefit of interpretability that comes with being in the data domain. We christen
-our method \emph{NIFR} (\emph{N}ull-sampling for \emph{I}nterpretable and \emph{F}air
+while having the benefit of interpretability that comes with being in the data domain. 
+%
+We call our method \emph{NIFR} (\emph{N}ull-sampling for \emph{I}nterpretable and \emph{F}air
 \emph{R}epresentations).
 %
 2) We explore a setting where the labelled training set suffers from varying levels of sampling

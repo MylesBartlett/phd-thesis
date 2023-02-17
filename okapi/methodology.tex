@@ -50,7 +50,7 @@ algorithm.
 \subsection{Enforcing consistency between cross-domain pairs}
 %
 We consider our predictor as being composed of an encoder (or \emph{backbone}) network, $f_\theta:
-\gX \to \mathbb{R}^d$, generating intermediary outputs (features) $z \triangleq
+\gX \to \R^d$, generating intermediary outputs (features) $z \triangleq
 f_\theta(x)$, and a prediction head, $g_\phi$, such that the prediction for sample $x$ is given by
 $\hat{y} \triangleq g_\phi \circ f_\theta(x)$.
 %
@@ -88,7 +88,7 @@ The general form of this loss for a given sample can then be written as
     \gL_{\mr{unsup}} &\triangleq \frac{1}{k} \sum_{z_n \in V_k(z_q)} d(z_q, z_n)
 \end{align}
 %
-where $d: \mathbb{R}^d \times \mathbb{R}^d \to \mathbb{R}$ is some distance function.
+where $d: \R^d \times \R^d \to \R$ is some distance function.
 %
 Here, we follow \cite{grill2020bootstrap} and define $d$ to be the squared Euclidean distance
 between normalised encodings for our experiments.
@@ -128,7 +128,7 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
 
 %
 The propensity score, $e$, for a given sample $x$ is estimated as $p(s|z)$ using a linear
-classifier $f_\theta$, $h_\psi: \mathbb{R}^d \to \bigtriangleup^{|\gS|}$ where
+classifier $f_\theta$, $h_\psi: \R^d \to \bigtriangleup^{|\gS|}$ where
 $\bigtriangleup^{|\gS|}$ is the probability simplex over possible domain labels, $\gS$.
 $h_\psi^d$ is trained via maximum (weighted) likelihood to predict the domain label of a given
 sample for all samples within the aggregate dataset $\gD$, or (typically) a subset of it,
@@ -137,7 +137,7 @@ encoded by $f_\theta$.
 Since we apply both calipers to the learned propensity score, the shape of this distribution can
 have a significant effect on the outcome of matching.
 %
-Accordingly, we apply temperature-scaling, with scalar $\tau \in \mathbb{R}^+_\star$, to the logits
+Accordingly, we apply temperature-scaling, with scalar $\tau \in \R^+_\star$, to the logits
 of $h_\psi$ (where $\bigtriangleup^{|\gS|}$ is induced by the softmax function) to modulate the
 resulting propensity-score distribution.
 %
@@ -248,7 +248,7 @@ Namely, we train $h_\psi$ in an online fashion to minimise the per-batch loss
 \end{equation}
 where $\gH$ is the standard cross-entropy loss between the predictive distribution and the
 (degenerate) ground-truth distribution, given by the one-hot encoded domain labels, and
-$w_{\mbf{s}_k}: \gS \to \mathbb{R}^+_*$ is a function assigning to each $s$ an importance weight
+$w_{\mbf{s}_k}: \gS \to \R^+_*$ is a function assigning to each $s$ an importance weight
 \citep{shimodaira2000improving} based on the inverse of its frequency in $\mbf{s}_k$ to counteract label imbalance.
 %
 In the special case in which the $\gD_l$ and $\gD_u$ are known to have disjoint support over $S$
