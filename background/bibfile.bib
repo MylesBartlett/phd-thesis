@@ -53,17 +53,6 @@
   year={2020}
 }
 
-@article{castro2020causality,
-  title={Causality matters in medical imaging},
-  author={Castro, Daniel C and Walker, Ian and Glocker, Ben},
-  journal={Nature Communications},
-  volume={11},
-  number={1},
-  pages={1--10},
-  year={2020},
-  publisher={Nature Publishing Group}
-}
-
 @article{albadawy2018deep,
   title={Deep learning for segmentation of brain tumors: Impact of cross-institutional training and testing},
   author={AlBadawy, Ehab A and Saha, Ashirbani and Mazurowski, Maciej A},
@@ -108,22 +97,6 @@
   pages={612--634},
   year={2021},
   publisher={IEEE}
-}
-
-@inproceedings{parascandolo2018learning,
-  title={Learning independent causal mechanisms},
-  author={Parascandolo, Giambattista and Kilbertus, Niki and Rojas-Carulla, Mateo and Sch{\"o}lkopf, Bernhard},
-  booktitle={International Conference on Machine Learning},
-  pages={4036--4044},
-  year={2018},
-  organization={PMLR}
-}
-
-@book{peters2017elements,
-  title={Elements of causal inference: foundations and learning algorithms},
-  author={Peters, Jonas and Janzing, Dominik and Sch{\"o}lkopf, Bernhard},
-  year={2017},
-  publisher={The MIT Press}
 }
 
 -- Shorcut learning/spurious correlations
@@ -243,6 +216,13 @@
   journal={Advances in neural information processing systems},
   volume={32},
   year={2019}
+}
+
+@article{allen2020towards,
+  title={Towards understanding ensemble, knowledge distillation and self-distillation in deep learning},
+  author={Allen-Zhu, Zeyuan and Li, Yuanzhi},
+  journal={arXiv preprint arXiv:2012.09816},
+  year={2020}
 }
 
 % -- Underspecification --
@@ -418,15 +398,6 @@ year={2022}
   year={2016}
 }
 
-@article{mooij2020joint,
-  title={Joint Causal Inference from Multiple Contexts},
-  author={Mooij, Joris M and Magliacane, Sara and Claassen, Tom},
-  journal={Journal of Machine Learning Research},
-  volume={21},
-  number={99},
-  pages={1--108},
-  year={2020}
-}
 @article{moreno2012unifying,
   title={A unifying view on dataset shift in classification},
   author={Moreno-Torres, Jose G and Raeder, Troy and Alaiz-Rodr{\'\i}guez, Roc{\'\i}o and Chawla, Nitesh V and Herrera, Francisco},
@@ -437,6 +408,71 @@ year={2022}
   year={2012},
   publisher={Elsevier}
 }
+
+-- Long-tail learning --
+@article{menon2020long,
+  title={Long-tail learning via logit adjustment},
+  author={Menon, Aditya Krishna and Jayasumana, Sadeep and Rawat, Ankit Singh and Jain, Himanshu and Veit, Andreas and Kumar, Sanjiv},
+  journal={arXiv preprint arXiv:2007.07314},
+  year={2020}
+}
+
+@inproceedings{kubat1997addressing,
+  title={Addressing the curse of imbalanced training sets: One-sided selection},
+  author={KUBAT, M},
+  booktitle={Proceedings of the 14th International Conference on Machine Learning},
+  pages={179--186},
+  year={1997},
+  organization={Morgan Kaufmann}
+}
+
+@article{chawla2002smote,
+  title={SMOTE: synthetic minority over-sampling technique},
+  author={Chawla, Nitesh V and Bowyer, Kevin W and Hall, Lawrence O and Kegelmeyer, W Philip},
+  journal={Journal of artificial intelligence research},
+  volume={16},
+  pages={321--357},
+  year={2002}
+}
+
+@inproceedings{cardie1997improving,
+  title={Improving Minority Class Prediction Using Case-Specific Feature Weights},
+  author={Cardie, Claire and Nowe, Nicholas},
+  booktitle={Proceedings of the Fourteenth International Conference on Machine Learning},
+  pages={57--65},
+  year={1997}
+}
+
+@inproceedings{fawcett1996combining,
+  title={Combining data mining and machine learning for effective user profiling.},
+  author={Fawcett, Tom and Provost, Foster J},
+  booktitle={KDD},
+  volume={96},
+  pages={8--13},
+  year={1996}
+}
+
+@article{shimodaira2000improving,
+  title={Improving predictive inference under covariate shift by weighting the log-likelihood function},
+  author={Shimodaira, Hidetoshi},
+  journal={Journal of statistical planning and inference},
+  volume={90},
+  number={2},
+  pages={227--244},
+  year={2000},
+  publisher={Elsevier}
+}
+
+@inproceedings{byrd2019effect,
+  title={What is the effect of importance weighting in deep learning?},
+  author={Byrd, Jonathon and Lipton, Zachary},
+  booktitle={International conference on machine learning},
+  pages={872--881},
+  year={2019},
+  organization={PMLR}
+}
+
+
 
   -- Adversarial Learning
 @InProceedings{   goodfellow14generative,
@@ -463,7 +499,6 @@ booktitle={International Conference on Learning Representations},
 year={2022},
 url={https://openreview.net/forum?id=26gKg6x-ie}
 }
-
 
 # --- NF-fairness literature ---
 @article{balunovic2021fair,
@@ -519,6 +554,15 @@ url={https://openreview.net/forum?id=26gKg6x-ie}
   pages={151--175},
   year={2010},
   publisher={Springer}
+}
+
+@inproceedings{david2010impossibility,
+  title={Impossibility theorems for domain adaptation},
+  author={David, Shai Ben and Lu, Tyler and Luu, Teresa and P{\'a}l, D{\'a}vid},
+  booktitle={Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics},
+  pages={129--136},
+  year={2010},
+  organization={JMLR Workshop and Conference Proceedings}
 }
 
 @article{ganin2016domain,
@@ -682,4 +726,61 @@ organization={Springer}
   booktitle={Proceedings of the eleventh annual conference on Computational learning theory},
   pages={92--100},
   year={1998}
+}
+
+
+-- Causality --
+@article{fisher1936design,
+  title={Design of experiments},
+  author={Fisher, Ronald Aylmer},
+  journal={British Medical Journal},
+  volume={1},
+  number={3923},
+  pages={554},
+  year={1936},
+  publisher={BMJ Publishing Group}
+}
+
+@article{mooij2020joint,
+  title={Joint Causal Inference from Multiple Contexts},
+  author={Mooij, Joris M and Magliacane, Sara and Claassen, Tom},
+  journal={Journal of Machine Learning Research},
+  volume={21},
+  number={99},
+  pages={1--108},
+  year={2020}
+}
+
+@article{castro2020causality,
+  title={Causality matters in medical imaging},
+  author={Castro, Daniel C and Walker, Ian and Glocker, Ben},
+  journal={Nature Communications},
+  volume={11},
+  number={1},
+  pages={1--10},
+  year={2020},
+  publisher={Nature Publishing Group}
+}
+
+@inproceedings{parascandolo2018learning,
+  title={Learning independent causal mechanisms},
+  author={Parascandolo, Giambattista and Kilbertus, Niki and Rojas-Carulla, Mateo and Sch{\"o}lkopf, Bernhard},
+  booktitle={International Conference on Machine Learning},
+  pages={4036--4044},
+  year={2018},
+  organization={PMLR}
+}
+
+@book{peters2017elements,
+  title={Elements of causal inference: foundations and learning algorithms},
+  author={Peters, Jonas and Janzing, Dominik and Sch{\"o}lkopf, Bernhard},
+  year={2017},
+  publisher={The MIT Press}
+}
+
+@book{pearl2009causality,
+  title={Causality},
+  author={Pearl, Judea},
+  year={2009},
+  publisher={Cambridge university press}
 }

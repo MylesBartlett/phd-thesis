@@ -1,0 +1,55 @@
+\begin{figure}[]
+        \centering
+        % -------- Covariate Shift --------
+        \begin{subfigure}[t]{0.3\textwidth}
+            \centering
+            \caption{\textbf{Covariate}}
+            \begin{tikzpicture}[]
+                \node[state, gray] (e) [] {$E$};
+                \node[state, blue] (x) [right = of e] {$X$};
+                \node[state, red] (y) [below = of x] {$Y$};
+                % \node[state, red] (x) [] {$X$};
+
+                \path (e) edge (x);
+                \path (x) edge (y);
+            \end{tikzpicture}
+        \end{subfigure}
+        % -------- Label Shift --------
+        \begin{subfigure}[t]{0.3\textwidth}
+            \centering
+            \caption{\textbf{Label}}
+            \begin{tikzpicture}[]
+                \node[state, gray] (e) [] {$E$};
+                \node[state, blue] (x) [right = of e] {$X$};
+                \node[state, red] (y) [below = of x] {$Y$};
+                % \node[state, red] (x) [] {$X$};
+
+                \path (e) edge (y);
+                \path (x) edge (y);
+            \end{tikzpicture}
+        \end{subfigure}
+        % -------- Multi-label Shift --------
+        \begin{subfigure}[t]{0.3\textwidth}
+            \centering
+            \caption{\textbf{Multi-label}}
+            \begin{tikzpicture}[]
+                \node[state, gray] (e) [] {$E$};
+                \node[state, blue] (x) [right = of e] {$X$};
+                \node[state, red] (y) [below = of x] {$Y$};
+                \node[state, magenta] (s) [below = of e] {$S$};
+
+                \path (e) edge (s);
+                \path (e) edge (y);
+                \path (e) edge (x);
+                \path (x) edge (y);
+
+            \end{tikzpicture}
+        \end{subfigure}
+    \caption{
+        Causal Bayesian Graphs (CBGs) corresponding to different distribution shifts, induced by
+        exogenous variable, \(E\), for a causal prediction (\(X \to Y \)) task, where \(X\) and
+        \(Y\) correspond to the covariates and response variable, respectively.
+        %
+        (c) introduces an additional, auxiliary label, \(S\), which forms the basis of the problems
+        tackled in Chapters 3 an 4.
+\end{figure}
