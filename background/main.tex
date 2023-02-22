@@ -1,20 +1,206 @@
 \chapter{Background}\label{ch:background}
 
+% ********************************************************************************
+\section{Supervised Learning, the I.I.D. Assumption, and its Pitfalls}
+% ********************************************************************************
+
+Traditional learning algorithms usually assume (or are only optimal for) that the training and test
+samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
+variables, such that one has $P_{tr}}(X, Y) \approx P_{te}(X, Y)$. 
+%
+Based on this assumption, the method of Empirical Risk Minimisation (ERM;
+\citet{vapnik1991principles}) seeks the hypothesis $f: \gX \to \gY$ that is minimiser, $f^\ast$ of
+the \emph{expected risk}, \emph{risk}, $\gR$, defined s the expectation of the loss,$\ell: \gY
+\times \gY \rightarrow \mathbb{R}_\+$, over the training distribution, $P_{tr}(X, Y)$. 
+%
+Formally, the risk is defined by: $\forall f \in \gF$,
+%
+\equ\begin{equation*} \label{eq:risk}
+  \gR(f) := \mathbb{E}_{P_{tr}(X, Y)}\[ \ell (f(X), Y) \]
+\end{equation*}
+%
+Since in practice one does not have access to the true generative distribution, but only a finite
+set of realizations, $\gD_{tr}$ \ref{eq:risk}, consisting of observed input-target pairs \(x, y)\),
+requires substituting with its empirical counterpart, the \emph{empirical risk}, $\hat{\gR}$ and
+uses this a proxy for the aforementioned true risk:
+
+\equ\begin{equation*} \label{eq:risk}
+  \hat{\gR(f)) := n^{-1} \sum_i=1^n \ell (f(x_i), y_i)
+\end{equation*}
+% where we recover the vanilla (unweighted) formulation by setting $w := \{w_i}_i=1,^n$
+
+(see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that of
+its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance,
+semenova2019study, zhai2022understanding, idrissi2022simple} 
+
+Despite its long (and storied) history in long-tail and distributionally-robust learning,
+\cite{byrd2019effect, zhai2022understanding} both impugn the efficacy of importance-weighted ERM. 
+%
+The former work posits that, in the case of \emph{over-parametrised models}, the effects of
+importance-weighting diminish over the course of training and can only be partially recovered when
+used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
+decay. 
+%
+The latter work defines a class of generalised reweighting (GRW) algorithms that admits both static
+and dynamic sample-weighting -- thus subsuming both IW-ERM (by the former) and gDRO (by the latter)
+-- and prove that the implicit biases of these algorithms and standard ERM are practically
+equivalent.
+%
+While IW may be intuitive, it provably does not alter the solution to the optimisation problem
+defined by the training set, that is to say, solutions that attain zero-loss are invariant under
+reweighting.
+%
+This observation motivates other approaches, such as those based on polynomially-tailed losses
+\citep{wang2021importance} and logit-adjustment \citep{menon2020long}.
+%
+The view of the latter is to instead aim to shift the classification boundary to be closer to the
+dominant (majority) classes and can be realised through the use of per-class margins, either
+through modifying the loss during training or post-hoc correction \cite{fawcett1996combining} 
+
+% ------------------------------------------------------------------------------  
+\subsection{Learning under Class Imbalance/Long-tail Learning}
+% ------------------------------------------------------------------------------  
+
+Notes from and on \cite{menon2020long}:
+%
+\begin{itemize}
+        \item Real-world classification problems typically exhibit long-tailed label distributions,
+          wherein most labels are associated with only a few samples.
+          %
+        \item Owing to this paucity, generalisation on such labels is challenging -- a classifier
+          trained on such data following such a distribution is susceptible to undesirable bias
+          towards the dominant labels. 
+          %
+          This problem has been widely studied in the literature on learning under \emph{class
+          imbalance} \citep{cardie1997improving}.
+          %
+        \item 
+          Existing approaches to coping with class imbalance modify: 
+          %
+          \begin{enumerate}
+            \item inputs to the model, for example by over- or under-sampling
+              \citep{kubat1997addressing, chawla2002smote} \item outputs (logits) of a model, for
+              example by post-hoc correction of the decision threshold \citep{fawcett1996combining}
+              %
+            \item internals of a model, e.g. by modifying the loss function 
+          \end{enumerate}'
+
+\end{itemize}'
+
+
+% ********************************************************************************
+\section{A (Brief) Taxonomy of Types of Distribution Shift}
+% ********************************************************************************
+
+See \cite{moreno2012unifying} and \cite{castro2020causality} for terminology for describing
+different types of distribution shift for classification tasks. 
+%
+See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing},
+for example, for causal treatments of the problem, the latter focussing on fairness under different
+manifestations of distribution shift.
+%
+\itemi\begin{itemize}
+        \item Covariate Shift
+        \item Label Shift -- can be decomposed further, per \cite{castro2020causality}, into
+          \item Prevalence shift
+          \item Annotation shift
+        \item Compound Shifts
+\end{itemize}
+
+% ********************************************************************************
+\section{Shortcut Learning}
+% ********************************************************************************
+
+Shortcut-learning is learning variance to the wrong thing and, consequentially, invariance to the
+right things.
+%
+Less pithily, a shortcut solution is robust enough to achieve near-zero loss on the training set,
+then there is little incentive for the model to learn alternative `views' (collections of features;
+\cite{allen2020towards}).
+%
+For instance, if texture is a reliable classification cue given the training data
+\cite{geirhos2018imagenet}, a model can latch onto that cue and ignore (be invariant to) other
+higher-level semantics, like shape and global structure, that humans judgements are much more
+strongly attributed.
+%
+High-frequency cues, such as colour and texture, are readily modulated by (unstable under) changes
+in lighting, for instance, making them less reliably cues for object classification in a dynamic
+environment; we are not wont, for example, to classify an object in the shape of a cat as an
+elephant simply because the texture of the latter has been transplanted, \emph{ceteris paribus}, to
+the former, a failure mode (in-)famously shown by \cite{geirhos2018imagenet} to apply to DNNs
+trained on ImageNet.
+
+See \cite{valle2018deep, geirhos2020shortcut, scimeca2021shortcut, shah2020pitfalls} for extensive discussion and
+theoretical treatment of shortcut-learning/simplicity bias phenomenon.
+
+Key findings from \cite{scimeca2021shortcut}:
+\\begin{enumerate}
+         \item Certain cues (conducive to the visual recognition problem at hand) are preferred to
+           others
+         \item Solutions biased to the easy-to-learn cues tend to converge to relatively flat minima
+           on the loss surface.
+         \item The solutions focusing on those preferred cues are far more abundant in parameter
+           space.
+         \item Solutions corresponding to Kolmogorov-simple cues are abundant in parameter space
+           and thus preferred by DNNs.
+          \item Devise a setup where multiple cues are equally valid for solving the task at hand;
+            find that DNNs attend to choose cues in a certain order (e.g. colour is preferred to
+            rotation).Simple cues, based on Kolmogorov complexity, are far more frequently
+            represented in the parameter space and thus are far more likely to be adopted by DNNs.
+          
+ \end{enumerate}
+Extended notes on \cite{scimeca2021shortcut}:
+\begin{itemize}
+        \item In some cases, the shortcut bias arises in models that suppress certain streams of
+          inputs: visual question answering (VQA) models often neglect whole-image cues, for one
+          does not require images to answer questions like ``what question is the banana in the
+          image?'' \citep{cadene2019rubi}.
+        \item Shortcut biases become problematic when it comes to generalisation to more
+          challenging test-time conditions, where the shortcuts are no longer valid. These biases
+          also cause ethical concerns when the shortcut features correspond to sensitive attributes
+          like gender or race \citep{wang2019balanced}.
+\end{itemize}
+
+
 % --------------------------------------------------------------------------------
-\subsection{Through the lens of causality}
+\subsection{Simplicity Bias \citep{valle2018deep, shah2020pitfalls}}
 % --------------------------------------------------------------------------------
+\begin{itemize}
+  \item In stationary settings where there is no mismatch between the training and test 
+    distributions, generalisation is usually maximised by selecting models according to the 
+    statistical equivalent of Occam's Razor, of using the simplest model that explains the data 
+    well. However, when the training and test distributions are not aligned in some sense, this 
+    fails to hold up where the simplest models are those that latch onto spurious statistical 
+    correlations in the training data and thus are not stable under non-causal interventions in 
+    the marginal or conditional distributions of $p(Y|X)$ (resulting in \emph{covariate} shift 
+    and \emph{concept} drift respectively).
+    %
+  \item On real-world datasets there are several distinct ways to discriminate between labels (e.g. 
+    based on shape, colour, texture, etc.) that are (a) predictive of the label to varying extents, 
+    and (b) define decision boundaries of varying complexity. 
+    %
+  \item For example, in the image-classification task of swans vs. bears, a linear-like simple 
+    classifier that only looks at colour could predict correctly on most instances except white 
+    polar bears, while a non-linear complex classifier that infers shape could have almost perfect 
+    predictive power.
+\end{itemize}
+
+
+% ********************************************************************************
+\section{Through the Lens of Causality}
+% ********************************************************************************
+
 We now introduce a causal formalism of the distribution-shift problem, a formalism which has been
 frequently exploited in the DG and FairML literature as it provides a simple calculus with which
 to reason about desired (and undesired) variances.
 %
-It should be noted in advance that we only draw upon this formalism in order to provide a
-unified formulation of the distribution-shift problems considered in this thesis; we do not operate
-on the domain of causal graphs nor attempt to perform causal inference. 
+It should be noted in advance that we only draw upon this formalism in order to provide a unified
+formulation of the distribution-shift problems considered in this thesis; we do not operate on the
+domain of causal graphs nor attempt to perform causal inference. 
 %
 The background on causality is thus commensurably light and we refer the reader
 to \cite{pearl2009causality} for full exposition of the topic.
 
-%
 While the term `domain' typically refers to the observed distributions as a whole in both DA and DG
 alike (i.e. `source' versus 'target'), such terminology is somewhat rigid, as it fails to capture
 that the distributions share an underlying structure and how and which variables are shifted.
@@ -72,13 +258,13 @@ causal prediction task.
 
 %
 We will see that such a formulation is particularly utile when we come to discuss domain
-generalisation which involves a multitude of source distributions, opposed to the dyadic
+generalisation which involves a multitude of source distributions, going beyond the dyadic
 source-target setup characterising DA.
-%
 
 % ------------------------------------------------------------------------------
 Points to incorporate from, and inspired from, \cite{scholkopf2021toward}:
-/\begin{enumerate}
+%
+/\begin{itemize}
   \item 
     The Independent Causal Mechanisms (ICM) principle states, in short, that the generative process
     giving rise to a system's observed variables is governed by \emph{autonomous} modules that do
@@ -113,7 +299,7 @@ Points to incorporate from, and inspired from, \cite{scholkopf2021toward}:
     in a sparse of local way in a causal factorisation (i.e. not all factors should be affected
     simultaneously).
     %
-    A factorisation, on the other hand, that does not accord with this can be said to be
+    A factorisation, on the other hand, that does not exhibit this behaviour can be said to be
     \emph{entangled}.
 
   \item 
@@ -154,245 +340,57 @@ Points to incorporate from, and inspired from, \cite{scholkopf2021toward}:
     %
     \item
 
- \end{enumerate}
+ \end{itemize}
 
- A common \citep{arjovskyinvariant, krueger2021out, sagawa2019distributionally} and natural way of
- framing the robust-prediction problem is as one of bilevel optimisation, where the inner loop
- entails computing the empirical risk over each domain and the outer loop corresponds to finding
- the function that minimises the maximum of said risks.
- %
- According to this formulation, we can then couch the optimal predictor as 
- %
- \begin{align}\label{eq:rob_erm_obj}
-   f^\ast_\text{ robust } =
-   \underset{ f \in \gF }{ \text{\argmin} } 
-   \underset{ e \in \gE} { \text{max} }
-   \E_{ P^{tr}(X, Y | E = e) } \[ \ell ( f( X ), Y ) \].
- \end{align}
- %
+
+One common \citep{arjovskyinvariant, krueger2021out, sagawa2019distributionally} and intuitive way
+of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
+loop entails computing the empirical risk over each domain and the outer loop corresponds to
+finding the function that minimises the maximum of said risks.
+%
+We can then define, accordingly, the optimal predictor as 
+%
+\begin{align}\label{eq:rob_erm_obj}
+ f^\ast_\text{ robust } =
+ \underset{ f \in \gF }{ \text{\argmin} } 
+ \underset{ e \in \gE} { \text{max} }
+ \E_{ P^{tr}(X, Y | E = e) } \[ \ell ( f( X ), Y ) \].
+\end{align}
+%
 As discussed at length before, domains/environments can be modelled as deriving from different
 interventions of the causal factorisation of \(P(X, Y\)).
 %
 It follows that, for Eq.\ref{eq:rob_erm_obj} to lead to successful generalisation to arbitrary
-domains, \(\gE^\dagger\) outside \(\gE\) (the goal of DG), \(\gE\) must be a representative
-(well-covering) set of samples from the underlying distribution \(\P(E)\) such that interpolation
-is feasible.
-
-
-\subsection{I.I.D Learning}
-
-Traditional learning algorithms usually assume (or are only optimal for) that the training and test
-samples are \emph{both} variables identically-and-independently distributed (i.i.d) random
-variables, such that one has $P_{tr}}(X, Y) \approx P_{te}(X, Y)$. Based on this assumption, the
-method of Empirical Risk Minimisation (ERM; \citet{vapnik1991principles}) seeks the hypothesis $f:
-\gX \to \gY$ that is minimiser, $f^\ast$ of the \emph{expected risk}, \emph{risk}, $\gR$, defined s
-the expectation of the loss,$\ell: \gY \times \gY \rightarrow \mathbb{R}_\+$, over the training
-distribution, $P_{tr}(X, Y)$. Formally, the risk is defined by: $\allall f \in \gF$,
+domains, \(\gE^\dagger\) outside \(\gE\) (\(\gE^\dagger \cap \gE = \varrnothing \); i.e. the goal
+of DG), \(\gE\) must be a representative (well-covering) set of samples from the generating
+distribution \(\P(E)\) such that smooth interpolation along the underlying manifold is possible.
 %
-\equ\begin{equation*} \label{eq:risk}
-  \gR(f) := \mathbb{E}_{P_{tr}(X, Y)}\[ \ell (f(X), Y) \]
-\end{equation*}
+When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
+with the robust optimisation literature \citep{ben2009robust} .
 %
-Since in practice one does not have access to the true generative distribution, but only a finite
-set of realizations, $\gD_{tr}$ \ref{eq:risk}, consisting of observed input-target pairs \(x, y)\),
-requires substituting with its empirical counterpart, the \emph{empirical risk}, $\hat{\gR}$ and
-uses this a proxy for the aforementioned true risk:
-
-\equ\begin{equation*} \label{eq:risk}
-  \hat{\gR(f)) := n^{-1} \sum_i=1^n \ell (f(x_i), y_i)
-\end{equation*}
-% where we recover the stand ard (unweighted) formulation by setting $w := \{w_i}_i=1,^n$
-
-(see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and
-that of its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance, semenova2019study,
-zhai2022understanding, idrissi2022simple} 
-
-Despite its long-history and near-ubiquity in long-tail and subfields devoted to distributionally
-robust (FairML, DA, DG, inter alia) learning,  \cite{byrd2019effect, zhai2022understanding} both
-impugn the efficacy of importance-weighted ERM. 
+While generalisation to arbitrary perturbations is provably hard (or impossible), in general
+\citep{david2010impossibility}, when \(\gE\) encodes prior information about the kinds of
+perturbations one expects to encounter at test-time then incorporating it into the optimisation
+process can be fruitful, both for allowing interpolation within the convex hull defined by the set
+and to an extrapolated region outside of it \citep{krueger2021out}.
 %
-The former work posits that, in the case of \emph{over-parametrised models}, the effects of
-importance-weighting diminish over the course of training and can only be partially recovered when
-used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
-decay. 
+Indeed, it stands to reason that by allowing the model to glean which features are and aren't
+stable across environments would allow it to better approximate the true causal structure of the
+prediction task. 
 %
-The latter work defines a class of generalised reweighting (GRW) algorithms that admits both static and
-dynamic sample-weighting -- thus subsuming both IW-ERM (by the former) and gDRO (by the latter) --
-and prov that the implicit biases of these algorithms and standard ERM are practically equivalent.
+This idea has been explored extensively in recent years in both the causal discovery
+\citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovskyinvariant,
+ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of inductive
+bias or additional information is necessary to provably identify the proper causal relations based
+on it \citep{lin2022zin}.
 %
-While IW may be intuitive, it provably does not alter the solution to the optimisation
-problem defined by the training set, that is to say, solutions that attain zero-loss are invariant under
-reweighting.
-%
-This observation motivates other approaches, such as those based on polynomially-tailed losses
-\citep{wang2021importance} and logit-adjustment \citep{menon2020long}.
-%
-The view of the latter is to instead aim to shift the classification boundary to be closer to the
-dominant (majority) classes and can be realised through the use of per-class margins, either
-through modifying the loss during training or post-hoc correction \cite{fawcett1996combining} 
 
-
-\subsection{Importance weighting}
-
-\citep{wang2021importance} 
-
-
-\section{Types of Distribution Shift in Classification}
-
-See \cite{moreno2012unifying} and \cite{castro2020causality} for terminology for describing
-different types of distribution shift for classification tasks. 
-%
-See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing},
-for example, for causal treatments of the problem, the latter focussing on fairness under different
-manifestations of distribution shift.
-%
-\itemi\begin{itemize}
-        \item Covariate Shift
-        \item Label Shift -- can be decomposed further, per \cite{castro2020causality}, into
-          \item Prevalence shift
-          \item Annotation shift
-        \item Compound Shifts
-\end{itemize}
-
-% TODO: Construct a causal diagram based on JCI to illustrate the different problems considered in
-% this thesis.
-
-
-\section{Shortcut Learning}
-Shortcut-learning is learning variance to the wrong thing and, consequentially, invariance to the
-right things.
-%
-Less pithily, a shortcut solution is robust enough to achieve near-zero loss on the training set,
-then there is little incentive for the model to learn alternative `views' (collections of features;
-\cite{allen2020towards}).
-%
-For instance, if texture is a reliable classification cue given the training data
-\cite{geirhos2018imagenet}, a model can latch onto that cue and ignore (be invariant to) other
-higher-level semantics, like shape and global structure, that humans judgements are much more
-strongly attributed.
-%
-High-frequency cues, such as colour and texture, are readily modulated by (unstable under) changes
-in lighting, for instance, making them less reliably cues for object classification in a dynamic
-environment; we are not wont, for example, to classify an object in the shape of a cat as an
-elephant simply because the texture of the latter has been transplanted, \emph{ceteris paribus}, to
-the former, a failure mode (in-)famously shown by \cite{geirhos2018imagenet} to apply to DNNs
-trained on ImageNet.
-
-
-\section{Domain Generalisation}
-
-Discuss independence and stability of causal mechanisms, modularity, autonomy of subsystems, etc.
-\citep{scholkopf2021toward, parascandolo2018learning, peters2017elements, scholkopf2012causal} 
-
-\textbf{Independent Causal Mechanisms (ICM) principle:}
-\begin{quotation}
-The causal generative process of a system’s variables is composed of autonomous modules that do not
-inform or influence each other. 
-%
-In the probabilistic case, this means that the conditional distribution of each variable given its
-causes (i.e., its mechanism) does not inform or influence the other mechanisms
-\citep{scholkopf2021toward}
-\end{quotation}}
-
-\textbf{Sparse Mechanism Shift (SMS):}
-\begin{quotation}
-Small distribution changes tend to manifest themselves in a sparse or local way in the
-causal/disentangled factorization (4), i.e., they should usually not affect all factors
-simultaneously \citep{scholkopf2021toward} \end{quotation}}
-
-
-For references re the general problem setup and theory see:
-\citet{gulrajani2020search, krueger2021out, arjovskyinvariant, ahuja2020invariant,
-weber2022certifying, rosenfeld2020risks}
-
-For a comprehensive survey on OOD generalisation see  \citet{shen2021towards}.
-
-\subsection{In Search of Lost Domain Generalization \citep{gulrajani2020search}}
-%
-Machine learning systems often fail to generalise out-of-distribution (OOD), crashing in 
-spectacular way when tested outside the domain of training examples.
-
-\itemi\begin{itemize}
-  \item Self-driving car systems struggle to perform under conditions different to those of 
-    training, including variations in lighting \citep{dai2018dark}, weather \citep{volk2019towards}, 
-    and object poses \citep{alcorn2019strike}
-  \item Systems trained on medical data collected in one hospital do not generalise to other health
-    centres \citep{castro2020causality, albadawy2018deep}
-  \item failing to generalise is failing to capture the causal factors of variation in data, 
-    clinging instead to easier-to-fit spurious correlations, which are prone to change from 
-    training to testing domains (unstable in the face of interventions)
-  \item  Examples of spurious correlations (SC) commonly encountered in machine learning include 
-    racial biases, texture biases \citep{geirhos2018imagenet}, and object backgrounds
-    \citep{beery2018recognition} .
-  \item Alas, the capricious behaviour of machine learning systems to distributional shifts is a 
-    roadblock to their deployment in critical applications.
-\end{itemize}
-
-The goal of DG is OOD generalisation: learning a predictor able to perform well on some unseen test
-domain when no data from the test domain is available during training -- we must assume the 
-existence of some statistical invariances across training and testing domains.
-DG differs from Domain Adaptation (DA) in that the latter assumes that the unlabelled data derived 
-from the test domain is available during training.
-
-
-See \cite{valle2018deep, geirhos2020shortcut, scimeca2021shortcut, shah2020pitfalls} for extensive discussion and
-theoretical treatment of shortcut-learning/simplicity bias phenomenon.
-
-Key findings from \cite{scimeca2021shortcut}:
-\\begin{enumerate}
-         \item Certain cues (conducive to the visual recognition problem at hand) are preferred to
-           others
-         \item Solutions biased to the easy-to-learn cues tend to converge to relatively flat minima
-           on the loss surface.
-         \item The solutions focusing on those preferred cues are far more abundant in parameter
-           space.
-         \item Solutions corresponding to Kolmogorov-simple cues are abundant in parameter space
-           and thus preferred by DNNs.
-          \item Devise a setup where multiple cues are equally valid for solving the task at hand;
-            find that DNNs attend to choose cues in a certain order (e.g. colour is preferred to
-            rotation).Simple cues, based on Kolmogorov complexity, are far more frequently
-            represented in the parameter space and thus are far more likely to be adopted by DNNs.
-          
- \end{enumerate}
-Extended notes on \cite{scimeca2021shortcut}:
-\begin{itemize}
-        \item In some cases, the shortcut bias arises in models that suppress certain streams of
-          inputs: visual question answering (VQA) models often neglect whole-image cues, for one
-          does not require images to answer questions like ``what question is the banana in the
-          image?'' \citep{cadene2019rubi}.
-        \item Shortcut biases become problematic when it comes to generalisation to more
-          challenging test-time conditions, where the shortcuts are no longer valid. These biases
-          also cause ethical concerns when the shortcut features correspond to sensitive attributes
-          like gender or race \citep{wang2019balanced}.
-\end{itemize}
-
-
-\subsection{Simplicity Bias \citep{shah2020pitfalls}}
-\begin{itemize}
-  \item In stationary settings where there is no mismatch between the training and test 
-    distributions, generalisation is usually maximised by selecting models according to the 
-    statistical equivalent of Occam's Razor, of using the simplest model that explains the data 
-    well. However, when the training and test distributions are not aligned in some sense, this 
-    fails to hold up where the simplest models are those that latch onto spurious statistical 
-    correlations in the training data and thus are not stable under non-causal interventions in 
-    the marginal or conditional distributions of $p(y|x)$ (resulting in \emph{covariate} shift 
-    and \emph{concept} drift respectively).
-  \item On real-world datasets there are several distinct ways to discriminate between labels (e.g. 
-    based on shape, colour, texture, etc.) that are (a) predictive of the label to varying extents, 
-    and (b) define decision boundaries of varying complexity. 
-  \item For example, in the image-classification task of swans vs. bears, a linear-like simple 
-    classifier that only looks at colour could predict correctly on most instances except white 
-    polar bears, while a non-linear complex classifier that infers shape could have almost perfect 
-    predictive power.
-\end{itemize}
-
-\subsection{Causality}%
-\subssubsection{DRO}
-\subsection{Underspecification}%
-\label{sub:underspecification}
-
-The problem of underspecification can be formalised in terms of 'Rashomon sets'
-\citep{semenova2019study} defined w.r.t. the validation/test set used to guide model-selection and
+% ********************************************************************************
+\section{Underspecification}\label{sub:underspecification}
+% ********************************************************************************
+ 
+The problem of underspecification can be formalised in terms of \emph{Raashomon sets}
+\citep{semenova2019study} defined \wrt{} the validation/test set used to guide model-selection and
 indeed assess the feasibility of performing a given task with a machine learning system given the
 data available. The Rashomon effect \citep{breiman2001statistical} \footnote{taking its name from
 the Kurosawa film in which four witnesses recount wildly differing versions of the same crime}
@@ -407,43 +405,19 @@ best model in the class, $f^\ast$.
 We generalise the formulation given in \citet{semenova2019study} to allow 
 performance to be measured with respect to an arbitrary dataset,  $\gD_{eval}$, by making this a 
 secondary parameter of $\phi$. This generalised form is then given as
+%
 \align\begin{align*}
-  \mathfrak{R} := \{ f \in \gF: \phi(F, \gD_{eval}) \leq \phi(f^\ast, \gD_{eval}) + \epsilon}
+  \gR \triangleq 
+  % lhs
+  \{ f \in \gF: \phi(F, \gD_{eval}) 
+  \leq 
+  % rhs
+  \phi(f^\ast, \gD_{eval}) + \epsilon}
 \end{align*}
 
-\subsection{Connection between Fairness and DG}
-%
-\citet{creager2021environment} cast the problem fair machine learning as one of DG,
-where the protected groups takes the role of the different domains/environments. In fairness
-literature, the learning objectives represent context-specific fairness notions,
-while in OOD literature, the learning objectives should be designed according to invariance 
-assumptions.
-A number of fair representation learning methods \citep{edwards2015censoring, madras2018learning}
-are derived from domain adaptation (DA) methods.
-When protected attributes are unknown, DRO and adversarially learning can be applied as in 
-\citet{hashimoto2018fairness} and \citet{lahoti2020fairness}, respectively, to obtain a 
-distributionally robust predictor and minimizing the worst-subgroup performance; the former can
-also be adapted to cases in which such information is known as in \citet{sagawa2019distributionally} 
-
-(\citep{krueger2021out} provide a good (albeit brief) discussion of the parallels between fairness and OOD
-generalization)
-
-Recent trend in the fairness literature is to consider how fairness behaves under distribution
-shift.
-\begin{itemize}
-  \item \cite{schrouff2022diagnosing}
-  \item \cite{schrouff2022maintaining}
-  \item \cite{singh2021fairness}
-  \item \cite{slack2020fairness}
-
-\end{itemize}
-
-\subsection{Taxonomy of methods}
-
-\section{Domain Adaptation (DA)}
-\begin{enumerate}
-  \item Seminal theoretical works of \cite{ben2006analysis, ben2010theory}
-\end{enumerate}
+% ********************************************************************************
+\section{Domain Adaptation (DA)}\label{sec:domain_adaptation}
+% ********************************************************************************
 
 Domain adaptation is a subfield of machine learning that deals with the problem of adapting a model
 trained on one distribution (the \emph{source domain}) to a different but related distribution (the
@@ -486,53 +460,143 @@ said distinction is particularly important as the efficacy of the paradigm hinge
 carrying information about \(f^\ast\), and thus the task being an anticausal one.
 %
 
-\subsection{Approaches}
-
+\subsection{Taxonomy of methods}
+%
 See \cite{zhang2013domain} for an early example (and theoretically-rigorous presentation of) domain
 adaptation under (target and conditional) distribution shift.
+%
+% ********************************************************************************
+\section{Domain Generalisation}\label{sec:domain_generalisation}
+% ********************************************************************************
+%
+Discuss independence and stability of causal mechanisms, modularity, autonomy of subsystems, etc.
+\citep{scholkopf2021toward, parascandolo2018learning, peters2017elements, scholkopf2012causal} 
 
-\subsection{Taxonomy of methods}
+\textbf{Independent Causal Mechanisms (ICM) principle:}
+\begin{quotation}
+The causal generative process of a system’s variables is composed of autonomous modules that do not
+inform or influence each other. 
+%
+In the probabilistic case, this means that the conditional distribution of each variable given its
+causes (i.e., its mechanism) does not inform or influence the other mechanisms
+\citep{scholkopf2021toward}
+\end{quotation}}
+
+\textbf{Sparse Mechanism Shift (SMS):}
+\begin{quotation}
+Small distribution changes tend to manifest themselves in a sparse or local way in the
+causal/disentangled factorization (4), i.e., they should usually not affect all factors
+simultaneously \citep{scholkopf2021toward} 
+\end{quotation}}
 
 
-\section{Adversarial Learning}
+For references re the general problem setup and theory see:
+\citet{gulrajani2020search, krueger2021out, arjovskyinvariant, ahuja2020invariant,
+weber2022certifying, rosenfeld2020risks}
+
+For a comprehensive survey on OOD generalisation see  \citet{shen2021towards}.
+
+\subsection{In Search of Lost Domain Generalization \citep{gulrajani2020search}}
+%
+Machine learning systems often fail to generalise out-of-distribution (OOD), crashing in 
+spectacular way when tested outside the domain of training examples.
+
+\itemi\begin{itemize}
+  \item Self-driving car systems struggle to perform under conditions different to those of 
+    training, including variations in lighting \citep{dai2018dark}, weather \citep{volk2019towards}, 
+    and object poses \citep{alcorn2019strike}
+  \item Systems trained on medical data collected in one hospital do not generalise to other health
+    centres \citep{castro2020causality, albadawy2018deep}
+  \item failing to generalise is failing to capture the causal factors of variation in data, 
+    clinging instead to easier-to-fit spurious correlations, which are prone to change from 
+    training to testing domains (unstable in the face of interventions)
+  \item  Examples of spurious correlations (SC) commonly encountered in machine learning include 
+    racial biases, texture biases \citep{geirhos2018imagenet}, and object backgrounds
+    \citep{beery2018recognition} .
+  \item Alas, the capricious behaviour of machine learning systems to distributional shifts is a 
+    roadblock to their deployment in critical applications.
+\end{itemize}
+
+The goal of DG is OOD generalisation: learning a predictor able to perform well on some unseen test
+domain when no data from the test domain is available during training -- we must assume the 
+existence of some statistical invariances across training and testing domains.
+DG differs from Domain Adaptation (DA) in that the latter assumes that the unlabelled data derived 
+from the test domain is available during training.
+
+
+% --------------------------------------------------------------------------------
+\subsection{Connection between Fairness and DG}\label{ssec:fairml_dg_cxn}
+% --------------------------------------------------------------------------------
+\citet{creager2021environment} cast the problem fair machine learning as one of DG,
+where the protected groups takes the role of the different domains/environments. In fairness
+literature, the learning objectives represent context-specific fairness notions,
+while in OOD literature, the learning objectives should be designed according to invariance 
+assumptions.
+A number of fair representation learning methods \citep{edwards2015censoring, madras2018learning}
+are derived from domain adaptation (DA) methods.
+When protected attributes are unknown, DRO and adversarially learning can be applied as in 
+\citet{hashimoto2018fairness} and \citet{lahoti2020fairness}, respectively, to obtain a 
+distributionally robust predictor and minimizing the worst-subgroup performance; the former can
+also be adapted to cases in which such information is known as in \citet{sagawa2019distributionally} 
+
+(\citep{krueger2021out} provide a good (albeit brief) discussion of the parallels between fairness and OOD
+generalization)
+
+Recent trend in the fairness literature is to consider how fairness behaves under distribution
+shift.
+%
+\begin{itemize}
+  \item \cite{schrouff2022diagnosing}
+  \item \cite{schrouff2022maintaining}
+  \item \cite{singh2021fairness}
+  \item \cite{slack2020fairness}
+
+\end{itemize}
+
+
+% --------------------------------------------------------------------------------
+\subsection{A (brief) taxonomy of domain-generalisation methods}
+% --------------------------------------------------------------------------------
+%
+
+% ********************************************************************************
+\section{Adversarial Learning}\label{sec:adversarial_learning}
+% ********************************************************************************
 \cite{GooAbaMirXuetal14}
-\subsection{Move Order and Strategic Equilibria} Since the strategies are not finitely spanned, the
-minimax theorem does not hold and the idea of an ``equilibrium'' becomes tenuous.
+% --------------------------------------------------------------------------------
+\subsection{Move Order and Strategic Equilibria} 
+% --------------------------------------------------------------------------------
+Since the strategies are not finitely spanned, the
+minimax theorem does not hold and the very idea of an ``equilibrium'' becomes tenuous.
 
-\import{background/pc}{al.tex}
+% \import{background/pc}{al.tex}
 
-
+% ********************************************************************************
 \section{ Semi-supervised Learning }\label{sec:SemiSL}
-\subsection{Taxonomy of methods}
+% ********************************************************************************
+ 
+\cite{chapelle2009semi, scholkopf2021toward}
 
+% --------------------------------------------------------------------------------
+\subsection{Cluster assumption.}\label{ssec:cluster_assumption}
+% --------------------------------------------------------------------------------
+%
+% --------------------------------------------------------------------------------
+\subsection{Low-density-separation assumption.}\label{ssec:lds_assumption}
+% --------------------------------------------------------------------------------
+%
+% --------------------------------------------------------------------------------
+\subsection{Smoothness assumption.}\label{ssec:smoothness_assumption}
+% --------------------------------------------------------------------------------
+
+% --------------------------------------------------------------------------------
+\subsection{A (brief) taxonomy of semi-supervised methods}
+% --------------------------------------------------------------------------------
+
+% ********************************************************************************
 \section{ Self-supervised Learning }\label{sec:SelfSL}
+% ********************************************************************************
 
-\paragraph{Cluster assumption.}
-\paragraph{Low-density-separation assumption.}
-\paragraph{Smoothness assumption.}
-
-\section{ Normalising Flows }\label{sec:nfs}
-
-% ------------------------------------------------------------------------------  
-\section{Learning under Class Imbalance/Long-tail Learning}
-% ------------------------------------------------------------------------------  
-\subsection{Notes from and on \cite{menon2020long}}
-
-Real-world classification problems typically exhibit long-tailed label distributions, wherein most
-labels are associated with only a few samples.
-Owing to this paucity, generalisation on such labels is challenging -- a classifier trained on such
-data following such a distribution is susceptible to undesirable bias towards the dominant labels. 
-This problem has been widely studied in the literature on learning under \emph{class imbalance}
-\citep{cardie1997improving}.
-Extant approaches to coping with class imbalance modify:
-\begin{enumerate}
-  \item inputs to the model, for example by over- or under-sampling \citep{kubat1997addressing,
-    chawla2002smote}
-  \item outputs (logits) of a model, for example by post-hoc correction of the decision
-    threshold \citep{fawcett1996combining}
-  \item internals of a model, e.g. by modifying the loss function
- \end{enumerate}'
-
-\section{Supervised Learning}
-...
-
+% ********************************************************************************
+\section{ Normalising Flows and Invertible Neural Networks }\label{sec:nfs_and_inns}
+% ********************************************************************************
