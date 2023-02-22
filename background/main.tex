@@ -575,7 +575,39 @@ minimax theorem does not hold and the very idea of an ``equilibrium'' becomes te
 \section{ Semi-supervised Learning }\label{sec:SemiSL}
 % ********************************************************************************
  
-\cite{chapelle2009semi, scholkopf2021toward}
+Given that this thesis references semi-supervised learning (SemiSL)
+\footnote{
+Since self-supervised learning also features prominently in this thesis (primarily in Chapter 5) we
+must depart from the typical initialism, SSL, so as to be able to differentiate the two learning
+paradigms.
+}
+in its title, it is only appropriate that a part of this background section be devoted to the
+topic.
+%
+However, we note that the methods introduced in this thesis are not tailored for the typical SemiSL
+regime wherein one hopes to draw upon a large corpus of unlabelled data to shore up the paucity of
+annotated data available for direct supervision, with the assumption being that the unlabelled and
+labelled data are drawn from the same distribution.
+%
+Rather, the theme across the constituent papers is how one can use unlabelled data to redress
+representational bias and failures in out-of-distribution generalisation. 
+%
+The problem setups considered thus more closely align with those found in DG and DA; we have
+afforded more attention to those topics for this reason.
+
+We would refer the reader to \cite{chapelle2009semi} for excellent (in both clarity and depth)
+exposition of theory underpinning SemiSL learning and methods in the pre-deep-learning era, a book
+we will reference extensively throughout this brief overview of the topic.
+%
+For a for comprehensive and current survey of SemiSL methods in the post-deep-learning, on the
+other hand, we refer the reader to \cite{yang2022survey}.
+
+%
+References to consider:
+\cite{chapelle2009semi, scholkopf2021toward, lienen2021credal, sohn2020fixmatch, tarvainen2017mean,
+blum1998combining, gong2021alphamatch}
+%
+
 
 % --------------------------------------------------------------------------------
 \subsection{Cluster assumption.}\label{ssec:cluster_assumption}
@@ -587,6 +619,12 @@ minimax theorem does not hold and the very idea of an ``equilibrium'' becomes te
 %
 % --------------------------------------------------------------------------------
 \subsection{Smoothness assumption.}\label{ssec:smoothness_assumption}
+% --------------------------------------------------------------------------------
+% --------------------------------------------------------------------------------
+\subsection{
+  Causal connections: when should/shouldn't SemiSL work?
+}\label{ssec:smoothness_assumption}
+
 % --------------------------------------------------------------------------------
 
 % --------------------------------------------------------------------------------
