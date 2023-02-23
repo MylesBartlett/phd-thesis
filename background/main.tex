@@ -608,7 +608,6 @@ References to consider:
 blum1998combining, gong2021alphamatch}
 %
 
-
 % --------------------------------------------------------------------------------
 \subsection{Cluster assumption.}\label{ssec:cluster_assumption}
 % --------------------------------------------------------------------------------
@@ -624,6 +623,120 @@ blum1998combining, gong2021alphamatch}
 \subsection{
   Causal connections: when should/shouldn't SemiSL work?
 }\label{ssec:smoothness_assumption}
+
+Following \cite{scholkopf2021toward}, start by supposing that our prediction task follows the
+causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausal, one.
+%
+As discussed before, the ICM principle states that modules in a joint distribution's causal
+decomposition do not inform or influence one another, i.e. \(\gI(X, Y) = 0 \); this implies that in
+the when \(X\) is the causal parent to \(Y\), as in the supposed case, a better estimate of
+\(P(X)\) does not engender a better estimate of \(P(Y|X)\) and it is the former that SemiSL
+compasses to learn using unlabelled data.
+%
+However, that is not to say that SemiSL as in its totality is misguided, it merely requires the
+right condition to be met, that condition (which applies to a wide-range of real-world problems)
+being the contrary factorisation, \(Y \to X \), which is to say that that the task under
+consideration is anticausal.
+%
+In this case, \(X\) can contain information about the labelling mechanism, as \(X\) is now the
+effect, and \(Y\) is now the cause opening up the possibility of exploiting dependencies in the
+marginal distribution to better estimate the conditional distribution; in
+\cite{scholkopf2012causal} the authors test corroborate this hypothesis.
+%
+While perhaps often overlooked, this requirement, in fact, well-aligned with the motivating
+arguments for SemiSL that we discussed at the beginning of this section.
+%
+The \emph{cluster assumption} predicates that points belonging to the same cluster in \(P(X)\)
+abide by the same labelling mechanism; 
+%
+the \emph{low-density} assumption predicates that the region in which \(P(Y|X)\) is maximally
+entropic (defining the decision boundary) should have low \(P(X)\), or, by invocation of Bayes'
+Theorem, low \( \frac{ P(X|Y)P(Y) }{ P(Y|X) } \); 
+%
+the \emph{smoothness assumption} predicates that if two inputs in a high-density region are close,
+then their respective images (under the model) also should be -- this can be viewed as imposing a
+kind of \(K\)-Lipschitz or \(\epsilon\)-isometric constraint on our function class;
+%
+notice that in all three of these cases the causal factorisation is implied to be \(Y \to X \).
+%
+The celebrated co-training theorem \citep{blum1998combining} similarly respects this precondition
+of anticausality in assuming that the co-trained predictors are conditionally independent given the
+label, as one have if the label were the cause (the causal parent in the bivariate causal graph).
+%
+Points from \cite{castro2020causality} to integrate into the above discussion:
+\begin{itemize}
+        \item One of the notorious challenges in medical image analysis is that of scarcity of
+          labelled data, owing to the high costs (lab tests) and expertise required  for
+          annotation.
+        \item In many cases, establishing the causal direction between inputs and prediction
+          targets is non-trivial, particularly if crucial metadata is missing.
+        \item Strong requirements need to be bet for SemiSL to be fruitful, namely, the
+          distribution of inputs needs to carry information relevant to the prediction task.
+          %
+          This idea is typically articulated in terms fo specific assumptions about the data:
+          similar inputs are likely to have similar labels (smoothness assumption) and will
+          naturally group into clusters with high density in the input features space (cluster
+          assumption). Lower density regions in that space in-between clusters are assumed to be
+          ideal candidates for fitting decision boundaries.
+          %
+          In this context, considering large amounts of unlabelled data together with scarce
+          labelled data may reveal such low density regions.
+          %
+          Note how this idea insinuates and interplay between the distribution of inputs, \( P(X)
+          \), and the conditional distribution \( P(Y|X) \). 
+          %
+          Recall that by the ICM principle, if the prediction task is causal, then the marginal
+          distribution \( P(X) \) is uninformative \wrt{} \( P(Y|X) \) and SSL is theoretically
+          futile.
+          %
+          Since typical semantic segmentation tasks are causal, there is likely very little hope
+          that semantic segmentation can fundamentally benefit from unlabelled data.
+          %
+          A model trained on image-derived annotations will attempt to predict some pre-imaging
+          ground-truth. 
+          It is plausible that seeing more raw images without corresponding anatomical information
+          provides no new insight about the labelling mechanism.
+          %
+          Conversely, if \( Y \to X \), as for skin lesions, then these distributions may be
+          dependent and semi-supervision has a chance of success.
+          %
+          That is not to say that SSL is completely  useless for causal tasks; there can be
+          practical algorithmic benefits.
+          %
+          Namely, under certain conditions, unlabelled data can be shown to have a regularising
+          effect and may reduce the amount of labelled data required to achieve a given performance
+          level \citep{chapelle2009semi}
+          %
+          A recent empirical study \citep{oliver2018realistic} reported that properly-tuned
+          supervised models, either pretrained on trained on only the task-relevant data, are often
+          competitive with or outperform their semi-supervised counterparts. Also shown here was
+          the potential for SemiSL to harm performance under label shift.
+          %
+          ``
+          We find that the performance of simple baselines which do not use unlabelled data is
+          often under-reported, SSL methods differ in sensitivity to the amount of labelled and
+          unlabelled data, and performance can degrade substantially when the unlabelled dataset
+          contains out-of-distribution examples
+          %
+          \begin{itemize}
+            \item When given equal budget for tuning hyperparameters, the gap in performance
+              between using SSL and using only labelled data is smaller than typically reported.
+              %
+            \item A large classifier with carefully chosen regularization trained on a small
+              labeled dataset with no unlabelled data can reach very good accuracy.
+              %
+            \item This demonstrates the importance of evaluating different SSL algorithms on the
+              same underlying model.
+              %
+            \item In some settings, pre-training a classifier on a different labelled dataset and
+              then retraining on only labelled data from the dataset of interest can outperform all
+              SSL algorithms we studied.
+              %
+            \item Performance of SSL techniques can degrade drastically when the unlabelled data
+              con • Different approaches exhibit substantially different levels of sensitivity to
+              the amount of labelled and unlabelled data.
+          ''
+\end{itemize}
 
 % --------------------------------------------------------------------------------
 
