@@ -1,7 +1,7 @@
 \chapter{Background}\label{ch:background}
 
 % ********************************************************************************
-\section{Supervised Learning, the I.I.D. Assumption, and its Pitfalls}
+\section{Supervised Learning, the I.I.D. Assumption, and its Pitfalls}\label{sec:iid}
 % ********************************************************************************
 
 Traditional learning algorithms usually assume (or are only optimal for) that the training and test
@@ -39,34 +39,39 @@ P^{tr}(X, Y) \) with this empirical counterpart, and since the we are now operat
 of instances, rather than a distribution, the expectation can be replaced with a
 finite sum (with normalisation):
 %
-\equ\begin{equation*} \label{eq:emp_risk}
-  \hat{\gR(f)}) \triangleq n^{-1} \sum_{i=1}^n \ell (f(x_i), y_i),
+\equ\begin{equation*} \label{eq:emp_risk} 
+  \hat{\gR(f)}) \triangleq |\gD^{tr}|^{-1}  \sum_{(x, y) \in \gD^{tr}} \ell (f(x), y),
 \end{equation*}
-%
-where \(x_i\) and \(y_i\) denote the \(i\)th input and target in \( \gD^{tr} \), respectively.
 %
 This defines the unweighted empirical risk but in practice, datasets often exhibit a degree of
 class-imbalance, or, more generally, `long-tailedness', which is to say that the marginal
 distribution \( P(Y) \) is not uniform over its domain.
 %
-Such motivates replacing the unweighted (or, more accurately, ` uniformly weighted') objective given
-by Eq.\ref{eq:emp_risk} with an importance  \emph{weighted} variant wherein the loss is weighted
-weighted by \( \P(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the targets,
-in the discrete (classification) case, or by the empirical density of the target (as given by
-kernel density estimate (KDE), for instance) in the continuous (regression) case.
+Such motivates replacing the unweighted (or, more accurately, ` uniformly weighted') objective
+given by Eq.\ref{eq:emp_risk} with an importance  \emph{weighted} variant wherein the loss is
+weighted by \( \P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the
+targets, in the discrete (classification) case, or by the empirical density of the target (as given
+by kernel density estimate (KDE), for instance) in the continuous (regression) case.
 %
-Using \( w_i \in \R \) to denote the weight assigned to the \(i\) instance, we can then generalise
-Eq.~\cite{eq:emp_risk} as
+Here, we have assumed no foreknowledge of \( P^{te}(Y) \) -- this typically being the case in
+practice -- with the choice of an uninformative, uniform distribution over the domain leading to
+its elimination from the importance weighting term that in general takes the form \( \frac{
+  P^{te}(Y) }{ P^{tr}(Y) } \) (or the empirical equivalent).
+
+%
+Using \( w \in \R \) to denote the weight assigned to instance \(x\) in \( \gD^{tr} \), we can then
+generalise Eq.~\cite{eq:emp_risk} as
 %
 \equ\begin{equation*} \label{eq:emp_risk_weighted}
-  \hat{\gR(f)}) \triangleq \sum_{i=1}^n \ell (f(x_i), y_i),
+  \hat{\gR(f)}) \triangleq \sum_{(x, y) \in \gD^{tr}} w \ell (f(x), y),
 \end{equation*}
 %
-noting that this subsumes the unweighted variant which can be recovered by simply fixing \(w_i\) to
-\(n^{-1}\) for all instances.
+noting that this subsumes the unweighted variant which can be recovered by simply fixing \(w\) to
+\( |\gD^{tr}|^{-1} \) for all instances.
 %
 It is also worth noting that these weights can be adaptive; they can be iteratively
-adjusted over the course of training according to some parametric or non-parametric function.
+adjusted over the course of training according to some parametric or non-parametric function
+\citep{wang2021importance}.
 %
 Instead of weighting the instance-losses, one can instead use the weights to adjust the sampling,
 which has several practical advantages when training with stochastic gradient descent (SGD),
@@ -78,10 +83,17 @@ computation of the loss is required;
 2) Highly-weighted samples appear in batches commensurately often; when weighting the loss, samples
 belonging to the long-tail will appear in batches rarely, resulting in forgetting and poor
 diversity as said samples are effectively duplicated.
-
-% (see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that of
-% its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance,
-% semenova2019study, zhai2022understanding, idrissi2022simple} 
+%
+One can achieve a similar effect by under-sampling the majority classes, groups, or their
+intersections, such that they are equifrequent, and \iid{} sampling from that subset \(
+\gD^{tr}_{\text{US}} \subset \gD^{tr} \) (or, conversely by duplicating instances from the minority
+classes to the same end).
+%
+Under- and over-sampling (US and OS, respectively) have long been used as a remedy for class imbalance
+\citep{chawla2002smote} but the former has recently been shown to be effective -- matching or
+exceeding in performance more sophisticated algorithms -- for group robustness and
+spurious-correlation problems \citep{sagawa2020investigation, idrissi2022simple} in part due to its
+early-stopping effect.
 
 Despite its intuitiveness and its long history, with roots in early statistical modelling, the
 practical usefulness of importance-weighted ERM in the context of modern deep learning has recently
@@ -105,43 +117,50 @@ the optimisation problem defined by the training set, which is to say, solutions
 zero-loss are invariant under reweighting.
 %
 This understanding has motivated other approaches, such as those based on polynomially-tailed
-losses \citep{wang2021importance} and logit-adjustment \citep{menon2020long}.
+losses (for binary classification; \cite{wang2021importance}) and logit-adjustment
+\citep{menon2020long}.
 %
 % The view of the latter is to instead aim to shift the classification boundary to be closer to the
 % dominant (majority) classes and can be realised through the use of per-class margins, either
 % through modifying the loss during training or post-hoc correction \cite{fawcett1996combining} 
 
-Statistical models provide only a superficial description of reality -- they are only required to
-model correlations in order to minimise the loss function.
+As statistical models are only required model correlations in the data to satisfy the loss
+function, they ultimately only capture a superficial representation of the true physical processes
+involved.
 %
 In the discriminative case (that this thesis is concerned with), for a given \( X \) and \( Y \) we
-are interested in approximating the conditional distribution \( P(Y|X) \), which corresponds to
+are interested in approximating the conditional distribution \( P(Y|X) \); this  corresponds to
 tasks like predicting the probability that a given image contains a dog (image classification), or
 the probability that a given chest X-ray indicates a pulmonary infiltration, or some other thoracic
 condition.
 %
-The problem of approximating \( P(Y | X) \) can be provably solved by observing a sufficient amount
-of \iid{} data drawn from the joint distribution \( P(X,Y) \), however this only solve the problem
-from a statistical perspective, and we will see that this perspective is not always aligned with
-the causal one, which can lead to problems in generalisation under certain conditions that crop up
-unsettlingly often in real-world applications. 
+Indeed, the task accurately estimating \( P(Y | X) \) can be provably solved by observing a
+sufficient amount of \iid{} data drawn from the joint distribution \( P(X,Y) \), yet this only
+solve the problem from the aforementioned statistical perspective, and we will see that this
+perspective is not always aligned with the causal one, which can lead to problems in generalisation
+under certain conditions that crop up unsettlingly often in real-world applications, including
+those that safety-critical.
 %
-That is to say, the predictions of a statistical model can only be trusted when the conditions of
-the training and test distributions match; arbitrary shifts (interventions on the data-generating
-distribution) can lead to arbitrarily bad predictions \citep{pearl2009causality, scholkopf2012causal}.
+This is to say, the predictions of a statistical model should only be trusted when the conditions
+of the training and test distributions are sufficiently similar, and, in short, arbitrary shifts
+(interventions on the data-generating distribution) can give rise to arbitrarily bad predictions
+\citep{pearl2009causality, scholkopf2012causal}.
 
-However, the true causal relationship is not generally \emph{identifiable} given the training data
-alone; uncovering it and severing the influence of confounding variables additional assumptions
-about the data or \emph{interventions}, the latter being the tack adopted in the domain
-generalisation literature, where each domain can be viewed as a different intervention on the true
-distribution.
+Since the true causal relationships between independent and dependent variables is, generally, not
+\emph{identifiable} given the training data alone, owing to confounding variables, additional
+information, as provided by interventions, or \emph{environments} \citep{peters2016causal}, is
+needed to resolve the statistical ambiguity; this the typical tack pursued within the domain
+generalisation generalisation literature, where each domain can be viewed as a different
+intervention on the true distribution.
 %
-By confounding variable, or \emph{confounder} more pithily, we mean some variable that is that is
+By `confounding variable', or \emph{confounder}, we mean some variable that is that is
 the causal parent of two or more other variables and explains the statistical dependency between
-them despite those variables not being causally related themselves.
+them despite those variables not being causally related themselves; in the trivariate case this
+corresponds to the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation
+between \(X\) and \(Y\) that is eliminated by conditioning on the confounder \(S\).
 %
 In the shortcut learning problems addressed in Chapters 3 and 4, we will see statistical learning
-breakdown in a similar way but for essentially the opposite reason.
+breakdown in a similar way yet for essentially the opposite reason.
 %
 Namely, instead of having latent variable that explains the statistical dependency \(X\) between
 \(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\) on
@@ -149,7 +168,14 @@ which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to
 the true causal mechanism.
 %
 We will delve more deeply into what Shortcut Learning is and how the mechanisms that give rise to
-it in \ref{sec:shortcut-learning}
+it in \ref{sec:shortcut-learning}.
+%
+For now, however, we will move onto discussing different types of distribution shift that
+statistical learning has to contend with.
+
+% (see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that of
+% its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance,
+% semenova2019study, zhai2022understanding, idrissi2022simple} 
 
 % ------------------------------------------------------------------------------  
 \subsection{Learning under Class Imbalance/Long-tail Learning}
@@ -185,22 +211,66 @@ Notes from and on \cite{menon2020long}:
 % ********************************************************************************
 \section{A (Brief) Taxonomy of Types of Distribution Shift}
 % ********************************************************************************
+% --------------------------------------------------------------------------------
+\subsection{Covariate shift}{ssec:covariate-shift}
+% --------------------------------------------------------------------------------
 
 See \cite{moreno2012unifying} and \cite{castro2020causality} for terminology for describing
 different types of distribution shift for classification tasks. 
-%
-See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing},
-for example, for causal treatments of the problem, the latter focussing on fairness under different
-manifestations of distribution shift.
-%
-\itemi\begin{itemize}
-        \item Covariate Shift
-        \item Label Shift -- can be decomposed further, per \cite{castro2020causality}, into
-          \item Prevalence shift
-          \item Annotation shift
-        \item Compound Shifts
-\end{itemize}
 
+% --------------------------------------------------------------------------------
+\subsection{Label shift}{ssec:label-shift}
+% --------------------------------------------------------------------------------
+\paragraph{Prevalence (concept) shift.}
+%
+Under prevalence shift (for anticausal tasks), the differences between datasets relate to
+differences in class frequency, the marginal distribution \wrt{} \(Y\), i.e. \( P^{tr}(Y) \neq
+P^{te}(Y) \).
+%
+This can arise from different predispositions in the training and test populations, or from
+variations in environmental factors.
+%
+To correct for this domain-mismatch in discriminative models, one can most simply weight the
+training loss, explicitly or implicitly at the level of sampling, by \( P^{tr}(Y) \), as discussed
+at length in \S~\ref{sec:iid}.
+%
+\paragraph{Annotation (target) shift.}
+
+%
+\paragraph{Manifestation shift (conditional).}
+%
+Manifesting sift refers a change in the way (anticausal) prediction targets physically manifest in
+(anatomical) changes between domains, or in mathematical terms: \( P^{tr}(E | Y) \neq P^{te}(E | Y)
+\).
+%
+As with target shift, this cannot be corrected without employing strong parametric assumptions on
+the nature of the interdomain differences.
+%
+\paragraph{Acquisition shift (domain shift).}
+%
+Acquisition shift refers to a change in distribution arising due to a change in the labelling
+mechanism, in how the data was acquired, typically arising due to differences in measuring
+equipment, such as the type of satellite, in the context of remote sensing, or camera
+trap, in the context of population-monitoring.
+%
+One particularly prime example of such shift can be found in the medical imaging domain, where
+differences in the scanning equipment used to collect the training and test data can lead to
+introducing site-specific biases that hinder generalisation and cannot be straightforwardly
+rectified by means of data-preprocessing \citep{glocker2019machine}.
+
+\subsection{Causes of distribution shift}
+\paragraph{Sampling/Selection/Representational bias.}
+\citep{kallus2018residual}
+\paragraph{Non-stationarity}
+
+% --------------------------------------------------------------------------------
+\subsection{Compound shift}
+% --------------------------------------------------------------------------------
+
+% See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing},
+% for example, for causal treatments of the problem, the latter focussing on fairness under different
+% manifestations of distribution shift.
+%
 % ********************************************************************************
 \section{Shortcut Learning}\label{shortcut-learning}
 % ********************************************************************************
@@ -255,6 +325,27 @@ Extended notes on \cite{scimeca2021shortcut}:
           like gender or race \citep{wang2019balanced}.
 \end{itemize}
 
+Notes on and from \cite{shah2020pitfalls}:
+\begin{itemize}
+        \item Well-studied approaches such as for improving group- and adversarial-robustness --
+          such as ensembling and adversarial training -- do not mitigate the problem of simplicity
+          bias on the proposed datasets.
+          %
+          The failure of ensembling is to be expected, as there if the simplicity bias is
+          sufficiently strong, there is little-to-no incentive for the ensemble members to learn
+          diverse views of the data \citep{allen2020towards} due to stochasticity in the weights
+          and optimisation procedure, this diversity being where the presumed origin of the
+          improved-robustness demonstrated by (deep) ensembles.
+          %
+          The failure of adversarial training is also to be expected given that the perturbations
+          do nothing to intervene on the spurious feature directly.
+          %
+\end{itemize}
+
+Notes on and from \cite{geirhos2020shortcut}:
+\begin{itemize}
+  \item
+\end{itemize}
 
 % --------------------------------------------------------------------------------
 \subsection{Simplicity Bias \citep{valle2018deep, shah2020pitfalls}}
