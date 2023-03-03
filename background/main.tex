@@ -47,7 +47,7 @@ This defines the unweighted empirical risk but in practice, datasets often exhib
 class-imbalance, or, more generally, `long-tailedness', which is to say that the marginal
 distribution \( P(Y) \) is not uniform over its domain.
 %
-Such motivates replacing the unweighted (or, more accurately, ` uniformly weighted') objective
+Such motivates replacing the unweighted (or, more accurately, `uniformly weighted') objective
 given by Eq.\ref{eq:emp_risk} with an importance  \emph{weighted} variant wherein the loss is
 weighted by \( \P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the
 targets, in the discrete (classification) case, or by the empirical density of the target (as given
@@ -211,70 +211,186 @@ Notes from and on \cite{menon2020long}:
 % ********************************************************************************
 \section{A (Brief) Taxonomy of Types of Distribution Shift}
 % ********************************************************************************
+In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
+statistical-learning literature and discuss how and in what contexts they might practically emerge.
+%
+To this end, we draw heavily upon the works of \cite{moreno2012unifying} and
+\cite{castro2020causality} in our definitions, noting that the ML literature is not of a
+single mind regarding the terminology and its semantics.
+%
+In \S \ref{sec:lens-of-causality} we will reframe these distribution shifts in causal terms by
+introduction of an exogenous variable -- allowing for an elegant formulation of the distribution
+shift problem and its relation to invariance -- but we leave that aside for now and seek to present
+them in more general terms.
 % --------------------------------------------------------------------------------
-\subsection{Covariate shift}{ssec:covariate-shift}
+\subsection{Covariate shift}{ssec:covariate-shift}\label{ssec:covariate-shift}
 % --------------------------------------------------------------------------------
-
-See \cite{moreno2012unifying} and \cite{castro2020causality} for terminology for describing
-different types of distribution shift for classification tasks. 
-
-% --------------------------------------------------------------------------------
-\subsection{Label shift}{ssec:label-shift}
-% --------------------------------------------------------------------------------
-\paragraph{Prevalence (concept) shift.}
+The most well-studied of the shifts, simply put, covariate shift refers to a change in the marginal
+distribution of the inputs, that is to say we have \(P^{tr}(X) \neq P^{te}(X) \) while the
+conditional distribution remains (effectively) unchanged, i.e. \)\(P^{tr}(Y|X) = P^{te}(Y|X) \).
 %
-Under prevalence shift (for anticausal tasks), the differences between datasets relate to
-differences in class frequency, the marginal distribution \wrt{} \(Y\), i.e. \( P^{tr}(Y) \neq
-P^{te}(Y) \).
+% NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
+% much meaning unless we presuppose the direction of causality.
+Departing from \cite{moreno2012unifying}, we do not restrict its definition to problems of a causal
+(\( X \to Y\)) nature and do away with the distinction between covariate shift and its anticausal
+(\( Y \to X \)) analogue in \emph{prior shift} to simplify exposition.
 %
-This can arise from different predispositions in the training and test populations, or from
-variations in environmental factors.
+Changes in the distribution of the target variable, \(Y\), will be referred to as \emph{target
+shift}, as explained later in this section.
 %
-To correct for this domain-mismatch in discriminative models, one can most simply weight the
-training loss, explicitly or implicitly at the level of sampling, by \( P^{tr}(Y) \), as discussed
-at length in \S~\ref{sec:iid}.
+This is not to say that we disregard the importance of distinguishing between the two causal
+directions; in the context of DA and SemiSL, we will discuss at some length the dependence of these
+paradigms on this characteristic of the problem.
 %
-\paragraph{Annotation (target) shift.}
-
-%
-\paragraph{Manifestation shift (conditional).}
-%
-Manifesting sift refers a change in the way (anticausal) prediction targets physically manifest in
-(anatomical) changes between domains, or in mathematical terms: \( P^{tr}(E | Y) \neq P^{te}(E | Y)
-\).
-%
-As with target shift, this cannot be corrected without employing strong parametric assumptions on
-the nature of the interdomain differences.
-%
-\paragraph{Acquisition shift (domain shift).}
-%
-Acquisition shift refers to a change in distribution arising due to a change in the labelling
-mechanism, in how the data was acquired, typically arising due to differences in measuring
-equipment, such as the type of satellite, in the context of remote sensing, or camera
-trap, in the context of population-monitoring.
-%
-One particularly prime example of such shift can be found in the medical imaging domain, where
-differences in the scanning equipment used to collect the training and test data can lead to
-introducing site-specific biases that hinder generalisation and cannot be straightforwardly
-rectified by means of data-preprocessing \citep{glocker2019machine}.
-
-\subsection{Causes of distribution shift}
-\paragraph{Sampling/Selection/Representational bias.}
-\citep{kallus2018residual}
-\paragraph{Non-stationarity}
+Indeed, a common assumption in DA is that the source and target domains are separated by covariate
+shift \cite{david2010impossibility}, however this assumption breaks down when the problem is
+anticausal (when we have what \cite{moreno} term prior shift).
 
 % --------------------------------------------------------------------------------
-\subsection{Compound shift}
+\subsection{Target shift}\label{ssec:label-shift}
 % --------------------------------------------------------------------------------
-
-% See \cite{mooij2020joint} (joint causal inference (JCI) framework) and \cite{schrouffdiagnosing},
-% for example, for causal treatments of the problem, the latter focussing on fairness under different
-% manifestations of distribution shift.
+% NOTE: As noted in the note above, we might want to specify that this type of shift only applies
+% to anticausal tasks
+Diametric to the above, target shift describes, as the name suggests, a shift in the
+marginal distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \neq P^{te}(Y) \).
 %
+In the classification setting, this means that classes do not appear equifrequently in the training
+and test data; many real-world datasets used for training exhibit long tails, \wrt{} the classes
+(or targets generally), in which the most-frequent class can appear orders-of-magnitude more
+frequently than the least-frequent class, while the test data has more even coverage.
+%
+As discussed in \S~\ref{iid}, a classic approach to rectifying this kind of shift, in the case of
+the discriminative models we are usually concerned with, is to  importance-weight the instance
+losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y}{P^{tr}(Y)}
+\), or simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the
+case).
+%
+% This can arise from different predispositions in the training and test populations, or from
+% variations in environmental factors.
+%
+% \subsection{Manifestation shift (conditional).}\label{ssec:manifestation-shift}
+% %
+% Manifestation shift refers a change in the way prediction targets physically manifest in
+% between domains.
+% %
+% Denoting the random variable corresponding to the domain, or environment, as \(E\), we can then
+% couch manifestation shift in mathematical terms as shift as inducing the inequality \( P^{tr}(E |
+% Y) \neq P^{te}(E | Y)\).
+% %
+% As with target shift, this type of shift irremediable unless one employs strong parametric
+% assumptions on the nature of the interdomain differences.
+
+\subsection{Concept shift.}\label{ssec:concept-shift}
+%
+To complete the triad of bivariate distribution shifts (we will later revisit distribution shift
+under the influence of an exogenous domain or environment variable) we have \emph{concept shift},
+referring to changes in the conditional distributions, \( P(Y|X) \) or \( P(X|Y) \), while the
+respective (\( P(X) \) and \( P(Y) \)) marginal distributions are preserved.
+%
+Thus, in the classification setting, concept shift corresponds to a change in the mechanism used to
+label the data; this might entail, for example, changes in the class definitions, differences in
+annotation protocol or grading scales between sites,  or different proclivities/standards in the
+annotators in the case of human-driven annotation should the task possess an element of
+subjectivity (AI-alignment via RLHF \citep{bai2022training} being a prime and topical example of
+such a task).
+%
+In addition to the shifts discussed, one can naturally also consider their composition, giving rise
+to \emph{compound shifts}, in which both the marginal and conditional distributions are subject to
+change. Such shifts, however. are unusual in the literature, and, perhaps more pertinently,
+impossible to solve unless one can draw upon strict assumptions, due to the need to decouple the
+constituent shifts (a problem of identifiability).
+%
+% \subsection{Acquisition shift (domain shift).}\label{ssec:acquisition-shift}
+% %
+% Domain or acquisition shift refers to a change in distribution arising due to a change in how or
+% where the data was acquired; this commonly stems from differences in measuring
+% equipment, such as the type of satellite, in the context of remote sensing, or camera
+% trap, in the context of ecology.
+% %
+% A prime example of such a shift can be found in the medical imaging domain, where differences in
+% the scanning equipment used to collect the training and test data can lead to introducing
+% site-specific biases that hinder generalisation and cannot be readily rectified by means of
+% data-preprocessing \citep{glocker2019machine}.
+
+% --------------------------------------------------------------------------------
+\subsection{Sampling/Selection/Representational bias}\label{ssec:sampling-bias}
+% --------------------------------------------------------------------------------
+Sampling (which we use synonymously with \emph{selection} and \emph{representational}) bias refers
+to distribution shifts that arise due to systematic flaws in the data-collection process that cause
+training samples being selected in a non-uniform fashion from the general population being
+modelled.
+%
+That is to say, the data is not missing at random but rather conditionally, and most notably when
+the conditioning is on the target or some other characteristic, such as a particular demographic.
+%
+Thus, sampling bias, isn't a type of distribution shift per se, but rather a mechanism by which the
+above-described distribution shifts can emerge, and it is particularly germane to Chapters 3 and 4
+of this thesis in which we consider extreme cases of it in which certain demographics, or outcomes
+for certain demographics, are omitted from the training data, promoting spurious correlations
+between said demographics and the outcome.
+%
+To give an example, in conducting a local survey there will invariably be subsets of the general
+population which are under-represented, or altogether excluded, from data-collection due to
+availability, willingness, and applicability to the research being conducted; if the locale in
+question were a University, then we would expect the population to be significantly younger and
+more liberal than on average.
+%
+Indeed, this a problem is particularly well-noted in experimental psychology, in which cohorts
+overwhelmingly consist of a very narrow band of individuals from the so-called WEIRD (White,
+Educated, Industrialized, Rich, Democratic)\citep{henrich2010weirdest} group.
+%
+The experimental data obtained from such homogeneous cohorts has been used  by numerous journal
+papers to support broad claims about the general population.
+%
+A prominent yet more subtle, mechanistically, example of sampling bias can be found in the credit
+scoring literature, in which no feedback is obtained from previously rejected candidates; this
+leads to bias amplification (as the model's past decisions directly shape the training data at
+future iterations) and in the context of fairness, demographic biases incurred due to such feedback
+models has been studied under the guises of Delayed Impact \citep{liu2018delayed} and Residual
+Unfairness \citep{kallus2018residual}.
+%
+Indeed, the Residual Unfairness problem introduced by \cite{kallus2018residual} was one of the
+chief motivators for the setup considered in Chapter 3, such that in the case of a binary decision
+system -- one designed for automated hiring, for instance -- and a population comprised of two
+subgroups, only positive outcomes are observed for the advantaged subgroup, while only negative
+outcomes are observed for the disadvantaged subgroup.
+
 % ********************************************************************************
 \section{Shortcut Learning}\label{shortcut-learning}
 % ********************************************************************************
 
+While the notoriety of shortcut-learning (SCL) in ML sphere is relatively recent, the phenomenon
+underpinning it is a fundamental one in statistics, one that may be summed up with the age-old
+aphorism \emph{cum hoc ergo propter hoc}, oft translated as \emph{correlation does not imply
+causation}.
+%
+DNNs define deeply expressive function classes, yet the solutions encoded by their parameter space
+need not be commensurately complex; in fact it is well established that these models -- in the
+absence of an countervailing (inductive) bias -- exhibit a \emph{simplicity bias} (SB;
+\cite{valle2018deep}), that is, the tendency to favour simpler solutions should those solutions
+serve sufficiently well for the task (as defined by the training set and loss function) at hand.
+%
+While the spate of failures following the deep-learning revolution were surprising -- and at the
+very least spirit-dampening to the those with lofty hopes for ML -- it is not surprising that this
+SB and that SCL should arise widely because of it, for while SB alone is not alone a precondition
+for SCL, the second precondition  of SCL is a problem (on the data side) that has long challenged
+statistical modelling: sampling bias.
+%
+Indeed, it is the combination of simplicity bias and acausal or spurious, correlations generated by
+sampling bias that give rise to SCL, but sampling bias is not something trivially redressed, even
+if the seemingly-straightforward recourse of `collect more data' does exist, which it often doesn't
+due to physical constraints (e.g. the data may only have been available within a given period of
+time) or limited (human or monetary) resources.
+%
+Although the problem may stem from the data-collection side, that is not to say that there is
+nothing that can be done on the modelling side, for both DG and FairML actively contend with
+different flavours of the problem and have been successful in developing methodologies to
+successfully mitigate them.
+
+
+
+the myriad guises under which the phenomenon has appeared in the ML and literature and that of
+adjacent field --
 Shortcut-learning is learning variance to the wrong thing and, consequentially, invariance to the
 right things.
 %
@@ -344,7 +460,35 @@ Notes on and from \cite{shah2020pitfalls}:
 
 Notes on and from \cite{geirhos2020shortcut}:
 \begin{itemize}
-  \item
+  \item Despite DNNs being touted as achieving super-human-level performance on complex tasks
+    across myriad domains, we are currently observing a large number of failure cases stemming from
+    small -- imperceptible even -- changes in the inputs or or changes in different background
+    contexts that should be incidental to the task.
+    %
+  \item DNNs can generate plausible captions for images and yet do so without looking at the image
+    in sooth \citep{cadene2019rubi}. 
+    
+    %
+  \item DNNs can accurately recognise faces but achieve significantly higher error rates for faces
+    from marginalised groups \citep{buolamwini2018gender}.
+  %
+  \item DNNs can predict hiring decisions based on resumes but the predictions are biased towards
+    selecting men \citep{dastin2018amazon}.
+  \item One central observation is that many failure cases are not independent phenomena but
+    instead are interconnected in the respect that they are the result of DNNs adopting unintended
+    `shortcut' strategies.
+    %
+    While superficially successful, these strategies typically fail under slightly different
+    circumstances; for instance, a DNN may appear to caption an image perfectly well, but describes
+    a typical grass landscape as 'a herd of grazing sheep'
+
+  \item At a principal level, shortcut learning is not a novel phenomenon. 
+    The field of ML has long aspired to develop a formal understanding of shortcut learning, which
+    has led to an increasing body of research under different names, such as `learning under
+    covariate shift', `anticausal learning', `dataset bias' and the `Clever Hans effect'.
+
+  \item Shortcuts are decision rules that perform well on \iid{} test data but fail on o.o.d. test
+    data, revealing a mismatch between the intended and learned solutions.
 \end{itemize}
 
 % --------------------------------------------------------------------------------
@@ -650,6 +794,10 @@ carrying information about \(f^\ast\), and thus the task being an anticausal one
 See \cite{zhang2013domain} for an early example (and theoretically-rigorous presentation of) domain
 adaptation under (target and conditional) distribution shift.
 %
+% ********************************************************************************
+\section{Fair Machine Learning (FairML)}\label{sec:fairml}
+% ********************************************************************************
+
 % ********************************************************************************
 \section{Domain Generalisation}\label{sec:domain_generalisation}
 % ********************************************************************************
