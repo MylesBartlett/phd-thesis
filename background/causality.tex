@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{Through the Lens of Causality}\label{sec:lens-of-causality}
+\section{Through the lens of causality}\label{sec:lens-of-causality}
 % ********************************************************************************
 
 We now introduce a causal formalism of the distribution-shift problem, a formalism which has been
@@ -23,13 +23,14 @@ distributions -- or subgraphs in the discrete case -- and explains how one is tr
 (`shifted') into the other.
 %
 We will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
-DG literature \citep{arjovskyinvariant}), which need satisfy only the loose requirement that it
+DG literature \citep{arjovsky2019invariant}), which need satisfy only the loose requirement that it
 belong to some Borel space (and thus may in theory be continuous or discrete).
 %
 Most simply, in the case of DA, \(E\) is simply a binary random variable, such that we have \(E:
 \Omega \to \{ \text{source}, \text{target} \}\), with \( \Omega \) being the sample space.
 %
-We view then view variables in our prediction task as constituting the node \gV \) in a Causal
+
+We view then view variables in our prediction task as constituting the nodes \( \gV \) in a Causal
 Bayesian Network (CBN; \cite{pearl1995bayesian}) where the direction of arrows (directed edges)
 between nodes indicate the direction of causality (e.g. \(\rmA \to \rmB \) means that \textbf{A}
 causes (is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
@@ -41,19 +42,20 @@ Formally, a CBG is a kind of Directed Acyclic Graph (DAG), \(\rmG \triangleq \la
 \rangle \) with node-set (variables), \(\gV\), and (directed) edge-set, \(\xi\) consisting of
 tuples \((ij)\) meaning \(i \to j \), or `node \(i\) is a parent of node \(j\)'.
 %
-Each node in \rmG then defines a probability distribution, conditional on its parents, such that
-the joint distribution of \(\gV\), \(P(V)\), factorises as \( P(V) = \prod_{v \in \gV} P(v |
+Each node in \( \rmG \) then defines a probability distribution, conditional on its parents, such that
+the joint distribution of \(\gV\), \( P(V) \), factorises as \( P(V) = \prod_{v \in \gV} P(v |
 \text{Pa}(v)) \) where we can now define \(\text{Pa}(\cdot)\) as a function that returns all nodes
 in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j \in \xi, j = v \}
 \).
 %
+
 Without loss of generality, for the prediction task with inputs, \(X\), and targets, \(Y\), we may
 introduce the aforementioned variable \(E\) to convert the joint distribution \(P(X, Y)\) into the
 conditional joint distribution \( P(X, Y) | E \); the structure of the underlying CBN determines
 the factorisation of this distribution and thus the nature of the distribution shift in question.
 %
 One can, for example characterise the case of covariate-shift with causal \(f^\star\), as having
-edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( \P(X, Y | E) | P(E) =
+edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
 P(Y|X)P(X|E)P(E) \). 
 %
 In Chapters 3 and 4 we go beyond the bivariate (excepting \( E \)) and covariate case and consider
@@ -67,7 +69,7 @@ We illustrate in Fig.~\ref{fig:ds_cbgs} CBGs corresponding to different distribu
 causal prediction task.
 %
 
-\import{background}{dist_shift_cbgs.tex}
+\import{background}{ds_cbgs.tex}
 
 %
 We will see that such a formulation is particularly utile when we come to discuss domain
@@ -75,7 +77,7 @@ generalisation which involves a multitude of source distributions, going beyond 
 source-target setup characterising DA.
 
 
-One common \citep{arjovskyinvariant, krueger2021out, sagawa2019distributionally} and intuitive way
+One common \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} and intuitive way
 of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
 loop entails computing the empirical risk over each domain and the outer loop corresponds to
 finding the function that minimises the maximum of said risks.
@@ -85,11 +87,11 @@ We can then define, accordingly, the optimal predictor as
 \begin{equation}\label{eq:rob-erm-obj} 
     f^\ast_\text{ robust } =
     %
-    \underset{ f \in \gF }{ \text{\argmin} } 
-    %
-    \underset{ e \in \gE} { \text{max} }
-    %
-    \E_{ P^{tr}(X, Y | E = e) } \[ \ell ( f( X ), Y ) \]. 
+    \underset{ f \in \gF }{ \argmin }\, 
+    % % %
+    \underset{ e \in \gE}{ \mathrm{max} }\,
+    % %
+    \E_{ P^{tr}( X, Y | E = e ) } [ D ( f( X ), Y ) ]. 
     %
 \end{equation}
 %
@@ -97,13 +99,12 @@ As discussed at length before, domains/environments can be modelled as deriving 
 interventions of the causal factorisation of \(P(X, Y\)).
 %
 It follows that, for Eq.\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
-domains, \(\gE^\dagger\) outside \(\gE\) (\(\gE^\dagger \cap \gE = \varrnothing \); i.e. the
-goal of DG), \(\gE\) must be a representative (well-covering) set of samples from the
-generating distribution \(\P(E)\) such that smooth interpolation along the underlying manifold
-is possible.
+domains, \(\gE^\dagger\) outside \(\gE\) (\( \gE^\dagger \cap \gE = \varnothing \); i.e. the goal
+of DG), \(\gE\) must be a representative (well-covering) set of samples from the generating
+distribution, \( P(E) \), such that smooth interpolation along the underlying manifold is possible.
 %
 When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set},
-accordant with the robust optimisation literature \citep{ben2009robust} .
+accordant with the robust optimisation literature \citep{ben2009robust}.
 %
 While generalisation to arbitrary perturbations is provably hard (or impossible), in general
 \citep{david2010impossibility}, when \(\gE\) encodes prior information about the kinds of
@@ -116,7 +117,7 @@ stable across environments would allow it to better approximate the true causal 
 the prediction task. 
 %
 This idea has been explored extensively in recent years in both the causal discovery
-\citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovskyinvariant,
+\citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovsky2019invariant,
 ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of
 inductive bias or additional information is necessary to provably identify the proper causal
 relations based on it \citep{lin2022zin}.

@@ -2,17 +2,23 @@
 \usepackage{subcaption}
 \usepackage{color}
 \usepackage{import}
-\usepackage{tikz}
 \usepackage{natbib}
-\bibliographystyle{unsrtnat}
+\bibliographystyle{dinat}
 
-% \addbibresource[]{background/bibfile.bib}
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
+\tikzset{
+    -Latex,auto,node distance =1 cm and 1 cm,semithick,
+    state/.style ={ellipse, draw, minimum width = 0.7 cm},
+    point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+    bidirected/.style={Latex-Latex,dashed},
+    el/.style = {inner sep=2pt, align=left, sloped}
+}
 
 \import{.}{math_commands}
 
 \begin{document}
 
-% \cite{zhu2014capturig}
 \import{background}{main}
 \bibliography{background/bibfile}
 

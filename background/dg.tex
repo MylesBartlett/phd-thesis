@@ -4,18 +4,18 @@
 While closely-related to DA, Domain Generalisation (DG) is distinct in the respect that the task is
 fundamentally, as the name suggests, one of \ood{} generalisation rather than one of adaptation.
 %
-By this we mean that while in (U)DA one is given a labelled dataset, \( \gD^{source} \triangleq
-\{x_i, y_i \}_{i=1}^{N^{source}} \), belonging to the source domain, along with an unlabelled
-dataset \( gD^{target} \triangleq \{ x_i \}_{i=1}^{N^{target}} \) belonging to the target domain,
+By this we mean that while in (U)DA one is given a labelled dataset, \( \gD^{src} \triangleq
+\{x_i, y_i \}_{i=1}^{N^{src}} \), belonging to the source domain, along with an unlabelled
+dataset \( \gD^{tgt} \triangleq \{ x_i \}_{i=1}^{N^{tgt}} \) belonging to the target domain,
 and the goal is to train a classifier to generalise from the former to the latter (which entails a
 degree of invariance), DG is more general, in that one is instead given datasets from multiple
 domains and seeks to train a classifier that can generalise to previously unseen ones. 
 %
-That is, given the meta distribution \( \frak{D} \triangleq \{\gD_e \}_{e \in \gE} \) consisting of
+That is, given the meta distribution \( \mathfrak{D} \triangleq \{\gD_e \}_{e \in \gE} \) consisting of
 \( |\gE| \) distributions drawn from different domains, or \emph{environments}, denoted by the
 index set \( \gE \subset \sN \), the goal is to train a classifier that will perform optimally, or
 with minimal degradation, when presented with distribution \( \gD_{e^{te}} \) from a novel
-domain,\( e^{te} \notin  \gE \).
+domain \( e^{te} \notin  \gE \).
 
 %
 While we would ideally have a model that could generalise to any arbitrary environment (assuming
@@ -23,29 +23,38 @@ the task remains consistent), this is sadly impossible given finite data
 \cite{david2010impossibility}, and so our expectations must be tempered to being able to generalise
 within some region the training distribution.
 %
-The justification of DG can then be viewed from two perspectives: 1) It stands to reason that we
-should be able to exploit information about known the known set of variances -- due to the domain
--- in order to learn a predictor that can generalise within the convex set (affine combinations of
-those variances) they define as well of those variances that are close by.
+The justification of DG can then be viewed from two perspectives: 
+\begin{enumerate}
 %
-The principle here is similar to that of vicinal risk minimisation \citep{chapelle2000vicinal} as
-in \cite{zhang2017mixup}, wherein data augmentation fulfils the role of a perturbation set that the
-environments fulfil in the case of DG.
+    \item 
 %
-2) Given a set of interventions on the underlying causal graph defined by the set of environments,
-recover the causal relationship between the input features and the target such that the predictive
-mechanism is unaffected by causally-independent changes (by interventions on variables not among
-the target variable's causal parents).
+        It stands to reason that we should be able to exploit information about known the known set
+        of variances -- due to the domain -- in order to learn a predictor that can generalise
+        within the convex set (affine combinations of those variances) they define as well of those
+        variances that are close by.
 %
-This idea of treating environments as interventions and using them to perform explicit or implicit
-causal inference has notably been exploited in \cite{peters2016causal} and in the foundational (to
-DG) work of \cite{arjovsky2019invariant}.
+        The principle here is similar to that of vicinal risk minimisation
+        \citep{chapelle2000vicinal} as in \cite{zhang2017mixup}, wherein data augmentation fulfils
+        the role of a perturbation set that the environments fulfil in DG.
 %
-Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
-gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem setup of
-DG and its desiderata in causal terms, and we will do so ourselves in
-\S~\ref{sec:lens-of-causality} in order to provide a more unified perspective of the distribution
-shift problems discussed thus far.
+    \item
+    %
+        Given a set of interventions on the underlying causal graph defined by the set of
+        environments, recover the causal relationship between the input features and the target
+        such that the predictive mechanism is unaffected by causally-independent changes (by
+        interventions on variables not among the target variable's causal parents).
+%
+        This idea of treating environments as interventions and using them to perform explicit or
+        implicit causal inference has notably been exploited in \cite{peters2016causal} and in the
+        foundational (to DG) work of \cite{arjovsky2019invariant}.
+%
+        Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
+        gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem
+        setup of DG and its desiderata in causal terms, and we will do so ourselves in
+        \S~\ref{sec:lens-of-causality} in order to provide a more unified perspective of the
+        distribution shift problems discussed thus far.
+%
+\end{enumerate}
 
 % --------------------------------------------------------------------------------
 \subsection{Connection between Fairness and DG}\label{ssec:fairml-dg-cxn}
