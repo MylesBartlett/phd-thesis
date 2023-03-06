@@ -1,0 +1,221 @@
+% ********************************************************************************
+\section{Supervised learning, the \iid{} assumption, and its pitfalls}\label{sec:iid}
+% ********************************************************************************
+
+Traditional learning algorithms usually assume (or are only optimal for) that the training and test
+samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
+variables, such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \). 
+%
+Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
+respectively.
+%
+Based on this assumption, the method of Risk Minimisation  seeks the hypothesis \( f^\ast \in \gF
+\) that is the minimiser of the \emph{risk}, $\gR$, which can be defined as a statistical
+divergence, \( D: M \times M \to \R^+ \) (for some statistical manifold \(M\)) between the
+predicted and ground-truth labels over the training distribution, often taken to be the (negative)
+Kullback-Leibler divergence, \( D_{KL} \) (also known as \emph{relative entropy}).
+%
+To simplify exposition, we will abuse notation here and throughout this chapter by allowing
+functions of the form \(f: X \to Y \) to accept random and observed variables interchangeably; we
+assume that the derived function classes are Borel Measurable (a trivial precondition in practice)
+and as such that a function of a random variable is also a random variable. \(f\) to operate on
+random variables \(X\).
+% %
+Thus, pedantically speaking, \( f(X) \) should be read as shorthand for \( f \circ X(\omega) \),
+for some event \( \omega \) drawn from sample space, \( \Omega \), while \( f(x) \) should be read
+in the standard fashion, with deterministic inputs and outputs.
+%
+With this in mind, we can formally define the (population or true) risk as
+%
+\begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ D ( f(X,
+    Y) )]
+    % \gR(f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } \[ D (f(X), Y) \].
+\end{equation}
+%
+In practice, of course, one does not have access to the true generative distribution, but only a
+finite set of realizations of it forming a \emph{dataset}, \( \gD^{tr} \), consisting of observed
+input-target pairs \( (x, y) \). 
+%
+Thus, we are instead doing \emph{empirical} risk minimisation (ERM; \cite{vapnik1991principles}),
+defined as the risk is instead defined over the empirical distribution, a finite set of
+observations, rather than over the underlying distribution from which those observations were
+drawn.
+% %
+To accommodate this discrepancy, two things need to be accounted for. 
+%
+First we need to  substitute \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
+\triangleq \{(x_i, y_i) \}_{i=1}^{N^{tr}} \); since we are now operating over a finite set of \(
+N^{tr} \) tuples, the expectation can be replaced with a finite sum (with normalisation). 
+%
+Second, given the variables are deterministic rather than random, one can no longer frame the
+optimisation objective in terms of a statistical divergence explicitly. 
+%
+Instead one measures -- and uses as feedback to drive model-optimisation -- the discrepancy between
+the predicted and observed targets using a \emph{loss} function, \( \ell: \R \times \R \to \R \). 
+%
+In standard classification settings in which the targets are given by single (one-hot encoded)
+labels, \( Y \) is represented by a degenerate (delta) distribution, wherein for each instance we
+simply have an binary indicator of which class said instance belongs to, rather than a distribution
+over the probability simplex allowing for capturing of intrinsic uncertainty in the task.
+%
+With these adjustments in mind, one can then define the standard ERM objective as
+% %
+\begin{equation*}\label{eq:emp_risk} \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y)
+\in \gD^{tr}} \ell (f(x), y). \end{equation*}
+%
+This version of the objective is simply a uniform (unweighted) average over all training pairs; it
+does not take into account the distribution of the inputs or targets.
+%
+This is mentionable as many real-world datasets exhibit significant class class-imbalance
+\citep{zhu2014capturing, van2017devil}, or, more generally, `long-tailedness', which is to say that
+the marginal distribution \( P(Y) \) is not uniform over its support.
+% %
+Such motivates replacing the unweighted (or, more accurately, `uniformly weighted') objective given
+by Eq.~\ref{eq:emp_risk}, with an importance  \emph{weighted} variant wherein the loss is weighted
+by \( P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the targets, in
+the discrete (classification) case, or by the empirical density of the target (as given by kernel
+density estimate (KDE), for instance) in the continuous (regression) case.
+% %
+Here, we have assumed no foreknowledge of \( P^{te}(Y) \) -- this typically being the case in
+practice -- with the choice of an uninformative, uniform distribution over the domain leading to
+its elimination from the importance weighting term that in general takes the form \( \frac{
+P^{te}(Y) }{ P^{tr}(Y) } \) (or the empirical equivalent).
+
+% %
+Using \( w \in \R^+ \) to denote the weight assigned to instance \(x\) in \( \gD^{tr} \), we can
+then generalise Eq.~\ref{eq:emp_risk} to
+% %
+\begin{equation*} \label{eq:emp_risk_weighted} \hat{\gR}(f) \triangleq \sum_{(x, y) \in \gD^{tr}} w
+\cdot \ell (f(x), y), \end{equation*}
+% %
+with `\( \cdot \)' denoting regular scalar multiplication (over \(\gR\)), noting that this form
+subsumes the unweighted form, which itself can be recovered by simply fixing \(w\) to \(
+|\gD^{tr}|^{-1} \) for all instances.
+%
+It is also worth noting that these weights can be adaptive; they can be iteratively adjusted over
+the course of training according to some parametric or non-parametric function
+\citep{wang2021importance}.
+%
+Instead of weighting the instance-losses, one can instead use the weights to adjust the sampling,
+which has several practical advantages when training with stochastic gradient descent (SGD),
+particularly: 
+% %
+1) The procedure is non-invasive: no modification to the data-loading nor the computation of the
+loss is required;
+%
+2) Highly-weighted samples appear in batches commensurately often; when weighting the loss, samples
+belonging to the long-tail will appear in batches rarely, resulting in forgetting and poor
+diversity as said samples are effectively duplicated.
+% %
+One can achieve a similar effect by under-sampling the majority classes, groups, or their
+intersections, such that they are equifrequent, and \iid{} sampling from that subset \(
+\gD^{tr}_{\text{US}} \subset \gD^{tr} \) (or, conversely by duplicating instances from the minority
+classes to the same end).
+% %
+Under- and over-sampling (US and OS, respectively) have long been used as a remedy for class
+imbalance \citep{chawla2002smote} but the former has recently been shown to be effective --
+matching or exceeding in performance more sophisticated algorithms -- for group robustness and
+spurious-correlation problems \citep{sagawa2020investigation, idrissi2022simple} in part due to its
+early-stopping effect.
+
+Despite its intuitiveness and long history, with roots in early statistical modelling, the
+practical usefulness of importance-weighted ERM in the context of modern deep learning has recently
+been impugned \citep{byrd2019effect, zhai2022understanding}.
+%
+\cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
+importance-weighting diminish over the course of training; these effects can be partially recovered
+when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
+decay but without such interventions there converged-upon solution is identical for both IW-ERM and
+vanilla ERM. 
+%
+Evidence for this was also provided by \cite{sagawa2019distributionally}, who stress the importance
+of combining aggressive regularisation with (a dynamic form of) importance-weighting for strong
+worst-group generalisation.
+%
+These empirical results were recently supported theoretically by the \cite{zhai2022understanding},
+who prove that the implicit biases of these algorithms and standard ERM are indeed equivalent.
+%
+Summarily, while importance-weighting may be intuitive, it provably does not alter the solution to
+the optimisation problem defined by the training set, which is to say, solutions that attain
+zero-loss are invariant under reweighting.
+%
+This understanding has motivated other approaches, such as those based on polynomially-tailed
+losses (for binary classification; \cite{wang2021importance}) and logit-adjustment
+\citep{menon2020long}.
+%
+% The view of the latter is to instead aim to shift the classification boundary to be closer to the
+% dominant (majority) classes and can be realised through the use of per-class margins, either
+% through modifying the loss during training or post-hoc correction \cite{fawcett1996combining} 
+
+As statistical models are only required model correlations in the data to satisfy the loss
+function, they ultimately only capture a superficial representation of the true physical processes
+involved.
+%
+In the discriminative case (that this thesis is concerned with), for a given \( X \) and \( Y \) we
+are interested in approximating the conditional distribution \( P(Y|X) \); this  corresponds to
+tasks like predicting the probability that a given image contains a dog (image classification), or
+the probability that a given chest X-ray indicates a pulmonary infiltration, or some other thoracic
+condition.
+%
+Indeed, the task accurately estimating \( P(Y | X) \) can be provably solved by observing a
+sufficient amount of \iid{} data drawn from the joint distribution \( P(X,Y) \), yet this only
+solves the problem from the aforementioned statistical perspective, and we will see that this
+perspective is not always aligned with the causal one, which can lead to problems in generalisation
+under certain conditions that crop up disconcertingly often in real-world applications, including
+those that safety-critical.
+%
+This is to say, the predictions of a statistical model should only be trusted when the conditions
+of the training and test distributions are sufficiently similar, and, in short, arbitrary shifts
+(interventions on the data-generating distribution) can give rise to arbitrarily bad predictions
+\citep{pearl2009causality, scholkopf2012causal}.
+
+Since the true causal relationships between independent and dependent variables is, generally, not
+\emph{identifiable} given the training data alone, owing to confounding variables, additional
+information, as provided by interventions, or \emph{environments} \citep{peters2016causal}, is
+needed to resolve the statistical ambiguity; this  the tack is popular within the domain
+generalisation literature, wherein domain can be viewed as a different intervention on the true
+distribution.
+%
+By `confounding variable', or \emph{confounder}, we mean some variable that is that is the causal
+parent of two or more other variables and explains the statistical dependency between them despite
+those variables not being causally related themselves; in the trivariate case this corresponds to
+the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
+and \(Y\) that is eliminated by conditioning on the confounder \(S\).
+%
+In the shortcut learning problems addressed in Chapters 3 and 4, we will see statistical learning
+breakdown in a similar way yet for essentially the opposite reason.
+%
+Namely, instead of having latent variable that explains the statistical dependency \(X\) between
+\(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\) on
+which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to be
+the true causal mechanism.
+%
+We will delve more deeply into what Shortcut Learning is and how the mechanisms that give rise to
+it in \S\ref{sec:shortcut-learning}.
+%
+For now, however, we will move onto discussing different types of distribution shift that
+statistical learning has to contend with.
+
+% % (see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that
+% of % its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance, %
+% semenova2019study, zhai2022understanding, idrissi2022simple} 
+
+% % ------------------------------------------------------------------------------
+% \subsection{Learning under Class Imbalance/Long-tail Learning} %
+% ------------------------------------------------------------------------------  
+
+% Notes from and on \cite{menon2020long}: % \begin{itemize} \item Real-world classification
+% problems typically exhibit long-tailed label distributions, wherein most labels are associated
+% with only a few samples. % \item Owing to this paucity, generalisation on such labels is
+% challenging -- a classifier trained on such data following such a distribution is susceptible to
+% undesirable bias towards the dominant labels. % This problem has been widely studied in the
+% literature on learning under \emph{class imbalance} \citep{cardie1997improving}. % \item Existing
+% approaches to coping with class imbalance modify: % \begin{enumerate} \item inputs to the model,
+% for example by over- or under-sampling \citep{kubat1997addressing, chawla2002smote} \item outputs
+% (logits) of a model, for example by post-hoc correction of the decision threshold
+% \citep{fawcett1996combining} % \item internals of a model, e.g. by modifying the loss function
+% \end{enumerate}'
+
+% \end{itemize}'
+
+

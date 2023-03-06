@@ -1,0 +1,200 @@
+% ********************************************************************************
+\section{Through the Lens of Causality}\label{sec:lens-of-causality}
+% ********************************************************************************
+
+We now introduce a causal formalism of the distribution-shift problem, a formalism which has been
+frequently exploited in the DG and FairML literature as it provides a simple calculus with which to
+reason about desired (and undesired) variances.
+%
+It should be noted in advance that we only draw upon this formalism in order to provide a unified
+formulation of the distribution-shift problems considered in this thesis; we do not operate on the
+domain of causal graphs nor attempt to perform causal inference. 
+%
+The background on causality is thus commensurably light and we refer the reader to
+\cite{pearl2009causality} for full exposition of the topic.
+
+While the term `domain' typically refers to the observed distributions as a whole in both DA and DG
+alike (i.e. `source' versus 'target'), such terminology is somewhat rigid, as it fails to capture
+that the distributions share an underlying structure and how and which variables are shifted.
+%
+It is more arguably flexible then, consistent with \citep{mooij2020joint}, to think of the domain
+as some exogenous latent variable, which, by its conditioning, gives rise to the different observed
+distributions -- or subgraphs in the discrete case -- and explains how one is transformed
+(`shifted') into the other.
+%
+We will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
+DG literature \citep{arjovskyinvariant}), which need satisfy only the loose requirement that it
+belong to some Borel space (and thus may in theory be continuous or discrete).
+%
+Most simply, in the case of DA, \(E\) is simply a binary random variable, such that we have \(E:
+\Omega \to \{ \text{source}, \text{target} \}\), with \( \Omega \) being the sample space.
+%
+We view then view variables in our prediction task as constituting the node \gV \) in a Causal
+Bayesian Network (CBN; \cite{pearl1995bayesian}) where the direction of arrows (directed edges)
+between nodes indicate the direction of causality (e.g. \(\rmA \to \rmB \) means that \textbf{A}
+causes (is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
+\textbf{B} indicates independence between them when conditioned on their parents, i.e. \( \rmA |
+\text{Pa}(\rmA) \perp \rmB | \text{Pa}(\rmB) \), where \( \text{Pa}(\cdot) \) denotes the causal
+parents of its argument node.
+%
+Formally, a CBG is a kind of Directed Acyclic Graph (DAG), \(\rmG \triangleq \langle \gV, \xi
+\rangle \) with node-set (variables), \(\gV\), and (directed) edge-set, \(\xi\) consisting of
+tuples \((ij)\) meaning \(i \to j \), or `node \(i\) is a parent of node \(j\)'.
+%
+Each node in \rmG then defines a probability distribution, conditional on its parents, such that
+the joint distribution of \(\gV\), \(P(V)\), factorises as \( P(V) = \prod_{v \in \gV} P(v |
+\text{Pa}(v)) \) where we can now define \(\text{Pa}(\cdot)\) as a function that returns all nodes
+in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j \in \xi, j = v \}
+\).
+%
+Without loss of generality, for the prediction task with inputs, \(X\), and targets, \(Y\), we may
+introduce the aforementioned variable \(E\) to convert the joint distribution \(P(X, Y)\) into the
+conditional joint distribution \( P(X, Y) | E \); the structure of the underlying CBN determines
+the factorisation of this distribution and thus the nature of the distribution shift in question.
+%
+One can, for example characterise the case of covariate-shift with causal \(f^\star\), as having
+edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( \P(X, Y | E) | P(E) =
+P(Y|X)P(X|E)P(E) \). 
+%
+In Chapters 3 and 4 we go beyond the bivariate (excepting \( E \)) and covariate case and consider
+label-shift problems with an additional auxiliary label \(S\) -- corresponding to an identifier of
+some subgroup or spurious feature we wish to be invariant to in the name of fairness or
+generalisation --  in which \(E\) influences the joint distribution \( P(S, Y) \) but not the
+marginal distribution \(P(X)\), giving rise to representation bias and, from it, spurious
+correlations.
+%
+We illustrate in Fig.~\ref{fig:ds_cbgs} CBGs corresponding to different distribution shifts for a
+causal prediction task.
+%
+
+\import{background}{dist_shift_cbgs.tex}
+
+%
+We will see that such a formulation is particularly utile when we come to discuss domain
+generalisation which involves a multitude of source distributions, going beyond the dyadic
+source-target setup characterising DA.
+
+
+One common \citep{arjovskyinvariant, krueger2021out, sagawa2019distributionally} and intuitive way
+of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
+loop entails computing the empirical risk over each domain and the outer loop corresponds to
+finding the function that minimises the maximum of said risks.
+%
+We can then define, accordingly, the optimal predictor as 
+%
+\begin{equation}\label{eq:rob-erm-obj} 
+    f^\ast_\text{ robust } =
+    %
+    \underset{ f \in \gF }{ \text{\argmin} } 
+    %
+    \underset{ e \in \gE} { \text{max} }
+    %
+    \E_{ P^{tr}(X, Y | E = e) } \[ \ell ( f( X ), Y ) \]. 
+    %
+\end{equation}
+%
+As discussed at length before, domains/environments can be modelled as deriving from different
+interventions of the causal factorisation of \(P(X, Y\)).
+%
+It follows that, for Eq.\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
+domains, \(\gE^\dagger\) outside \(\gE\) (\(\gE^\dagger \cap \gE = \varrnothing \); i.e. the
+goal of DG), \(\gE\) must be a representative (well-covering) set of samples from the
+generating distribution \(\P(E)\) such that smooth interpolation along the underlying manifold
+is possible.
+%
+When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set},
+accordant with the robust optimisation literature \citep{ben2009robust} .
+%
+While generalisation to arbitrary perturbations is provably hard (or impossible), in general
+\citep{david2010impossibility}, when \(\gE\) encodes prior information about the kinds of
+perturbations one expects to encounter at test-time then incorporating it into the optimisation
+process can be fruitful, both for allowing interpolation within the convex hull defined by the
+set and to an extrapolated region outside of it \citep{krueger2021out}.
+%
+Indeed, it stands to reason that by allowing the model to glean which features are and aren't
+stable across environments would allow it to better approximate the true causal structure of
+the prediction task. 
+%
+This idea has been explored extensively in recent years in both the causal discovery
+\citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovskyinvariant,
+ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of
+inductive bias or additional information is necessary to provably identify the proper causal
+relations based on it \citep{lin2022zin}.
+%
+
+% % ------------------------------------------------------------------------------
+% Points to incorporate from, and inspired from, \cite{scholkopf2021toward}:
+% %
+% /\begin{itemize} \item The Independent Causal Mechanisms (ICM) principle states, in short, that the
+%     generative process giving rise to a system's observed variables is governed by
+%     \emph{autonomous} modules that do not inform (have zero mutual information \wrt{}) or influence
+%     each other.
+%     %
+%     In the probabilistic case, this means that the conditional distribution of each variable, given
+%     its causes (parents), does not inform or influence other mechanisms.
+%     %
+%     Applied to casual factorisation, the principle dictates that the factors should be independent
+%     in the sense that 
+%     %
+%     \begin{enumerate} \item Changing (intervening on) one mechanism in the system (CBN), \(P(i,
+%         \text{Pa}(i))\) does not change any of the other mechanisms in the same system, \(P(j,
+%         \text{Pa}(j))\), \(\forall j \neq i \).
+%       %
+% \item Knowing information about \(P(i, \text{Pa}(i))\) does not confer us additional knowledge
+% about \(P(j, \text{Pa}(j))\), i.e. \( \forall (i \neq j): \gI(i; j) = 0 \). \end{enumerate}
+%     %
+% The notion of invariant, autonomous, and independent mechanisms has appeared in many guises
+% throughout the history of causality research.
+%     %
+% The \emph{invariance criterion} of Herb Simon states that the true causal order is the one that is
+% invariant under the right sort of intervention.
+%     %
+% Pearl avers that a causal mechanism remains invariant when other mechanisms are subjected to
+% external (exogenous influence).
+%     %
+% One may then derive from the tenets of the ICM principle, the Sparse Mechanism Shift (SMS)
+% hypothesis, which simply postulates that small distribution shifts tend to manifest themselves in a
+% sparse of local way in a causal factorisation (i.e. not all factors should be affected
+% simultaneously).
+%     %
+% A factorisation, on the other hand, that does not exhibit this behaviour can be said to be
+% \emph{entangled}.
+
+% \item According to the ICM principle, independence of two mechanisms should mean  that the two
+%     conditional distributions do not inform or influence one another.
+%     %
+%     Note that this does not necessarily align with the notion of statistical dependency. \item
+%     Causal structure captures the physical mechanisms that generate statistical dependencies in the
+%     first place.
+%     %
+%     Statistical structure is an epiphenomenon that follows if we make unexplained variables random.
+%     %
+%     By virtue of modularity, a world model based on causally factorised latents is maximally
+%     compressive in general, and by this we mean it provides the simplest explanation to the complex
+%     physical world. 
+%     %
+%     It is much more efficient, for example, to explain changes in the shape of an object as one
+%     moves around it by a change in vantage point, in terms of global symmetry, rather than by
+%     independent changes in local structure, as would be explained by an \emph{entangled} model.
+%     %
+%     The connection between causal representation learning and modern physics thus becomes clear
+%     when one thinks as modularity being synonymous with invariances, or \emph{symmetries}, with it
+%     being little exaggeration to say that modern physics is the study of \emph{symmetries} and the
+%     corresponding conserved quantities, as predicated by Noether's celebrated theorem
+%     \citep{noether1918invariante}.
+%     %
+%     In light of this, the statistically- and causally-driven approaches are manifestly at odds with
+%     one another in the context of shortcut learning -- shortcut features provide the simplest,
+%     loss-minimising solution based on the training distribution, \(P^{tr}(X, Y)\), however they do
+%     not provide the simplest solution in the causal sense as evidenced by the lack of
+%     generalisability.
+%     %
+%     Models that are faithful to the underlying causal structure of the problem are much more robust
+%     to distributional changes and are more protean because the learned modules can be reconfigured
+%     arbitrarily according to the problem at hand and can be updated locally to incorporate new
+%     information without degrading modules adapted for other, unrelated tasks.
+%     %
+% \item
+
+% \end{itemize}
+

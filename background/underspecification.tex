@@ -1,0 +1,82 @@
+% ********************************************************************************
+\section{Underspecification}\label{sub:underspecification}
+% ********************************************************************************
+ 
+As we discussed in the previous section, one of the major dangers posed by SCL is its
+diaganosability: since data used for testing the model during development is generally drawn from
+the same distribution as the training data -- and thus inherits the same biases -- it is only once
+the model is deployed on \ood{} data that the potential shortcut-dependencies are revealed, unless
+one takes measures to properly vet the model's solutions using tools from the interpretability
+literature, such as feature attribution.
+%
+Thus, there is an element of what is termed \emph{underspecification} involved in the SCL problem,
+and in \ood{} generalisation generally, and is what makes this class of problem so challenging, or
+even ill-posed without sufficient inductive bias of the underlying problem or foreknowledge of the
+downstream distribution.
+%
+Underspecification simply refers to settings in which the \iid{} test data used for model-selection are
+insufficient proxies for the data on which the selected model is ultimately to be deployed.
+%
+By `insufficient' we mean not only is there a discrepancy in the performance of any given model
+when evaluated on the \iid{} and \ood{} test sets -- which is to be expected -- but that there also
+a discrepancy in how the performance the ranking of different models on the two datasets.
+%
+In a special, but typical, case, it may also be that a number of models achieve equitable
+performance on the \iid{} test set but perform wildly differently when exposed to \ood{} data.
+%
+To tie this in with our cows vs. camels conceit from the last section, given two classifiers such
+that one is shortcut-exploiting and one is shortcut-avoiding (causally-concordant)- and their
+evaluation on a subset of the training data, it could well be the case that the two models are
+performantly equivalent despite embodying very different solutions (the former relying on
+background, the latter relying on some non-linear combination of high-level features like head/body
+shape, posture, part-whole relations, etc.), one of which will fail in the \ood{} case in which the
+spurious correlation fuelling the shortcut solution no longer holds.
+
+%
+One can formalise the problem underspecification in terms of \emph{Raashomon sets}
+\citep{semenova2019study}.
+% defined \wrt{} the test set used to guide model-selection and indeed
+% assess the feasibility of performing a given task with a machine learning system given the data
+% available. 
+The Rashomon effect \citep{breiman2001statistical},
+%
+\footnote{taking its name from the Kurosawa film
+in which four witnesses recount wildly differing versions of the same crime}
+%
+which lends Rashomon sets their name, describes the phenomenon in which there exists a
+non-singular set of equally-performing predictors from a given function class $\gF$.
+%
+ The empirical Rashomon set is a subset of models of the hypothesis space $\gF$ forming an
+ equivalence class (according to scoring function $\phi$), with some tolerance, $\epsilon \in \R^+$, \wrt{}
+ the best model in the class, $f^\ast$. 
+%
+We can generalise the formulation given in \citet{semenova2019study} to allow performance to be
+measured \wrt{} to an evaluation set,  $\gD^{eval}$, by making this a second parameter of
+$\phi$, such that we have
+%
+\begin{equation*}
+  \frak{R} \triangleq 
+  \{ 
+    f \in \gF: \phi(f, \gD^{eval}) 
+    \leq 
+    \phi( f^\ast, \gD^{eval} ) + \epsilon 
+  \}.
+\end{equation*}
+
+It is perhaps interesting to note that (deep) ensembling hinges on the assumption that for many
+problems Rashomon sets exist, combining seemingly-equivalent (in terms of \iid{}\ performance)
+models to construct a composite predictor that draws upon a wider set of views and is thus more
+robust to distribution shift.
+%
+However, as noted before, in the case of the SCL problem, this Rashomon set could well be a
+singleton (in that all models are functionally equivalent) when the spurious feature is of low
+enough complexity (and thus easy to learn) and strongly predictive of the target, thus nullifying
+traditional ensemble-based approaches.
+%
+For \ood{} problems more generally, such as the one addressed in Chapter 5, the idea of
+underspecification, and Rashomon sets with it, is a pertinent one.
+%
+Indeed, the problem of model-selection, due to underspecification, was underscored in
+\cite{gulrajani2020search} in the context of domain generalisation and how to best conduct it is
+still very much an open question.
+
