@@ -10,32 +10,63 @@
 \let\cleardoublepage\relax
 
 \chapter*{Abstract}
-Biased data represents a significant challenge for the proper functioning of machine learning models,
-which affects the trustworthiness of deployed models.
-These biases are usually introduced by the data generation process,
-i.e., data is collected from non-representative samples or is the result of biased processes.
-However, these data deficiencies can be very expensive or even impossible to fix,
-which makes it desirable to solve the problem on the algorithmic end.
-In this work, I consider two different forms of data bias:
-labelling bias and sampling bias;
-investigated under the framework of algorithmic fairness and evaluated using common fairness metrics.
-Labelling bias here refers to a systematic bias,
-correlated with a sensitive attribute,
-which causes the labels in the dataset to differ from the ``true'' labels;
-whereas sampling bias indicates that samples are missing from the training set in a systematic way,
-but are still present in the setting where the model is intended to be deployed.
-Both biases will make a naively trained model fail to generalize.
-I present three approaches to tackling this problem, each relying on some form of additional knowledge about the data.
-The first approach, dealing with labelling bias, is based on implicit, probabilistic target labels
-which satisfy certain given statistics.
-These target labels can be used to train any likelihood-based model.
-The second approach deals with strong spurious correlations in the training data,
-which can be seen as a specific form of sampling bias.
-A bias-free partially-labelled context set is used to learn an interpretable representation of the data
-which is invariant to the spurious correlation and can be assessed qualitatively.
-The third approach deals with less extreme cases of sampling bias,
-but relaxes the assumption of having labels in the context set,
-by learning an invariant representation via distribution matching.
+%
+% This thesis contends with problems of \emph{distribution shift} under various guises and proposes
+% several mettods for mitigating their impact on deep learning (DL) models by capitalising on
+% additional unlabelled (or partially-labelled) data. 
+%
+Over the past decade, deep learning has paved the way for machine-learning systems to achieve
+unprecedented levels of performance on myriad real-world tasks by learning complex decision rules
+directly from large quantities of data.
+% prediction \citep{jumper2021highly}, algorithm discovery \citep{fawzi2022discovering}, and
+% language comprehension \citep{brown2020language}. % However, DL models can also be brittle owing
+% to their fundamentally statistical -- rather than causal -- nature, something that has led to
+% spectacular failures in safety-critical and ethically-sensitive applications.
+%
+However, the data-driven, and fundamentally statistical -- rather than causal -- nature of these
+systems is a double-edged sword that has led to catastrophic, difficult-to-diagnose, failures in
+various safety-critical and ethically-sensitive applications.
+%
+% Crucially, since it takes distributional-shift to expose this brittleness, such problems are
+% difficult to diagnose in development; we consider problems characterised by such, wherein
+% data-derived biases interplay with underspecification and distributional mismatch.
+%
+Indeed, worryingly often they learn to exploit \emph{shortcuts} that are extraneous to the
+underlying task.
+%
+% \cite{zech2018variable}, for instance, famously demonstrated that one can train a model for
+% pneumonia diagnosis achieving near-perfect accuracy solely based on the site-specific tags and
+% the associated prevalence rates -- such a model is demonstrably useless (which is to say,
+% dangerous) in practice despite its well-satisfying the training objective.
+%
+This is said to be a problem of \emph{shortcut-learning}; the first two papers constituting this
+thesis tackle different manifestations of such with appropriately different solutions, both
+predicated on leveraging additional data to obviate biases immanent in the training data.
+%, consistent with the overarching theme of semi-supervision.
+%
+In the first, we consider a setup in which sampling bias induces a one-to-one correspondence
+between subgroup and target; since learning from the training data alone is ill-posed, we propose
+a two-stage, interpretable framework exploiting the unique properties of invertible models, founded
+on the assumption that more-diverse unlabelled data is often readily obtainable, e.g. from
+censuses.
+%
+In the second, we relax the aforementioned problem such that subgroup-target combinations are
+missing in an asymmetric fashion, \wrt{} the target, and propose to solve this by matching the
+support of the training set with that of an unlabelled dataset representative of the test set. 
+%
+This is realised through a combination of clustering, adversarial training with a set
+discriminator, and a hierarchical-sampling strategy.
+%
+The third and final paper contends with the broader problem of generalising to data from
+\emph{domains} outside the training distribution  and how unlabelled data from extra domains can
+effectively further this goal.
+%
+Here, changes in domain induce natural distribution shifts corresponding, for example, to
+variations in lighting, perspective, and environs; to counteract them, we propose a simple,
+consistency-based approach based on causal matching.
+%this can be effective for semi-supervised domain generalisation across a range of tasks and
+%modalities.
+
 
 \endgroup
 

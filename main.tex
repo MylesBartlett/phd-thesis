@@ -494,7 +494,10 @@ titlepage,numbers=noenddot,%1headlines,
 % \include{FrontBackmatter/Titleback}
 % \cleardoublepage\include{FrontBackmatter/Dedication}
 % \cleardoublepage\include{FrontBackmatter/Foreword}
-% \cleardoublepage\include{FrontBackmatter/Abstract}
+\begin{refsection}[all]
+  \cleardoublepage\include{FrontBackmatter/Abstract}
+  \printbibliography
+\end{refsection}
 % \cleardoublepage\include{FrontBackmatter/Publications}
 % \cleardoublepage\include{FrontBackmatter/Declaration}
 % \cleardoublepage\include{FrontBackmatter/Acknowledgments}
@@ -530,10 +533,10 @@ titlepage,numbers=noenddot,%1headlines,
 }
 \part{Publications}\label{pt:main}
 
-\begin{refsection}[nifr]
-  \include{nifr/main}
-  \printbibliography
-\end{refsection}
+% \begin{refsection}[nifr]
+%   \include{nifr/main}
+%   \printbibliography
+% \end{refsection}
 
 % \begin{refsection}[okapi]
 %   \include{okapi/main}

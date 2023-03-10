@@ -22,28 +22,67 @@ The problem setups considered thus more closely align with those found in DG and
 afforded more attention to those topics for this reason.
 
 We would refer the reader to \cite{chapelle2009semi} for excellent (in both clarity and depth)
-exposition of theory underpinning SemiSL learning and methods in the pre-deep-learning era, a book
-we will reference extensively throughout this brief overview of the topic.
+exposition of the theoretical underpinnings of SemiSL and methods for it from the pre-deep-learning
+era (many of which are still fundamentally applicable today, however), a book we will reference
+extensively throughout this brief overview of the topic.
 %
-For a for comprehensive and current survey of SemiSL methods in the post-deep-learning, on the
-other hand, we refer the reader to \cite{yang2022survey}.
-
+For a comprehensive and current survey of SemiSL methods in the post-deep-learning, on the other
+hand, we would refer the reader to \cite{yang2022survey}.
 %
 % References to consider: \cite{chapelle2009semi, scholkopf2021toward, lienen2021credal,
 % sohn2020fixmatch, tarvainen2017mean, blum1998combining, gong2021alphamatch}
 %
 
 % --------------------------------------------------------------------------------
-\subsection{Cluster assumption.}\label{ssec:cluster-assumption}
+\subsection{Assumptions}\label{ssec:assumptions}
 % --------------------------------------------------------------------------------
+While SemiSL is an tantalising prospect whenever one has a large corpus of unlabelled data, and
+relatively sparing labelled data, it is unfortunately not the case that whenever there is
+unlabelled data available that one can mine it for additional information about the given task. 
 %
-% --------------------------------------------------------------------------------
-\subsection{Low-density-separation assumption.}\label{ssec:lds-assumption}
-% --------------------------------------------------------------------------------
+In fact, in some cases -- those in which there is an element of distribution shift -- one might
+find a degradation in performance when using SemiSL, relative to the supervised baseline trained on
+a small fraction of the samples.
 %
-% --------------------------------------------------------------------------------
-\subsection{Smoothness assumption.}\label{ssec:smoothness-assumption}
-% --------------------------------------------------------------------------------
+SemiSL theory requires that certain assumptions about the data-generating process be met in order
+for the learning paradigm to bear fruit (in sense of reduced generalisation-error/improved sample
+efficiency), whatever the chosen method, though this is not to say that there one can't observe
+practical benefits -- such as improved convergence-rates or stability -- detached from those
+assumptions.
+%
+We will broach the importance of the direction of causality -- that is how the data-generating
+process factorises -- later in this section; to begin with, following \citep{chapelle2009semi}, we
+summarise the justifying assumptions for SemiSL.
+%
+These assumptions are not complementary, in the sense that they can, or need be, simultaneously
+satisfied; rather they provide three different perspectives leading to different classes of
+algorithms. 
+%
+The cluster and low-density-separation assumptions most obviously form a dual-view of the same
+fundamental principle, understanding `cluster' to mean `high-density-connectedness'.
+
+\marginpar{Cluster Assumption}
+To elaborate, the \emph{cluster assumption} posits that data-points which can be connectable by a
+path through density regions should belong to the same class.
+%
+This is precisely the assumption that drives many traditional (density-based) clustering algorithms
+aiming to separate the data into groups of samples, or `clusters', using density (estimable, for
+instance, with kernel methods or neighbourhood graphs) as a surrogate for ground-truth labels.
+%
+\marginpar{Low-density-separation Assumption} If one flips this, such that we have instead have the
+axiom `data-points that are not connected by paths through high-density regions belong to different
+clusters', then one obtains the \emph{low-density-separation assumption}, though this is more
+commonly expressed in terms of the decision boundary, namely that the plane separating any two
+classes should carve out a region of low density.
+%
+Despite the equivalence, the two afford very different perspectives, from an optimisation
+standpoint. Indeed, the aforementioned density-based clustering algorithms, of which DBSCAN
+\citep{ester1996density} is the paradigmatic example, focus on the data-points themselves --
+grouping together those that are sufficiently close (dense) -- rather than on the space between
+them -- that is, the problem of choosing the set of separating planes with sufficiently-low path
+integrals.
+
+
 % --------------------------------------------------------------------------------
 \subsection{
   Causal connections: when should(n't) SemiSL work?
@@ -86,7 +125,7 @@ notice that in all three of these cases the causal factorisation is implied to b
 %
 The celebrated co-training theorem \citep{blum1998combining} similarly respects this precondition
 of anticausality in assuming that the co-trained predictors are conditionally independent given the
-label, as one have if the label were the cause (the causal parent in the bivariate causal graph).
+label, as one would have if the label were the cause (the causal parent in the bivariate causal graph).
 %
 
 % Points from \cite{castro2020causality} to integrate into the above discussion:
