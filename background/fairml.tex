@@ -17,20 +17,50 @@ that extend notions of, and methods for enforcing, fairness to continuous settin
 The term bias is often used to refer to demographic disparities in algorithmic systems that are
 objectionable for societal reasons.
 
-\subsection{Metrics for detecting bias}\label{ssec:bias-metrics}
+\subsection{Metrics for measuring bias}\label{ssec:bias-metrics}
 %
-\subsubsection{Independence}
+\subsubsection{Equalised rates}
 %
-For binary classification, one measure popular independence is \emph{demographic parity} (DP;
-\cite{zemel2013learning, feldman2015certifying}),
-known also as statistical parity, group fairness, disparate impact, inter alia. 
+A long-standing and heatedly-debated problem in FairML is how exactly one should define the concept
+of `fairness`; indeed what constitutes a `fair` decision depends both on the (individual, social,
+or institutional) value system and the context in question.
+%
+Much of the fairness literature has focussed on notions of fairness based on enforcing the
+predictor to output equal rates (e.g. of positive or correct predictions) across the sensitive
+groups.
+%
+Here, we briefly discuss and formulate Demographic Parity, Equal of Opportunity, and Equalised Odds
+as well-established -- and widely used on account of it -- metrics based on this tenet of
+equalising inter-group rates. These metrics all naturally adopt a similar form, only differing in
+their conditioning. This content is primarily relevant to Chapter 3 with the constituent paper
+being fairness-oriented, despite the generalisability of the method to spurious-correlation
+problems in general. Chapter 4 adopts a perspective in line with the domain generalisation
+literature, a la \cite{sagawa2019distributionally}, a perspective which is known under the guise of
+\emph{minmax fairness} in the FairML literature.
+
+\marginpar{\textbf{Demographic Parity}}
+%
+Unlike the other two metrics in this class, \emph{demographic parity} (DP; \cite{zemel2013learning,
+feldman2015certifying}) -- known also as statistical parity, group fairness, disparate impact,
+inter alia -- strictly applies to the binary-classification setting as it hinges on the notion of
+their being a \emph{positive} class.
 %
 While \(s\) is commonly binary itself, DP can be generally defined for categorical variables as the
-requirement that the probability of a positive prediction should be equal (at parity) across all
-demographic groups. 
+requirement that the probability of a positive prediction (positive rate) should be constant (at
+parity) across all demographic groups. 
 %
-This is equivalent to requiring, according to the standard notion of statistical independence, that
-the conditional and marginal distributions be equal, i.e.
+That is
+%
+\begin{equation}
+    \forall s \in \gS: P( \hat{Y} = 1 | S = s ) \seq \text{constant},
+\end{equation}
+%
+where `constant` denotes some placeholder constant value, noting that this could be any arbitrary
+value and does not take into account utility, such that a majority or randomly classifier
+automatically this satisfies the condition. 
+%
+This above constraint is equivalent to requiring, according to the standard notion of statistical
+independence, that the conditional and marginal distributions be equal, i.e.
 %
 \begin{equation}
     P( \hat{Y} = 1 | S) \seq P( \hat{Y} = 1 )
@@ -40,23 +70,22 @@ where \(\hat{Y}\) denotes the random variable corresponding to the predictions o
 predictor, \(f\) .
 %
 Since requiring that this condition be satisfied exactly is generally overly strict, it is common
-to introduce some slack factor, \(\epsilon\), that defines the feasible region for a relaxation of
-the constraint:
+to introduce some relaxation factor, \(\epsilon\), that expands the constraint to a feasible
+region so that with some minor rearrangement we may instead write:
 %
-\begin{equation} \forall s \in \gS: P(\hat{Y}=1|S=s) P(S=s)
-    %
-    \in 
-    %
-[ 1 - \epsilon, 1 + \epsilon ]. \end{equation}
+\begin{equation}
+    \forall s \in \gS: P(\hat{Y}=1|S=s) P(S=s) \in [ 1 - \epsilon, 1 + \epsilon ]. 
 %
-In practice, we can then measure fairness (one notion of it, at least) of a predictor by evaluating
-by how much it violates this condition, either in terms of differences (DPDiff) or ratios
-(DPRatio), which in non-binary cases can be computed pairwise and then optionally summarised by
-taking the maximum over the resulting set.
+\end{equation}
+%
+We can measure fairness (one notion of it, at least) of a predictor by evaluating by how much it
+violates this condition, either in terms of differences (DPDiff) or ratios (DPRatio), which in
+non-binary cases can be computed pairwise and then optionally summarised by taking the maximum over
+the resulting set.
 
-The above notion of (statistical) independence can be expressed generally  in terms of the mutual
-information (MI) between \(Y\) and \(S\), defined as the Kullback-Leibler (KL) divergence between
-the joint and product of the marginal distributions
+This idea of statistical independence can be expressed generally in terms of the mutual information
+(MI) between \(Y\) and \(S\), defined as the Kullback-Leibler (KL) divergence between the joint and
+product of the marginal distributions
 %
 \begin{equation}
     \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
@@ -66,14 +95,72 @@ If, and only if, \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables sai
 statistical independent.
 %
 MI admits various decompositions into sums of marginal and joint/conditional entropies that make it
-particularly amenable to optimisation. 
+particularly amenable for optimisation purposes. 
 %
 In invariant representation learning (encompassing fair representation learning, domain adaptation,
 and domain generalisation), for example, a common method for imparting independence, \(Z \perp S \)
 -- which is sufficient for \(Y \perp S\), given a predictor head, \(c: \gZ \to \gY \) -- between
 the representations learned by encoder \(g: \gX \to \gZ \) and the sensitive attribute to train
 \(g\) to maximise the conditional entropy \( H(\hat{S}|Z) \) generated by an adversarial predictor,
-\(a: \gZ \to \bigtriangleup^{|\gS|}\) (trained via MLE to maximise \( P(\hat{S}|Z) \)
+\(a: \gZ \to \bigtriangleup^{|\gS|}\) (trained via MLE to maximise \( P(\hat{S}|Z) \).
+
+%
+\marginpar{\textbf{Equality of Opportunity}}
+%
+The second of the aforementioned metrics, \emph{Equality of Opportunity} (EO;
+\cite{hardt2016equality}) demands a stricter form of parity, namely of the predictive rates
+(independence \wrt{} \(S\)) conditioned on the ground-truth positive labels, \(Y=1\), which is to
+say parity of the true-positive rates (TPRs) across the groups:
+%
+\begin{equation}
+    %
+    \forall s \in \gS: P( \hat{Y}=1|Y=1, S=s ) = P(\hat{Y}|Y=1),
+    %
+\end{equation}
+%
+By making the above symmetric, \wrt{} \(Y\), such that not only do we demand parity of the TPRs but
+also true-negative rates (TNRs) we obtained the final and strictest of our ERs-based metrics, Equalised Odds
+(EqOd; \cite{woodworth2017learning}) -- also known as disparate mistreatment.
+%
+Due to this symmetry, EqOd can be generalised to categorical variables
+\citep{woodworth2017learning}, yielding the unified formulation:
+%
+\begin{equation}
+    %
+    \forall y s \in \gY, \forall s \in \gS: P( \hat{Y}=y|Y=y, S=s ) = P(\hat{Y}=y|Y=y, S=s),
+    %
+\end{equation}
+%
+\marginpar{\textbf{Fairness-accuracy trade-off}}
+%
+It has long been understood that there is inherent trade-off between the utility, as measured by
+aggregate performance and fairness under conceptions of fairness based on ERs
+\cite{kaplow1999conflict}; with accuracy being the principal measure of said utility in the context
+of classification, this trade-off is commonly referred to as the \emph{accuracy-fairness
+trade-off}, though as we will see in the next subsection, such a trade-off does not apply to
+fairness in general, as in the case for notions of fairness defined by \emph{minmax fairness} where
+one optimises for the worst-group utility rather group parity.
+%
+Given the existence of such a trade-off, the problem of learning a utile classifier subject to
+ER constraints induces not one optimal solution (or one equivalence class of optimal solutions,
+more accurately) -- as one would have when focussed on only the utility -- but rather a set of
+\emph{Pareto optimal} solutions, the discovery of which is the remit of multi-objective
+optimisation (MOO; \cite{sawaragi1985theory, deb2013multi}). 
+%
+MOO has appeared both implicitly and explicitly throughout the FairML literature, the latter only
+relatively recently (e.g. in \cite{navon2020learning}). 
+%
+Indeed, examples of the former include the methods of \cite{louizos2015variational,
+madras2018learning} which entail learning a \emph{linear scalarised} solution,  with position of
+this solution on the \emph{Pareto frontier} controlled by a linear weighting of loss terms
+optimising for utility and fairness separately.
+
+% Equality of error rates (accuracy) is one of the most intuitive and well-studied group fairness
+% notions, and in enforcing it one often implicitly hopes that higher error rates on disadvantaged
+% groups will be reduced towards that of the majority group.
+% In practice, however, equalised error rates and similar notions may require artificially inflating
+% error on easier-to-predict groups, without necessarily decreasing the error rate for the
+% harder-to-predict of the groups. 
 
 %
 % ------------------------------------------------------------------------------ 
