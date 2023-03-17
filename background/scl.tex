@@ -4,17 +4,16 @@
 
 While the notoriety of shortcut-learning (SCL) in ML sphere is relatively recent, the phenomenon
 underpinning it is a fundamental one in statistics, one that may be summed up with the age-old
-aphorism \emph{cum hoc ergo propter hoc}, oft translated as \emph{correlation does not imply
-causation}.
+aphorism \emph{correlation does not imply causation}.
 %
 DNNs define deeply expressive function classes, yet the solutions encoded by their parameter space
 need not be commensurately complex; in fact, it is well established that these models -- in the
 absence of an countervailing (inductive) bias -- exhibit a \emph{simplicity bias} (SB;
-\cite{valle2018deep}), that is, the tendency to favour simpler solutions should those solutions
+\cite{valle2018deep}), that is, the tendency to favour simpler solutions, should those solutions
 serve sufficiently well for the task (as defined by the training set and loss function) at hand.
 %
 While the spate of failures following the deep-learning revolution were surprising -- and at the
-very least spirit-dampening to the those with lofty hopes for ML -- it is, given thought,
+very least mildly-disenchanting to those with lofty hopes for ML -- it is, given thought,
 \emph{not} surprising that SB should exist and beget SCL, for while SB alone is not alone a
 precondition for SCL, the second precondition  of SCL is a problem (on the data side) that has long
 challenged statistical modelling: \emph{sampling bias}.
@@ -30,6 +29,7 @@ modelling side, so long as certain assumptions or criteria can be met;
 %
 indeed, both DG and FairML are active -- more so than ever -- subfields of ML contending with
 different flavours of the problem and have successfully developed mitigation strategies for them.
+
 %
 The now-canonical example of shortcut-learning in the DG literature -- which we will also invoke
 here for its simplicity -- is due to \cite{beery2018recognition}, wherein the task is one of
@@ -67,7 +67,7 @@ The obvious one, which we have already belaboured, is `variance` ` to spurious f
 that are statistically but not causally related to the target; the second one, however, is more
 subtle and a consequence of the first one, that being \emph{feature suppression}, in that the model
 is not simply variant to the `wrong' features but invariant to the `right' ones -- it is not simply
-a matter of a difference in importance but in reality a more pernicious matter of
+a matter of a difference in importance but, in reality, a more pernicious matter of
 inclusion/exclusion.
 %
 This is to say, if a shortcut solution is robust enough to achieve near-zero loss on the training
@@ -92,8 +92,8 @@ adversarial-robustness fail.
 %
 The power of ensembles, for instance, resides in their combining of different views of the data --
 engendered by stochasticity in the weights and optimisation procedure -- yet shortcut solutions
-produce correspond to such a strong (easy-to-learn and potent) and stable attractor that all
-ensemble members simply converge onto that one corresponding view.
+create such a strong (easy-to-learn and potent) and stable attractor that all ensemble
+members simply converge onto that one corresponding view.
 %
 Domain adversarial learning -- popularised by \cite{ganin2016domain} and a mainstay throughout the
 DA, DG, and FairML literature alike -- on the other hand suffers from the problem that for the

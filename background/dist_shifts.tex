@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{A (brief) taxonomy of distribution shifts}
+\section{A (brief) taxonomy of distribution shifts}\label{sec:dist-shift}
 % ********************************************************************************
 In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
@@ -13,7 +13,7 @@ introduction of an exogenous variable -- allowing for an elegant formulation of 
 shift problem and its relation to invariance -- but we leave that aside for now and seek to present
 them in more general terms.
 % --------------------------------------------------------------------------------
-\subsection{Covariate shift}{ssec:covariate-shift}\label{ssec:covariate-shift}
+\subsection{Covariate shift}\label{ssec:covariate-shift}
 % --------------------------------------------------------------------------------
 The most well-studied of the shifts, simply put, covariate shift refers to a change in the marginal
 distribution of the inputs, that is to say we have \( P^{tr}(X) \neq P^{te}(X) \) while the
@@ -33,7 +33,7 @@ directions; in the context of DA and SemiSL, we will discuss at some length the 
 paradigms on this characteristic of the problem.
 %
 Indeed, a common assumption in DA is that the source and target domains are separated by covariate
-shift \cite{david2010impossibility}, however this assumption breaks down when the problem is
+shift \citep{david2010impossibility}, however this assumption breaks down when the problem is
 anticausal (when we have what \cite{moreno2012unifying} term prior shift).
 
 % --------------------------------------------------------------------------------
@@ -49,9 +49,9 @@ and test data; many real-world datasets used for training exhibit long tails, \w
 (or targets generally), in which the most-frequent class can appear orders-of-magnitude more
 frequently than the least-frequent class, while the test data has more even coverage.
 %
-As discussed in \S\ref{iid}, a classic approach to rectifying this kind of shift, in the case of
+As discussed in \S\ref{sec:iid}, a classic approach to rectifying this kind of shift, in the case of
 the discriminative models we are usually concerned with, is to  importance-weight the instance
-losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y}{P^{tr}(Y)}
+losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)}
 \), or simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the
 case).
 %
@@ -78,7 +78,7 @@ referring to changes in the conditional distributions, \( P(Y|X) \) or \( P(X|Y)
 respective (\( P(X) \) and \( P(Y) \)) marginal distributions are preserved.
 %
 Thus, in the classification setting, concept shift corresponds to a change in the mechanism used to
-label the data; this might entail, for example, changes in the class definitions, differences in
+annotate the data; this might entail, for example, changes in the class definitions, differences in
 annotation protocol or grading scales between sites,  or different proclivities/standards in the
 annotators in the case of human-driven annotation should the task possess an element of
 subjectivity (AI-alignment via RLHF \citep{bai2022training} being a prime and topical example of
@@ -107,13 +107,13 @@ constituent shifts (a problem of identifiability).
 % --------------------------------------------------------------------------------
 Sampling (which we use synonymously with \emph{selection} and \emph{representational}) bias refers
 to distribution shifts that arise due to systematic flaws in the data-collection process that cause
-training samples being selected in a non-uniform fashion from the general population being
+training samples to be selected in a non-uniform fashion from the general population being
 modelled.
 %
 That is to say, the data is not missing at random but rather conditionally, and most notably when
 the conditioning is on the target or some other characteristic, such as a particular demographic.
 %
-Thus, sampling bias isn't a type of distribution shift in itself, but rather a mechanism by which the
+Thus, sampling bias is not a type of distribution shift in itself, but rather a mechanism by which the
 above-described distribution shifts can emerge, and it is particularly germane to Chapters 3 and 4
 of this thesis in which we consider extreme cases of it in which certain demographics, or outcomes
 for certain demographics, are omitted from the training data, promoting spurious correlations
@@ -122,7 +122,7 @@ between said demographics and the outcome.
 To give an example, in conducting a local survey there will invariably be subsets of the general
 population which are under-represented, or altogether excluded, from data-collection due to
 availability, willingness, and applicability to the research being conducted; if the locale in
-question were a University, then we would expect the population to be significantly younger and
+question were a university, then we would expect the population to be significantly younger and
 more liberal than on average.
 %
 Indeed, this a problem is particularly well-noted in experimental psychology, in which cohorts

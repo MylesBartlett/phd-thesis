@@ -2,8 +2,8 @@
 \section{Supervised learning, the \iid{} assumption, and its pitfalls}\label{sec:iid}
 % ********************************************************************************
 
-Traditional learning algorithms usually assume (or are only optimal for) that the training and test
-samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
+Traditional learning algorithms usually assume  that (or are only optimal when) the training and
+test samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
 variables, such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \). 
 %
 Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
@@ -125,7 +125,7 @@ been impugned \citep{byrd2019effect, zhai2022understanding}.
 \cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
 importance-weighting diminish over the course of training; these effects can be partially recovered
 when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
-decay but without such interventions there converged-upon solution is identical for both IW-ERM and
+decay but without such interventions the converged-upon solution is identical for both IW-ERM and
 vanilla ERM. 
 %
 Evidence for this was also provided by \cite{sagawa2019distributionally}, who stress the importance
@@ -157,7 +157,7 @@ tasks like predicting the probability that a given image contains a dog (image c
 the probability that a given chest X-ray indicates a pulmonary infiltration, or some other thoracic
 condition.
 %
-Indeed, the task accurately estimating \( P(Y | X) \) can be provably solved by observing a
+Indeed, the task of accurately estimating \( P(Y | X) \) can be provably solved by observing a
 sufficient amount of \iid{} data drawn from the joint distribution \( P(X,Y) \), yet this only
 solves the problem from the aforementioned statistical perspective, and we will see that this
 perspective is not always aligned with the causal one, which can lead to problems in generalisation

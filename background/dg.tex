@@ -11,16 +11,16 @@ and the goal is to train a classifier to generalise from the former to the latte
 degree of invariance), DG is more general, in that one is instead given datasets from multiple
 domains and seeks to train a classifier that can generalise to previously unseen ones. 
 %
-That is, given the meta distribution \( \mathfrak{D} \triangleq \{\gD_e \}_{e \in \gE} \) consisting of
-\( |\gE| \) distributions drawn from different domains, or \emph{environments}, denoted by the
-index set \( \gE \subset \sN \), the goal is to train a classifier that will perform optimally, or
-with minimal degradation, when presented with distribution \( \gD_{e^{te}} \) from a novel
-domain \( e^{te} \notin  \gE \).
+That is, given the (empirical) meta distribution \( \mathfrak{D} \triangleq \{\gD_e \}_{e \in \gE}
+\) consisting of \( |\gE| \) distributions drawn from different domains, or \emph{environments},
+denoted by the index set \( \gE \subset \sN \), the goal is to train a classifier that will perform
+optimally, or with minimal degradation, when presented with distribution \( \gD_{e^{te}} \) from a
+novel domain \( e^{te} \notin  \gE \).
 
 %
 While we would ideally have a model that could generalise to any arbitrary environment (assuming
 the task remains consistent), this is sadly impossible given finite data
-\cite{david2010impossibility}, and so our expectations must be tempered to being able to generalise
+\citep{david2010impossibility}, and so our expectations must be tempered to being able to generalise
 within some region the training distribution.
 %
 The justification of DG can then be viewed from two perspectives: 
@@ -30,8 +30,8 @@ The justification of DG can then be viewed from two perspectives:
 %
         It stands to reason that we should be able to exploit information about known the known set
         of variances -- due to the domain -- in order to learn a predictor that can generalise
-        within the convex set (affine combinations of those variances) they define as well of those
-        variances that are close by.
+        within the convex set (affine combinations of those variances) they define as well as to
+        those variances that are close by.
 %
         The principle here is similar to that of vicinal risk minimisation
         \citep{chapelle2000vicinal} as in \cite{zhang2017mixup}, wherein data augmentation fulfils
@@ -51,26 +51,26 @@ The justification of DG can then be viewed from two perspectives:
         Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
         gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem
         setup of DG and its desiderata in causal terms, and we will do so ourselves in
-        \S~\ref{sec:lens-of-causality} in order to provide a more unified perspective of the
+        \S\ref{sec:lens-of-causality} in order to provide a more unified perspective of the
         distribution shift problems discussed thus far.
 %
 \end{enumerate}
 
-% --------------------------------------------------------------------------------
-\subsection{Connection between Fairness and DG}\label{ssec:fairml-dg-cxn}
-% --------------------------------------------------------------------------------
-\citet{creager2021environment} cast the problem fair machine learning as one of DG,
-where the protected groups takes the role of the different domains/environments. 
-%
-In fairness literature, the learning objectives represent context-specific fairness notions, while
-in OOD literature, the learning objectives should be designed according to invariance assumptions.
-%
-A number of fair representation learning methods \citep{edwards2015censoring, madras2018learning}
-are derived from domain adaptation (DA) methods. When protected attributes are unknown, DRO and
-adversarially learning can be applied as in \citet{hashimoto2018fairness} and
-\citet{lahoti2020fairness}, respectively, to obtain a distributionally robust predictor and
-minimizing the worst-subgroup performance; the former can also be adapted to cases in which such
-information is known as in \citet{sagawa2019distributionally} 
+% % --------------------------------------------------------------------------------
+% \subsection{Connection between Fairness and DG}\label{ssec:fairml-dg-cxn}
+% % --------------------------------------------------------------------------------
+% \citet{creager2021environment} cast the problem fair machine learning as one of DG, where the
+% protected groups takes the role of the different domains/environments. 
+% %
+% In fairness literature, the learning objectives represent context-specific fairness notions, while
+% in OOD literature, the learning objectives should be designed according to invariance assumptions.
+% %
+% A number of fair representation learning methods \citep{edwards2015censoring, madras2018learning}
+% are derived from domain adaptation (DA) methods. When protected attributes are unknown, DRO and
+% adversarially learning can be applied as in \citet{hashimoto2018fairness} and
+% \citet{lahoti2020fairness}, respectively, to obtain a distributionally robust predictor and
+% minimizing the worst-subgroup performance; the former can also be adapted to cases in which such
+% information is known as in \citet{sagawa2019distributionally} 
 
 % (\citep{krueger2021out} provide a good (albeit brief) discussion of the parallels between fairness and OOD
 % generalization)

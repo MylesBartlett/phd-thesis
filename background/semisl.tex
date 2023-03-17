@@ -19,8 +19,7 @@ labelled data are drawn from the same distribution.
 Rather, the unifying theme across the constituent papers is how one can use unlabelled data to
 buttress against different types of distribution shift.
 %
-The problem setups considered thus more closely align with those found in DG and DA; we have
-afforded more attention to those topics for this reason.
+The problem setups considered thus more closely align with those found in DG and DA. 
 
 We would refer the reader to \cite{chapelle2009semi} for excellent (in both clarity and depth)
 exposition of the theoretical underpinnings of SemiSL and methods for it from the pre-deep-learning
@@ -37,7 +36,7 @@ to a transient phenomenon) but collecting data in general is not, how can one ex
 unannotated data to improve a model's predictive power?
 %
 Thus, we can think of our dataset as having two partitions: one corresponding to the labelled
-dataset, as in \ref{sec:iid}, which we can use for standard supervised learning and which we will
+dataset, as in \S\ref{sec:iid}, which we can use for standard supervised learning and which we will
 override here with the notation \( \gD^{tr}_l \triangleq \{ x_i \}_{i=1}^{N^{tr}_l} \) for
 clarity's sake, and a second partition corresponding to the unannotated data, which we will denote
 by \( \gD^{tr}_u  \triangleq \{ x_i \}_{i=1}^{N^{tr}_u} \).
@@ -58,8 +57,8 @@ perspective, namely, as supervised learning with additional information \citep{c
 %
 \marginpar{\textbf{Transduction}}
 %
-Closely related to SemiSL is the idea of \emph{transductive learning} (TL) pioneered by Vapnik in
-the 90s \citep{gammerman1998learning}. 
+Closely related to SemiSL is the idea of \emph{Transductive Learning} (TL), as pioneered by Vapnik
+\citep{gammerman1998learning}. 
 %
 With TL, rather than pursuing the lofty goal of learning a predictor that can generalise across the
 entire input domain, \( \gX \) -- reflecting the inductive process of extrapolation -- one instead
@@ -85,13 +84,13 @@ goal of generalising between two specific domains -- with the target domain give
 %
 Niceness of this inter-field parallel aside, we afford TL particular mention here due to its
 pertinence in Chapter 4, wherein we consider the possibility of using the test set itself as a
-reference dataset for the matching procedure.
+reference dataset for the proposed matching procedure.
 
 
 % --------------------------------------------------------------------------------
 \subsection{Assumptions}\label{ssec:assumptions}
 % --------------------------------------------------------------------------------
-While SemiSL is an tantalising prospect whenever one has a large corpus of unlabelled data, and
+While SemiSL is a tantalising prospect whenever one has a large corpus of unlabelled data, and
 relatively sparing labelled data, it is unfortunately not the case that whenever there is
 unlabelled data available that one can mine it for additional information about the given task. 
 %
