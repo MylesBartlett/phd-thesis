@@ -4,6 +4,14 @@
 \usepackage{import}
 \usepackage{natbib}
 \bibliographystyle{plainnat}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=red,
+}
 
 \usepackage{tikz}
 \usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
@@ -17,8 +25,15 @@
 
 \import{.}{math_commands}
 
-\begin{document}
+\title{Some Fairly-Incomprehensive Background on Some Fairly-Related Things}
+\date{}
+\author{}
 
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
 \import{background}{main}
 \bibliography{background/bibfile}
 

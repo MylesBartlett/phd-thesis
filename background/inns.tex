@@ -73,8 +73,8 @@ of said representations due to its having an exact inverse (whereas auto-encoder
 approximate inverse (the decoder) that must be trained separately from the encoder).
 %
 That is to say, while \(f\) may deform manifold \(\gX\) in arbitrarily non-linear ways, since each
-point is mapped uniquely from the domain to codomain then only the form of the information
-contained in the input can change, not its extent. 
+point is mapped uniquely from the domain to codomain only the form of the information contained in
+the input can change, not its extent. 
 %
 This is in contrast to conventional architectures that define \emph{surjective} mappings that embed
 inputs into spaces much smaller than \(\R^d\) (in line with the \emph{Manifold Hypothesis}
@@ -115,7 +115,7 @@ their non-linear, non-invertible functions, to only a subset of the input dimens
 that the layer as a whole remains invertible, thus limiting the degree to which interdependencies
 between the input dimensions can be modelled.
 %
-Finally, if not properly constrained (e.g. to be bidirectionally \(K\)-Lipschitz), the
+Finally, without proper parametric constraints (e.g. to be bidirectionally \(K\)-Lipschitz), the
 optimisation of INNs can be prone to instabilities that can render them \emph{numerically}
 non-invertible, despite their design, and thus invalidate computations made according to
 Eq.~\ref{eq:cov} \citep{behrmann2021understanding}.

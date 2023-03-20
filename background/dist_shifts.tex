@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{A brief taxonomy of distribution shifts}\label{sec:dist-shift}
+\section{A (brief) taxonomy of distribution shifts}\label{sec:dist-shift}
 % ********************************************************************************
 In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
@@ -16,8 +16,8 @@ them in more general terms.
 \subsection{Covariate shift}\label{ssec:covariate-shift}
 % --------------------------------------------------------------------------------
 The most well-studied of the shifts, simply put, covariate shift refers to a change in the marginal
-distribution of the inputs, that is to say we have \( P^{tr}(X) \neq P^{te}(X) \) while the
-conditional distribution remains (effectively) unchanged, i.e. \( (P^{tr}(Y|X) = P^{te}(Y|X) \).
+distribution of the inputs, that is to say we have \( P^{tr}(X) \not\approx P^{te}(X) \) while the
+conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \approx P^{te}(Y|X) \).
 %
 % NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
 % much meaning unless we presuppose the direction of causality.
@@ -42,7 +42,7 @@ anticausal (when we have what \cite{moreno2012unifying} term prior shift).
 % NOTE: As noted in the note above, we might want to specify that this type of shift only applies
 % to anticausal tasks
 Diametric to the above, target shift describes, as the name suggests, a shift in the
-marginal distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \neq P^{te}(Y) \).
+marginal distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \not\approx P^{te}(Y) \).
 %
 In the classification setting, this means that classes do not appear equifrequently in the training
 and test data; many real-world datasets used for training exhibit long tails, \wrt{} the classes
