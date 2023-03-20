@@ -21,7 +21,7 @@ then \(f\) in its totality, also satisfies this property, allowing us to build a
 INNs by chaining together layers defining these subfunctions.
 %
 
-The typical bailiwick of INNs is density estimation -- and by complement, generative modelling --
+The usual bailiwick of INNs is density estimation -- and by complement, generative modelling --
 due to their hallmark diffeomorphic property that make it possible for densities under the models
 to be calculated \emph{exactly}, in contrast to variational methods that only do so up to a lower
 bound (the so-called ELBO). 
@@ -42,15 +42,19 @@ Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), w
 \(\gN(\cdot; 0, \sI)\) the aforementioned Gaussian distribution, can be computed as
 %
 \begin{equation*}
+%
     \begin{aligned}
+        %
         &\log P(X=x) = 
         %
         \log P(Z=z) + \sum_{l=1}^L \log \left| \det\left( \frac{\diff f_l}{ f_{l-1}}\right)
         \right|, \\
         %
         &P(Z=z) = \gN(z; 0, \sI),
+        %
     \end{aligned}
-\label{eq:changeofvariables}
+\label{eq:cov}
+%
 \end{equation*}
 %
 and training the model simply amounts to maximising this quantity over the empirical training
@@ -59,25 +63,59 @@ distribution in the usual fashion.
 As with GANs and VAEs, to sample from \(P(X)\), one needs only draw a random sample from the
 corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
 
-%
+
 \marginpar{\textbf{Losslessness}}
 %
 In Chapter 3, however, it is not the foregoing density-estimation capabilities of INNs that we are
 interested in, rather the diffeomorphic property itself, insofar as it guarantees the learned
-representation is \emph{lossless} \wrt{} the inputs.
+representations are \emph{lossless} \wrt{} the inputs as well as a means to visualise the factors
+of said representations due to its having an exact inverse (whereas auto-encoders have only an
+approximate inverse (the decoder) that must be trained separately from the encoder).
 %
 That is to say, while \(f\) may deform manifold \(\gX\) in arbitrarily non-linear ways, since each
 point is mapped uniquely from the domain to codomain then only the form of the information
 contained in the input can change, not its extent. 
 %
 This is in contrast to conventional architectures that define \emph{surjective} mappings that embed
-inputs into a latent space much smaller than \(\R^d\) (in line with the Manifold Hypothesis
+inputs into spaces much smaller than \(\R^d\) (in line with the \emph{Manifold Hypothesis}
 \citep{fefferman2016testing}).
 %
 Other works have also capitalised on this information-preservation explicitly, e.g. both
 \cite{hoogeboom2019integer} and \cite{xie2021enhanced} explore the natural suitability of INNs for
 lossless image compression.
+%
+Contrastingly, in work postdating that done in Chapter 3, normalising flows have been applied
+applied to FairML problems with the insight that one can leverage the exact-density computation to
+define define an optimal adversary \citep{balunovic2021fair, cerrato2022fair}. 
+%
+This allows for obtaining provably fair representations while also obviating the optimisation
+challenges that accompany (parametric) adversarial training, though at the cost of an independent
+INN for each of the sensitive groups.
 
-
-
-
+\marginpar{\textbf{Practical drawbacks}}
+%
+As discussed, INNs have a number of unique and compelling properties that would seem to make them
+the choice method for many generative purposes; INNs do have their share of practical
+shortcomings, however. 
+%
+Notably, bijectivity does not come at a cost; while there are some ways of mitigating it, such as
+factoring out parts of the representation at intermittent steps \citep{hoogeboom2019integer}, one
+is constrained to having a latent space that is equidimensional to the input space and when the
+latter is large, as in the case of images, training an INN can be computationally challenging.
+%
+Conventional architectures do not suffer this problem as they can make free use of coarsening
+(downsampling) operations throughout their extent.
+%
+This drawback is further compounded by the fact that the layers making up an INN are necessarily
+less expressive than their invertible counterparts and thus more them are needed to achieve
+comparable levels of expressiveness in composition. 
+%
+The coupling layers that constitute the atomic building blocks in \cite{dinh2014nice} restrict
+their non-linear, non-invertible functions, to only a subset of the input dimensions at a time so
+that the layer as a whole remains invertible, thus limiting the degree to which interdependencies
+between the input dimensions can be modelled.
+%
+Finally, if not properly constrained (e.g. to be bidirectionally \(K\)-Lipschitz), the
+optimisation of INNs can be prone to instabilities that can render them \emph{numerically}
+non-invertible, despite their design, and thus invalidate computations made according to
+Eq.~\ref{eq:cov} \citep{behrmann2021understanding}.

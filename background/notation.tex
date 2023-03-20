@@ -1,11 +1,46 @@
 % ********************************************************************************
 \section{Some notes on notation}\label{sec:notation}
 % ********************************************************************************
-To simplify exposition, we will abuse notation throughout this chapter by allowing functions of the
-form \(f: X \to Y \) to accept random and observed variables interchangeably; we assume that the
-derived function classes are Borel Measurable (a trivial precondition in practice) and as such that
-a function of a random variable is also a random variable. \(f\) to operate on random variables
-\(X\).
+We describe here some of the general notation schemes used throughout this background chapter,
+leave the concrete notation to be defined contextually, both to allow overloading (drawing from a
+small alphabet) and to minimise cognitive overhead for the reader.
+
+%
+First, we denote random variables using upper-case (non-calligraphic) letters and their associated
+observed/deterministic/realised variables with the corresponding lower-case letters.
+%
+Following convention, we consistently denote by \(X\) and \(Y\) the input (covariate) and
+target (response) variables, respectively; by \(S\) some auxiliary variable on which we want to
+condition (for evaluation and/or optimisation), such as the domain (in domain
+adaptation/generalisation) or sensitive attribute (in algorithmic fairness); by \(Z\) the latent
+space, representations, encodings, or embeddings (all synonymously) of some model.
+%
+Second, calligraphic letters are used to denote (but not exclusively) the domain of a variable,
+e.g. \(x \in \gX \).
+%
+Under this scheme, we would have for the random variable, \(X: \Omega \to \R^d \), realisations \(x
+\in \gX \subset \R^d \) defined on a subset of the \(d\)-dimensional space of real numbers.
+%
+We then use \(P(\cdot)\) to denote probability distributions with conditioning indicated as
+\(P(X=x)\) -- continuing the foregoing example -- and use \(\gD\) to denote \emph{datasets} that
+correspond to the empirical distributions of variables; for instance \(\gD \triangleq
+\{x_i\}_{i=1}^N \) denotes a dataset made up of \(N\) observations of \(X\).
+%
+We will often augment this notation with super- and subscripts to indicate a variety of concepts
+including, inter alia, association with a particular subset of the data or concept, optimality,
+observability, and approximation.
+%
+Some representative examples include \(\gD^{tr}\) and \(\gD^{te}\) to denote the training and test
+sets, respectively, \(f^\ast\) to denote the optimal function \wrt{} some optimisation problem, and
+\(\hat{y}\) to denote a prediction made by some estimator (of \(P(Y|X)\)).
+%
+% We will state the exact meaning in each case, whenever it is not obvious by association.
+
+%
+Finally, to simplify exposition, we abuse notation by allowing functions of the form \(f: X \to Y
+\) to accept random and observed variables interchangeably; we assume that the derived function
+classes are Borel Measurable and as such that a function of a random variable is also a random
+variable. \(f\) to operate on random variables \(X\).
 % %
 Thus, pedantically speaking, \( f(X) \) should be read as shorthand for \( f \circ X(\omega) \),
 for some event \( \omega \) drawn from sample space, \( \Omega \), while \( f(x) \) should be read
