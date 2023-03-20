@@ -15,17 +15,18 @@ divergence, \( D: M \times M \to \R^+ \) (for some statistical manifold \(M\)) b
 predicted and ground-truth labels over the training distribution, often taken to be the (negative)
 Kullback-Leibler divergence, \( D_{KL} \) (also known as \emph{relative entropy}).
 %
-To simplify exposition, we will abuse notation here and throughout this chapter by allowing
-functions of the form \(f: X \to Y \) to accept random and observed variables interchangeably; we
-assume that the derived function classes are Borel Measurable (a trivial precondition in practice)
-and as such that a function of a random variable is also a random variable. \(f\) to operate on
-random variables \(X\).
-% %
-Thus, pedantically speaking, \( f(X) \) should be read as shorthand for \( f \circ X(\omega) \),
-for some event \( \omega \) drawn from sample space, \( \Omega \), while \( f(x) \) should be read
-in the standard fashion, with deterministic inputs and outputs.
+% To simplify exposition, we will abuse notation here and throughout this chapter by allowing
+% functions of the form \(f: X \to Y \) to accept random and observed variables interchangeably; we
+% assume that the derived function classes are Borel Measurable (a trivial precondition in practice)
+% and as such that a function of a random variable is also a random variable. \(f\) to operate on
+% random variables \(X\).
+% % %
+% Thus, pedantically speaking, \( f(X) \) should be read as shorthand for \( f \circ X(\omega) \),
+% for some event \( \omega \) drawn from sample space, \( \Omega \), while \( f(x) \) should be read
+% in the standard fashion, with deterministic inputs and outputs.
 %
-With this in mind, we can formally define the (population or true) risk as
+Bearing in mind the overloading of \(f\), \wrt{} deterministic and random variables, we can
+formally define the (population or true) risk as
 %
 \begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ D ( f(X,
     Y) )]

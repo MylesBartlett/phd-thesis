@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{A (brief) taxonomy of distribution shifts}\label{sec:dist-shift}
+\section{A brief taxonomy of distribution shifts}\label{sec:dist-shift}
 % ********************************************************************************
 In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
@@ -103,7 +103,7 @@ constituent shifts (a problem of identifiability).
 % data-preprocessing \citep{glocker2019machine}.
 
 % --------------------------------------------------------------------------------
-\subsection{Sampling/selection/representational bias}\label{ssec:sampling-bias}
+\subsection{Sampling bias}\label{ssec:sampling-bias}
 % --------------------------------------------------------------------------------
 Sampling (which we use synonymously with \emph{selection} and \emph{representational}) bias refers
 to distribution shifts that arise due to systematic flaws in the data-collection process that cause
@@ -141,9 +141,9 @@ future iterations) and in the context of fairness, demographic biases incurred d
 models have been studied under the guises of Delayed Impact \citep{liu2018delayed} and Residual
 Unfairness \citep{kallus2018residual}.
 %
-Indeed, the Residual Unfairness problem introduced by \cite{kallus2018residual} served as a chief
+Indeed, the systematic censoring problem posed by \cite{kallus2018residual} served as a prime
 motivator for the setup considered in Chapter 3, such that in the case of a binary decision system
 -- one designed for automated hiring, for instance -- and a population comprised of two subgroups,
 only positive outcomes are observed for the advantaged subgroup, while only negative outcomes are
 observed for the disadvantaged subgroup.
-
+%

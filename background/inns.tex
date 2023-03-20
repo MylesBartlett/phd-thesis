@@ -1,3 +1,83 @@
 % % ********************************************************************************
-% \section{ Normalising Flows and Invertible Neural Networks }\label{sec:nfs_and_inns}
+\section{Invertible neural networks}\label{sec:inns}
 % % ********************************************************************************
+Chapter 3 of this thesis explores the application of invertible neural networks (INNs) to
+fair-representation learning and so will afford some brief discussion to their basic workings here.
+%
+\marginpar{\textbf{Bijectivity}}
+%
+An INN \citep{kobyzev2020normalizing}, as the name suggests, refers to any neural network for which
+both the usual forward mapping, \(f(\cdot)\), and its inverse \(f(\cdot)\) are defined, with the
+assumed property that both are differentiable and as such that the function belongs to the class of
+\emph{diffeomorphisms}, \(f \in \text{Diff}(\gX)\). 
+%
+Thus, we have a function that is invertible bicontinuous map from input space, \(\gX \subset \R^d
+\) to latent space \(\gZ \subset \R^d \), noting that the domain and codomain are equidimensional,
+as presupposed by the function's bijectivity.
+%
+It is obvious, but nonetheless worth stating, that for \(f\) is composed of subfunctions \(f
+\triangleq f_L \circ \dots \circ f_2 \circ f_1\) and each individual subfunction is diffeomorphic,
+then \(f\) in its totality, also satisfies this property, allowing us to build arbitrarily complex
+INNs by chaining together layers defining these subfunctions.
+%
+
+The typical bailiwick of INNs is density estimation -- and by complement, generative modelling --
+due to their hallmark diffeomorphic property that make it possible for densities under the models
+to be calculated \emph{exactly}, in contrast to variational methods that only do so up to a lower
+bound (the so-called ELBO). 
+%
+\marginpar{\textbf{Normalising flows}}
+%
+This calculation is enabled by the change-of-variables theorem, allowing one to track how the
+density of the distribution changes as the INN warps a known (and tractable) base distribution into
+a complex, highly-multimodal, one.
+%
+Like with variational auto-encoders, the base density, \(P(Z)\), is generally taken to be an
+Isotropic Gaussian distribution; the posterior density, \(P(X)\), `flows' through the network -- in
+a manner reminiscent of a Galton Board -- into this normalised base density, earning this class of
+methods the name \emph{normalising flows} (NFs; \cite{rezende2015variational,
+kobyzev2020normalizing}).
+%
+Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), with base density
+\(\gN(\cdot; 0, \sI)\) the aforementioned Gaussian distribution, can be computed as
+%
+\begin{equation*}
+    \begin{aligned}
+        &\log P(X=x) = 
+        %
+        \log P(Z=z) + \sum_{l=1}^L \log \left| \det\left( \frac{\diff f_l}{ f_{l-1}}\right)
+        \right|, \\
+        %
+        &P(Z=z) = \gN(z; 0, \sI),
+    \end{aligned}
+\label{eq:changeofvariables}
+\end{equation*}
+%
+and training the model simply amounts to maximising this quantity over the empirical training
+distribution in the usual fashion.
+%
+As with GANs and VAEs, to sample from \(P(X)\), one needs only draw a random sample from the
+corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
+
+%
+\marginpar{\textbf{Losslessness}}
+%
+In Chapter 3, however, it is not the foregoing density-estimation capabilities of INNs that we are
+interested in, rather the diffeomorphic property itself, insofar as it guarantees the learned
+representation is \emph{lossless} \wrt{} the inputs.
+%
+That is to say, while \(f\) may deform manifold \(\gX\) in arbitrarily non-linear ways, since each
+point is mapped uniquely from the domain to codomain then only the form of the information
+contained in the input can change, not its extent. 
+%
+This is in contrast to conventional architectures that define \emph{surjective} mappings that embed
+inputs into a latent space much smaller than \(\R^d\) (in line with the Manifold Hypothesis
+\citep{fefferman2016testing}).
+%
+Other works have also capitalised on this information-preservation explicitly, e.g. both
+\cite{hoogeboom2019integer} and \cite{xie2021enhanced} explore the natural suitability of INNs for
+lossless image compression.
+
+
+
+
