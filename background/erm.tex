@@ -9,24 +9,31 @@ variables, such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \).
 Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
 respectively.
 %
-Based on this assumption, the method of Risk Minimisation  seeks the hypothesis \( f^\ast \in \gF
-\) that is the minimiser of the \emph{risk}, $\gR$, which can be defined as a statistical
-divergence, \( D: M \times M \to \R^+ \) (for some statistical manifold \(M\)) between the
-predicted and ground-truth labels over the training distribution, often taken to be the (negative)
-Kullback-Leibler divergence, \( D_{KL} \) (also known as \emph{relative entropy}).
+Based on this assumption, the method of Risk Minimisation seeks the hypothesis \( f^\ast \in \gF \)
+that is the minimiser of the \emph{risk}, $\gR$, defined according to some statistical distance, of
+\emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted, \(\hat{Y}
+\triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution, \(P^{tr}(X,
+Y)\). 
+% often taken to be the (negative) Kullback-Leibler divergence, \( D_{KL} \) (also known as
+% \emph{relative entropy}).
+A canonical example of such a distance for classifications tasks is the \emph{cross-entropy loss};
+in information-theoretic terms, this can be couched as the amount of information (here, in nats)
+required to identify a sample from the true distribution given a coding scheme optimised for the
+predictive distribution and takes the form
 %
-% To simplify exposition, we will abuse notation here and throughout this chapter by allowing
-% functions of the form \(f: X \to Y \) to accept random and observed variables interchangeably; we
-% assume that the derived function classes are Borel Measurable (a trivial precondition in practice)
-% and as such that a function of a random variable is also a random variable. \(f\) to operate on
-% random variables \(X\).
-% % %
-% Thus, pedantically speaking, \( f(X) \) should be read as shorthand for \( f \circ X(\omega) \),
-% for some event \( \omega \) drawn from sample space, \( \Omega \), while \( f(x) \) should be read
-% in the standard fashion, with deterministic inputs and outputs.
+\begin{equation}
+    H(Y, f(X)) \triangleq \E_{P(Y)}[ \log P(f(X)) ].
+\end{equation}
 %
-Bearing in mind the overloading of \(f\), \wrt{} deterministic and random variables, we can
-formally define the (population or true) risk as
+An alternative, and perhaps more natural, way of viewing this function is by its decomposition into
+the sum of the Kullback-Leibler (KL) Divergence (also known as the \emph{relative entropy}),
+\(D_{KL}(P(f(X))||P(Y))\), and entropy of the marginal target distribution, \(H(Y)\). 
+%
+When the latter carries no dependence on the learned parameters -- as is generally the case, save
+for certain cases of model-distillation, consistency-regularisation etc. -- the term vanishes from
+the gradient, leaving just the KL term.
+%
+Returning from this brief aside, we can formally define the (population or true) risk as
 %
 \begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ D ( f(X,
     Y) )]
@@ -34,8 +41,8 @@ formally define the (population or true) risk as
 \end{equation}
 %
 In practice, of course, one does not have access to the true generative distribution, but only a
-finite set of realizations of it forming a \emph{dataset}, \( \gD^{tr} \), consisting of observed
-input-target pairs \( (x, y) \). 
+finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
+observed input-target pairs \( (x, y) \). 
 %
 Thus, we are instead doing \emph{empirical} risk minimisation (ERM; \cite{vapnik1991principles}),
 defined as the risk is instead defined over the empirical distribution, a finite set of
@@ -44,22 +51,23 @@ drawn.
 % %
 To accommodate this discrepancy, two things need to be accounted for. 
 %
-First we need to  substitute \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
+\textbf{First} we need to  substitute \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
 \triangleq \{(x_i, y_i) \}_{i=1}^{N^{tr}} \); since we are now operating over a finite set of \(
 N^{tr} \) tuples, the expectation can be replaced with a finite sum (with normalisation). 
 %
-Second, given the variables are deterministic rather than random, one can no longer frame the
-optimisation objective in terms of a statistical divergence explicitly. 
+\textbf{Second}, given the variables are deterministic rather than random, one can no longer frame the
+optimisation objective in terms of a statistical distance explicitly. 
 %
 Instead one measures -- and uses as feedback to drive model-optimisation -- the discrepancy between
-the predicted and observed targets using a \emph{loss} function, \( \ell: \R \times \R \to \R \). 
+the predicted and observed targets using an empirical \emph{loss} function, \( \ell: \R \times \gY
+\to \R \). 
 %
 In standard classification settings in which the targets are given by single (one-hot encoded)
 labels, \( Y \) is represented by a degenerate (delta) distribution, wherein for each instance we
 simply have an binary indicator of which class said instance belongs to, rather than a distribution
-over the probability simplex allowing for capturing of intrinsic uncertainty in the task.
+over the probability simplex, allowing for capturing of intrinsic uncertainty in the task.
 %
-With these adjustments in mind, one can then define the standard ERM objective as
+With the foregoing adjustments in mind, one can then define the standard ERM objective as
 % %
 \begin{equation*}\label{eq:emp_risk} \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y)
 \in \gD^{tr}} \ell (f(x), y). \end{equation*}
