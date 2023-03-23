@@ -2,41 +2,53 @@
 \section{Adversarial Learning}\label{sec:adv-learning}
 % ********************************************************************************
 Adversarial learning (AdvL) is a general, multi-field-spanning learning paradigm, characterising --
-borrowing game-theoretical parlance -- non-cooperative systems, or `games' in which two or more
-`players' compete over a shared (or interdependent) objective. 
+borrowing game-theoretical parlance -- non-cooperative (competitive) systems, or `games' in which
+two or more `players' compete over a shared or interdependent
+\emph{utility}.
 %
 In two-player cases -- accounting for the majority of AdvL setups (notable exceptions to this
 include those based on self-play in which one computes the best response against a mixture of
 adversarial policies \citep{silver2017mastering, vinyals2019grandmaster}) and those that we shall
-discuss here -- the game can be formulated as a minimax problem in which one player, \(a\), plays
-the role of the `maximiser', the other player, \(f\), the role of the minimiser; given that in ML
-we optimise some parametric model to minimise a loss function (via gradient descent), it is natural
-to view \(f\) as the model of interest, or `learner' and \(a\) as the `adversary` which frustrates
-\(a\) in order to improve its own payoffs (but with the end goal of the game ultimately being to
-improve \(f\) in some respect, such as its robustness or fairness).
+discuss here -- the game can be formulated as a (zero-sum) minimax problem in which one player,
+\(\mu_{max}\), plays the role of the `maximiser', the other player, \(\mu_{min}\), the role of the
+minimiser; given that in ML we optimise some parametric model to minimise a loss function (via
+gradient descent), it is natural to view \(\mu_{min}\) as the model of interest, or `learner', and
+\(\mu_{max}\) as the `adversary` which frustrates \(\mu_{min}\) in order to improve its own payoffs
+(but with the end goal of the game ultimately being to improve \(\mu_{min}\) in some respect, such
+as robustness or fairness).
 %
 
 Such a problem can alternatively be viewed as an alternating (turn-based) bilevel optimisation
-problem, where at the \(t\)th iterate, the parameters, \(\theta \in \Theta\), of the learner are
-updated to give the best response, \(\theta^{\ast}_t\), to the best response of the adversary at
-the previous iterate, i.e. \(a^\ast|_{\theta^\ast_{t-1}}\).
+problem, where at the \(t\)th iterate the learner selects (via some optimisation procedure) from \(
+\gS_{min} \), the strategy that gives the best response, \(s_{min, t}^{\ast}\), to the best
+response of the adversary at the previous iterate, i.e. \( s_{max}^\ast|_{s_{min,t-1}^\ast} \).
 %
-A hallmark of the \emph{adversarial} regime is that the strategy of maximiser is dependent on the
-state of the minimiser and if the state of the minimiser changes so does the best-response save if
+The best response is determined by each players respective utility, as measured by the
+player-specific function \(\pi: \gS \to \R^+\), with \(\gS\) denoting the space of strategic
+profiles,  a strategic profile itself simply referring to tuple of chosen strategies characterising
+a game state.
+%
+A hallmark of the adversarial regime is that the strategy of maximiser is dependent on the
+state of the minimiser and if the state of the minimiser changes so does the best-response, unless 
 in a state of \emph{Nash Equilibrium} (NE; or at least a local one).  
 %
-The concept of a NE is fundamental to game theory, referring to strategic profiles from which no
-player can unilaterally deviate and achieve greater payoff, or, mathematically
+The concept of a NE is fundamental to game theory, referring to strategic profiles, \(s^\ast \in
+\gS^\ast\), from which no player can unilaterally deviate and achieve greater payoff, or,
+mathematically (treating \(\mu_{min}\) as the reference player)
 %
 \begin{equation}
-  \forall s_i \in \gS_i:\, \pi_i ( s^\ast_i, s^\ast_{-i} ) \ge \pi_i( s^\ast_i, s^\ast_{-i} ),
+  \forall s_{min} \in \gS_{min}:\, \pi_{min} ( s^\ast_{min}, s^\ast_{max} ) \ge \pi_{min}(
+  s_{min}, s^\ast_{max} ).
 \end{equation}
 %
-using \(\pi_i\) and \(\gS_i\) to denote the payoff and set of possible strategies, respectively for
-player \(i\).
+where \(s^\ast_{min}\) and \(s^\ast_{max} \) are NE strategies for \(\mu_{min}\) and \( \mu_{max}
+\), that by their pairing make up some NE strategic profile, \(s^\ast\).
 %
-This general (non-strict) NE is non-unique -- by the virtue of the inclusive inequality -- such
-that for any given game one may have a set of NE strategic profiles.
+% using \(\pi_\cdot\), denote the payoff and the strategy of the subscripted player, respectively
+%
+By this non-strict definition the set of NE solutions can be non-singleton -- by virtue of the
+inclusive inequality -- such that for any given game one may have a set of one or more NE strategic
+profiles.
 %
 The notion of a NE is closely related to the idea of \emph{Pareto Optimality} (PO) in
 multi-objective optimisation, noting, however, that a NE strategic profile need not be a Pareto
@@ -50,8 +62,8 @@ robustness comply -- perhaps subtly -- with this definition as the strategy of t
 interpreted as a weighting function whose best-response is the one under which only the loss of the
 highest-loss group contributes to the overall loss. 
 %
-Practically, computing the best response for each player over the entire dataset at each iterate is
-not computationally tractable in most non-trivial cases, especially so if said players are deep
+Practically, computing the best response for each player over the entire dataset for each iterate is
+computationally intractable for most non-trivial cases, especially so if said players are deep
 neural networks and many iterates are required for convergence, and so some degree of approximation
 is required.
 %
@@ -69,12 +81,15 @@ In the latter applications, adversarial learning is frequently leveraged as an e
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
 related to the domain or sensitive group in DA/DG and FairML, respectively.
 %
-For this, both players take the form of NNs with strategies defined by their parameters, \(\theta\)
-and \(\psi \in \Psi\) for the learner and adversary, respectively. 
+For this, both players take the form of an NN with strategies defined by their parameters --
+\(\theta_{min} \in \Theta_{min}\) and \(\theta_{min} \in \Theta_{max}\) for the learner and
+adversary, respectively -- which they play according to their respective architectures, together
+constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time \Psi \to
+\R \).
 %
-Due to the continuity and non-convexity of (multi-layer) NNs, it is unfortunately not possible to
-guarantee the existence of Nash Equilibria for the resulting games, only ones that are locally
-defined \citep{unterthiner2018coulomb}.
+We note, incidentally, that due to the continuity and non-convexity of NNs, it is unfortunately not
+possible to guarantee the existence of Nash Equilibria for the resulting games, only ones that are
+locally defined \citep{unterthiner2018coulomb}.
 %
 The game in question can then be couched in terms of the following countervailing objectives:
 %
@@ -82,32 +97,35 @@ The game in question can then be couched in terms of the following countervailin
   %
   \item \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
     \(s\) associated with given a input \(x\), while having access to only the version
-    (representation) of the input censored by \(f\).
+    (representation) of the input censored by \(f_i\).
     %
-  \item \textbf{learner}: create a censored version of the input that maximally minimises the
+  \item \textbf{learner}: create a censored version of the input, \(z\), that maximally minimises the
     amount of information about \(s\) determinable from it. 
   %
 \end{itemize}
 %
-This game then gives rise to the following minimax objective function
+This game then gives rise to the following minimax objective function, for some dataset \(\gD\)
+made up of pairs of inputs, \(x\), and attributes to be censored, \(s\)
 %
 \begin{align}\label{eq:minimax-obj}
   %
-\underset{\theta \in \Theta}{\text{min}}\; \underset{\psi \in \Psi}{\text{max}}\,
+  \underset{\theta_{min} \in \Theta_{min}}{\text{min}}\; \underset{\theta_{max} \in
+  \Theta_{max}}{\text{max}}\,
 %
--\E_{(x, s) \sim \gD} [ \ell(a_\psi( f(x) ), s ) ]
+-\E_{(x, s) \sim \gD} [ \ell(a_{max}( a_{min}(x, \theta), \psi ), s ) ],
 %
 \end{align}
 %
 where we have negated the expectation (converting the loss into utility) to remain consistent with
-the idea of the adversary being the maximiser and defined the optimisations over the parameter
+the idea of the adversary being the maximiser and defined the optima over the parameter
 spaces to make clear the idea that the parameters define the chosen strategies; when \(s\) is
 discrete, \(\ell\) is typically taken to be the standard cross-entropy loss.
 %
 Having the learner play this game without any additional objectives (maximising for utility \wrt{}
 the task of interest) is, of course, inauspicious if the goal is to have a representation that is
-useful for some task (other than eluding the adversary) -- a trivial solution on the part of \(f\)
-would, for instance, be to simply ignore the input and output a constant representation.
+useful for some task (other than eluding the adversary) -- a trivial solution on the part of
+\(\mu_{min}\) would, for instance, be to simply ignore the input and output a constant
+representation.
 %
 
 
