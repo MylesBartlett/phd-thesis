@@ -51,7 +51,7 @@ in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j
 
 Without loss of generality, for the prediction task with inputs, \(X\), and targets, \(Y\), we may
 introduce the aforementioned variable \(E\) to convert the joint distribution \(P(X, Y)\) into the
-conditional joint distribution \( P(X, Y) | E \); the structure of the underlying CBN determines
+conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying CBN determines
 the factorisation of this distribution and thus the nature of the distribution shift in question.
 %
 One can, for example characterise the case of covariate-shift with causal \(f^\star\), as having
@@ -72,7 +72,7 @@ causal prediction task.
 \import{background}{ds_cbgs.tex}
 
 %
-We will see that such a formulation is particularly utile when we come to discuss domain
+We will see that such a formulation is particularly useful when we come to discuss domain
 generalisation which involves a multitude of source distributions, going beyond the dyadic
 source-target setup characterising DA.
 
@@ -112,9 +112,9 @@ perturbations one expects to encounter at test-time then incorporating it into t
 process can be fruitful, both for allowing interpolation within the convex hull defined by the
 set and to an extrapolated region outside of it \citep{krueger2021out}.
 %
-Indeed, it stands to reason that by allowing the model to glean which features are and aren't
-stable across environments would allow it to better approximate the true causal structure of
-the prediction task. 
+Indeed, it stands to reason that by allowing the model to glean which features are and are not
+stable across environments would allow it to better approximate the true causal structure of the
+prediction task. 
 %
 This idea has been explored extensively in recent years in both the causal discovery
 \citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovsky2019invariant,

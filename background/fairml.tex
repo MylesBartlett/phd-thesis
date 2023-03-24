@@ -223,7 +223,7 @@ a linear weighting of loss terms optimising for utility and fairness separately.
 fairness}\label{ssec:minimax-fairness}
 % ------------------------------------------------------------------------------ 
 The foregoing notions are as intuitive as they are well-studied, and there is a wide
-range of applications to which they may be reasonably used as a lodestone for fairness.
+range of applications to which they may be reasonably used as a lodestar for fairness.
 %
 However, the fact that they require degrading performance of the advantaged groups is problematic
 for applications where the quality of service -- the utility of the model -- is cardinal, or --
@@ -265,7 +265,7 @@ P(X, Y) \), the minimax (ERM-based) DRO objective can be expressed as
 recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random variables.
 %
 Thus, in contrast to standard ERM, which would optimise over the `flattened' meta distribution, the
-DRO objective defines a bilevel optimisation problem in which only the supremum of the divergence
+DRO objective defines a bilevel optimisation problem in which only the supremum of the loss
 over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be minimised by our
 predictor, \(\Gamma\).
 %

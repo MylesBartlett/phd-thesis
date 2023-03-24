@@ -2,9 +2,11 @@
 \section{Adversarial Learning}\label{sec:adv-learning}
 % ********************************************************************************
 Adversarial learning (AdvL) is a general, multi-field-spanning learning paradigm, characterising --
-borrowing game-theoretical parlance -- non-cooperative (competitive) systems, or `games' in which
-two or more `players' compete over a shared or interdependent
-\emph{utility}.
+in game-theoretical parlance -- non-cooperative (competitive) systems, or `games' in which
+two or more `players' compete over shared or interdependent
+\emph{utility} \citep{fudenberg1991game}.
+%
+\marginpar{\textbf{Minimax}}
 %
 In two-player cases -- accounting for the majority of AdvL setups (notable exceptions to this
 include those based on self-play in which one computes the best response against a mixture of
@@ -18,31 +20,35 @@ gradient descent), it is natural to view \(\mu_{min}\) as the model of interest,
 as robustness or fairness).
 %
 
+\marginpar{\textbf{Bilevel optimisation}}
+%
 Such a problem can alternatively be viewed as an alternating (turn-based) bilevel optimisation
 problem, where at the \(t\)th iterate the learner selects (via some optimisation procedure) from \(
-\gS_{min} \), the strategy that gives the best response, \(s_{min, t}^{\ast}\), to the best
-response of the adversary at the previous iterate, i.e. \( s_{max}^\ast|_{s_{min,t-1}^\ast} \).
+\Sigma_{min} \), the strategy that gives the best response, \(\sigma_{min, t}^{\ast}\), to the best
+response of the adversary at the previous iterate, i.e. \( \sigma_{max}^\ast|_{\sigma_{min,t-1}^\ast} \).
 %
 The best response is determined by each players respective utility, as measured by the
-player-specific function \(\pi: \gS \to \R^+\), with \(\gS\) denoting the space of strategic
-profiles,  a strategic profile itself simply referring to tuple of chosen strategies characterising
-a game state.
+player-specific function \(\pi: \Sigma \to \R^+\), with \(\Sigma\) denoting the space of strategic
+profiles,  a strategic profile itself referring to tuple of chosen strategies characterising a game
+state.
+%
+\marginpar{\textbf{Nash equilibria}}
 %
 A hallmark of the adversarial regime is that the strategy of maximiser is dependent on the
 state of the minimiser and if the state of the minimiser changes so does the best-response, unless 
 in a state of \emph{Nash Equilibrium} (NE; or at least a local one).  
 %
-The concept of a NE is fundamental to game theory, referring to strategic profiles, \(s^\ast \in
-\gS^\ast\), from which no player can unilaterally deviate and achieve greater payoff, or,
+The concept of a NE is fundamental to game theory, referring to strategic profiles, \(\sigma^\ast \in
+\Sigma^\ast\), from which no player can unilaterally deviate and achieve greater payoff, or,
 mathematically (treating \(\mu_{min}\) as the reference player)
 %
 \begin{equation}
-  \forall s_{min} \in \gS_{min}:\, \pi_{min} ( s^\ast_{min}, s^\ast_{max} ) \ge \pi_{min}(
-  s_{min}, s^\ast_{max} ).
+  \forall \sigma_{min} \in \Sigma_{min}:\, \pi_{min} ( \sigma^\ast_{min}, \sigma^\ast_{max} ) \ge \pi_{min}(
+  \sigma_{min}, \sigma^\ast_{max} ).
 \end{equation}
 %
-where \(s^\ast_{min}\) and \(s^\ast_{max} \) are NE strategies for \(\mu_{min}\) and \( \mu_{max}
-\), that by their pairing make up some NE strategic profile, \(s^\ast\).
+where \(\sigma^\ast_{min}\) and \(\sigma^\ast_{max} \) are NE strategies for \(\mu_{min}\) and \( \mu_{max}
+\), that by their pairing make up some NE strategic profile, \(\sigma^\ast\).
 %
 % using \(\pi_\cdot\), denote the payoff and the strategy of the subscripted player, respectively
 %
@@ -50,11 +56,10 @@ By this non-strict definition the set of NE solutions can be non-singleton -- by
 inclusive inequality -- such that for any given game one may have a set of one or more NE strategic
 profiles.
 %
-The notion of a NE is closely related to the idea of \emph{Pareto Optimality} (PO) in
-multi-objective optimisation, noting, however, that a NE strategic profile need not be a Pareto
-optimal one, PO being defined in terms of the maximum theoretically-achievable utility for each
-player (given the utilities of every other player), NE solely in terms of the relative utilities of
-the players and the resulting fixed points.
+The notion of a NE is closely related to the idea of Pareto optimality in MOO, noting, however,
+that a NE strategic profile need not be a Pareto optimal one, PO being defined \wrt{} the maximum
+theoretically-achievable utility for each player (given the utilities of every other player), NE
+solely \wrt{} the relative utilities of the players and the resulting fixed points.
 
 %
 The minimax formulations we saw in the context of minimax fairness and (worst-group) distributional
@@ -69,13 +74,19 @@ is required.
 %
 This usually translates to performing only a fixed budget of updates in the minimising/minimising
 direction over random subsets of the data.
+%
+In fact, \cite{ganin2016domain} demonstrated that, in practice, one can ignore best-response
+dynamics altogether and obtain approximately domain-invariant representations with minimal overhead
+through concurrent (single-step) updates to the players' strategies.
 
-Notable concrete applications of adversarial learning include Artificial Curiosity
+Notable concrete applications of adversarial learning include artificial curiosity
 \citep{schmidhuber1992learning}, Generative Adversarial Networks (GANs;
-\cite{goodfellow14generative}), (fictitious) Self-Play \citep{silver2018general}, Adversarial
-Robustness \citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant
-\citep{ganin2016domain, zhao2019learning} and Fair \citep{edwards2015censoring, madras2018learning}
-Representation Learning.
+\cite{goodfellow14generative}), self-play \citep{silver2018general}, adversarial robustness
+\citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant
+\citep{ganin2016domain, zhao2019learning} and fair-representation learning
+\citep{edwards2015censoring, madras2018learning}.
+%
+\marginpar{\textbf{Adversarial infomin}}
 %
 In the latter applications, adversarial learning is frequently leveraged as an engine for
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
@@ -96,8 +107,8 @@ The game in question can then be couched in terms of the following countervailin
 \begin{itemize}
   %
   \item \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
-    \(s\) associated with given a input \(x\), while having access to only the version
-    (representation) of the input censored by \(f_i\).
+    \(s\) associated with given a input \(x\), while having access to only the censored version
+    (representation) of the input produced by \(f_i\).
     %
   \item \textbf{learner}: create a censored version of the input, \(z\), that maximally minimises the
     amount of information about \(s\) determinable from it. 
@@ -107,126 +118,109 @@ The game in question can then be couched in terms of the following countervailin
 This game then gives rise to the following minimax objective function, for some dataset \(\gD\)
 made up of pairs of inputs, \(x\), and attributes to be censored, \(s\)
 %
-\begin{align}\label{eq:minimax-obj}
+\begin{align}
   %
   \underset{\theta_{min} \in \Theta_{min}}{\text{min}}\; \underset{\theta_{max} \in
   \Theta_{max}}{\text{max}}\,
 %
 -\E_{(x, s) \sim \gD} [ \ell(a_{max}( a_{min}(x, \theta), \psi ), s ) ],
 %
+\label{eq:adv-infomin}
 \end{align}
 %
 where we have negated the expectation (converting the loss into utility) to remain consistent with
-the idea of the adversary being the maximiser and defined the optima over the parameter
-spaces to make clear the idea that the parameters define the chosen strategies; when \(s\) is
-discrete, \(\ell\) is typically taken to be the standard cross-entropy loss.
+the idea of the adversary being the maximiser and defined the optima over the parameter spaces to
+make clear the idea that the parameters define the chosen strategies. 
+%
+When \(s\) is discrete, \(\ell\) is typically taken to be the standard cross-entropy loss; in this
+case the fixed point of the objective function is attained when the outputs of \(a_{max}\), with
+codomain the appropriate probability simplex, are maximally entropic (the derived predictions no
+better than random), which one hopes holds for all \(\sigma_{max} \in \Sigma_{max}\) and connotes
+the invariance \(Z \perp S\).
+%
+\marginpar{\textbf{Practical challenges}}
 %
 Having the learner play this game without any additional objectives (maximising for utility \wrt{}
 the task of interest) is, of course, inauspicious if the goal is to have a representation that is
-useful for some task (other than eluding the adversary) -- a trivial solution on the part of
+useful for some task (other than foiling the adversary) -- a trivial solution on the part of
 \(\mu_{min}\) would, for instance, be to simply ignore the input and output a constant
 representation.
 %
-
-
-
-%
-% Such a minimax scenario can be formulated, in general terms, for the standard (bivariate) supervised
-% learning case as
-%
-% \begin{align}\label{eq:minimax-obj}
-%   %
-% \underset{\theta \in \Theta}{\text{min}}\; \underset{\psi \in \Psi}{\text{max}}\,
-% %
-% \E_{(x, y) \sim \gD^{tr}} a_\psi(\ell, f,  x, y)
-% %
-% \end{align}
-% %
-% recalling \(\ell\) denotes the empirical loss, or pay-off associated with the strategy profiles \(
-% (\theta, \psi) \), corresponding, for instance, to the weights of a neural network or to the
-% direction/magnitude of a perturbation.
-% %
-% For generality, we have formulated the above such that the adversary may define any fixed
-% algorithm, modulated by \(psi\), that can operate on any of the supplied variables.
+In many cases, however -- especially those arising in FairML and DA -- there is competition not
+only between the adversary and the learner, but between the objectives themselves \wrt{} the latter
+alone.
 %
 
-% ChatGPT nonsense
-% begin
-% Adversarial learning is a type of machine learning technique where the goal is to learn from the
-% competition between two or more agents, each of which has opposing objectives. It finds use in a
-% wide range of applications, including image and speech recognition, natural language processing,
-% and game playing.
-% %
-% In game theory, the concept of a Nash equilibrium is used to describe a situation where no agent
-% can improve its outcome by changing its strategy. Similarly, in adversarial learning, the goal is
-% to achieve a robust model that cannot be easily fooled by an adversary. This is analogous to a Nash
-% equilibrium, where the model's strategy (i.e., its decision-making process) cannot be improved by
-% the adversary.
-
-% Formally, we can describe adversarial learning as a game between two players, denoted as P1 and P2.
-% P1 is the learner, and P2 is the adversary. Each player has a set of actions and objectives. The
-% learner's objective is to minimize the loss function L, which measures the discrepancy between the
-% learner's predicted output and the actual output. The adversary's objective is to maximize the loss
-% function L. The game is repeated for a finite number of rounds, and both players take turns
-% choosing their actions.
-
-% Distinct from games treated by classical Game Theory, in adversarial learning, the strategies
-% adopted by the players are generally not discrete but continuous.
-
-% In game theory, the Nash equilibrium is a concept used to describe a situation where no player can
-% improve their outcome by changing their strategy, assuming that all other players are following
-% their strategies. Similarly, in adversarial learning, we aim to reach a point where the learner
-% cannot be improved further by the adversary.
-
-% Formally, we can define a Nash equilibrium for the adversarial learning game as a pair of
-% strategies (s1, s2), where s1 is the strategy of the learner, and s2 is the strategy of the
-% adversary. This pair of strategies is a Nash equilibrium if and only if:
-
-% The learner's strategy s1 minimizes the loss function L, given that the adversary is using strategy
-% s2. The adversary's strategy s2 maximizes the loss function L, given that the learner is using
-% strategy s1. In other words, neither player can improve their outcome by changing their strategy,
-% assuming that the other player is using their strategy.
-
-% end
-
+Assume, for instance, that the task of interest is a classification one, such that we have on top
+of the infomin objective defined Eq.~\ref{eq:adv-infomin} an \emph{infomax} objective \wrt{} the
+ground-truth label \(y\).
 %
-% Adversarial learning (AL) refers to any  a system in which the objective of our learner is
-% frustrated by some adversarial policy, which may or may not itself be parameterised.
+Only if the condition \(\gI(S; Y) \approx 0 \) (i.e. the target labels are uniformly distributed
+across \(\gS\)) holds can the infomin and infomax objectives be simultaneously satisfied, which is
+to say, in optimisation terms, that the inner product of the gradients of the two respective losses
+(\wrt{} \(\theta_{min}\)) is consistently non-negative and there is no trade-off, governed by the
+preference direction, leading to a Pareto front and suggesting treatment with MOO methods.
+%
+More generally, unconditional infomin is problematic whenever there is conditional shift between
+the training (source) and test (target) sets, as anatomised by \cite{zhao2019learning} in the
+context of UDA. 
+%
+Given full observability of \(y\) and \(s\) and consistent support of their joint distribution,
+i.e. \(\text{supp}(\hat{P}^{tr}(S, Y)) = \text{supp}(\hat{P}^{te}(S, Y))\), one can realign the
+objective by computing the infomin component class-conditionally (practically, importance weighting
+based on the empirical distribution \(\hat{P}^{tr}(Y)\)). 
+%
+When this observability does not hold, generally or for a subset of the data (the target domain in
+the case of UDA), then matters are complicated, however, and approximations are required (e.g by
+clustering).
+%
+In Chapter 4 we consider a problem of this nature and recast the problem as one of aligning the
+supports of the training -- which is systematically missing certain combinations of \(s\) and \(y\)
+-- and deployment -- which is presumed unlabelled, as in UDA -- sets.
 
-% - Adversarial robustness (in the context of non-parametric adversarial policies)
-% - Best response
-% - Deeply-rooted in game theory \citep{von1944theory}
-% - Can be framed as a bilevel optimisation problem with the dynamics of the inner loop governed by
-% some adversarial policy
-% - GANs can be viewed as a particular instantiation of Predictability Minimisation in which the
-% outputs of the controller, \(C\) are randomly replaced with samples from the true distribution,
-% with some probability, as inputs to the minimiser, \(M\) \citep{schmidhuber1992learning, schmidhuber2020generative}
-% - Since the strategies are not finitely spanned, the minimax theorem does not hold and the very
-% idea of an ``equilibrium'' becomes tenuous.
+We have already alluded to some of the challenges entailed in adversarial infomin
+approaches; here, we summarise the two most salient ones:
+%
+\begin{enumerate}
+        %
+        \marginpar{\textbf{Approximation errors}}
+        %
+        \item The strength of information-minimisation is proportional to the strength adversary
+          used to drive it -- a fixed point attained by one adversary  is not guaranteed to hold
+          for any other adversary (differing in architecture, optimisation scheme, etc.) unless the
+          fixed point corresponds to the desired invariance. 
+          %
+          Theory dictates that one computes the best response of each player at each iteration,
+          however this is generally infeasible when working with models with many parameters and
+          datasets with many samples. 
+          %
+          Thus, approximations are required -- e.g. by limiting the number of updates per iteration
+          and by bootstrapping the best response from the previous one -- but these can lead to
+          unstable training dynamics or entrapment in bad optima. 
+          %
+          Indeed, a number of recent studies have shown that many adversarial approaches fail to
+          faithfully produce infomin representations when probed \citep{moyer2018invariant,
+          feng2019learning, balunovic2021fair}.
+        %
+        \marginpar{\textbf{Cyclic dynamics}}
+        %
+        \item Adversarial setups are generally susceptible to cycles in strategy space, e.g. where
+          two players repeatedly switch between two non-NE strategies because doing so is mutually
+          locally optimal. 
+          %
+          In reinforcement learning, for instance, this has led to the development of fictitious
+          self-play algorithms \citep{brown1951iterative, heinrich2015fictitious,
+          vinyals2019grandmaster} wherein each player has its best response computed against a
+          uniform mixture of past opposing strategies (this mixture provably converging to a NE);
+          while this allows for avoiding the aforementioned cycles it comes at a significant
+          computational cost.
+          %
+          In Chapter 3 we consider this pitfall and propose a middle ground of training against a
+          stochastic ensemble of adversaries.
+         % 
+\end{enumerate}
 
-% A fundamental concept in game theory is the Nash Equilibrium (NE), defined as a strategy profile
-% which no player can deviate from to improve their pay-off.
-% %
-% Nash famously be showed that every finite game has at least one NE in mixed strategies.
-% %
-% The notion of a NE is closely related to the idea of Pareto Optimality for multi-objective problems
-% composed of competing (`non-cooperative') objectives, noting, however, that a NE strategic profile
-% need not be Pareto optimal one, as demonstrated by the textbook example of the Prisoner's Dilemma.
 
-% If each player has chosen a strategy and no player can increase one's own expected pay-off by
-% unilaterally changing their strategy, then the current set of strategy profile constitutes a Nash
-% equilibrium.
-
-
-% \begin{theorem}
-%     (Minimax theorem) In a zero-sum game, with maximising player \(s_{max}\) and minimising
-%     player \(s_{min}\) we have the order of the min and max operations are exchangeable.
-% \end{theorem}
-
-% Let \(s_i \in \gS\) denote the pure strategy of the \(i\)th player and \(\sigma_i \in \Sigma_i \)
-% their mixed strategy, with \(\sigma(s_i)\) representing the probability of choosing strategy
-% \(s_i\).
-% %
 % If a pure strategy is strictly dominated by another pure strategy then it cannot be played with
 % positive probability at a Nash equilibrium.
 % %
@@ -266,12 +260,6 @@ representation.
 % Papers to reference:
 % \cite{edwards2015censoring, madras2018learning, zhao2019learning, long2018conditional,
 % szegedy2013intriguing, goodfellow14generative, oliehoek2017gangs, chen2022scalable}
-
-% Excerpts from \cite{chen2022scalable}: Adversarial training is effective with a strong adversary,
-% however it is often challenging to train the adversary thoroughly in practice [to yield the best
-% response] due to temporal or numerical barriers. 
-% In fact, recent studies have revealed that adversarial approaches may not faithfully produce an
-% infomin representation \citep{moyer2018invariant, feng2019learning, balunovic2021fair}.
 
 % \cite{moyer2018invariant}:
 % Existing approaches cast the trade-off between task performance and invariance in an adversarial
