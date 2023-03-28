@@ -50,7 +50,8 @@ essentia -- there are perhaps elements I should think less fondly of but might i
 style of some dualistic tale) as the shadow that makes the light -- the nobler qualities -- burn
 all the brighter.
 
-\section{On themes and living chairs}
+%
+\section{On humble themes and living chairs}\label{sec:themes}
 %
 Every story has a theme, even if that theme is no theme at all, and whether it be conscious or
 otherwise: an unbroken thread, the warp and weft, that weaves all into one.
@@ -107,7 +108,60 @@ too lofty a goal -- however, the notion of invariance -- to specific concepts in
 sets (open or closed) of transformations -- is at the heart of all problems broached -- each on its
 own quite humble.
 
-\section{Charting the course}
+%
+\section{Charting the course}\label{sec:charting}
+%
+This is a thesis of three parts and six chapters. 
+%
+As this is the first chapter, it is necessarily the beginning yet, at the same time, it is not the
+end of the beginning. 
+%
+In the subsequent chapter, and what remains of the beginning, I provide background on the main
+topics I think relevant to the works that constitute the `middle' and marrow of thesis.
+%
+That second chapter has its own introduction and so I will not dwell more here on the precise
+nature of its contents.
+%
+The `middle' is a part of three chapters, each chapter corresponding to a distinct paper and a
+distinct problem; these papers appear in an order that is chronological yet also thematically
+contiguous in some sense.
+%
+In the `end', I discuss the works holistically, both in the context of one another and in the
+context of more recent developments in the germane fields, as well as ponder future avenues of work
+in similar vain.
+%
+To help orient the reader, I adumbrate below the three `middle' chapters of the thesis, detailing
+in each case their motivations, methods, and merits.
+
+\paragraph{Chapter 3: Null-sampling for Interpretable and Fair Representations.}
+%
+Here, we consider a setup in which sampling bias induces a one-to-one correspondence
+between subgroup and target; since learning from the training data alone is ill-posed, we propose a
+two-stage, interpretable framework exploiting the unique properties of invertible models, founded
+on the assumption that more-diverse unlabelled data is often readily obtainable, e.g. from
+censuses.
+
+\paragraph{Chapter 4: Addressing Missing Sources with Adversarial Support-Matching.}
+%
+In this second paper, we relax the problem constructed in Chapter 3 such that subgroup-target
+combinations are missing in an asymmetric fashion, \wrt{} the target, and propose to solve this by
+matching the support of the training set with that of an unlabelled dataset representative of the
+test set. 
+%
+This is realised through a combination of clustering, adversarial training with a set
+discriminator, and a hierarchical-sampling strategy.
+%
+
+\paragraph{Chapter 5: Okapi: Generalising Better by Making Statistical Matches Match.}
+%
+The third and final paper contends with the broader problem of generalising to data from
+\emph{domains} outside the training distribution  and how unlabelled data from extra domains can
+effectively further this goal.
+%
+Here, changes in domain induce natural distribution shifts corresponding, for example, to
+variations in lighting, perspective, and environs; to counteract them, we propose a simple,
+consistency-regularised approach based on causal matching.
+
 
 
     
