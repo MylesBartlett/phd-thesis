@@ -124,8 +124,42 @@ capable of discovering new, more-efficient algorithms for age-old mathematical p
 \citep{fawzi2022discovering}; of deeply comprehending language -- in all its daedal complexity --
 and in turn generating it with staggering coherence and -- on occasion -- expert-level insight
 \citep{brown2020language}; of going toe-to-toe with the most adept players of the most
-strategically- and physically-demanding games conceived by the human mind
+strategically- and physically-demanding games conceived by humanity
 \citep{silver2017mastering,vinyals2019grandmaster,meta2022human}.
+%
+Yet, where there is light there is shadow, and for every marvel there is a misstep; the annals of
+ML present no exception to that.
+%
+For all the mystique that seems to surround it, ML is, au fond, \emph{statistical} modelling: an ML
+algorithm ingests a set of data, collected via some (generally imperfect) mechanism, and models
+correlations between the covariate and response variables (and between the covariate variables
+themselves) in some higher-dimensional space, assuming for the sake of simplicity (and consistency
+with the works in this thesis) a \emph{supervised-learning} task (and if otherwise then the response
+variables are but some (dynamic) subset of the covariate variables).
+%
+This is perhaps slightly reductive but it is nonetheless accurate and all that is important for what
+I write of next.
+
+%
+There are \emph{correlations} that are causally-supported, and these are the correlations one hopes
+are learned by one's ML algorithm of choice, because they are \emph{real} and thus
+\emph{generalisable}; there are also those that are \emph{not} causally-supported but are
+nonetheless present due to deficiencies on the data-collection (or data-curation) side -- I will
+refer to such correlations as being \emph{spurious} henceforth.
+%
+Of course, I am being `nebulous' again when I say `deficiencies', and again it is for generality's
+sake, for this covers anything from systemic bias -- as is the remit of algorithmic fairness (AF)
+-- to insufficient coverage (geographically, demographically, etc.), as a result of constrained
+resources, for instance -- as is more the remit of domain adaptation and generalisation, though the
+lines between these and AF are often gauzy.
+
+
+% I have said before that central theme, the urgrund, of this thesis is the tension between
+% statistical and the causal (the \emph{real}).
+%
+%
+% It would be a gross exaggeration to say, however that it is a Barmecide Feast -- that has promised the world
+% and delivered and delivered an atlas -- for the accomplishments are very much real.
 
 % \cite{zech2018variable}, for instance, famously demonstrated that one can train a model for
 % pneumonia diagnosis achieving near-perfect accuracy solely based on the site-specific tags and
@@ -155,8 +189,15 @@ In the `end', I discuss the works holistically, both in the context of one anoth
 context of more recent developments in the germane fields; taking stock of this, I also ponder
 future avenues of work in similar vain.
 %
-To help orient the reader, I adumbrate below the three `middle' chapters of the thesis, detailing
-in each case their motivations, methods, and merits.
+To help orient the reader, I adumbrate below the three `middle' chapters of the thesis, stating
+in each case their motivations, methods, and merits. 
+%
+I will shift to using `we' here as all these works were done collaboratively yet I claim credit
+enough (as first or second author) to feel deserving of their ownership and of their inclusion in
+this thesis, a text that represents work of my shaping and doing.
+%
+To substantiate this claim, I include at the end of each of the corresponding chapters an estimate
+of the contributions made by myself and each co{\"a}uthor.
 
 \paragraph{Chapter 3: Null-sampling for Interpretable and Fair Representations.}
 %
