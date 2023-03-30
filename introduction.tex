@@ -64,7 +64,7 @@ the autonomous one -- nevertheless.
 
 %
 This is a Machine Learning (ML) thesis and the themes are suitably related to ML; if there
-is one central theme that unites all themes across all chapters, it is the dialectical tension
+is one central theme that unites all themes across all chapters, it is the disconnect
 between the \emph{statistical} nature of ML and the \emph{causal} nature of reality -- to mistake
 the notion of \emph{correlation} -- born from the former -- with the notion of \emph{causation} is
 a great fallacy (\emph{cum hoc ergo propter hoc}), as every new Statistics student learns before
@@ -82,7 +82,7 @@ I should emphasise -- to stem right away any misconceptions about what this thes
 be -- that despite their being rooted in it, the themes of this thesis are not of causality itself,
 by which I mean that, while I may use the calculus of causality to characterise and interconnect
 phenomena, I never venture to solve the formidable problem of causal discovery head on, only those
-problems emanating from it, representing the aforementioned tension.
+problems emanating from it, representing the aforementioned disconnect.
 %
 % I shall now explain precisely what I mean by all this.
 
@@ -122,10 +122,10 @@ borne on the winds of the deep-learning revolution stirred by \cite{krizhevsky20
 Indeed, the statistical-learning paradigm has given rise to, no less than, autonomous agents
 capable of discovering new, more-efficient algorithms for age-old mathematical problems
 \citep{fawzi2022discovering}; of deeply comprehending language -- in all its daedal complexity --
-and in turn generating it with staggering coherence and -- on occasion -- expert-level insight
-\citep{brown2020language}; of going toe-to-toe with the most adept players of the most
-strategically- and physically-demanding games conceived by humanity
-\citep{silver2017mastering,vinyals2019grandmaster,meta2022human}.
+and in turn generating it with remarkable coherence, consistency and -- on occasion -- expert-level
+insight \citep{brown2020language}; of going toe-to-toe with, or even trouncing, the most adept
+players of the most strategically- and physically-demanding games conceived by humanity
+\citep{silver2017mastering,berner2019dota,vinyals2019grandmaster,meta2022human}.
 %
 Yet, where there is light there is shadow, and for every marvel there is a misstep; the annals of
 ML present no exception to that.
@@ -149,9 +149,49 @@ refer to such correlations as being \emph{spurious} henceforth.
 %
 Of course, I am being `nebulous' again when I say `deficiencies', and again it is for generality's
 sake, for this covers anything from systemic bias -- as is the remit of algorithmic fairness (AF)
--- to insufficient coverage (geographically, demographically, etc.), as a result of constrained
-resources, for instance -- as is more the remit of domain adaptation and generalisation, though the
+-- to insufficient coverage (geographically, demographically, etc.), as a result, for instance, of
+constrained resources -- as is more the remit of domain adaptation and generalisation, though the
 lines between these and AF are often gauzy.
+%
+These deficiencies have led to a spate of (in)famous cases, within both academic and journalistic
+spheres, igniting public concern and redoubling research efforts to allay said concern.
+%
+To illustrate: a 2018 investigation \citep{dastin2018amazon} into the automated-hiring system
+deployed by Amazon revealed said system to overwhelming prefer male candidates to female ones for
+software-development roles based on their resumes; the same year, \cite{buolamwini2018gender}
+investigated the behaviour of three commercial gender-classification algorithms \wrt{} different
+skin types (`lighter' vs. `darker') and observed marked disparities in the resulting accuracies
+between lighter-skinned and darker-skinned subjects, and between male and female subjects, with a
+compounding of the two trends; again the same year, \cite{zech2018variable} demonstrated that
+ML classifiers can predict incidences of pneumonia with stellar accuracy based on only the
+site-specific tags and the prevalence rates associated thereof.
+
+%
+The solution -- the falcata to this Gordian knot -- seems a staggeringly simple one, so simple as to
+perhaps invite the reader to question the whys and wherefores of this thesis and cry: `just collect
+more/better data!'
+%
+Unfortunately, if this best-of-all-possible worlds were so perfect to always provide us this
+knot-severing implement, there would likely be no need for it in the first place; in this imperfect
+world, we often have little choice but to make the best of what we have. 
+%
+There is little hope, for instance, of deriving diverse, bias-free data from any significant
+population of people given how rife, and arguably intrinsic (from an evolutionary-psychology
+perspective; \cite{kurzban2001evolutionary}), out-group biases (conscious or subconscious) are in
+us humans.
+%
+There is also little hope of capturing, by camera trap, every species within a given region under
+every condition and in every locale given that different animals have different ecologies
+(nocturnal vs. diurnal, being a clear distinguisher) and there are only so many camera traps one
+can afford to place and thereafter monitor; it may not be possible to capture every locale alone
+(but wish to later generalise to the thitherto-unseen locales) and in such case we have a
+\emph{domain generalisation} problem.
+%
+While we cannot correct the problem at the source, we can intervene to \emph{mitigate} the
+downstream biases.
+
+
+
 
 
 % I have said before that central theme, the urgrund, of this thesis is the tension between
@@ -161,10 +201,6 @@ lines between these and AF are often gauzy.
 % It would be a gross exaggeration to say, however that it is a Barmecide Feast -- that has promised the world
 % and delivered and delivered an atlas -- for the accomplishments are very much real.
 
-% \cite{zech2018variable}, for instance, famously demonstrated that one can train a model for
-% pneumonia diagnosis achieving near-perfect accuracy solely based on the site-specific tags and
-% the associated prevalence rates -- such a model is demonstrably useless (which is to say,
-% dangerous) in practice despite its well-satisfying the training objective.
 
 
 %
@@ -192,7 +228,7 @@ future avenues of work in similar vain.
 To help orient the reader, I adumbrate below the three `middle' chapters of the thesis, stating
 in each case their motivations, methods, and merits. 
 %
-I will shift to using `we' here as all these works were done collaboratively yet I claim credit
+I will shift to using `we' here as all these works were done collaboratively, yet I claim credit
 enough (as first or second author) to feel deserving of their ownership and of their inclusion in
 this thesis, a text that represents work of my shaping and doing.
 %
