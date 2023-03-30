@@ -10,6 +10,8 @@
 }
 {Alice in Wonderland\\Lewis Carroll}
 %
+% \section{Preamble:\\life is a story and\\a story must be told}
+\section{Preamble: The thesis of stories}
 \noindent It is common knowledge that every good story should have a beginning, a middle, and an
 end; for if a story had not those things it could scarcely be called a story at all, at most it
 would be a nonsense one and nonsense should only be abided when founded on good sense.
@@ -51,20 +53,20 @@ the style of some dualistic tale) as the shadow that makes the light -- the nobl
 burn all the brighter.
 
 %
-\section{Humble themes}\label{sec:themes}
+\section{On humble themes and symmetries}\label{sec:themes}
 %
 Every story has a theme, even if that theme is no theme at all, and whether it be conscious or
 otherwise: an unbroken thread, the warp and weft, that weaves all into one.
 %
 This story is no exception; its theme is not one of valour, of defiance in the face of impossible
 odds, or of taking the next step when the path ahead is fogged and the path behind beset with
-demons -- indeed, the theme is nothing so inspiriting or ennobling -- that has the power to rouse
+demons -- indeed, the theme is nothing so elevating or ennobling -- that has the power to rouse
 our best, eudaimonic selves -- but it bears its own importance -- not to the human condition but
 the autonomous one -- nevertheless.
 
 %
 This is a Machine Learning (ML) thesis and the themes are suitably related to ML; if there
-is one central theme that unites all themes across all chapters, it is the disconnect
+is one central theme that unites all themes across all chapters, it is the \emph{disconnect}
 between the \emph{statistical} nature of ML and the \emph{causal} nature of reality -- to mistake
 the notion of \emph{correlation} -- born from the former -- with the notion of \emph{causation} is
 a great fallacy (\emph{cum hoc ergo propter hoc}), as every new Statistics student learns before
@@ -79,10 +81,10 @@ deeper one, `\(X\) \emph{causes} \(Y\)' without employing interventions with the
 confounding factors, i.e. factors causing both (and thereby correlating) \(X\) and \(Y\).
 %
 I should emphasise -- to stem right away any misconceptions about what this thesis is or aspires to
-be -- that despite their being rooted in it, the themes of this thesis are not of causality itself,
-by which I mean that, while I may use the calculus of causality to characterise and interconnect
-phenomena, I never venture to solve the formidable problem of causal discovery head on, only those
-problems emanating from it, representing the aforementioned disconnect.
+be -- that despite their being rooted in it, the themes of this thesis are not \emph{of} causality
+itself, by which I mean that, while I may use the calculus of causality to characterise and
+interconnect phenomena, I never venture to solve the formidable problem of causal discovery head
+on, only those problems emanating from it, representing the aforementioned disconnect.
 %
 % I shall now explain precisely what I mean by all this.
 
@@ -130,15 +132,16 @@ players of the most strategically- and physically-demanding games conceived by h
 Yet, where there is light there is shadow, and for every marvel there is a misstep; the annals of
 ML present no exception to that.
 %
-For all the mystique that seems to surround it, ML is, au fond, \emph{statistical} modelling: an ML
-algorithm ingests a set of data, collected via some (generally imperfect) mechanism, and models
-correlations between the covariate and response variables (and between the covariate variables
-themselves) in some higher-dimensional space, assuming for the sake of simplicity (and consistency
-with the works in this thesis) a \emph{supervised-learning} task (and if otherwise then the response
-variables are but some (dynamic) subset of the covariate variables).
+For all the mystique that seems to surround it, ML is (as I have mentioned in passing), au fond,
+\emph{statistical} modelling: an ML algorithm ingests a set of data, collected via some (generally
+imperfect) mechanism, and models correlations between the covariate and response variables (and
+between the covariate variables themselves) in some higher-dimensional space, assuming for the sake
+of simplicity (and consistency with the works in this thesis) a \emph{supervised-learning} task
+(and if otherwise then the response variables are but some (dynamic) subset of the covariate
+variables).
 %
-This is perhaps slightly reductive but it is nonetheless accurate and all that is important for what
-I write of next.
+This is perhaps slightly reductive but it is nonetheless accurate and all that is important for
+what I write of next.
 
 %
 There are \emph{correlations} that are causally-supported, and these are the correlations one hopes
@@ -150,8 +153,8 @@ refer to such correlations as being \emph{spurious} henceforth.
 Of course, I am being `nebulous' again when I say `deficiencies', and again it is for generality's
 sake, for this covers anything from systemic bias -- as is the remit of algorithmic fairness (AF)
 -- to insufficient coverage (geographically, demographically, etc.), as a result, for instance, of
-constrained resources -- as is more the remit of domain adaptation and generalisation, though the
-lines between these and AF are often gauzy.
+constrained resources -- as is more the remit of domain adaptation and domain generalisation (DG),
+though the lines between these and AF are often gauzy.
 %
 These deficiencies have led to a spate of (in)famous cases, within both academic and journalistic
 spheres, igniting public concern and redoubling research efforts to allay said concern.
@@ -162,16 +165,16 @@ software-development roles based on their resumes; the same year, \cite{buolamwi
 investigated the behaviour of three commercial gender-classification algorithms \wrt{} different
 skin types (`lighter' vs. `darker') and observed marked disparities in the resulting accuracies
 between lighter-skinned and darker-skinned subjects, and between male and female subjects, with a
-compounding of the two trends; again the same year, \cite{zech2018variable} demonstrated that
-ML classifiers can predict incidences of pneumonia with stellar accuracy based on only the
+compounding of the two trends; again the same year, \cite{zech2018variable} demonstrated that ML
+classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
 site-specific tags and the prevalence rates associated thereof.
 
 %
-The solution -- the falcata to this Gordian knot -- seems a staggeringly simple one, so simple as to
+The solution -- the sword to this Gordian knot -- seems a staggeringly simple one, so simple as to
 perhaps invite the reader to question the whys and wherefores of this thesis and cry: `just collect
 more/better data!'
 %
-Unfortunately, if this best-of-all-possible worlds were so perfect to always provide us this
+Unfortunately, if this best-of-all-possible-worlds were so perfect to always provide us this
 knot-severing implement, there would likely be no need for it in the first place; in this imperfect
 world, we often have little choice but to make the best of what we have. 
 %
@@ -182,29 +185,25 @@ us humans.
 %
 There is also little hope of capturing, by camera trap, every species within a given region under
 every condition and in every locale given that different animals have different ecologies
-(nocturnal vs. diurnal, being a clear distinguisher) and there are only so many camera traps one
-can afford to place and thereafter monitor; it may not be possible to capture every locale alone
-(but wish to later generalise to the thitherto-unseen locales) and in such case we have a
-\emph{domain generalisation} problem.
+(nocturnal vs. diurnal, being a clear distinguisher) and there are only so many devices one can
+afford to place and thereafter monitor; it may not even be possible to capture every locale alone
+(but wish to later generalise to the thitherto-unseen locales) and in such case we have a DG
+problem.
 %
 While we cannot correct the problem at the source, we can intervene to \emph{mitigate} the
-downstream biases.
-
-
-
-
-
-% I have said before that central theme, the urgrund, of this thesis is the tension between
-% statistical and the causal (the \emph{real}).
+downstream biases; given that we know what these biases are, we can seek to be \emph{invariant} to
+their cause.
 %
-%
-% It would be a gross exaggeration to say, however that it is a Barmecide Feast -- that has promised the world
-% and delivered and delivered an atlas -- for the accomplishments are very much real.
+Thus, in AF, we can (depending on our definition of `fairness') couch our desideratum as learning a
+predictor that is invariant to (does not take into account) the designated sensitive attribute(s)
+-- race, gender, and age being the usual candidates; in DG, it is the eponymous \emph{domain} one
+targets for invariance, this being the locale in the forgoing camera-trap example.
 
+% It would be a gross exaggeration to say, however that it is a Barmecide Feast -- that has
+% promised the world and delivered and delivered an atlas -- for the accomplishments are very much
+% real.
 
-
-%
-\section{Charting the course}\label{sec:charting}
+\section{Charting the course ahead}\label{sec:charting}
 %
 This is a thesis of three parts and six chapters. 
 %
@@ -228,9 +227,9 @@ future avenues of work in similar vain.
 To help orient the reader, I adumbrate below the three `middle' chapters of the thesis, stating
 in each case their motivations, methods, and merits. 
 %
-I will shift to using `we' here as all these works were done collaboratively, yet I claim credit
-enough (as first or second author) to feel deserving of their ownership and of their inclusion in
-this thesis, a text that represents work of my shaping and doing.
+I will shift to using `we' here, in self-reference, as all these works were done collaboratively,
+yet I claim credit enough (as first or second author) to feel deserving of their ownership and of
+their inclusion in this thesis, a text that represents work of my shaping and doing.
 %
 To substantiate this claim, I include at the end of each of the corresponding chapters an estimate
 of the contributions made by myself and each co{\"a}uthor.
@@ -264,82 +263,3 @@ Here, changes in domain induce natural distribution shifts corresponding, for ex
 variations in lighting, perspective, and environs; to counteract them, we propose a simple,
 consistency-regularised approach based on causal matching.
 
-
-
-    
-
-
-
-
-
-%
-
-
-% \emph{
-%     %
-%     ``You might just as well say,'' added the March Hare, “that `I like what I get` is the same
-%     thing as `I get what I like`!''
-%     %
-%     \\
-%     %
-%     ``You might just as well say,'' added the Dormouse, who seemed to be talking in his sleep,
-%     ``that `I breathe when I sleep' is the same thing as `I sleep when I breathe'!'' 
-%     %
-% }
-
-% \emph{
-%     ``Would you tell me, please, which way I ought to go from here?''
-%     \\
-%     ``That depends a good deal on where you want to get to,'' said the Cat.
-%     \\
-%     ''I don’t much care where—'' said Alice.
-%     \\
-%     ``Then it doesn’t matter which way you go,'' said the Cat.
-%     \\
-%     ``-so long as I get somewhere,'' Alice added as an explanation.
-%     \\
-%     ``Oh, you’re sure to do that,'' said the Cat, ``if you only walk long enough.''
-% }
-
-% \emph{
-%     %
-%     The King’s argument was, that anything that had a head could be beheaded, and that you
-% weren’t to talk nonsense.
-%     %
-% }
-
-% \emph{
-%     %
-% ``Well! I’ve often seen a cat without a grin,'' thought Alice; ``but a grin without a cat! It's the
-% most curious thing I ever saw in all my life!'' 
-%     %
-% }
-
-% \emph{
-%     %
-%     I don’t see how he can ever finish, if he doesn't begin.
-%     %
-% }
-
-% \emph{
-% %
-%     Alice didn't think that proved it at all; however, she went on ``And how do you know that
-%     you’re mad?''
-% %
-%     ``To begin with,” said the Cat, ``a dog’s not mad. You grant that?''
-% %
-%     ``I suppose so,'' said Alice.
-% %
-%     ``Well, then,'' the Cat went on, ``you see, a dog growls when it's angry, and wags its tail
-%     when it's pleased. Now I growl when I'm pleased, and wag my tail when I’m angry. Therefore I’m
-%     mad.''
-% %
-% }
-
-
-% \emph{
-%     %
-%     ``If there’s no meaning in it,'' said the King, ``that saves a world of trouble, you know, as
-%     we needn't try to find any.''
-%     %
-% }
