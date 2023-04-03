@@ -1,24 +1,19 @@
 \epigraph{
     %
     \emph{
-        %
-        % ``Begin at the beginning,'' the King said gravely, ``and go on till you come to the end:
-        % then stop.''
         ``It is good to have an end to journey toward; but it is the journey that matters, in the
         end.''
     %
 } 
 %
 }
-% {Alice in Wonderland\\Lewis Carroll}
 {The Left Hand of Darkness\\Ursula K. Le Guin}
 %
-\section{The thesis of stories}
-% \section{All in the golden afternoon}
+\section*{The thesis of stories}
 %
-\noindent It is well-accepted that every good story should have a beginning, a middle, and an end;
-for if a story had not those things it could scarcely be called a story at all, at most it would be
-a nonsense one and nonsense should only be abided when founded on good sense.
+\noindent It is well-acknowledged that every good story should have a beginning, a middle, and an
+end; for if a story had not those things it could scarcely be called a story at all, at most it
+would be a nonsense one and nonsense should only be abided when founded on good sense.
 %
 This is where this thesis begins, a thesis that hopefully satisfies some of the reader's
 sensibilities regarding what makes a good story; at the very least I hope it bears some sense of
@@ -41,7 +36,7 @@ completion, attests to -- not by own mettle alone but as much by the support and
 who have staunchly companioned me each step of the way, through summer-sweetened meadow and
 gloom-drenched thicket alike.
 %
-I would moreover call this thesis a \emph{story} for simply for my fanciful fondness of stories,
+I would also call this thesis a \emph{story} for simply for my fanciful fondness of stories,
 for all that they might teach us about others, and, most of all, ourselves -- by exploring fabulous
 new worlds we also come to better understand the inner one -- and I would naturally like to like
 something I have devoted so much to, whose lesser elements I might recast, like in some dualistic
@@ -51,7 +46,7 @@ For while every lit candle casts a shadow, it is equally true that the darker, t
 the night, the more splendent the starlight.
 
 %
-\section{On the sea of themes}\label{sec:themes}
+\section*{On the sea of themes}\label{sec:themes}
 %, even if that theme is no theme at all: 
 % , and whether it be conscious or otherwise:
 Every story has a theme:
@@ -88,7 +83,6 @@ itself, by which I mean that, while I may use the calculus of causality to chara
 interconnect phenomena, I never venture to solve the formidable problem of causal discovery head
 on, only those problems emanating from it, representing the aforementioned disconnect.
 %
-% I shall now explain precisely what I mean by all this.
 
 The simplest explanations are usually the best ones, and by \emph{best} I mean \emph{true} (or
 approximately so) when it comes to \emph{reality} -- indeed, such was the consummate genius of
@@ -247,12 +241,8 @@ And so, with that, I finish charting a crude atlas of the thematic realms for wh
 %
 In the next section I shall chart a definite course into those realms and following that, we shall
 embark, full sail on that course, into the very heart of the thesis.
-
-% It would be a gross exaggeration to say, however that it is a Barmecide Feast -- that has
-% promised the world and delivered and delivered an atlas -- for the accomplishments are very much
-% real.
-
-\section{Charting the course ahead}\label{sec:charting}
+%
+\section*{Charting the course ahead}\label{sec:charting}
 %
 This is a thesis of three parts and six chapters. 
 %
@@ -282,27 +272,61 @@ their inclusion in this thesis, a text that represents work of my shaping and do
 %
 To substantiate this claim, I include at the end of each of the corresponding chapters an estimate
 of the contributions made by myself and each co{\"a}uthor.
-
-\paragraph{Chapter 3: Null-sampling for Interpretable and Fair Representations.}
 %
-Here, we consider a setup in which sampling bias induces a one-to-one correspondence between
-subgroup and target; since learning from the training data alone is ill-posed in this case, we
-propose a two-stage, interpretable framework exploiting the unique properties of invertible models,
-founded on the assumption that more-diverse unlabelled data is often readily obtainable, e.g. from
-censuses.
-
-\paragraph{Chapter 4: Addressing Missing Sources with Adversarial Support-Matching.}
+\subsection*{Chapter 3: Null-sampling for Interpretable and Fair Representations}
 %
-In this second paper, we relax the problem constructed in Chapter 3 such that subgroup-target
-combinations are missing in an asymmetric fashion, \wrt{} the target, and propose to solve this by
-matching the support of the training set with that of an unlabelled dataset representative of the
-test set. 
+In this first of the middle chapters, we tackle what we term an \emph{aggravated fairness problem},
+characterised strong spurious spurious correlations between the sensitive and target attributes, to
+the extent of one-to-one correspondence which is not maintained at test time.
 %
-This is realised through a combination of clustering, adversarial training with a set
-discriminator, and a hierarchical-sampling strategy.
+This is, consequently, a shortcut-learning problem in which the former attribute serves as a proxy
+for the latter attribute, by virtue of its lower-complexity; to ensure generalisability across the
+spectrum of intersectional groups, we require a model that learns the correct, causal mapping for
+the features to the target, which is to say that is invariant to the sensitive attribute, though we
+are harried by the entailed problem of identifiability.
 %
-
-\paragraph{Chapter 5: Okapi: Generalising Better by Making Statistical Matches Match.}
+Similar characterisations had been considered in the domain generalisation literature
+\cite{arjovsky2019invariant, jacobsen2019excessive}, though we approached and, argued for the
+validity of, the problem from an AF perspective, partly motivated by the cases of systemic
+censoring adduced in \citep{kallus2018residual}.
+%
+Given the intractability of disentangling the two attributes, we assume the existence of a
+supplementary, dataset that contains all intersectional groups but is annotated only partially, in
+the sense that the target-annotations are absent -- we assume such data is more easily obtained
+than fully-annotated data, with census data being one potential source, for example.
+%
+This gives rise to a kind of transfer-learning setup in which the quality to be transferred is
+invariance to the sensitive attribute for which we propose to interpretable framework exploiting
+the unique properties of invertible models, in particular their losslessness connoted by their
+bijectivity along with their namesake exact invertibility (whereas more traditional
+autoencoder-based approaches furnish only approximate invertibility).
+%
+We demonstrate that these unique properties are practically meritable, giving rise to models that
+perform more robustly over a range of datasets and degrees of correlations, compared with baseline
+models, and especially so in full transfer-learning scenarios where the partially-annotated and
+fully-annotated datasets are drawn from disparate distributions sharing a sensitive attribute.
+%
+Moreover, the exact invertibility allows us insight into what the model has learned and diagnose
+potential failures, such as unforeseen entanglements between the sensitive attribute and certain
+dimensions of the inputs.
+%
+\subsection*{Chapter 4: Addressing Missing Sources with Adversarial Support-Matching}
+%
+The aforementioned paper only require partially-annotated unbiased data but it required annotations
+nonetheless and there are undoubtedly cases where this is limiting.
+%
+In the second chapter, we consider a relaxed version of the problem -- couched
+in a way that is not AF-centric -- which is soluble using supplementary data that is unannotated in
+the truest sense, in that neither the sensitive -- here, `subgroup' -- nor target annotations are
+provided.
+%
+The problem is still one of shortcut-learning, however, the biasing is imposed in an asymmetric
+fashion such that the identifiability is possible; its general formulation -- which admits the
+problem from the previous chapter as a special case -- is as much a contribution of the chapter as
+the solution we ultimately propose to it, predicated on the idea of aligning support rather than
+distributions as historically practised in domain adaptation \citep{ben2006analysis}.
+%
+\subsection*{Chapter 5: Okapi: Generalising Better by Making Statistical Matches Match}
 %
 The third and final paper contends with the broader problem of generalising to data from
 \emph{domains} outside the training distribution  and how unlabelled data from extra domains can
