@@ -1,0 +1,47 @@
+\documentclass[10pt]{article}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage{epigraph}
+\setlength\epigraphwidth{.8\textwidth}
+
+\usepackage{import}
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=red,
+}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
+\tikzset{
+    -Latex,auto,node distance =1 cm and 1 cm,semithick,
+    state/.style ={ellipse, draw, minimum width = 0.7 cm},
+    point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+    bidirected/.style={Latex-Latex,dashed},
+    el/.style = {inner sep=2pt, align=left, sloped}
+}
+
+\import{.}{math_commands}
+
+% \title{Some Fairly-Incomprehensive Background on Some Fairly-Related Things}
+\title{Introduction}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+
+
+% \tableofcontents
+% \newpage
+\import{.}{introduction}
+% \import{background}{main}
+% \bibliography{background/bibfile}
+\bibliography{allreferences}
+
+\end{document}
