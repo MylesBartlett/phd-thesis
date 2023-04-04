@@ -1,7 +1,7 @@
 % ********************************************************************************
-\section{Fair machine learning}\label{sec:fairml}
+\section{Algorithmic fairness}\label{sec:fairml}
 % ********************************************************************************
-Research into algorithmic fairness, FairML, has flourished in recent years, the subfield growing
+Research into algorithmic fairness (AF) has flourished in recent years, the subfield growing
 from what was once an arguably niche one to one of great prominence, borne by ML's proliferation --
 and thus increased capacity to affect real lives consequentially -- in all sectors of society.
 %
@@ -11,7 +11,7 @@ nature of unchecked ML systems -- \cite{kasperkevic2015google}, \cite{angwin2016
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
 %
-There are many strands of FairML following different criteria for what it means for a
+There are many strands of AF following different criteria for what it means for a
 predictor to be \emph{fair}; in this thesis we focus on those corresponding to group definitions of
 fairness \citep{barocas2019fairness}, where `group' refers to some demographic group, such as
 gender or ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are
@@ -19,7 +19,7 @@ often used interchangeably throughout the literature; we will favour the former)
 %
 We will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
 realisation \(s\) -- and will assume that this variable along with the target variable are discrete
-(and in most cases binary); this is the most common setup considered in the FairML literature --
+(and in most cases binary); this is the most common setup considered in the AF literature --
 and toward which many standard metrics of fairness are geared \citep{feldman2015certifying,
 hardt2016equality, woodworth2017learning} -- though there are works that extend notions of -- and
 methods for enforcing -- fairness to settings with categorical and continuous (\( S \) and \( Y \))
@@ -42,7 +42,7 @@ relevant constraint on the predictive rates is met).
 
 %
 
-Simply put, the unified goal of FairML is to learn some predictor, \(\Gamma: \gX \to \gY \) that
+Simply put, the unified goal of AF is to learn some predictor, \(\Gamma: \gX \to \gY \) that
 is, according to some definition, non-discriminatory -- that does not deprive a given individual of
 opportunities by dint of belonging to a particular sensitive group.
 %
@@ -64,7 +64,7 @@ Through Unawareness} (FTU).
 
 \subsection{Equalised rates}\label{sec:equalised-rates}
 %
-A long-standing and vigorously-debated problem in FairML spheres is how exactly one should define
+A long-standing and vigorously-debated problem in AF spheres is how exactly one should define
 the concept of `fairness`; indeed what constitutes a `fair` decision depends both on the
 (individual, social, or institutional) value system and the context in question.
 %
@@ -84,7 +84,7 @@ problems in general, decontextualised from fairness.
 %
 Chapter 4 adopts a perspective in line with the domain generalisation literature
 \cite{sagawa2019distributionally}, a perspective which is known under the guise of \emph{minimax
-fairness} in the FairML literature.
+fairness} in the AF literature.
 %
 While perhaps obvious, it is relevant to note that that a predictive distribution provably cannot
 simultaneously satisfy all three notions of fairness dictated by DP, EqOp and EO
@@ -210,7 +210,7 @@ accurately) -- as one would have when focussed on only the utility -- but rather
 \emph{Pareto optimal} solutions, the discovery of which is the remit of multi-objective
 optimisation (MOO; \cite{sawaragi1985theory, deb2013multi}). 
 %
-MOO has appeared both implicitly and explicitly throughout the FairML literature, the latter only
+MOO has appeared both implicitly and explicitly throughout the AF literature, the latter only
 relatively recently (e.g. in \cite{navon2020learning}). 
 %
 Indeed, examples of the former include the methods of \cite{louizos2015variational} and
@@ -358,10 +358,6 @@ mixture of men and women.
 %
 \cite{kallus2018residual} show that in such cases, enforcing fairness on the training distribution
 provably does not guarantee fairness on the true population.
-
-
-
-
 
 
 % We consider a model of biased data where systematic censoring affects whether or not entire

@@ -12,7 +12,7 @@ favour of keeping broader perspectives regarding the motivations of, assumptions
 interconnections between, the considered learning paradigms. 
 %
 This is to say, this chapter does not aspire to be a comprehensive survey of Domain Adaptation
-(DA), Domain Generalisation (DG), Fair Machine Learning (FairML), and the other germane subfields
+(DA), Domain Generalisation (DG), Algorithmic Fairness (AF), and the other germane subfields
 touched on herein; producing such for any one of these subfields is in itself a considerable
 undertaking given the breadth and depth the Machine Learning literature, the field having grown
 precipitously over the last decade since the onset of the deep-learning revolution heralded by
@@ -26,7 +26,7 @@ Indeed, each of said chapters contain their own background sections drawing dire
 related work and we wish to avoid repetition in this respect.
 
 The main themes of this thesis, as indicated by the title, are Semi-Supervised Learning (SemiSL)
-and Distributional Robustness (DR), the latter in the context of FairML (Chapters 3 and 4) and DG
+and Distributional Robustness (DR), the latter in the context of AF (Chapters 3 and 4) and DG
 (Chapter 5), specifically. 
 %
 We will cover these topics directly, but to properly contextualise and motivate them requires
@@ -56,8 +56,7 @@ to engender it.
 %
 Before branching off into discussion of the specific learning paradigms, we first reframe the
 problem of supervised learning and distribution shift through the lens of causality, yielding a
-unified perspective of the latter and when SemiSL (and by extension \emph{Self-Supervised
-Learning} (SelfSL)) should be expected to work.
+unified perspective of the latter and when one should expect SemiSL to be efficacious.
 %
 While this thesis does not directly tangle with questions of causal inference, the field of
 causality \citep{pearl2009causality} provides, through Causal Bayesian graphs (CBGs) and
@@ -66,6 +65,6 @@ desired/undesired variances/invariances using a single, formalised calculus.
 %
 Equipped with this calculus, we conclude this section -- as alluded to above -- with a discussion
 of the specific subfields and learning paradigms of relevance to the three papers constituting this
-thesis, namely:  DA, DG, FairML, SemiSL, SelfSL, Adversarial Learning (AL), and Normalising
+thesis, namely:  DA, DG, AF, SemiSL, Adversarial Learning (AL), and Normalising
 Flows/Invertible Neural Networks (NFs/INNs).
 

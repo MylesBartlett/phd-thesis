@@ -1,9 +1,10 @@
 \epigraph{
     %
     \emph{
+        %
         ``It is good to have an end to journey toward; but it is the journey that matters, in the
         end.''
-    %
+        %
 } 
 %
 }
@@ -15,8 +16,8 @@ end; for if a story had not those things it could scarcely be called a story at 
 would be a nonsense one and nonsense is only sens\emph{ible} when founded on \emph{able} sense.
 %
 This is where this thesis begins, a thesis that hopefully satisfies some of the reader's
-sensibilities regarding what makes a good story; at the very least I hope it contains some
-scintilla of sense, maybe even an estimate of erudition.
+sensibilities regarding what makes a good story; at the very least I hope it bears some sliver of
+sense, even perhaps an estimate of erudition.
 %
 \marginpar{\raggedleft\textbf{The thesis of stories and the journey without an end}}
 %
@@ -163,6 +164,11 @@ between lighter-skinned and darker-skinned subjects, and between male and female
 compounding of the two trends; again the same year, \cite{zech2018variable} demonstrated that ML
 classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
 site-specific tags and the prevalence rates associated thereof.
+%
+Such systems can be said to \emph{not} be \emph{distributionally robust} as they either fail to
+generalise beyond the training distribution or to exhibit approximate performance-parity between
+sub-distributions even within the training data, corresponding to different concepts (gender and
+race in the foregoing examples).
 
 %
 \marginpar{\raggedleft\textbf{The knots and nots of data and bias}}
@@ -220,7 +226,7 @@ In this thesis, I entertain two particular motives for using supplementary, unan
 unified in their premise of enabling invariance to `concepts' of interest.
 %
 Since the unannotated data is being used concurrently with the usual task-defining, annotated data,
-we tread in semi-supervised learning's domain.
+we tread in semi-supervised learning's (SemiSL's) domain.
 %
 The aforementioned motives are as such:
 %
@@ -249,8 +255,8 @@ the end of the beginning.
 In the subsequent chapter -- what remains of the beginning -- I provide background on the main
 topics I think relevant to the works that constitute the `middle' and marrow of this thesis.
 %
-That second chapter has its own introduction and so I will not expatiate here on the precise
-nature of its contents.
+That second chapter has its own introduction and so I will not dwell here on the precise nature of
+its contents.
 %
 The `middle' is a part of three chapters, each chapter corresponding to a distinct paper and a
 distinct problem; these papers appear in an order that is chronological yet also most
@@ -313,10 +319,10 @@ dimensions of the inputs.
 The aforementioned paper only require partially-annotated unbiased data but it required annotations
 nonetheless and there are undoubtedly cases where this is prohibitive.
 %
-In the second chapter, we consider a relaxed version of the problem -- this time, couched in
-non-AF-centric manner -- which is soluble using supplementary data that is unannotated in the
-truest sense, in that neither the sensitive -- here, `subgroup' -- nor target annotations are
-provided.
+In the second chapter, we accordingly consider a relaxed version of the problem -- this time,
+couched in non-AF-centric manner -- which is soluble using supplementary data that is unannotated
+in the truest sense, in that neither the sensitive -- here, `subgroup' -- nor target annotations
+are provided.
 %
 The problem is still one of SCL, however, the biasing is imposed in a hierarchical (with the
 targets -- specifically classes -- constituting the top level the implied tree, the subgroup the
@@ -360,11 +366,52 @@ targets) baselines.
 %
 \subsection*{Chapter 5}%: Okapi: Generalising Better by Making Statistical Matches Match}
 %
-The third and final paper contends with the broader problem of generalising to data from
-\emph{domains} outside the training distribution  and how unlabelled data from extra domains can
-effectively further this goal.
+In the forgoing chapters, we considered setups in which the concepts (sensitive subgroup attributes
+for Chapters 3 and 4 respectively) constituted a closed set, which is to plainly say that their
+possible test-time values were known and represented -- in some form, annotated,
+partially-annotated, or entirely unannotated -- at training time.
 %
-Here, changes in domain induce natural distribution shifts corresponding, for example, to
-variations in lighting, perspective, and environs; to counteract them, we propose a simple,
-consistency-regularised approach based on causal matching.
+We also assumed that the target played a role in the distributional shift that consequently
+corresponded to one of target and subpopulation/subgroup/domain (all these terms being synonymous
+here and throughout the literature, differing only by context) shift combined yet could not be
+treated with conventional methods, such as reweighting, due to the emergence of spurious
+correlations.
+%
+The focus of this third chapter, in contrast, is not on any spurious component but on the
+domain-shift one, such that is the well-established problem of DG that we tackle, albeit with an
+SemiSL slant introduced by then-recent benchmarks \citep{SagWeiLeeGaoetal22}. 
+%
+We may distil this focus into the motivating question ``Given annotated training data drawn from a
+finite set of domains, disjoint from those of the test set, might we use additional unannotated
+data from again disjoint (\wrt{} both training and test sets) domains to improve generalisation (to
+the aforesaid unseen domains)?''
+%
+
+The springboard for our proposed method was statistical-matching algorithm developed by my
+co{\"a}uthors, as appearing in \cite{RomInsShaQua22}, that pairs samples from different (in this
+case) domains based on certain (robust) statistical criteria. 
+%
+In the context of \cite{RomInsShaQua22}, this algorithm is applied in a pseudo-post-hoc fashion to
+construct a `patched' dataset, with which the initial model is trained anew in a
+distributionally-robust manner.
+%
+In the context of the chapter-being-discussed, this algorithm is generalised and embedded in a
+online-learning framework --  motivated by improved-efficiency and the finding that the original
+two-stage (offline) framework proved insufficient for problems of the kind in question -- with the
+generated matches used to define matches for a consistency-regularised SemiSL objective that is
+task- and modality-agnostic.
+%
+We find the resulting algorithm consistently outperforms baseline methods, including
+full-supervised ones which \cite{SagWeiLeeGaoetal22} showed many existing SemiSl methods failed to
+do, and, as in Chapter 3, it comes with a valuable interpretable aspect, conferred by the
+trained-with matching algorithm.
+
+
+% The third and final paper contends with the broader problem of generalising to data from
+% \emph{domains} outside the training distribution  and how unlabelled data from extra domains can
+% effectively further this goal.
+% %
+% Here, changes in domain induce natural distribution shifts corresponding, for example, to
+% variations in lighting, perspective, and environs; to counteract them, we propose a simple,
+% consistency-regularised approach based on causal matching.
 
