@@ -1,4 +1,4 @@
-% \chapter{Discussion and future work}\label{ch:conclusion} 
+% \chapter{Discussion}\label{ch:discussion} 
 \epigraph{
     %
     \emph{
@@ -9,5 +9,140 @@
 %
 }
 {The Farthest Shore\\Ursula K. Le Guin}
-\section{Limitations and intended use}\label{sec:ch7-limitations}
-\section{Broader perspective}\label{sec:broader-perspective}
+%
+\section*{Preamble}
+%
+And so we come to story's end, but the end of every story begets the beginning of a new one, or
+maybe the continuation of same one, and so the story may never truly end, but only perpetually
+change.
+%
+% Through the varied isles of ML we have sailed;
+And behind every story there is another story of how that story came to be, and together a greater
+story they may make;
+%
+for I might tell of the endless seeking of wisdom, from those sages that came before and those that
+in far-off realms now dwell, ever weaving, layer upon layer, their spells of computation to make
+magic of machine;
+%
+of bearding twin serpents, Byas and Koraleishen, and not only living to tell the tale but seeing
+them in part reconciled with unlabelled aid;
+%
+of parleying with the wise wardens of the great Sancta of Knowledge -- Aykl\'ir, Ays\^iml, Esesevi,
+N\"ur\`ipsa, and time-honoured S\'iv\={i}piar, not least of all-- to earn entrance to their
+hallowed halls.
+% the sister moons
+% of iris Aykleer and fuchsia Frijeyai bloomed full.
+%
+\section*{Of what was said and the silence between}\label{sec:what-was-said}
+%
+I have introduced three methods, each a solution to a different problem, though with all problems
+conjoined by a notion of distributional-robustness.
+%
+\marginpar{\textbf{Synopsis}}
+%
+To briefly recount, and thereby set the scene for the discussion to follow: in Chapter 3 we
+proposed an INN-based transfer-learning approach -- transferring invariance from a
+partially-labelled representative set to the training set -- for solving a spurious correlation
+problem where for training samples the target is completely determined by the sensitive attribute
+and because the latter is easier to learn it constitutes a shortcut;
+%
+in Chapter 4 we proposed to match in representation-space the support (of intersectional groups) of
+the training and deployment sets in order to overcome a relaxed version of aforesaid
+spurious-correlation where the deployment set is a dataset representative (in support) of the test
+set, but for which no annotations are required unlike the representative set featured in Chapter 3;
+%
+finally, in Chapter 5 we grappled with the problem of semi-supervised domain generalisation -- by
+which I mean the problem of to make effective use of unlabelled data drawn from extra domains to
+bolster out-of-distribution performance -- and proposed a consistency-regularised approach
+employing a robust, causally-inspired algorithm as a match-generation engine, with the matches
+bootstrapped from encodings guided (in optimisation) by past matches.
+%
+Again, all of these works are mine but not unshared, for I owe much gratitude to all my
+co{\"a}uthors -- my colleagues, my advisors, my friends -- for allowing this thesis to become what
+it has thus become.
+
+%
+\marginpar{\textbf{Limitations}}
+%
+I shall begin by discussing, with the gift of hindsight and the wisdom which comes with being
+humbled by experience, the limitations of the works presented, and I will do so candidly: for as I
+said at the outset, I do not fear the `lesser elements', for every candle lit there is a shadow
+cast, but it is because of the shadow that we may see the light and we may learn to never cast the
+same shadow twice or otherwise accept that is the shadow is right for the light.
+%
+Among these limitations, I shall begin with the most fundamental one that pervades all the works
+and is itself bipartite, comprising the assumed availability of subgroup (I, arbitrarily, use this
+term to cover the myriad names for \(S\) here) annotations, and the assumed discrete property of
+these annotations.
+
+%
+Throughout the thesis I progressively relax the former part, such that in Chapter 5 we only need to
+be able to partition the data into two sets and need not know the specific subgroup to which any
+given sample belongs.
+%
+We argued in Chapter 3 that partially-labelled data, for which the subgroup- but not the target-
+attribute is provided, is generally more `readily available'. 
+%
+While this may be true for certain domains and applications, it is not true for others, and it is
+largely contingent on what the target and subgroup attributes have been determined to be, and
+moreover, how they interact (their relative complexity).
+%
+It is reasonable in the case of a face dataset like CelebA to assume that gender information can be
+explicitly, or implicitly, gleaned -- for instance, by virtue of the images appearing in
+gender-specific catalogues -- whereas `Smiling' is not a feature to innately partition by (and we
+would assume that in the forgoing catalogue case that most models will be smiling), and these two
+attributes would indeed realistically serve well as the subgroup and target attributes,
+respectively, for Chapter 3's framework; it is less easy to intuit whether a shortcut would emerge
+though we contend there is no harm in taking the precaution if using a lossless encoder.
+%
+If it were `Hair Colour' that we sought invariance to -- which seems quite plausible -- and `Age'
+we were targeting, however, we might wager matters not panning out so neatly in practice.
+
+%
+The problem of learning distributional-robust models from biased data, and circumventing spurious
+correlations thereof, when the distributions (subgroups) in question are unknown has attracted
+considerable attention as of late \citep{HasSriNamLia18, creager2021environment, liu2021just,
+taghanaki2022masktune, kim2022learning}, however one must unavoidably rely on certain assumptions
+or one some degree of inductive bias derived from prior knowledge of the problem.
+
+Regarding the latter part, we have throughout assumed that the subgroup can be represented, innately or
+by reasonable preprocessing, discretely; while this is accords with much of the literature (because
+of its simplicity and prevalence) there are nonetheless cases where this assumption is untenable.
+%
+This is particularly germane to the method proposed in Chapter 4 which expects the data to both be
+clusterable and for the sources to be finite (and, practically, tractably-sized) sets, such that
+one can balance batches \wrt{} them.
+
+% \marginpar{On the manual and automatic identifiability of bias}
+%
+% Problem of underspecification: how do we know that intervention is required if the validation set
+% is drawn from the same distribution as the training set? The obvious answer is with tools from
+% interpretable/explainable machine-learning (xAI); this demands a human-in-the-loop element but it
+% seems reasonable to expect any system designed for public-facing, critical-decision-making should
+% be subject to rigorous auditing. MaskTune takes advantage of feature-attribute to encourage a
+% model to learn multiple views of the data, rather than just the one generated by a spurious
+% correlation.
+% Using pre-trained models to automatically detect biases (according to a `constitution
+% \citep{bai2022constitutional}): for text-based tasks, RLHF has emerged as the leading paradigm
+% aligning the output of generative models with human values (along the competing axes of
+% `helpfulness'  \citep{scheurer2022training} and `harmlessness' \citep{bai2022training}). While
+% RLHF is annotation-intensive -- though this can be ameliorated with crowdsourcing --
+% \cite{bai2022constitutional} showed that given an existing RLHF-trained model, one can improve
+% performance along the harmlessness axis (i.e. de-bias the model) based on the guidance of the
+% RLHF model itself, as given by some constitution (a set of values encoded in the form of
+% prompts); this variant of RLHF has been appropriately termed RLAIF (Reinforcement Learning from
+% AI feedback).
+% While RLHF was initially conceived for, and has been almost-exclusively since applied to,
+% text-generation (giving rise to a wave of AI assistants, most famously embodied by ChatGPT), the
+% paradigm is a fundamentally modality-agnostic, this fact recently capitalised on by
+% \cite{lee2023aligning} in extending RLHF to text-to-image generation.
+%
+% One could conceive of a further broadening of the paradigm to conventional supervised-learning
+% tasks, wherein the model is constructed to give natural-language explanations (which goes beyond,
+% thinking of vision-language tasks, beyond standard captioning which entail no explanation, only
+% description) for its classification, rather than mere logits; RLHF/RLAIF can then be conducted
+% using said explanations.
+
+
+
+\section*{Of what has since become and might yet be}
