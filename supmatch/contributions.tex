@@ -1,0 +1,52 @@
+\noindent\textsc{Contributions:}
+%
+\begin{itemize}
+    %
+    \item 
+    %
+        Conceptually, I proposed we convert the problem of distribution-matching, proposed by T.
+        Kehrenberg, into one of support-matching by means of source-balanced bags and a
+        set-discriminator, an necessary element for achieving the desired goal of
+        subgroup-invariance while preserving variance to the target.
+    %
+        Practically, while much of the original codebase was written by T. Kehrenberg, the lion's
+        share of the (several-times) rewritten and extended (additional datasets, baselines,
+        discriminator methods, etc.) one was authored by me; a similar story applies both to the
+        text, with much of the latest version (save the theoretical sections) being of my hand, and
+        to the experiment-running (and the implied model-selection).
+
+    \item 
+      %
+        T. Kehrenberg conceived of the initial idea of overcoming the limitation of the
+        partially-annotated representative set in Chapter 3 through the use of distribution
+        matching, wrote much of the original implementation and text, and was the primary
+        experiment-runner during the nascent distribution-matching stage of the project.
+    %
+        Later on in the project, he notably worked to establish theoretical guarantees
+        for the support-matching method and a more rigorous formulism of the problem setup, while
+        also continuing to aid with experiment-running and paper-writing (though both to a reduced,
+        but still significant, degree).
+    %
+    \item
+      %
+        V. Sharmanska conceived, and gave the first formulation of, the problem setting, wrote
+        significant portions of the initial versions of the paper -- those related to the
+        introduction and problem setup primarily.
+      %
+        In later stages of the project, she took on an important advisory role and gave
+        feedback on revisions of the paper.
+    %
+    \item 
+      %
+        N. Quadrianto suggested the combining of distribution-matching with clustering-derived
+        sample-weighting during the initial stages -- this being a major stepping stone in the
+        development of the eventual support-matching method (for which said weighting was replaced
+        by exact bag-based balancing) -- wrote significant portions of the original text, and ran
+        experiments primarily on the clustering side.
+      %
+        He was also responsible for generally supervising the project, by which I mean discussing
+        and advising on current progress and future avenues, and providing feedback on revisions of
+        the paper, to give a non-exhaustive list.
+      
+    %
+\end{itemize}
