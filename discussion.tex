@@ -10,28 +10,28 @@
 }
 {The Farthest Shore\\Ursula K. Le Guin}
 %
-\section*{Preamble}
-%
-And so we come to story's end, but the end of every story begets the beginning of a new one, or
-maybe the continuation of same one, and so the story may never truly end, but only perpetually
-change.
-%
-% Through the varied isles of ML we have sailed;
-Behind every story there is another story of how that story came to be, and together a greater
-story they may make;
-%
-for I might tell of the seeking of wisdom, from those sages that came before and those that
-in far-off realms now dwell, ever weaving, layer upon layer, their spells of computation to make
-magic of machine;
-%
-of bearding twin serpents, Byas and Koraleishen and seeing them reconciled with unlabelled aid;
-%
-and of parleying with the Wardens of the great Sancta of Knowledge -- Aykl\'ir, Ays\^iml, Esesevi,
-N\"ur\`ipsa, and time-honoured S\'iv\={i}piar, not least of all-- to earn entrance to their
-hallowed halls.
-% the sister moons
-% of iris Aykleer and fuchsia Frijeyai bloomed full.
-%
+% \section*{Preamble}
+% %
+% And so we come to story's end, but the end of every story begets the beginning of a new one, or
+% maybe the continuation of same one, and so the story may never truly end, but only perpetually
+% change.
+% %
+% % Through the varied isles of ML we have sailed;
+% Behind every story there is another story of how that story came to be, and together a greater
+% story they may make;
+% %
+% for I might tell of the seeking of wisdom, from those sages that came before and those that
+% in far-off realms now dwell, ever weaving, layer upon layer, their spells of computation to make
+% magic of machine;
+% %
+% of bearding twin serpents, Byas and Koraleishen and seeing them reconciled with unlabelled aid;
+% %
+% and of parleying with the Wardens of the great Sancta of Knowledge -- Aykl\'ir, Ays\^iml, Esesevi,
+% N\"ur\`ipsa, and time-honoured S\'iv\={i}piar, not least of all-- to earn entrance to their
+% hallowed halls.
+% % the sister moons
+% % of iris Aykleer and fuchsia Frijeyai bloomed full.
+% %
 \section*{Of what was said and the silence between}\label{sec:what-was-said}
 %
 I have introduced three methods, each a solution to a different problem, though with all problems
@@ -47,8 +47,9 @@ and because the latter is easier to learn it constitutes a shortcut;
 %
 in Chapter 4 we proposed to match in representation-space the support (of intersectional groups) of
 the training and deployment sets in order to overcome a relaxed version of aforesaid
-spurious-correlation where the deployment set is a dataset representative (in support) of the test
-set, but for which no annotations are required unlike the representative set featured in Chapter 3;
+spurious-correlation problem where the deployment set is a dataset representative (in support) of
+the test set, but for which no annotations are required, in contrast to the representative set
+featured in Chapter 3;
 %
 finally, in Chapter 5 we grappled with the problem of semi-supervised DG -- by which I mean the
 problem of how to make effective use of unlabelled data drawn from extra domains to bolster
@@ -61,13 +62,12 @@ co{\"a}uthors -- my colleagues, my advisors, my friends -- for allowing this the
 it has thus become.
 
 %
-\marginpar{\textbf{Limitations}}
+\marginpar{\textbf{The gift of hindsight}}
 %
 I shall begin by discussing, with the gift of hindsight and the wisdom which comes with being
 humbled by experience, the limitations of the works presented, and I will do so candidly: for as I
-said at the outset, I do not fear the `lesser elements', for every candle lit there is a shadow
-cast, but it is because of the shadow that we may see the light and we may learn to never cast the
-same shadow twice. %or otherwise accept that is the shadow is right for the light.
+said at the outset, I do not fear the `lesser elements' -- for every candle lit there is a shadow
+cast, but it is also because of the shadow that we may see the light.
 %
 Among these limitations, I shall begin with the most fundamental one that pervades all the works
 and is itself bipartite, comprising the assumed availability of subgroup (I, arbitrarily, use this
@@ -80,8 +80,8 @@ such that in Chapter 4 we need only know in advance all possible (\wrt{} the tes
 know that the deployment set contains them); by Chapter 5 we need only be able to partition the
 data into two disjoint sets, across which the matching is performed.
 %
-We argued in Chapter 3 that partially-labelled data, for which the subgroup- but not the target-
-attribute is provided, is generally more `readily available'. 
+We argued in Chapter 3 that partially-labelled data, for which the subgroup- but not the
+target-attribute is provided, is generally more `readily available'. 
 %
 While this may be true for certain domains and applications, it is not true for others, and it is
 largely contingent on what the target and subgroup attributes have been determined to be, and,
@@ -95,8 +95,8 @@ attributes would indeed realistically serve well as the subgroup and target attr
 respectively, for Chapter 3's framework; it is less easy to intuit whether a shortcut would emerge
 though we contend there is no harm in taking the precaution if using a lossless encoder.
 %
-If it were `Hair Colour' that we sought invariance to -- which seems quite plausible -- and `Age'
-we were targeting, however, matters would not pan out so neatly.
+If it were `Hair Colour' that we sought invariance to and `Age' we were targeting (this combination
+plausible enough), however, we would not expect things to pan out nearly so neatly.
 
 %
 The problem of learning distributional-robust models from biased data, and circumventing spurious
@@ -117,19 +117,20 @@ are excluded from annotation but their intersections.
 Nonetheless, this discovery can fail to align with expectation, and we assume in Chapter 4 that the
 subgroups/targets are sufficiently salient to be well-clustered by un-/semi-supervised means -- one
 would not expect a source formed from gender/pulmonary infiltration (subgroup and target
-attributes, respectively) to lend itself to natural clusters, to adduce a fail-case from our
-experimentation. 
+attributes, respectively) to lend itself to natural clusters, to adduce a fail-case born from
+experiments conducted on the Chest Xray8 dataset. 
 
-Regarding the latter `part', we have throughout assumed that the subgroup can be represented,
-innately or by some preprocessing, discretely; while this is accords with much of the literature
-(because of its simplicity and prevalence) there are nonetheless cases where this assumption is
-untenable.
+Speaking of the discreteness assumption, we have throughout assumed that the subgroup can be
+represented, innately or by simple preprocessing, by some index; while this accords with much of
+the literature (because of its simplicity and prevalence) there are nonetheless cases where this
+assumption is untenable.
 %
 This is particularly germane to the method proposed in Chapter 4 which expects the data to both be
-clusterable and for the sources to be finite (and, practically, tractably-sized) sets, such that
-one can balance batches \wrt{} them -- how one might extend the method to continuous subgroups is
-an open question -- the notion perhaps not even sensible -- and in order to maintain tractability
-in pursuit of generality it would seem necessarily give up the theoretical guarantees established.
+clusterable and for the sources to be finite (and, practically, small enough to be computationally
+tractable) sets, such that one can balance batches \wrt{} them -- how one might extend the method
+to continuous subgroups is unclear -- the notion perhaps not even sensible -- and in order to
+maintain tractability in pursuit of generality it would seem necessarily give up the theoretical
+guarantees established.
 %
 The adversarial-infomin approach adopted in Chapter 3, on the other hand, can be readily adapted to
 continuous subgroups, for instance, by substituting cross-entropy with the
@@ -138,15 +139,14 @@ as an objective but as a fairness metric for tasks involving \emph{categorical} 
 
 \marginpar{\textbf{The idiosyncrasies and iniquities of adversarial infomin}}
 %
-Seeing this as opportunity to dovetail (half-cohesively) into fuller discussion of AdvL: I have
-spoken before of the practical deficiencies of the paradigm in a DL context -- namely the fragility
-of optimisation, disposition to cyclical dynamics, architectural dependency, and the loss of
-guarantees incurred by estimating the best response dynamics with a finite (typically small) number
-of steps -- but it is apposite that we revisit these points again here, retrospectively instead of
-prospectively.
+I have spoken before of the practical deficiencies of the AdvL paradigm in a DL context --
+namely the fragility of optimisation, disposition to cyclical dynamics, architectural dependency,
+and the loss of guarantees incurred by estimating the best-response dynamics with a finite
+(typically small) number of steps -- but it is apposite that we revisit these points again here,
+retrospectively instead of prospectively.
 %
 Indeed -- as again spoken of before but of which there is again no harm recalling -- said
-deficiencies have been well noted infomin literature, motivating attempts to develop
+deficiencies have been well noted in the infomin-related literature, motivating attempts to develop
 non-adversarial approaches, taking advantage of, for instance, the exact-density-estimation
 afforded by normalising flows \citep{balunovic2021fair}, sliced mutual information
 \citep{goldfeld2021sliced} to scalably target the infomin objective directly
@@ -155,30 +155,30 @@ moyer2018invariant} for which the subgroup attribute plays the part of the \emph
 to reconcile the parlance.
 %
 While cognisant of, and taking measures (e.g. ensembling, limiting the volume of the latent space)
-to ameliorate, these deficiencies, the making of the aforesaid chapters was in no small amount
+to ameliorate, these deficiencies, the making of the aforesaid chapters was, in no small amount,
 harried by them, often demanding careful and exhaustive tuning to coax the respective methods into
 working as desired, the `tuning' itself problematic due to the underspecified nature of the problem
 setups.
 %
-We found the inherent instability of AdvL particularly pronounced in the making of Chapter 3,
+We found the inherent instability of AdvL particularly pronounced in the case of Chapter 3,
 specifically, owing to the compounding instabilities imparted by the invertible architectures, a
 problem which itself would not be addressed \emph{in toto} until \cite{behrmann2021understanding}.
 %
 In light of the forgoing, exploring non-adversarial methods, of the kind referenced, as alternative
-infomin engines for the higher-level methods proposed in the germane chapters is certainly
-well-founded (for those wishing to apply, or undertake further research, on said methods), though I
-cannot -- despite their theoretical appeal -- attest to their practical efficacy in these contexts,
-\emph{a priori}; I would note in defence of the chapters, however, that for neither higher-level
-method is the form of said engine integral to its identity, and is in fact modular, such that we
-may conceivably freely interchange engines subject to their respective requirements.
+infomin engines for the higher-level methods proposed in said chapters is well-founded (for those
+wishing to apply, or undertake further research, on said methods), though I cannot -- despite their
+theoretical appeal -- attest to their practical efficacy in these contexts, \emph{a priori}; I
+would note in defence of the chapters, however, that for neither higher-level method is the form of
+said engine integral to its identity, and is in fact modular, such that we may conceivably freely
+interchange engines subject to their respective requirements.
 %
 In Chapter 5 we induce invariance by non-adversarial means ourselves, namely by enforcing
 similarity between matching samples from different domains within representation space -- the
-adversary substituted with a co\"operative, non-parametric match-generator -- and we thereby avert
+adversary substituted with a non-parametric match-generator -- and we thereby avert
 many of the optimisation difficulties plaguing the aforementioned chapters, though the problem of
 judicious hyperparameter-selection lingers, or arguably amplified by the non-parametricity -- we
 point in the paper to adaptive-configuration of the calipers being an obvious (in motivation but
-not implementation) extension to the existing algorithm.
+not implementation) avenue of extension.
 %
 
 \marginpar{\raggedleft\textbf{On the problem of identifiability}}
@@ -209,13 +209,14 @@ risks invalidating inter-method comparisons \citep{gulrajani2020search}.
 %
 \marginpar{\raggedleft\textbf{Interpretability and Oversight}}
 %
-In absence of a such validation set by which to quantify biases, one may draw upon methods from the
-explainability/interpretability literature \citep{gunning2019xai} to determine the learned
-solutions align with the intended solutions; one may, for instance, readily diagnose the use of
-background as a shortcut, per the now-canonical example from \cite{beery2018recognition}, with a
-standard-method-in-that-literature in Grad-cam \cite{selvaraju2017grad}, allowing for a targeted
-intervention (e.g. by augmentation) -- one may even use the resulting attribution maps directly for
-this purpose as proposed by \cite{taghanaki2022masktune}.
+In absence of a such validation set by which to quantify biases and generalisation-failures, one
+may draw upon methods from the explainability/interpretability literature \citep{gunning2019xai} to
+determine the learned solutions align with the intended solutions; one may, for instance, readily
+diagnose the use of background as a shortcut, per the now-canonical example from
+\cite{beery2018recognition}, with a standard-method-in-that-literature in Grad-cam
+\cite{selvaraju2017grad}, allowing for a targeted intervention (e.g. by augmentation) -- one may
+even use the resulting attribution maps directly for this purpose as proposed by
+\cite{taghanaki2022masktune}.
 %
 It is for this reason that we emphasise the interpretability aspect in Chapter 3, for even if we
 cannot sufficiently debias a model (if it need be debiased), we might glean when this is the case
@@ -225,23 +226,45 @@ This is, of course, easier for some domains than others -- images being naturall
 to their underlying structure and familiarity (the window through which we, quite literally, see
 the world), whereas tabular data generally affords no such luxuries -- but the bottom line of this
 excursis is my advocacy (which I am certainly not unique for) for human oversight, and the rigorous
-model-vetting it should beget, irrespective of how trustable the concerned methods and data are, in
-principle.
+model-vetting it should beget, irrespective of the theoretical trustability of the methods/data.
+ 
 %
+\marginpar{\raggedleft\textbf{Theoretical-groundedness}}
+%
+As far as limitations go, I shall last speak expressly of empirical and theoretical claims, and the
+desire to couple the two.
+%
+In Chapter 4 we provided theoretical guarantees regarding when the proposed support-matching should
+succeed, subject to certain (relatively-loose) assumptions about the data-generating distributions.
+%
+Chapter 5, however, features no such proofs -- only intuition -- for the efficacy of its respective
+method, that being a notable weakness of the current incarnation of the paper -- having such may
+serve to guide us regarding the configuration of the matching algorithm and thereby obviate the
+somewhat-lengthy hyperparameter-selection procedure went through to obtain the presented results.
+%
+In Chapter 3, on the other hand, we leverage an established infomin framework, around which (or in
+the vicinity of which) there is a significant body of existing theoretical work -- both within the
+context of the various subfields ML concerned with it (DA, DG, AF) and within the broader context
+of game theory, dynamical systems theory, and information theory -- however, we again furnish only
+intuition and empirical claims for the stabilisation techniques, for which (proof-driven)
+theoretical-grounding would be demonstrably desirable.
 
+%
+\section*{Of what has since become and might yet be}
+%
 \marginpar{\raggedleft\textbf{Learning from human preferences and scaling supervision}}
 %
 Recent work on AI-alignment has proposed `scaling supervision' (understanding `supervision' to mean
-what I called before `oversight') of generative-language models by using human-aligned LLMs both
-not only as the model-to be-supervised, but also as the supervisor, acting according to a set of
-values (in the form of prompts), or `constitution', specified by the practitioner
+what I called before `oversight') of generative-language models by using human-aligned LLMs not
+only as the model-to be-supervised, but also as the supervisor, acting according to a set of values
+(in the form of prompts), or `constitution', specified by the practitioner
 \citep{bowman2022measuring, bai2022constitutional}.
 %
 Such supervisors exhibit the ability to accurately, and well-calibratedly, detect biases violating
 said constitution in generated responses and provide feedback for redressing them; this feedback
 may be used to further align the supervised model, as substitute for the human-generated feedback
 fuelling the eponymous Reinforcement Learning from Human Feedback (RLHF; \cite{christiano2017deep,
-stiennon2020learning, bai2022training}).
+stiennon2020learning, bai2022training}), analogously termed RLAIF (AIF standing for AI feedback).
 %
 While RLHF does not allow for sidestepping of annotations (which has been ameliorated by
 unprecedented levels of crowdsourcing), tuning based on preferences (given for pairs of responses)
@@ -253,42 +276,76 @@ the bias exists on a (difficult-to-quantify) spectrum or is fundamentally subjec
 While RLXF (to coin a catch-all initialism for reinforcement learning from some kind of feedback)
 affords a spectacularly simple and general paradigm in terms of alignment, alignment and
 distributional-robustness (that we view throughout this thesis in terms of invariance and
-worst-group performance) should not be confused as one and the same even though they can align --
+worst-group performance) should not be confused as one and the same even though they can overlap --
 for some tasks there is no subjective element to engender the notion of `preference', i.e. the
 value system is fixed (inherently or by legislation), and so may be the answer-set (e.g the
 label-set for closed-set classification). 
 %
-Thus, while one may use RLXF to obtain generative models that are more helpful/harmless/honest
-(the `HHH triad') -- a sense of `debiasing' -- it is no panacea for problems of the nature discussed in this
-thesis, especially so for specialised tasks for which there is little prior knowledge -- acquired
-from large-scale pre-training -- to be leveraged; methods like those presented herein might then
-still have their place in this brave new world of ML where multi-modal foundation models and RLXF
-putatively rule the roost (or at least the headlines).
+Thus, while one may use RLXF to obtain generative models that are more helpful/harmless/honest (the
+`HHH triad') -- a sense of `debiasing' -- it is no panacea for problems of the nature discussed in
+this thesis, especially so for specialised tasks for which there is little prior knowledge --
+acquired from large-scale pre-training -- to be leveraged; methods like those presented herein
+might then still have their place in this brave new world of ML where multi-modal foundation models
+\citep{driess2023palm, huang2023language, openai2023gpt4, katz2023gpt} and RLXF putatively rule the
+roost (though most definitely the headlines).
 %
-The premise of scaling supervision, via review, as in \cite{bai2022constitutional}, may have
-broader application, however: for image-classification, one could conceive of a model that
-classifies based on natural-language descriptions of a scene, providing a reasoning mechanism that
-is evaluable by `constitutional' critics and human auditors (who, again, should very much remain
-part of the equation -- they are to be assisted not superseded).
+The premise of scaling supervision, through this process of self-review, as in
+\cite{bai2022constitutional}, may have broader application, however: for image-classification, one
+could conceive of a model that classifies based on natural-language descriptions of a scene,
+providing a reasoning mechanism that is evaluable by `constitutional' critics and human auditors
+(who, again, should very much remain part of the equation -- they are to be assisted not
+superseded).
 %
 
 %
-\marginpar{\raggedleft\textbf{Theoretical-groundedness}}
+% I have already spoken of foundation models \citep{bommasani2021opportunities}, albeit in the narrow
+% context of AI-alignment, but 
+Beyond this alignment-centric perspective, it is also appropriate to speak of the merits of
+large-scale pre-training, and subsequent fine-tuning, from a non-generative perspective and rather
+in terms of the distributional-robustness representations it may give rise to; whereas the focus
+before was on the language domain, here it will be on the vision one which preponderated in this
+thesis's works, due foremost to its interpretability.
 %
-In Chapter 4 we provided some theoretical guarantees regarding when the proposed support-matching
-should succeed, given certain assumptions about the data-generating distribution.
+A host of prominent works attest that large-scale (primarily self-supervised) training improves
+downstream robustness for visual tasks, in both covariate \citep{hendrycks2019using,
+hendrycks2020pretrained, radford2021learning} and target/subgroup senses \citep{liu2021self,
+goyal2022vision}, with \cite{goyal2022vision} showing that the pre-training corpus, if of
+sufficient scale (here being on the order of millions of samples), need not be curated for this to
+apply -- curation being the natural enemy of scalability, which itself can implies diversity and
+robustness, at least in the out-of-distribution sense (for it cannot  necessarily imply invariance
+in general).
 %
-Chapter 5, however, features no such proofs -- only intuition -- for the efficacy of its respective
-method, that being a notable weakness of the current incarnation of the paper -- having such may
-serve to guide us regarding the configuration of the matching algorithm and thereby obviate the
-somewhat-lengthy hyperparameter-selection procedure went through to obtain the presented results.
+Thus, for some tasks out-of-distribution/DG tasks, one may not need to resort to dedicated DG
+algorithms, but instead simply fine-tune, or use as is, the representations of such foundation
+models -- one may even be able to obviate the need to perform any manner of fine-tuning if the task
+in question is sufficiently general as to admit zero-shot solutions by vision-language models
+\citep{radford2021learning, alayrac2022flamingo}.
 %
-In Chapter 3, on the other hand, we leverage an established infomin framework, around which there
-is a significant body of existing theoretical work -- both within the context of the various
-subfields ML concerned with it (DA, DG, AF) and within the broader context of game theory,
-dynamical systems theory, and information theory -- however, we again furnish only intuition and
-empirical claims for the stabilisation techniques, for which (proof-driven) theoretical-grounding
-would be demonstrably desirable.
+There are two issues that prevent or hinder such foundation-model-based approaches from providing
+general-purpose solutions, however. 
+%
+The first I have alluded to before, that being that for tasks of a specialised nature -- such as
+those found in medical imaging -- we would expect the degree of positive transfer from large-scale
+web-derived datasets to be limited, on the representation front, and zero-shot approaches all the
+more inauspicious; the second is that the robustness of pre-training models is known to degrade
+(become `distorted') as the result of fine-tuning processes \citep{andreassen2021evolution,
+kumar2022finetuning}, a phenomenon which can be mitigated but not altogether averted, at present --
+the development of more-robust, less-distorting fine-tuning routines remains an active area of
+research \citep{lee2022surgical, trivedi2023closer}.
+%
+An additional concern, of a more practical, but not innegligibly-niche nature, is that running the
+germane foundation model might demand more compute or time than can be afforded, even when run in
+inference mode (simply loading larger foundation models into memory can be challenging, requiring
+model-sharding), this being most-obviously applicable to low-compute edge devices.
+%
+These issues aside, while foundation models may pave some of the way to robustness, in certain
+respects, it will often be the case that one can do better given the data available, and the
+remainder of the way need be paved with dedicated distributionally-robust methods; in cases where
+no annotations for the attribute to-be-invariant to are given or obtainable, however, they do
+provide a promising recourse, one that requires few, if no, assumptions -- one may obtain
+robustness for `free', so to speak -- and little to no (in the zero-shot case) compute be spent on
+training, albeit with the aforementioned caveat on the compute-requirements standing.
+
 
 % \marginpar{On the manual and automatic identifiability of bias}
 %
@@ -330,5 +387,3 @@ would be demonstrably desirable.
 % foundation models and RL(HF/AI)F seemingly rule the roost (or at least the headlines).
 % 
 
-
-\section*{Of what has since become and might yet be}
