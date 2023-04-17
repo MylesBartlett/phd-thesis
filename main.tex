@@ -171,7 +171,16 @@ titlepage,numbers=noenddot,%1headlines,
 %\tikzexternalize[mode=list and make, prefix=ext-tikz/]
 \usepackage[dvipsnames]{xcolor}
 \usepackage[edges]{forest}
-\usetikzlibrary{shadows.blur}
+% \usepackage{tikz}
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning,shadows.blur}
+\tikzset{
+    -Latex,auto,node distance =1 cm and 1 cm,semithick,
+    state/.style ={ellipse, draw, minimum width = 0.7 cm},
+    point/.style = {circle, draw, inner sep=0.04cm,fill,node contents={}},
+    bidirected/.style={Latex-Latex,dashed},
+    el/.style = {inner sep=2pt, align=left, sloped}
+}
+% \usetikzlibrary{shadows.blur}
 % ****************************************************************************************************
 
 
@@ -223,7 +232,8 @@ titlepage,numbers=noenddot,%1headlines,
 % for compatibility with Sussex requirements
 % \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
 % !!! for drafting, I'll use slightly incorrect margins, because it's annoying if the text isn't centered
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt,marginparwidth=20mm,
+margin=35mm]{geometry}
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{TeX Gyre Pagella} % Palatino clone
 \linespread{1.05} % a bit more for Palatino
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{Linux Libertine O}
@@ -396,10 +406,12 @@ titlepage,numbers=noenddot,%1headlines,
 %********************************************************************
 % Bibliographies
 %*******************************************************
-\addbibresource[label=all]{allreferences.bib}
-\addbibresource[label=nifr]{nifr/bibfile.bib}
-\addbibresource[label=okapi]{okapi/bibfile.bib}
 \addbibresource[label=ownpubs]{ownpubs.bib}
+\addbibresource[label=all]{allreferences.bib}
+\addbibresource[label=background]{background/bibfile.bib}
+\addbibresource[label=nifr]{nifr/bibfile.bib}
+\addbibresource[label=supmatch]{supmatch/bibfile.bib}
+\addbibresource[label=okapi]{okapi/bibfile.bib}
 
 %********************************************************************
 % Hyphenation
@@ -442,12 +454,16 @@ titlepage,numbers=noenddot,%1headlines,
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{example}{Example}[chapter]
 
+% epigraph
+\usepackage{epigraph}
+% \setlength\epigraphwidth{5.\textwidth}
 % Pseudocode-related packages.
 % Note that minted requires the build directory to be set when
 % compiling with lualatex; for the most part the generated
 % code should be left frozen.
 \usepackage{algorithm}
-\usepackage{algorithmic}
+% \usepackage{algorithmic}
+\usepackage{algpseudocode}
 \renewcommand{\algorithmicrequire}{\textsc{Input:}}
 \renewcommand{\algorithmicensure}{\textsc{Output:}}
 % \usepackage[ruled]{algorithm2e} % http://www.ctan.org/pkg/algorithm2e
@@ -519,32 +535,50 @@ titlepage,numbers=noenddot,%1headlines,
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
 \ctparttext{
-  This part covers the introduction, the related work and a summary of the work presented in part~\ref{pt:main}.
-}
-% \part{Preliminaries}\label{pt:intro}
-% \include{ch/1-introduction}
-% \include{ch/2-related-work}
-% \include{ch/3-structure}
-
+  This part comprises the introduction and background topics deemed relevant to
+  part~\ref{pt:middle}.
+}\part{Beginning}\label{pt:beginning}
+%
+\begin{refsection}[all]
+  \include{introduction}
+  \printbibliography
+\end{refsection}
+%
+\begin{refsection}[background]
+  \include{background/main}
+  \printbibliography
+\end{refsection}
+%
 \cleardoublepage
+%
 \ctparttext{
-  This part comprises two peer-reviewed publications and one work in progress.
-  They are reproduced here with minimal changes.
-} \part{Publications}\label{pt:main}
-
-% \begin{refsection}[nifr]
-%   \include{nifr/main}
-%   \printbibliography
-% \end{refsection}
-
-% \begin{refsection}[okapi]
-%   \include{okapi/main}
-%   \printbibliography
-% \end{refsection}
-
-\cleardoublepage
-% \part{Conclusion}\label{pt:end}
-% \include{ch/7-discussion}
+  This part comprises three publications, two peer-reviewed and published at top ML conferences,
+  one a work-in-progress; the former have been adapted for this thesis textually, to improve
+  clarity, technical correctness, and consistency (both internally and between works) but are
+  limited in scope and the preponderance of the text remains as-published.
+}\part{Middle}\label{pt:middle}
+%
+\begin{refsection}[nifr]
+  \include{nifr/main}
+  \printbibliography
+\end{refsection}
+%
+\begin{refsection}[supmatch]
+  \include{supmatch/main}
+  \printbibliography
+\end{refsection}
+%
+\begin{refsection}[okapi]
+  \include{okapi/main}
+  \printbibliography
+\end{refsection}
+%
+\ctparttext{}\part{End}\label{pt:end}
+%
+\begin{refsection}[all]
+  \include{discussion}
+  \printbibliography
+\end{refsection}
 
 % ********************************************************************
 % Appendix

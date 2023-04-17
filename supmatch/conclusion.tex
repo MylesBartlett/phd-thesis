@@ -1,0 +1,21 @@
+We have highlighted the problem that systematic bias or dataset curation can result in one or more
+subgroups having zero labelled data, and by doing so, hope to have stimulated serious consideration
+for it when planning, building, and evaluating %and regulating ML
+%and computer vision
+systems.
+%
+We proposed a two-step approach for addressing the resulting spurious correlations.
+%
+First, we construct perfect bags from an unlabelled deployment set via semisupervised clustering. 
+%
+Second, by matching the support of the training and deployment sets in representation space, we
+learn representations with subgroup-invariance.
+%
+We empirically validate our frame\-work on the Coloured MNIST, CelebA and Chest-Xray8 datasets,
+proving it is possible to maintain high performance on subgroups with incomplete support.
+%
+Furthermore, we bound the error in the objective due to imperfect clustering.
+%
+Future work includes exploring other unsupervised-learning methods and addressing the limitations
+raised in Sec.~\ref{sec:limitations}.
+

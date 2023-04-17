@@ -1,0 +1,26 @@
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\begin{algorithm}
+  \caption{Adversarial Support Matching}\label{alg:cap} 
+  \begin{algorithmic}
+    \Require Number of encoder updates $N^\text{enc}$, number of discriminator updates $N^\text{disc}$,
+    encoders $f$ and $t$, decoder $r$, discriminator $h$, training set $\gD^{tr}$, deployment set
+    $\gD^{dep}$
+    \Ensure Debiaser $f$ with learned invariance to $s$
+    \\
+
+    \For{$i \gets 1$ to $N^\text{enc}$} \Comment Encoder update loop
+    \State Sample batches of perfect bags $\gB^{tr} \sim \gD^{tr}$ and $\gB^{dep} \sim
+    \gD^{dep}$ using $\Pi$ (Eq.~\ref{eq:Pi})
+    \State Compute $\gL^\text{enc}$ using Eq.~\ref{eq:disentangling_total}
+    \State Update $f$, $t$, and $r$ by descending in the direction $\nabla \gL^\text{enc}$
+    \For{$j \gets 1$ to $N^\text{disc}$} \Comment Discriminator update loop
+    \State Sample batches of perfect bags $\gB^{tr} \sim \gD^{tr}$ and $\gB^{dep} \sim
+    \gD^{dep}$ using $\Pi$ (Eq.~\ref{eq:Pi})
+    \State Compute $\gL^\text{match}$ using Eq.~\ref{eq:disentangling_total}
+    \State Update $h$ by ascending in the direction $\nabla \gL^\text{match}$
+    \EndFor
+    \EndFor
+
+  \end{algorithmic}
+\end{algorithm}

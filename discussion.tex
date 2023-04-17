@@ -1,4 +1,6 @@
-% \chapter{Discussion}\label{ch:discussion} 
+% -------------------------------------------------------------------------------
+\chapter{Discussion}\label{ch:discussion}
+% -------------------------------------------------------------------------------
 \epigraph{
     %
     \emph{
@@ -189,11 +191,11 @@ methodological (or data-sided) interventions, such as those delineated; 2) and e
 success of those interventions -- given the element of underspecification
 \citep{semenova2019study}.
 %
-To the first aspect of the question, the obtuse answer would be that it need not be answered, or
-answerable, presupposing that the model in question (figuratively) is to be deployed regardless
-with or without intervention (the control), for comparisons should be made \wrt{} the latter rather
-than \wrt{} an ideal, a gold-standard that may (and often will not be) practically realisable --
-one need only ensure that performance does not degrade based on what is evaluable.
+The obtuse answer would be that it need not be answered, or answerable, presupposing that the model
+in question (figuratively) is to be deployed regardless with or without intervention (the control),
+for comparisons should be made \wrt{} the latter rather than \wrt{} an ideal, a gold-standard that
+may (and often will not be) practically realisable -- one need only ensure that performance does
+not degrade based on what is evaluable.
 %
 %
 This ethos of `do the best we can with what's available, regardless of the outcome', however is
@@ -202,12 +204,12 @@ or should, aim to deploy models subject to their being sensible/unbiased (if onl
 sake) and to thoroughly diagnose, and attempt to remedy failure cases via well-measured and
 iterative processes.
 %
-The second aspect, the problem of underspecification -- of validating models without access to data
-representative of that to-be-encountered at deployment time, as defines DG -- remains an
-outstanding one, that has been discussed broadly and in the context of DG specifically, where it
-risks invalidating inter-method comparisons \citep{gulrajani2020search}.
+The problem of underspecification -- of validating models without access to data representative of
+that to-be-encountered at deployment time, as defines DG -- that encapsulates the second aspect of
+the question remains an outstanding one, that has been discussed broadly and in the context of DG
+specifically, where it risks invalidating inter-method comparisons \citep{gulrajani2020search}.
 %
-\marginpar{\raggedleft\textbf{Interpretability and Oversight}}
+\marginpar{\raggedleft\textbf{Interpretability and oversight}}
 %
 In absence of a such validation set by which to quantify biases and generalisation-failures, one
 may draw upon methods from the explainability/interpretability literature \citep{gunning2019xai} to
@@ -274,7 +276,7 @@ the bias exists on a (difficult-to-quantify) spectrum or is fundamentally subjec
 `offensive', for example).
 %
 While RLXF (to coin a catch-all initialism for reinforcement learning from some kind of feedback)
-affords a spectacularly simple and general paradigm in terms of alignment, alignment and
+affords a spectacularly simple and general paradigm in terms of alignment and
 distributional-robustness (that we view throughout this thesis in terms of invariance and
 worst-group performance) should not be confused as one and the same even though they can overlap --
 for some tasks there is no subjective element to engender the notion of `preference', i.e. the
@@ -344,8 +346,7 @@ remainder of the way need be paved with dedicated distributionally-robust method
 no annotations for the attribute to-be-invariant to are given or obtainable, however, they do
 provide a promising recourse, one that requires few, if no, assumptions -- one may obtain
 robustness for `free', so to speak -- and little to no (in the zero-shot case) compute be spent on
-training, albeit with the aforementioned caveat on the compute-requirements standing.
-
+training, albeit with the aforementioned caveat on compute standing.
 
 % \marginpar{On the manual and automatic identifiability of bias}
 %

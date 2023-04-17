@@ -142,14 +142,15 @@ taking the maximum over the resulting set.
 \marginpar{\textbf{Mutual-information minimisation}}
 %
 This idea of statistical independence, upon which DP hinges, can be expressed generally in terms of
-the mutual information (MI) between \(Y\) and \(S\), itself expressible as the KL divergence
-between the joint and product of the marginal distributions:
-%
-\begin{equation}
-    \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
-\end{equation}
-
-Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be statistical independent.
+the mutual information (MI) between \(Y\) and \(S\) such that
+% , where
+% , itself expressible as the KL divergence
+% between the joint and product of the marginal distributions:
+% %
+% \begin{equation}
+%     \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
+% \end{equation}
+iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be statistical independent.
 %
 MI admits various decompositions into sums of marginal and joint/conditional entropies that make it
 particularly amenable for optimisation purposes. 
@@ -176,15 +177,15 @@ Thus, EO can be written, as above, as
 %
 \begin{equation}
     %
-    \forall s \in \gS: P( \hat{Y}=1|Y=1, S=s ) = P(\hat{Y}=1|Y=1),
+    \forall s \in \gS: P( \hat{Y}=1|Y=1, S=s ) = P(\hat{Y}=1|Y=1).
     %
 \end{equation}
 %
 \marginpar{\textbf{Equalised Odds}}
 %
-By making the above symmetric \wrt{} \(Y\), such that not only do we demand parity of the TPRs but
-also false-positive rates (FPRs) we obtain the final of the ERs-based metrics, \emph{Equalised
-Odds} (EqOd; \cite{hardt2016equality}) -- also known as disparate mistreatment:
+By making this symmetric \wrt{} \(Y\), such that not only do we demand parity of the TPRs but also
+false-positive rates (FPRs) we obtain the final of the ERs-based metrics, \emph{Equalised Odds}
+(EqOd; \cite{hardt2016equality}) -- also known as disparate mistreatment:
 % Plainly, EqOd is tantamount to requiring that no additional information about \(S\) should be
 % gleanable from observing \(\hat{Y}\) given that we have already observed \(Y\). 
 % %

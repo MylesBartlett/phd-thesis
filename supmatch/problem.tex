@@ -1,0 +1,257 @@
+% -------------------------------------------------------------------------------
+In this section, we illustrate and formalise the problem of classes with incomplete
+subgroup-support. 
+%
+We start by defining requisite notation for conveying our setup and in
+Sec.~\ref{ssec:problem_formalism} expand on this notation to construct a more general and compact
+description of said problem. 
+%
+Let \( x \in \gX \subset \R^d \), \( y \in \gY \) and \( s \in \gS \) denote the observed input
+features, class labels and subgroup labels, respectively, with \( \gY \) and \( \gS \) being
+non-empty, finite sets (i.e. \( \gY, \gS \in \{ A | A \in \gP(V), A \neq \varnothing, |A| <
+\aleph_0 \} \)), and with upper-case letters denoting observed variables' random-variable
+counterparts here (\(X\), \(Y\), and \(S\)) and throughout.
+% the set-builder notation S = {A | A ∈ P(X), A ≠ ∅, |A| < ∞} defines the set of all non-empty,
+% finite sets that are subsets of the set X.
+%
+We refer to the values, \( g \in \gG \) as \emph{sources}, representing unique pairs of \( s \) and
+\( y \), such that \(  \gG \subseteq \gS \times \gY \). 
+%
+As in a standard supervised learning task, we have access to a labelled training set \( \gD^{tr}
+\triangleq \{ (x_n, s_n, y_n) \}_{n=1}^{N^{tr}} \subset (\gX \times \gS \times \gY) \), that is used to
+train a classifier \( \Gamma:\gX \rightarrow \gY \) that is then deployed on test set \( \gD^{te}
+\triangleq \{ (x_n, s_n, y_n) \}_{n=1}^{N^{te}} \subset (\gX \times \gS \times \gY) \). 
+%
+We use superscript, to denote association of a domain with a correspondingly superscripted dataset,
+e.g. \( \gG^{tr} \) and \( \gG^{te} \) respectively denote the sources in the training and test
+sets.
+%
+Lastly, for some functions, we abuse notation and allow the random and observed variables to be
+interchanged as inputs; we presuppose such functions (and their domain) are Borel measurable and
+thus preserve the type of variable, i.e. a function of a random variable is also a random variable.
+%
+For example, given function \(f: \gX \to \R \), we may write both \( f(x) \) and \( f(X) \),
+meaning by the latter \( f \circ X(\omega) \) for some event \( \omega \in \Omega \).
+%
+% -------------------------------------------------------------------------------
+\subsection{Spurious correlations from missing sources}\label{ssec:walkthrough}
+% -------------------------------------------------------------------------------
+The spurious correlation (SC; \cite{arjovsky2019invariant}), or shortcut-learning
+\citep{valle2018deep, geirhos2020shortcut}, problem is characterised by the presence of some
+secondary attribute \(s\) (such as background \citep{beery2018recognition}, texture
+\citep{geirhos2018imagenet}, or gender \citep{sagawa2019distributionally, seyyed2020chexclusion}
+that confounds the prediction task.
+%
+We refer to this attribute as the ``subgroup'', in line with fair machine learning (FairML;
+\citet{barocas-hardt-narayanan}) that is strongly correlated with the target attribute, \(y\), in
+the training set, but spuriously so in the sense that the correlation the mapping \( \gS \to \gY \)
+is acausal and thus cannot be expected to hold at deployment time. 
+%
+This correlation is pernicious when \(S\) is of lower complexity (which can be formalised in the
+Kolmogorov sense; \citet{scimeca2021shortcut}) than the causal cues contained in \(X\), and thereby
+becomes the preferred cue by virtue of simplicity bias \citep{valle2018deep}. 
+%
+Such problems have garnered considerable attention in recent years \citep{liu2021just,
+pezeshki2021gradient, SohDunAngGuetal20, krueger2021out} due to their pervasive, and potentially
+catastrophic \citep{codevilla2019exploring, de2019causal, castro2020causality}, nature.
+%
+In this paper, we introduce, and propose a semi-supervised solution for, a hierarchical and
+class-asymmetric variant of the SC problem that we term the \emph{Missing Sources} (MS) problem .
+
+To illustrate the general SC problem and the MS problem as a particular instantiation of it, we
+define the conditional-probability matrix, \( \mathbf{P}^{tr} \in [0, 1]^{|\gS| \times |\gY|} \),
+where each element \( \mathbf{P}^{tr}_{ij} \) encodes the conditional probability \(
+P^{tr}(Y=j|S=i) \) in the training set, \( \gD^{tr} \). 
+%
+When \( \mathbf{P}^{tr} \) is both binary and doubly stochastic (that is, has all rows and columns
+summing to 1) we have that \(y\) is completely determined by \(s\) in \( \gD^{tr} \) -- this is an
+extreme form of the SC problem which is statistically intractable without access to additional
+sources of data \citep{KehBarThoQua20} or multiple environments \citep{arjovsky2019invariant}. 
+%
+The MS problem can be viewed as a relaxation of this SC wherein the elements of \( \mathbf{P}^{tr}
+\) respect the constraint that all columns contain at least one non-zero value, i.e. we observe all
+class labels but not all possible pairs of class and subgroup labels -- we say that we have
+\emph{missing sources}, \(\gM\ \triangleq \gG^{te} \setminus \gG^{tr}\). 
+%
+This setup still leads to spurious correlations but ones that are statistically tractable due to
+asymmetry.
+%
+Practically speaking, considering only cases where sources are entirely missing is overly
+restrictive, and as such we instead view the problem setup as extending to cases where sources may
+not be altogether missing but have sample sizes too small to constitute meaningful supervision. 
+%
+To understand the non-triviality of this problem, and why aiming for invariance to \(s\) in the
+training set alone -- as is characteristic of many representation-learning methods in FairML
+\citep{edwards2015censoring, madras2018learning, quadrianto2019discovering}  and domain adaptation
+(DA; \citep{ganin2016domain, zhao2018adversarial, saito2018maximum, lee2019sliced}) -- will
+assuredly fail, consider a binary classification problem with binary subgroups, where \(\gY = \{ 0,
+1 \}\) and \( \gS = \{ 0, 1 \}\) and for which \( \mathbf{P}^{tr} \) takes the form
+%
+\begin{align}\label{ms_example}
+  \mathbf{P}^{tr} = \bordermatrix{
+  & Y=0 & Y=1 \cr
+  S=0 & 0.5 & 0.5 \cr
+  S=1 & 1.0 & 0.0}~.
+\end{align}
+%
+This represents a special case of the MS problem that we refer to as the \emph{Subgroup Bias} (SB)
+problem, distinguished by the fact that we observe all subgroups. 
+%
+Here, we have samples from $S=0$ evenly distributed across both the negative and positive classes;
+for $Y=1$, however, we only observe samples from the negative class. 
+%
+This setup might appear somewhat benign at first blush, given that all classes are present in the
+training set, however, the fact that \(s\) serves as a proxy for \(y\) in the case of $S=1$
+frustrates our goal of subgroup-invariant classification. 
+%
+The reason for this becomes obvious when decompose a classifier into a mixture of experts (MoE),
+where \(s\) indicates which expert to choose for the given sample. 
+%
+Such a model naturally arises in practice due to the tendency of deep neural networks to strongly
+favour shortcut solutions \citep{geirhos2020shortcut}.
+%
+We note that for this, and throughout the paper, we assume that \(s\) is inferable, to some extent,
+from $x$, that is \( \gI(X; S) > 0 \), with \( \gI(\cdot; \cdot) \) denoting the mutual information
+between two variables -- this is almost always the case in practice but we make the dependence
+explicit here by denoting by \( X_Y \) the causally-relevant component of \( X \)), that is
+independent of \(S\), and by including \( s \in \{0, 1\} \) explicitly in the set of inputs.
+%
+With this noted, we may then define the MoE classifier, \(c_{MoE}\), that `solves' the training set
+with labels distributed according to \( \mathbf{P}^{tr} \) as
+%
+\begin{align}
+  c_{MoE}(X_Y, S) = \begin{cases}
+c_{S=0}(X_Y) &S=0 \\
+0 &S=1 \\
+\end{cases},
+\end{align}
+%
+using \(c_{S=0}(\cdot)\) to denote the expert that learns to classify only the subset of the data
+for which $S=0$.
+%
+Such a classifier is clearly undesirable, as should it ever encounter a sample belonging to
+subgroup $1$ with a positive label, the classifier will automatically declare it negative without
+needing to attend to $X_Y$ -- it is invariant to $X_Y$ while being variant to \(S\), which is the
+opposite of what we desire. 
+%
+This is often done by learning an encoder $f: \gX \to \gZ$ that maps an input $x$ into a
+representation, \( z \in \gZ \subset \R^l \), which has the desired property of \(S\)-invariance,
+\( Z \perp S \), while also maximising $\gI(Z; Y)$ so that the representation is useful for
+classification. 
+%
+A popular way of imparting this invariance is with adversarial methods \cite{ganin2016domain,
+zhao2018adversarial, madras2018learning} where  $f$ is trained to the equilibrium point, $f^\ast$,
+of the (non-convex) minimax equation 
+%
+\begin{align}\label{eq:moo}
+\underset{f \in \gF}{\text{min}}\; \underset{a \in \gA}{\text{max}}\,
+\E_{(x, s, y) \sim \gD^{tr}}
+\big[ 
+  \textcolor{red}{ \overbrace{ a(f(x))_s }^{ \text{invariance}} }
+  - \textcolor{blue}{ \underbrace{ \lambda \gI(f(x); y) }_{ \text{classification} } }
+\big],
+\end{align}
+%
+where \( a: \gZ \to \bigtriangleup^{|\gS|} \) is a parametric adversary with codomain the standard
+simplex over \( \gS \), and \(\lambda \in \R^+\) is a positive scalar controlling the trade-off
+between the two constituent objectives. 
+%
+Under ideal conditions, when all possible pairs of \(s\) and \(y\) are observed, \(f^\ast\)
+corresponds to the point at which \(a\) is maximally entropic and occurs when \(Z\) is invariant to
+\(S\), and only \(S\), while mutual information \wrt{} \(Y\) is jointly maximised -- from an
+optimisation standpoint, the gradients of first and second objectives are non-conflicting (i.e.
+have non-negative inner products; \cite{yu2020gradient}) and there is no trade-off. 
+%
+However, in cases where we have missing sources, the waters are muddied: satisfying the first part
+of the objective connotes invariance not only to \(S\), but also to \(Y\), since \(S\) can be
+predicted from \(Y\) with above-random accuracy due to the skewed statistics of the dataset. 
+%
+This is patently problematic as \(Y\) is the very thing we wish to predict and achieving invariance
+to \(S\) does little good if our classifier can no longer utilise features predictive of \(Y\). 
+
+Since we cannot achieve optimality for the competing invariance and classification terms
+simultaneously, we instead have a set of Pareto optimal solutions that collectively make up the
+Pareto front -- learning the solutions corresponding to different trade-offs, or preference
+vectors, is the domain of multi-objective optimisation (MOO; \citep{deb2014multi}). 
+%
+Specifically, Eq.~\ref{eq:moo}, with \(\lambda\) controlling the preference direction,
+characterises the most straightforward approach to MOO, called \emph{linear scalarisation}.
+\citep{boyd2004convex}. 
+%
+MOO has recently been explored in the context of unsupervised domain adaptation (UDA), for
+controlling the descent direction, in unsupervised domain adaptation (UDA) in light of the conflict
+arising between the gradients of the alignment and classification terms \citep{liang2021pareto},
+and in FairML for controlling the inherent trade-off between predictive performance and fairness
+(typified by the \emph{Accuracy-Fairness trade-off}; \citet{martinez2020minimax}). 
+%
+While our missing-sources problem admits a MOO-based approach, we are instead interested in
+leveraging unlabelled data to sidestep the implied trade-off altogether.
+% -------------------------------------------------------------------------------
+\subsection{Formalising the problem}\label{ssec:problem_formalism}
+% -------------------------------------------------------------------------------
+In order to provide a general formulation of the MS problem exemplified above, we begin by defining
+additional notation for reasoning over label-conditioned subsets and their support. 
+%
+For a given dataset, \( \gD \), we denote by \( \gD_{S=s^\prime} \) its subset with subgroup label
+\( s^\prime \in \gS \), by \( \gD_{Y=y^\prime} \) its subset with class label \( y^\prime \in \gY
+\), and -- combining the two -- by \( \gD_{S=s^\prime,Y=y^\prime} \) its subset with subgroup label
+\( s^\prime \) and class label \( y^\prime \).
+%
+According to this scheme, \( \gD_{S=\text{\color{purple}{purple}}, Y=\text{2}} \) should then be
+read as ``the set of all samples in \( \gD \) with class label `2' and subgroup label
+`\textcolor{purple}{purple}'''.
+%
+We apply similar syntax to the subgroups, writing \( \gS^{tr}_{Y=y^\prime} \) to mean the observed
+subgroups within class \(y\) in the training set.
+%
+For instance, \(\gS^{tr}_{Y=1}=\{0\}\) prescribes that for class \(1\), only subgroup \(0\) is
+present in the training set.
+
+We assume a problem of a hierarchical nature.
+%, as illustrated in Fig.~\ref{fig:problem-setup}. 
+%
+While the full set of class labels is observed in both the training and test sets, we do not
+observe all pairs of \(s\) and \(y\) in the former, i.e. \( \gG^{tr} \subset \gG^{te} \) or \(\gM
+\neq \varnothing \). 
+%
+Equivalently, we say that for some class, \(y^\dagger\), we have \( \gS^{tr}_{Y=y^\dagger} \subset
+\gS \), subject to the constraint that \(  \gS^{tr} = \gS^{te} \).
+%
+With this, we can succinctly notate the SB problem realised by Eq.~\ref{ms_example}, in which class
+\(Y=1\) has no overlap with subgroup \(S=1\), as \(\gS^{tr}_{Y=1}=\{0\}\) (while
+\(\gS^{tr}_{Y=0}=\{ 0, 1 \}\)), corresponding to \( \gM = \{(1, 1)\} \), and distinguish SB
+problems generally by the inclusion of the additional constraint \( \gS^{tr} = \gS^{te} \).
+%
+To illustrate a more complex case, the SB problem depicted in Fig.~\ref{fig:problem-setup}, in
+which for we observe exclusively purple `2's and green and red `4's, can be notated with the pair
+\( \gS^{tr}_{Y=2}=\{\text{\textcolor{purple}{purple}\}} \), \( \gS^{tr}_{Y=4}=\{
+\text{\textcolor{green}{green}}, \text{\textcolor{red}{red}} \} \).
+% -------------------------------------------------------------------------------
+\subsection{A way forward}
+% -------------------------------------------------------------------------------
+In this paper, we propose to alleviate the SB problem by mixing labelled data with
+\emph{unlabelled} data that is usually much cheaper to obtain \citep{ChaSchZie06}, referring to
+this set of \emph{unlabelled} data as the \emph{deployment set} 
+%
+\footnote{In our experiments, we report accuracy and bias metrics on another independent test set
+instead of on the unlabelled data that is available at training time.} \( \gD^{dep}_\star =\{(x_n,
+s_n^\star, y_n^\star)\}_{n=1}^{N^{dep}} \subset (\gX \times \gS \times \gY) \), using ``\(\star\)''
+to denote that the labels are \emph{unobserved}, and in practice we only have access to \(
+\gD^{dep} \triangleq \{(x_n)\}_{n=1}^{N^{dep}} \subseteq \gX \) and must estimate the corresponding
+sources.
+%
+We assume that this deployment set is source-complete \wrt{} the test set, \( \gG^{dep} = \gG^{te}
+\). Leveraging this deployment set, we seek to learn a classifier, \( \Gamma \), that can
+generalise well to the missing sources appearing in the test set without seeing any labelled
+representatives in the training set. 
+%
+In practice, we treat \( \Gamma \) as a composition, \( c \circ f \), of two subfunctions: an
+encoder \( f: \gX \to \gZ \), which maps a given input \( x \) to a representation \( z \in \gZ
+\subseteq \R^l \), and a classifier head \( c: \gZ \to \gY \) which completes the mapping to the
+space of class labels, \( \gY \). 
+%
+Since the task of achieving independence between the predictions and subgroup labels can be reduced
+to the task of learning the invariance \( Z \perp S \); we next discuss how one can learn an
+encoder satisfying this condition in a theoretically-principled manner.
+% -------------------------------------------------------------------------------
+% \input{./notation}

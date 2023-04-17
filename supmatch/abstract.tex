@@ -1,0 +1,36 @@
+\noindent
+%
+When trained on diverse labelled data, machine learning models have proven themselves to be a
+powerful tool in all facets of society.
+%
+However, due to budget limitations, deliberate or non-deliberate censorship, and other problems
+during data collection and curation, the labelled training set might exhibit a systematic dearth of
+data for certain groups. This problem is particularly pertinent in medical imaging where the number
+of positive samples typically outweigh the number of negative samples by an orders of magnitude and
+certain demographics may be excluded on safety grounds (e.g. pregnant women) or due to
+socioeconomic biases.
+%
+We investigate a scenario in which the absence of certain data is linked to the second level of a
+two-level hierarchy in the data.
+%
+Inspired by the idea of protected groups from algorithmic fairness, we refer to the partitions
+carved by this second level as ``subgroups''; we refer to combinations of subgroups and classes, or
+leaf nodes in aforementioned hierarchy, as \emph{sources}.
+%
+To characterize the problem, we introduce the concept of classes with \emph{incomplete subgroup
+support}. The representational bias in the training set can give rise to spurious correlations
+between the classes and the subgroups which cause standard classification models to generalize
+poorly to unseen sources.
+%
+To overcome this bias, we make use of an additional, diverse but unlabelled dataset, called the
+\emph{deployment set}, to learn a representation that is invariant to subgroup. This is done by
+adversarially matching the support of the training and deployment sets in representation space
+using a set discriminator operating on sets, or \emph{bags}, of samples.
+% that uses a set-based loss function inspired by multiple instance learning.
+%
+In order to learn the desired invariance, it is paramount that the bags are balanced by class; this
+is easily achieved for the training set, but requires using semi-supervised clustering for the
+deployment set.
+%
+We demonstrate the effectiveness of our method on several datasets and
+realisations of the problem.

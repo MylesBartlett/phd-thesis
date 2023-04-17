@@ -1,0 +1,262 @@
+\input{supmatch/figures/tex/pipeline.tex}
+
+We cast the problem of learning a subgroup-invariant representation as one of
+\emph{support-matching} between a dataset that is \emph{labelled} but has \emph{incomplete} support
+over sources, $G$, and one, conversely, that has \emph{complete} support over $G$, but is
+\emph{unlabelled}. 
+%
+The idea is to produce a representation that is invariant to this difference in support, and thus
+invariant to the subgroup. However, it is easy to learn the wrong invariance if one is not careful.
+% Simply matching the distributions of the two datasets would wrongly result in the relative
+% frequency of the sources being taken into account and the potential loss of task-relevant
+% information.
+To measure the discrepancy in support between the two distributions, we adopt an adversarial
+approach, but one where the adversary is operating on small sets -- which we call \emph{bags} --
+instead of individual samples. These bags need to be balanced with respect to ($s$, $y$), such that
+we can interpret them as approximating $\gG$ as opposed to the joint probability distribution,
+$P(S, Y)$.
+%
+Details on how these bags are constructed can be found in in Sec.~\ref{ssec:realisation}
+and Sec.~\ref{sec:implementation}.
+% These sets correspond to the "perfect bags" introduced in the next section,
+% Sec.~\ref{ssec:perfect-bags}:
+
+
+\subsection{Objective}\label{ssec:objective}
+%
+We now present our overall support-matching objective. 
+%
+As alluded to before, the goal, in summary, is to learn an encoder, \(f\), which
+preserves all information relating to $Y$, but is invariant to $S$. 
+%if the training set is incomplete w.r.t.\ $s$.
+Let \(P^{tr}(f(X)=z', S=s',Y=y')\) be the joint probability that a data point \(x\) drawn
+from \(P^{tr}(X)\) -- the training set -- results in the encoding \(z'\) and is at the same
+time labelled as subgroup \(s'\) and class \(y'\). 
+%
+We also define the following shorthand: $p_f(Z=z')=P^{tr}(f(X)=z')$, the distribution
+resulting from sampling \(x\) from \(P^{tr}\) and then transforming \(x\) with \(f\).
+%
+Analogously for the deployment set: $q_f(Z=z')=P^{dep}(f(X)=z')$. 
+%
+For the conditioned distributions we write $p_f|_{S=s',Y=y'}$, following the convention established
+in Sec.~\ref{ssec:problem_formalism} but with the added `\(|\)' to clearly delimit the
+conditioning.
+
+The objective makes a distinction between those classes, \(y \in \gY\), for which there is overlap
+with all subgroups \(s \in \gS\) in the training set and those classes for which there is not.
+% An extreme version of this is when \emph{none} of the classes have overlap with a specific subgroup.
+% In the \emph{missing subgroup} scenario, \emph{none} of the classes have overlap with all subgroups \(s\).
+To formalise this, we define the following helper function $\Pi$ which maps \((s',y')\) to a set of
+subgroup identifiers depending on whether the class \(y\) has full \(s\)-support:
+
+\begin{align}\label{eq:Pi}
+\Pi(s',y') = \begin{cases}
+  \{s'\}&\text{if }\,\gS^{tr}_{ Y=y' }=\gS \\
+  \gS^{tr}_{ Y=y' }&\text{otherwise.}
+\end{cases}
+\end{align}
+%
+$\Pi(s,y)$ ensures that the correct invariance is learned and is discussed in more detail further below.
+Our objective is then
+%
+\begin{align}
+  \gL_\text{match}(f)=\sum\limits_{s'\in\gS}\sum\limits_{y'\in\gY} d(p_f|_{s\in \Pi(s',y'),Y=y'},
+  q_f|_{S=s',Y=y'})
+\label{eq:objective}
+\end{align}
+%
+where \(d(\cdot, \cdot)\) is a distance measure for probability distributions.
+The optimal encoder $f^*$ is found by solving the following optimisation problem:
+%
+\begin{align}
+  f^*=
+  \argmin\limits_{f\in\gF} 
+  \textcolor{red}{
+  \gL_\text{match}(f)
+  }
+  - 
+  \textcolor{blue}{
+  \gI(f(X);X)
+  }
+\end{align}
+%
+where $\gI(\cdot; \cdot)$ again denotes the mutual information. As written, Eq.~\ref{eq:objective}
+requires knowledge of \(s\) and \(y\) on the deployment set for conditioning. 
+%
+That is why, in practice, the distribution matching is not done separately for all combinations of
+\(s'\in\gS\) and \(y'\in\gY\). 
+%
+Instead, we compare \emph{bags} that contain samples from all combinations in the right
+proportions. For the deployment set, Eq.~\ref{eq:objective} implies that all
+\(s\)-\(y\)-combinations have to be present at the same rate in the bags, but for the training set,
+we need to implement \(\Pi(s',y')\) with hierarchical balancing.
+
+As the implications of the given objective might not be immediately clear,
+we provide the following proposition.
+%
+The proof can be found in Appendix~\ref{sec:theoretical-analysis}.
+%
+\begin{theorem}
+%
+If \(f\) is such that
+%
+\begin{align}
+p_f|_{s\in \Pi(s',y'),Y=y'} = q_f|_{S=s',Y=y'}\quad\forall s'\in\gS, y' \in\gY
+\end{align}
+%
+and \(P^{tr}\) and \(P^{dep}\) are data
+distributions that correspond to the real data distribution \(P\),
+except that some \(s\)-\(y\)-combinations are less prevalent, or, in the
+case of \(P^{tr}\), missing entirely, then, for every
+\(y' \in \gY\), there is either full coverage of \(s\) for \(y'\)
+in the training set (\( \gS^{tr}_{ Y=y' }=\gS \)), or the
+following holds:
+%
+\begin{align}
+P(S=s'|f(X)=z', Y=y')=\frac{1}{n_s}~.
+\end{align}
+%
+In other words: for \(Y=y'\), \(f(x)\) is not predictive of \(s\).
+\end{theorem}
+
+\subsection{Implementation}\label{ssec:realisation}
+%
+The implementation of above objective combines elements from unsupervised representation-learning and
+adversarial learning.
+% For simplicity, we follow an autoencoder paradigm for the former but any
+% unsupervised/self-supervised representation learning objective could be used in place of the
+% reconstruction objective.
+In addition to the invariant representation $z$, our model also outputs $\tilde{s}$, in a similar
+fashion to \citet{KehBarThoQua20} and \citet{creager2019flexibly}. 
+%
+This can be understood as a reconstruction of the subgroup information from the input $x$ and is
+necessary to prevent $z$ from being forced to encode $s$ by the reconstruction loss.
+%
+We note that this need could potentially be obviated through use of self-supervised approaches,
+but refrain from exploring this avenue in the interest of simplicity.
+
+The model, $\Gamma$, is composed of three core modules: 
+1) two \emph{encoder} functions, $f$ (which we refer to
+as the ``debiaser'') and $t$, which share weights and map $x$ to $z \in \gZ$ and
+$\tilde{s} \in \tilde{\gS}$, respectively;
+2) a \emph{decoder} function \(r: \gZ \times \tilde{\gS} \to \gX\) that learns to
+invert $f$ and $t$; and
+% 3) \emph{predictor} functions $\ell_y$ and $\ell_s$ that predict $y$ and $s$
+% from $z$ and $\tilde{s}$ respectively, and
+3) a \emph{discriminator} function $h: \gZ \to ( 0, 1 )$ that predicts which
+dataset a bag of samples embedded in $\gZ$ was sampled from. 
+% The predictor $\ell_s: \tilde{\gS} \to \bigtriangleup^{|\gS|}$ (with $\bigtriangleup^{|\gS|}$
+% denoting the $|\gS|$-dimensional standard simplex) is usually the identity function, and is
+% primarily listed here for notational symmetry. Fig. \ref{fig:architecture} illustrates how $f$
+% and $h$ interact during training -- the decoding step involving the other two components, $t$ and
+% $g$, is omitted for compactness. This marks a significant departure from the typical GAN
+% discriminator, which takes as input batches of data and yields a prediction for each sample
+% independently of the other samples in the batch. %, where the training signal comes from the
+% perfect dataset.
+%
+The encoder $f$ is then tasked with learning a representation $z$ such that it is indeterminable to
+the adversary $h$ whether a given bag originated from the deployment set (`positive') or the
+training set (`negative').
+Formally, given bags
+\( \gB^{tr} \), sampled according to \(\Pi\) from the training set, and balanced bags from the deployment
+set, \( \gB^\mathit{dep} \), we first define, for notational convenience, the loss \wrt{} to the
+encoder networks, $f$ and $t$ as
+%
+\begin{align}
+&\gL_\text{enc}(f, t, r, h) = 
+  \sum_{b^{dep} \in \gB^{dep}}
+  \sum_{b^{tr} \in \gB^{tr}} 
+\textcolor{blue}{
+  \Bigg[\,
+    \overbrace{
+    \sum_{x \in b^{dep} \cup b^{tr}} 
+      \lVert x - r(f(x), t(x))\rVert_p^p}^{\gL_{\text{recon}}}
+    \Bigg]
+    }
+    \nonumber\\
+   &\quad\quad\quad\quad\quad\quad
+ %   +  
+   \textcolor{red}{
+     \underbrace{ \lambda_\text{match}  \Bigg[
+       \log h \bigl( \{ \texttt{sg}[f(x)]\ | x \in b^\mathit{dep} \} \bigr) 
+       - \log h \bigl( \{ f(x)\ | x \in b^\mathit{tr} \} \bigr) 
+ \Bigg] }_{\gL_{\text{match}}},
+}
+   % \nonumber\\
+   % &\quad+ \!\!\sum_{x\in b_\mathit{tr}}
+   % \lambda_y L_{\text{sup}} (
+   % y, \ell_y(f(x))) + \lambda_s L_{\text{sup}} (s, \ell_s(t(x)))
+\label{eq:disentangling}
+\end{align}
+%
+where \( \gL_{\text{recon}} \) denotes the reconstruction loss defined by the \(p\)-norm (\(p=1\)
+and \(p=2\) yielding MAE and MSE, respectively), \( \gL_\text{match} \) denotes the adversarial loss,
+\( \lambda_\text{match} \in \mathbb{R}^+_\ast \) is a pre-factor controlling the trade-off between
+the loss terms, and \( \texttt{sg}[\cdot] \) denotes the ``stop-gradient`` operator that behaves as
+the identity function but with zero partial derivatives.
+%
+The overall objective, encompassing $f$, $t$, and $h$ can then be formulated in terms of
+\( \gL_\text{enc} \) as
+%
+\begin{align}
+    \underset{f, t, r}{\textrm{min}}\; \underset{h}{\textrm{max}}\,\gL_\text{enc}(f, t, h)~.
+    \label{eq:disentangling_total}
+\end{align}
+%
+This equation is computed over batches of bags and the discriminator is trained to map a bag of
+samples from the training set and the deployment set to a binary label: $1$ if the bag is adjudged to
+have been sampled from the deployment set, $0$ if from the training set.
+% Its goal is to effectively estimate the probability that a bag of samples has been sampled from
+% one distribution or the other.
+For the discriminator to be able to classify sets of samples, it needs to be permutation-invariant
+along the bag dimension -- that is, its predictions should take into account dependencies between
+samples in a bag while being invariant to the order in which they appear. 
+% We experiment with two different types of attention mechanism for the bag-wise pooling layer of our
+% discriminator, finding them both to work well.
+For aggregating information over the bags, we use a self-attention-based
+\citep{vaswani2017attention} pooling layer in which the query vector is averaged over the bag
+dimension.
+For more details see Appendix~\ref{ssec:attention-mechanism}. 
+Furthermore, in Appendix~\ref{ssec:no-mil}, we
+validate that having the discriminator operate over sets (bags) of samples rather than independent samples
+(with the same balancing scheme) is essential for achieving good and robust (\wrt{} balancing quality)
+performance.
+
+% Our goal is to make $z$ invariant to the subgroup $s$.
+% However, what the adversarial loss actually enforces is that $z$ generates bags with the same support over $S \times Y$ irrespective of the dataset they were drawn from.
+% To ensure that the disentangling aligns with our objective,
+Our goal is to disentangle $x$ into two subspaces: a subspace $z$, representing the class, and a
+subspaces $\tilde{s}$,
+representing the subgroup.
+For the problem to be well-posed, it is crucial that the bags differ only
+in terms of which sources are present and not in terms of other aspects.
+% with respect to the class-subgroup combinations present and not with respect to the shape of the
+% underlying distribution.
+We thus sample the bags according to the following set of rules which operationalize $\Pi$. Please
+refer to Fig.~\ref{fig:pipeline} for a visualisation of the effect of these rules. 
+%
+\begin{enumerate}\label{ls:rules}
+  %
+  \item Bags of the deployment set are sampled so as to be approximately balanced with
+    respect to $s$ and $y$ (all combinations of $s$ and $y$ should appear in equal number). 
+    %
+  \item For bags from the training set, all possible values of $y$ should appear with equal
+    frequency. Without this constraint, there is the risk of $y$ being encoded in $\tilde{s}$
+    instead of $s$. 
+  \item Bags of the training set should furthermore exhibit equal representation of each subgroup
+    within classes so long as rule 2 is not violated.
+    For classes that do not have complete $s$-support, the missing combinations of $(s, y)$ need to
+    be substituted with a sample from the same class -- i.e., if $s \notin \gS^{tr}(y)$ we instead
+    sample randomly from a uniform distribution over $\gS^{tr}(y$). 
+    %
+\end{enumerate}
+
+% We supplement the implicit constraints carried by the balancing of the bags with the explicit
+% constraint that $z$ be predictive of $y$, which we achieve using a linear predictor $\ell_y$.
+% Whenever we have $\textrm{dim}(\mathcal{S}_{tr}) > 1$, %(in our experiments this corresponds to the
+% \emph{subgroup bias} setting) we can also impose the same constraint on $\tilde{s}$, but with
+% respect to $s$.
+
+\input{supmatch/pc}
+\input{supmatch/balancing}
+\input{supmatch/limitations}

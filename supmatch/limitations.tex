@@ -1,0 +1,33 @@
+\subsection{Limitation and intended use}
+\label{sec:limitations}
+% First, dataset consumers should take extra care about the cost-benefit analysis of selecting particular datasets for their machine learning tasks. 
+%
+Although having zero labelled examples for some subgroups is not uncommon due to the effects of
+systematic bias or dataset curation, we should make a value-judgement on the efficacy of the dataset
+with respect to a task.
+%
+% {\color{red}Corrective action such as the one described in this paper or inaction should be
+% recorded.}
+We can then decide whether or not to take corrective action as described in this paper.
+%
+A limitation of the presented approach is that, for constructing the perfect bags used to train the
+disentangling algorithm, we have relied on knowing the number of clusters \emph{a priori},
+something that, in practice, is perhaps not the case. However, for person-related data, such
+information can, for example, be gleaned from recent census data. (see also
+Appendix~\ref{sec:overclustering} for results with misspecified numbers of clusters.)
+%
+% Removing this dependency through automatic determination of the number of clusters would
+% generalize our method further but this line of research is beyond the scope of the current paper. 
+%
+One difficulty with automatic determination of the number of clusters is the need to ensure that
+the small
+% but salient
+clusters are correctly identified. 
+%
+% In the case of 2-digit Colored MNIST, for example, the deployment set may contain only a small
+% portion of {\color{purple}purple} fours relative to the other subgroups, meaning that the cluster
+% they form can be easily overlooked by a clustering algorithm in favor of larger but less salient
+% clusters (which may be sub-clusters of other digit/color combinations). 
+A cluster formed by an underrepresented subgroup can be easily overlooked by a clustering algorithm
+in favour of larger but less meaningful clusters.
+% less salient clusters (which may be sub-clusters of other, larger, subgroups). 

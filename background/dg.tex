@@ -25,35 +25,35 @@ within some region the training distribution.
 %
 The justification of DG can then be viewed from two perspectives:
 \begin{enumerate}
-%
-    \item 
-%
-        It stands to reason that we should be able to exploit information about known the known set
-        of variances -- due to the domain -- in order to learn a predictor that can generalise
+        %
+        \item
+        %
+        It stands to reason that one should be able to exploit information about known the known
+        set of variances -- due to the domain -- in order to learn a predictor that can generalise
         within the convex set (affine combinations of those variances) they define as well as to
-        those variances that are close by.
-%
+        those variances that are proximal.
+        %
         The principle here is similar to that of vicinal risk minimisation
         \citep{chapelle2000vicinal} as in \cite{zhang2017mixup}, wherein data augmentation fulfils
         the role of a perturbation set that the environments fulfil in DG.
-%
-    \item
-    %
+        %
+        \item
+        %
         Given a set of interventions on the underlying causal graph defined by the set of
         environments, recover the causal relationship between the input features and the target
         such that the predictive mechanism is unaffected by causally-independent changes (by
         interventions on variables not among the target variable's causal parents).
-%
+        %
         This idea of treating environments as interventions and using them to perform explicit or
         implicit causal inference has notably been exploited in \cite{peters2016causal} and in the
         foundational (to DG) work of \cite{arjovsky2019invariant}.
-%
+        %
         Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
         gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem
         setup of DG and its desiderata in causal terms, and we will do so ourselves in
         \S\ref{sec:lens-of-causality} in order to provide a more unified perspective of the
         distribution shift problems discussed thus far.
-%
+        %
 \end{enumerate}
 
 % % --------------------------------------------------------------------------------
