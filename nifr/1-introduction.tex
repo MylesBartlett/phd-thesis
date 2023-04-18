@@ -146,13 +146,12 @@ To render our representations interpretable, we rely on a simple transformation 
 %
 Previous approaches to fair representation learning
 (\cite{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter alia)
-predominantly rely upon autoencoder models to jointly minimise reconstruction loss and invariance. 
+predominantly rely upon \ac{AE} models to jointly minimise reconstruction loss and invariance. 
 %
-We discuss first how this can be done with such a model that we refer to as cVAE (conditional VAE),
-before arguing that the bijectivity of invertible neural networks (INNs)~\citep{Dinh2014} makes
-them better suited to this task. 
+We discuss first how this can be done with such a model that we refer to as \ac{cVAE}, before
+arguing that the bijectivity of \ac{INN}~\citep{Dinh2014} makes them better suited to this task. 
 %
-We refer to the variant of our method based on these as cFlow (conditional Flow). 
+We refer to the variant of our method based on these as \ac{cFlow}. 
 %
 INNs have several properties that make them appealing for unsupervised representation learning. 
 %
@@ -183,8 +182,8 @@ Our contributions are thus two-fold:
 1) We propose a simple approach to generating representations that are invariant to a feature $s$,
 while having the benefit of interpretability that comes with being in the data domain. 
 %
-We call our method \emph{NIFR} (\emph{N}ull-sampling for \emph{I}nterpretable and \emph{F}air
-\emph{R}epresentations).
+We call our method \textbf{NIFR} (\textbf{N}ull-sampling for \textbf{I}nterpretable and \textbf{F}air
+\textbf{R}epresentations).
 %
 2) We explore a setting where the labelled training set suffers from varying levels of sampling
 bias, demonstrating an approach based on transferring information from a more diverse

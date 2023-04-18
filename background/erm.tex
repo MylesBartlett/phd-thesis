@@ -1,7 +1,7 @@
 % ********************************************************************************
 \section{Supervised learning, empirical risk minimisation, and its pitfalls}\label{sec:iid}
 % ********************************************************************************
-
+%
 Traditional learning algorithms usually assume  that (or are only optimal when) the training and
 test samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
 variables, such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \). 
@@ -66,7 +66,7 @@ labels, \( Y \) is represented by a degenerate (delta) distribution, wherein for
 simply have an binary indicator of which class said instance belongs to, rather than a distribution
 over the probability simplex, allowing for capturing of intrinsic uncertainty in the task.
 %
-With the foregoing adjustments in mind, one can then define the standard ERM objective as
+With the foregoing adjustments in mind, one can then define the standard \ac{ERM} objective as
 % %
 \begin{equation*}\label{eq:emp_risk} \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y)
 \in \gD^{tr}} \ell (f(x), y). \end{equation*}
@@ -79,15 +79,15 @@ This is mentionable as many real-world datasets exhibit significant class class-
 the marginal distribution \( P(Y) \) is not uniform over its support.
 % %
 Such motivates replacing the unweighted (or, more accurately, `uniformly weighted') objective given
-by Eq.~\ref{eq:emp_risk}, with an importance  \emph{weighted} variant wherein the loss is weighted
+by Eq.~\ref{eq:emp_risk}, with an \ac{IW} variant wherein the loss is weighted
 by \( P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the targets, in
 the discrete (classification) case, or by the empirical density of the target (as given by kernel
 density estimate (KDE), for instance) in the continuous (regression) case.
 % %
 Here, we have assumed no foreknowledge of \( P^{te}(Y) \) -- this typically being the case in
 practice -- with the choice of an uninformative, uniform distribution over the domain leading to
-its elimination from the importance weighting term that in general takes the form \( \frac{
-P^{te}(Y) }{ P^{tr}(Y) } \) (or the empirical equivalent).
+its elimination from the \ac{IW} term that in general takes the form \( \frac{ P^{te}(Y) }{
+P^{tr}(Y) } \) (or the empirical equivalent).
 
 % %
 Using \( w \in \R^+ \) to denote the weight assigned to instance \(x\) in \( \gD^{tr} \), we can
@@ -105,8 +105,7 @@ the course of training according to some parametric or non-parametric function
 \citep{wang2021importance}.
 %
 Instead of weighting the instance-losses, one can instead use the weights to adjust the sampling,
-which has several practical advantages when training with stochastic gradient descent (SGD),
-particularly: 
+which has several practical advantages when training with \ac{SGD}, particularly: 
 % %
 1) The procedure is non-invasive: no modification to the data-loading nor the computation of the
 loss is required;
@@ -127,21 +126,22 @@ spurious-correlation problems \citep{sagawa2020investigation, idrissi2022simple}
 early-stopping effect.
 
 Despite its intuitiveness and long history, with roots in early statistical modelling, the
-practical usefulness of importance-weighted ERM in the context of modern deep learning has recently
+practical usefulness of importance-weighted \ac{ERM} in the context of modern deep learning has recently
 been impugned \citep{byrd2019effect, zhai2022understanding}.
 %
 \cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
 importance-weighting diminish over the course of training; these effects can be partially recovered
 when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
-decay but without such interventions the converged-upon solution is identical for both IW-ERM and
-vanilla ERM. 
+decay but without such interventions the converged-upon solution is identical for both
+\ac{IW}-\ac{ERM} and
+vanilla \ac{ERM}. 
 %
 Evidence for this was also provided by \cite{sagawa2019distributionally}, who stress the importance
 of combining aggressive regularisation with (a dynamic form of) importance-weighting for strong
 worst-group generalisation.
 %
 These empirical results were recently supported theoretically by \cite{zhai2022understanding}, who
-prove that the implicit biases of these algorithms and standard ERM are indeed equivalent.
+prove that the implicit biases of these algorithms and standard \ac{ERM} are indeed equivalent.
 %
 Summarily, while importance-weighting may be intuitive, it provably does not alter the solution to
 the optimisation problem defined by the training set, which is to say, solutions that attain
@@ -190,16 +190,16 @@ those variables not being causally related themselves; in the trivariate case th
 the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
 and \(Y\) that is eliminated by conditioning on the confounder \(S\).
 %
-In the shortcut learning problems addressed in Chapters 3 and 4, we will see statistical learning
-breakdown in a similar way yet for essentially the opposite reason.
+In the \ac{SCL} problems addressed in Chapters \ref{ch:nifr} and \ref{ch:supmatch}, we will see
+statistical learning breakdown in a similar way yet for essentially the opposite reason.
 %
 Namely, instead of having latent variable that explains the statistical dependency \(X\) between
 \(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\) on
 which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to be
 the true causal mechanism.
 %
-We will delve more deeply into what Shortcut Learning is and how the mechanisms that give rise to
-it in \S\ref{sec:shortcut-learning}.
+We will delve more deeply into what \ac{SCL} is and how the mechanisms that give rise to it in
+\S\ref{sec:shortcut-learning}.
 %
 For now, however, we will move onto discussing different types of distribution shift that
 statistical learning has to contend with.

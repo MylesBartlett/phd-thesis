@@ -46,15 +46,15 @@ override here with the notation \( \gD^{tr}_l \triangleq \{ x_i \}_{i=1}^{N^{tr}
 clarity's sake, and a second partition corresponding to the unannotated data, which we will denote
 by \( \gD^{tr}_u  \triangleq \{ x_i \}_{i=1}^{N^{tr}_u} \).
 %
-One is generally motivated to employ some form of \ac{SemiSL} in cases when \( N^{tr}_l \ll N^{tr}_u \),
-though this not need be the case and it may be that the unlabelled data can be useful beyond simply
-providing more data from the same distribution (as the labelled data), as epitomised by UDA and as
-explored in other contexts throughput this thesis.
+One is generally motivated to employ some form of \ac{SemiSL} in cases when \( N^{tr}_l \ll
+N^{tr}_u \), though this not need be the case and it may be that the unlabelled data can be useful
+beyond simply providing more data from the same distribution (as the labelled data), as epitomised
+by \ac{UDA} and as explored in other contexts throughput this thesis.
 %
 There exist many different branches and perspectives of \ac{SemiSL}, as a learning paradigm with deep
 roots reaching as far back as the 60s \citep{scudder1965probability, fralick1967learning}. 
 %
-On the perspective side, one can, for instance, view \ac{SemiSL} as \ac{USL} learning subject to
+On the perspective side, one can, for instance, view \ac{SemiSL} as \ac{UL} learning subject to
 constraints -- which is especially pertinent in the case of semi-supervised clustering
 \citep{bair2013semi} -- though it is usually more natural to frame it from the opposite
 perspective, namely, as \ac{SL} with additional information \citep{chapelle2009semi}.
@@ -93,7 +93,7 @@ reference dataset for the proposed matching procedure.
 
 
 % --------------------------------------------------------------------------------
-\subsection{Justifying SemiSL}\label{ssec:assumptions}
+\subsection{Justifying \acs{SemiSL}}\label{ssec:assumptions}
 % --------------------------------------------------------------------------------
 While \ac{SemiSL} is a tantalising prospect whenever one has a large corpus of unlabelled data, and
 relatively sparing labelled data, it is unfortunately not the case that whenever there is
@@ -195,7 +195,7 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  members of those pairs.
  %
 % --------------------------------------------------------------------------------
-\subsection{Causal connections: when should(n't) SemiSL work?}\label{ssec:semisl-causality}
+ \subsection{Causal connections: when should(n't) \acs{SemiSL} work?}\label{ssec:semisl-causality}
 % --------------------------------------------------------------------------------
 Following \cite{scholkopf2021toward}, start by supposing that our prediction task follows the
 causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausal, one.

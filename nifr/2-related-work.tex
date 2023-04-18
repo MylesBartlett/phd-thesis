@@ -13,23 +13,29 @@ representation $z$ of $x$ is then one for which $z \perp s$ holds, while ideally
 also being predictive of the class label $y$. 
 %
 \citet{zemel2013learning} was the first to propose the learning of fair representations which allow
-for transfer to new classification tasks. More recent methods are often based on
+for transfer to new classification tasks.
+%
+More recent methods are often based on
 \acfp{VAE}~\citep{kingma2013auto,louizos2016variational,edwards2016censoring,beutel2017data}. The
 achieved fairness of the representation can be measured with various fairness metrics. These
 measure, however, usually how fair the predictions of a classifier are and not how fair a
 representation is.
 
 The appropriate measure of fairness for a given task is domain-specific \citep{liu2018delayed} and
-there is often not a universally accepted measure. However, \emph{Demographic Parity} is the most
-widely used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. Demographic Parity
-demands $\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. In the
-context of fair representations, we measure the Demographic Parity of a downstream classifier,
-$f(\cdot )$, which is trained on the representation $z$, i.e.\  $\Gamma: \gZ \to \gY$.
+there is often not a universally accepted measure. 
+%
+However, \emph{\ac{DP}} is the most widely
+used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. Demographic Parity demands
+$\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. 
+%
+In the context of fair representations, we measure the Demographic Parity of a downstream
+classifier, $f(\cdot )$, which is trained on the representation $z$, i.e.\  $\Gamma: \gZ \to \gY$.
 
-A core principle of all fairness methods is the \emph{accuracy-fairness trade-off}. As previously
-stated, the fair representation should be invariant to $s$ ($\to$ fairness) but still be predictive
-of $y$ ($\to$ accuracy). These desiderata cannot, in general, be simultaneously satisfied if $s$
-and $y$ are correlated.
+A core principle of all fairness methods is the \emph{accuracy-fairness trade-off}.
+%
+As previously stated, the fair representation should be invariant to $s$ ($\to$ fairness) but still
+be predictive of $y$ ($\to$ accuracy). These desiderata cannot, in general, be simultaneously
+satisfied if $s$ and $y$ are correlated.
 
 The majority of existing methods for fair representations also make use of $y$ labels during
 training, in order to ensure that $z$ remains predictive of $y$. This aspect can, in theory,
@@ -101,23 +107,29 @@ feature embedding and the spurious variable. While the method is effective under
 show experimentally that it is not robust to the range of settings we consider.
 
 \citet{JacBehZemBet19} explore the vulnerability of traditional neural networks to spurious
-variables -- e.g., textures, in the case of ImageNet \citep{Geir18} -- and propose a INN-based
-solution akin to ours. The INN's encoding is split such that one partition, $z_b$ is encouraged to
+variables -- e.g., textures, in the case of ImageNet \citep{Geir18} -- and propose a \ac{INN}-based
+solution akin to ours. The \ac{INN}'s encoding is split such that one partition, $z_b$ is encouraged to
 be predictive of the spurious variable while the other serves as the logits for classification of
 the semantic label. Information related to the nuisance variable is ``pulled out'' of the logits as
 a result of maximising $\log p(s|z_n)$. This specific approach, however, is incompatible with the
 settings we consider, due to its requirement that both $s$ and $y$ be available at training time.
 
 Viewing the problem from a causal perspective, \citet{arjovsky2019invariant} develop a variant of
-empirical risk minimisation called invariant risk minimisation (IRM). The goal of IRM is to train a
-predictor that generalises across a large set of unseen environments; because variables with
-spurious correlations do not represent a stable causal mechanism, the predictor learns to be
-invariant to them. IRM assumes that the training data is not \emph{\iid{}} but is partitioned into
-distinct environments, $e \in E$. The optimal predictor is then defined as the minimiser of the sum
-of the empirical risk $R_e$ over this set. In contrast, we assume possession of only a single
-source of \emph{labelled}, albeit spuriously-correlated, data, but that we have a second source of
-data that is free of spurious correlations, with the benefit being that it only needs to be
-labelled \emph{with respect to $s$}.
+\acl{ERM} called invariant risk minimisation (IRM).
+%
+The goal of IRM is to train a predictor that generalises across a large set of unseen environments;
+because variables with spurious correlations do not represent a stable causal mechanism, the
+predictor learns to be invariant to them.
+%
+IRM assumes that the training data is not \emph{\iid{}} but is partitioned into distinct
+environments, $e \in E$.
+%
+The optimal predictor is then defined as the minimiser of the sum of the empirical risk $R_e$ over
+this set.
+%
+In contrast, we assume possession of only a single source of \emph{labelled}, albeit
+spuriously-correlated, data, but that we have a second source of data that is free of spurious
+correlations, with the benefit being that it only needs to be labelled \emph{\wrt{} $s$}.
 
 % The model thereby enforces their independence. This is achieved with an adversarial approach,
 % borrowing the gradient reversal technique from \cite{ganin2016domain}.

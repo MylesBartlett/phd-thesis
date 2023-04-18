@@ -9,12 +9,21 @@
 % By doing so, the system can learn to produce accurate and reliable predictions, even when deployed in settings radically different from the one in which it was trained.
 % However, if the training set contains spurious correlations, then a computer vision and machine learning system cannot learn the true relations just from that dataset.
 % We either need to supply an inductive bias \cite{locatello2019challenging} or additional information which we can incorporate into learning.
-
-% As a step towards solving these problems,
-We have proposed a general and straightforward framework for producing invariant representations, under the assumption that a representative but partially-labelled \emph{representative} set is available.
-Training consists of two stages:
-an encoder is first trained on the representative set to produce a representation that is invariant to a designated spurious feature. 
-This is then used as input for a downstream task-classifier, the training data for which might exhibit extreme bias with respect to that feature.
-We train both a VAE- and INN-based model according to this procedure, and show that the latter is particularly well-suited to this setting due to its losslessness. 
-The design of the models allows for representations that are in the data domain and therefore exhibit meaningful invariances. 
-We characterise this for synthetic as well as real-world datasets for which we develop a method for simulating sampling bias.
+We have proposed a general and straightforward framework for producing invariant representations,
+under the assumption that a representative but partially-labelled \emph{representative} set is
+available. 
+%
+Training consists of two stages: an encoder is first trained on the representative set to produce a
+representation that is invariant to a designated spurious feature. 
+%
+This is then used as input for a downstream task-classifier, the training data for which might
+exhibit extreme bias with respect to that feature. 
+%
+We train both a \acs{VAE}- and \acs{INN}-based model according to this procedure, and show that the
+latter is particularly well-suited to this setting due to its losslessness. 
+%
+The design of the models allows for representations that are in the data domain and
+therefore exhibit meaningful invariances. 
+%
+We characterise this for synthetic as well as real-world
+datasets for which we develop a method for simulating sampling bias.

@@ -24,7 +24,7 @@ and methodologies featured in Chapters \ref{ch:nifr}, \ref{ch:supmatch} and \ref
 Indeed, each of said chapters contain their own background sections drawing direct comparisons to
 related work and we wish to avoid repetition in this respect.
 
-The main themes of this thesis, as indicated by the title, are \ac{SemiSL} and \acf{DR}, the latter
+The main themes of this thesis, as indicated by the title, are \ac{SemiSL} and \ac{DR}, the latter
 in the context of \ac{AF} (Chapters \ref{ch:nifr} and \ref{ch:supmatch}) and \ac{DG} (Chapter
 \ref{ch:okapi}), specifically. 
 %
@@ -33,7 +33,7 @@ visiting both foundational and adjacent areas of ML.
 
 %
 With the above in mind, we begin our discussion of the classical supervised learning setup and how
-standard \acf{ERM} is ill-suited to long-tailedness and distribution shifts,
+standard \ac{ERM} is ill-suited to long-tailedness and distribution shifts,
 both pervasive phenomena in real-world applications. 
 %
 \emph{Distributions shift} as a term is highly polysemous, meaning very different things, and
@@ -42,14 +42,14 @@ direction of causality. We will give a brief taxonomy of the different kinds of 
 in terms of how the marginal and conditional distributions are affected, and what may cause them. 
 
 %
-\acf{SC}s, or (statistical) shortcuts (we will use the terms interchangeably throughout), give rise
+\acp{SC}, or (statistical) shortcuts (we will use the terms interchangeably throughout), give rise
 to a particularly aggressive form of distribution shift as a result of features in the training
 data being highly (conceivably to the degree of a one-to-one correspondence) correlated with the
 target but not in a way that is causally consistent, and thus in a way that should not be expected
 to hold consistently at test time. 
 %
 The idea of \ac{SC}s is central to both Chapters \ref{ch:nifr} and \ref{ch:supmatch} (manifested in
-different ways) and the idea of \acf{SCL} has close ties to \ac{DG} \citep{arjovsky2019invariant},
+different ways) and the idea of \ac{SCL} has close ties to \ac{DG} \citep{arjovsky2019invariant},
 the focus of Chapter \ref{okapi}; in light of this, we afford dedicated discussion of the \ac{SCL}
 problem and what conditions are needed to engender it.
 
@@ -59,11 +59,11 @@ problem of supervised learning and distribution shift through the lens of causal
 unified perspective of the latter and when one should expect \ac{SemiSL} to be efficacious.
 %
 While this thesis does not directly tangle with questions of causal inference, the field of
-causality \citep{pearl2009causality} provides, through \acf{CBG}s and interventions thereof, the
+causality \citep{pearl2009causality} provides, through \acp{CBN} and interventions thereof, the
 means of expressing different distribution shifts and the desired/undesired variances/invariances
 using a single, formalised calculus.
 %
 Equipped with this calculus, we conclude this section -- as alluded to above -- with a discussion
 of the specific subfields and learning paradigms of relevance to the three papers constituting this
-thesis, namely:  \ac{DA}, \ac{DG}, \ac{AF}, \ac{SemiSL}, \acf{AdvL}}, and \acf{INN}s.
+thesis, namely:  \ac{DA}, \ac{DG}, \ac{AF}, \ac{SemiSL}, \ac{AdvL}, and \acp{INN}.
 

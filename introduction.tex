@@ -76,8 +76,8 @@ great fallacy, as every new Statistics student learns before most else.
 That is to say, if two events, \(X\) and \(Y\), routinely co{\"o}ccur, with the former preceding
 the latter, they are correlated, in that one can use the occurrence of \(X\) to predict the
 occurrence of \(Y\) at an above-chance rate -- such is the indispensable utility of statistics, as
-the quantification of \emph{patterns} (and ML is but sophisticated \emph{pattern recognition}) --
-but one cannot reasonably extend this deduction that `\(X\) \emph{predicts} \(Y\)' to the much
+the quantification of \emph{patterns} (and \ac{ML} is but sophisticated \emph{pattern recognition})
+-- but one cannot reasonably extend this deduction that `\(X\) \emph{predicts} \(Y\)' to the much
 deeper one, `\(X\) \emph{causes} \(Y\)' without employing interventions with the view to eliminate
 confounding factors, i.e. factors causing both (and thereby correlating) \(X\) and \(Y\).
 %
@@ -189,8 +189,8 @@ often have little choice but to make the best of what we have.
 %
 There is little hope, for instance, of deriving diverse, bias-free data from any significant
 population of people given how rife, and arguably intrinsic (from an evolutionary-psychology
-perspective; \cite{kurzban2001evolutionary}), out-group biases (conscious or subconscious) are in
-us humans.
+perspective; \citealp{kurzban2001evolutionary}), out-group biases (conscious or subconscious) are
+in us humans.
 %
 There is also little hope of capturing, by camera trap, every species within a given region under
 every condition and in every locale given that different animals have different ecologies
@@ -222,7 +222,7 @@ are composed of pixels and the annotations are human-conferred labels).
 While `annotated data' is often indeed scarce due to reasons, inter alia, of a budgetary,
 geographic, or inability-to-travel-retrograde-along-the-fourth-dimension nature, data of the
 `unannotated' (or `partially annotated') variety is more readily obtained, and it is this reality
-by which the embers of \acf{USL} have been stoked, into what has become a bustling blaze of
+by which the embers of \acf{UL} have been stoked, into what has become a bustling blaze of
 research in but the short time since this thesis was begun.
 %
 And so this leads us, hopefully not-too-word-weathered, to the final of port in our thematic
@@ -233,7 +233,7 @@ In this thesis, I entertain two particular motives for using supplementary, unan
 unified in their premise of enabling invariance to `concepts' of interest.
 %
 Since the unannotated data is being used concurrently with the usual task-defining, annotated data,
-we tread in \acf{SemiSl}'s domain.
+we tread in \acposs{SemiSL} domain.
 %
 The aforementioned motives are as such:
 %
@@ -296,9 +296,9 @@ the features to the target, which is to say that is invariant to the sensitive a
 are harried by the entailed problem of identifiability.
 %
 Similar characterisations had been considered in the \ac{DG} literature
-\cite{arjovsky2019invariant, jacobsen2019excessive}, though we approached and, argued for the
+\citep{arjovsky2019invariant, jacobsen2019excessive}, though we approached and, argued for the
 validity of, the problem from an \ac{AF} perspective, partly motivated by the cases of systemic
-censoring adduced in \citep{kallus2018residual}.
+censoring adduced in \citet{kallus2018residual}.
 %
 Given the intractability of disentangling the two attributes, we assume the existence of a
 supplementary, dataset that contains all intersectional groups but is annotated only partially, in
@@ -308,8 +308,8 @@ than fully-annotated data, with census data being one potential source, for exam
 This gives rise to a kind of transfer-learning setup in which the quality to be transferred is
 invariance to the sensitive attribute for which we propose to interpretable framework exploiting
 the unique properties of invertible models, in particular their losslessness connoted by their
-bijectivity along with their namesake exact invertibility (whereas more traditional
-autoencoder-based approaches furnish only approximate invertibility).
+bijectivity along with their namesake exact invertibility (whereas more traditional approaches
+based on \acp{AE} furnish only approximate invertibility).
 %
 
 We demonstrate that these unique properties are practically meritable, giving rise to models that
@@ -336,8 +336,8 @@ targets -- specifically classes -- constituting the top level the implied tree, 
 bottom level) and asymmetric fashion such that the identifiability is possible; its general
 formulation -- which admits the problem from the previous chapter as a special case -- is as much a
 contribution of the chapter as the solution we ultimately propose to it, a solution predicated on
-the idea of aligning support rather than distributions as historically practised in domain
-adaptation \citep{ben2006analysis}.
+the idea of aligning support rather than distributions as historically practised in \acs{DA}
+\citep{ben2006analysis}.
 %
 By `asymmetric' I mean that for we observe all subgroups and classes expected at deployment time
 and for at least one class we observe more than one subgroup. 
@@ -351,8 +351,8 @@ data from a \emph{target} domain, distributionally-shifted relative to the train
 to maximise positive transfer, or adaptation, to that test data from that same domain.
 %
 However, the distinction lies in the missing-sources problem being of a
-hierarchical/class-conditional nature, whereas in UDA there would be entire subgroups missing from
-the training data yet at the same time no shortcuts between subgroup and targets induced.
+hierarchical/class-conditional nature, whereas in \ac{UDA} there would be entire subgroups missing
+from the training data yet at the same time no shortcuts between subgroup and targets induced.
 
 %
 In order to accomplish the alluded-to support-alignment, or \emph{support-matching}, we employ
@@ -402,13 +402,13 @@ construct a `patched' dataset, with which the initial model is trained anew in a
 distributionally-robust manner.
 %
 In the context of the chapter-being-discussed, this algorithm is generalised and embedded in a
-online-learning framework --  motivated by improved-efficiency and the finding that the original
+online-learning framework -- motivated by improved-efficiency and the finding that the original
 two-stage (offline) framework proved insufficient for problems of the kind in question -- with the
 generated matches used to define matches for a consistency-regularised \ac{SemiSL} objective that
 is task- and modality-agnostic.
 %
 We find the resulting algorithm consistently outperforms baseline methods, including
-fully-supervised ones which \cite{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL} methods
-failed to do, and, as in Chapter \ref{ch:nifr}, it comes with a valuable interpretable aspect,
-conferred by the trained-with matching algorithm.
+fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL} methods
+failed to accomplish, and, as in Chapter \ref{ch:nifr}, it comes with a valuable interpretable
+aspect, conferred by the trained-with matching algorithm.
 

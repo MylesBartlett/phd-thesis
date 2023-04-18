@@ -31,15 +31,15 @@ Most simply, in the case of \ac{DA}, \(E\) is simply a binary random variable, s
 \Omega \to \{ \text{source}, \text{target} \}\), with \( \Omega \) being the sample space.
 %
 
-We view then view variables in our prediction task as constituting the nodes \( \gV \) in a Causal
-Bayesian Network (\ac{CBN}; \cite{pearl1995bayesian}) where the direction of arrows (directed edges)
+We view then view variables in our prediction task as constituting the nodes \( \gV \) in a
+\acl{CBN} (\acs{CBN}; \citealp{pearl1995bayesian}) where the direction of arrows (directed edges)
 between nodes indicate the direction of causality (e.g. \(\rmA \to \rmB \) means that \textbf{A}
 causes (is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
 \textbf{B} indicates independence between them when conditioned on their parents, i.e. \( \rmA |
 \text{Pa}(\rmA) \perp \rmB | \text{Pa}(\rmB) \), where \( \text{Pa}(\cdot) \) denotes the causal
 parents of its argument node.
 %
-Formally, a \ac{CBN} is a kind of \acf{DAG}, \(\rmG \triangleq \langle \gV, \xi
+Formally, a \ac{CBN} is a kind of \ac{DAG}, \(\rmG \triangleq \langle \gV, \xi
 \rangle \) with node-set (variables), \(\gV\), and (directed) edge-set, \(\xi\) consisting of
 tuples \((ij)\) meaning \(i \to j \), or `node \(i\) is a parent of node \(j\)'.
 %
@@ -52,7 +52,7 @@ in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j
 
 Without loss of generality, for the prediction task with inputs, \(X\), and targets, \(Y\), we may
 introduce the aforementioned variable \(E\) to convert the joint distribution \(P(X, Y)\) into the
-conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying CBN determines
+conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying \ac{CBN} determines
 the factorisation of this distribution and thus the nature of the distribution shift in question.
 %
 One can, for example characterise the case of covariate-shift with causal \(f^\star\), as having
@@ -66,17 +66,17 @@ generalisation --  in which \(E\) influences the joint distribution \( P(S, Y) \
 marginal distribution \(P(X)\), giving rise to representation bias and, from it, spurious
 correlations.
 %
-We illustrate in Fig.~\ref{fig:ds_cbgs} CBGs corresponding to different distribution shifts for a
-causal prediction task.
+We illustrate in Fig.~\ref{fig:ds_cbns} \acp{CBN} corresponding to different distribution shifts
+for a causal prediction task.
 %
-\import{background}{ds_cbgs.tex}
+\import{background}{ds_cbns.tex}
 %
 We will see that such a formulation is particularly useful when we come to discuss domain
 generalisation which involves a multitude of source distributions, going beyond the dyadic
 source-target setup characterising DA.
 %
 
-One common \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} and intuitive way
+A popular \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} and intuitive way
 of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
 loop entails computing the empirical risk over each domain and the outer loop corresponds to
 finding the function that minimises the maximum of said risks.

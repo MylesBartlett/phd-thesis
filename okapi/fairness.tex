@@ -1,19 +1,24 @@
-DG and Algorithmic Fairness overlap in their objective to train a model that yields predictions that are
+\ac{DG} and \ac{AF} overlap in their objective to train a model that yields predictions that are
 statistically independent of (and thus robust to variations in) domain, when for the latter the
 domain is taken to be some protected characteristic, such as age or gender, and fairness is
 measured according to invariance-driven notions of group fairness such as Demographic Parity
-\citep{feldman2015certifying} and Equal Opportunity \citep{hardt2016equality}. Indeed, methods that
-focus on equalising the empirical risk across subgroups -- such as by importance weighting
-\citep{idrissi2022simple, shimodaira2000improving} -- have featured extensively in both DG
+\citep{feldman2015certifying} and Equal Opportunity \citep{hardt2016equality}. 
+%
+Indeed, methods that focus on equalising the empirical risk across subgroups -- such as by
+importance weighting \citep{idrissi2022simple, shimodaira2000improving} -- have featured
+extensively in both \ac{DG}
 \citep{arjovsky2019invariant,creager2021environment,krueger2021out,sagawa2019distributionally} and
 fairness \citep{agarwal2018reductions,donini2018empirical,kamiran2012data} and many approaches to
-fair representation learning \citep{ creager2019flexibly,kehrenberg2020null,madras2018learning,
+\ac{FRL} \citep{creager2019flexibly,kehrenberg2020null,madras2018learning,
 oneto2020exploiting,quadrianto2019discovering} have roots in the former \cite{muandet2013domain}
-and in the closely-related field of domain adaptation \citep{ganin2016domain}. Beyond this more
-general equivalence, our work also has ties to notions of individual fairness pioneered by
+and in the closely-related field of \ac{DA} \citep{ganin2016domain}. 
+%
+Beyond this more general equivalence, our work also has ties to notions of \ac{IF} pioneered by
 \cite{dwork2012fairness} -- broadly prescribing that similar individuals be treated similarly -- in
 that our unsupervised loss involves maximising the similarity between inter-domain samples within
-representation space. This is reminiscent of the operationalisation of individual fairness proposed
-by \cite{lahoti2019operationalizing} that enforces similarity between a given representation and
-the representations of its neighbouring -- in both the input space and according to a between-group
+representation space. 
+%
+This is reminiscent of the operationalisation of individual fairness proposed by
+\cite{lahoti2019operationalizing} that enforces similarity between a given representation and the
+representations of its neighbouring -- in both the input space and according to a between-group
 (cross-domain) quantile graph -- samples.

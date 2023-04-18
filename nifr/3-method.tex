@@ -29,6 +29,7 @@
 \subsection{Problem Statement}
 %
 \noindent We assume we are given inputs $x \in \gX$ and corresponding labels $y \in \gY$.
+%
 Furthermore, there is some spurious variable $s \in \gS$ associated with each input $x$ which
 we do \emph{not} want to predict. 
 %
@@ -36,7 +37,7 @@ Let $X$, $S$ and $Y$ be the random variables that take on the observed values $x
 respectively. 
 %
 The fact that both $Y$ and $S$ are predictive of $X$ implies that $\gI(X;Y), \gI(X;S) > 0$,
-where $\gI(\cdot ;\cdot)$ denotes mutual information between two random variables.
+where $\gI(\cdot ;\cdot)$ denotes \acf{MI} between two random variables.
 %
 Note, however, that the conditional entropy is non-zero: \( H(S|X) > 0 \), i.e., $S$ is \emph{not}
 completely determined by $X$.
@@ -69,7 +70,7 @@ label and training a model with such a dataset would limit generalisability.
 Let \( (X^{tr}, S^{tr}, Y^{tr}) \) then be the random variables sampled from the training set, and
 \( (X^{te}, S^{te}, Y^{te}) \) likewise be the random variables sampled from the test set.
 %
-The training and test sets thus induce the following inequality for their mutual information:
+The training and test sets thus induce the following inequality for their \ac{MI}:
 \( \gI(S^{tr}; Y^{tr}) \gg \gI(S^{te}; Y^{te}) \approx 0 \).
 
 Our goal is to learn a representation $Z_u$ (with realisations \(z_u\)), that is independent of $S$
@@ -81,7 +82,7 @@ models to be described.
 %To satisfy this objective, we introduce an additional regularisation term that can be viewed from
 %an information-theoretic perspective as minimising the mutual information between the random
 %variables:
-The requirement for $Z_u$ can be expressed in terms of mutual information as
+The requirement for $Z_u$ can be expressed in terms of \acf{MI} as
 %
 \begin{align}
   \gI(Z_u; S) \neq 0~,
@@ -111,7 +112,7 @@ should be understood to mean \( f \circ X(\omega) \) for some event \( \omega \i
 which basis \( f(x) \) can be reinterpreted as \( f(X=x) \).
 %
 In practice, we optimise this loss in an adversarial fashion by playing a minimax game, in which
-our encoder acts as the generative component from a GAN \citep{goddfellow2014generative}
+our encoder acts as the generative component from a \ac{GAN} \citep{goddfellow2014generative}
 perspective.
 %
 The adversary is an auxiliary classifier \(g: \to \bigtriangleup^{|\gS|} \) trained to predict the
@@ -174,8 +175,8 @@ We call this the \emph{representative set}, with random variables $X^{rep}$ and 
 satisfying the condition that \( \gI(S^{rep}; Y^{rep}) \approx 0 \) (or rather, it would if the
 class labels \( Y^{rep} \) were available).
 
-We now summarise the training procedure; an outline for the invertible network model (cFlow) can be
-seen in fig.~\ref{fig:inn_diagram}.
+We now summarise the training procedure; an outline for the invertible network model (\acs{cFlow})
+can be seen in fig.~\ref{fig:inn_diagram}.
 %
 First, the encoder network $f$ is trained on \( (X^{rep}, S^{rep}) \), during the first
 phase.
@@ -195,8 +196,8 @@ Thus, the classifier cannot take the shortcut of learning $s$ and instead must l
 $y$ directly.
 %
 Obtaining the $s$-invariant representations, $x_u$, in the data domain is simply a matter of
-replacing the $\gB$ component of the decoder's input for the cVAE, and $z_b$ for
-cFlow, with a zero vector of equivalent size.
+replacing the $\gB$ component of the decoder's input for the \ac{cVAE}, and $z_b$ for
+\ac{cFlow}, with a zero vector of equivalent size.
 %
 We refer to this procedure used to generate $x_u$ as \emph{null-sampling} (here, with respect
 to $z_b)$.
@@ -213,11 +214,11 @@ post-training.
 \subsection{Conditional Decoding}%
 %
 \label{conddec}
-\noindent We first describe a VAE-based model similar to that proposed
+\noindent We first describe a \acs{VAE}-based model similar to that proposed
 in~\citet{madras2018learning}, before highlighting some of its shortcomings that motivate the
 choice of an invertible representation learner.
 
-The model takes the form of a class conditional $\beta$-VAE \citep{higgins2017beta}, in which the
+The model takes the form of a class conditional $\beta$-\acs{VAE} \citep{higgins2017beta}, in which the
 decoder is conditioned on the spurious attribute. 
 %
 We use $\theta_{enc}, \theta_{dec} \in \theta$ to denote the parameters of the encoder and decoder
@@ -236,7 +237,7 @@ the label, thereby freeing up $z_u$ from encoding the unwanted information while
 reconstruction of the input.
 %
 Thus, by feeding a zero-vector to the decoder we achieve $\hat{x} \perp s$. The full learning
-objective for the cVAE is given as
+objective for the \ac{cVAE} is given as
 %
 \begin{align}
 \begin{split}
@@ -277,8 +278,9 @@ and freedom from a reconstruction loss, the importance of which we elaborate on 
 \subsection{Conditional Flow}\label{cflow}
 %
 \paragraph{Invertible Neural Networks.}
-INNs are a class of neural network architecture characterised by a bijective
-mapping between their inputs and output \citep{Dinh2014}. 
+%
+\Acp{INN} define a class of \ac{NN} architecture characterised by a bijective mapping between their
+inputs and output \citep{Dinh2014}. 
 %
 The transformations are designed such that their inverses and Jacobians are efficiently computable.
 %
@@ -300,7 +302,7 @@ highly multi-modal, but still normalised, density, using the change-of-variable 
 where $h_i$ denotes the output of the \(i\)th layer of the network and $p(z)$ is the base density,
 which is again an Isotropic Gaussian. 
 %
-Training the INN then reduces to maximising $\log p(x)$ over the training set, i.e.\ maximising the
+Training the \ac{INN} then reduces to maximising $\log p(x)$ over the training set, i.e.\ maximising the
 probability the network assigns to samples in the training set.
 
 % The requirement of analytic invertibility and Jacobians demands the use of a specialised subset
@@ -329,8 +331,9 @@ probability the network assigns to samples in the training set.
 \paragraph{The Benefits of Bijectivity.}
 %
 Using an invertible network to generate our encoding, $z_u$, carries a number of advantages
-over other approaches. Ordinarily, the main benefit of flow-based models is that they permit exact
-density estimation.
+over other approaches. 
+%
+Ordinarily, the main benefit of flow-based models is that they permit exact density estimation.
 %
 However, since we are not interested in sampling from the model's distribution, in our case the
 likelihood term serves as a regulariser, as it does in \citet{JacSmeOya18}.
@@ -347,7 +350,7 @@ representation, an invertible network sidesteps this due to the network's biject
 ensuring all relevant information is stored somewhere. 
 %
 This opens up the possibility of transfer learning between datasets with a similar manifestation of
-$s$, as we demonstrate in section~\ref{sec:transfer-learning}.
+$s$, as we demonstrate \S\ref{sec:transfer-learning}.
 
 Under our framework, the invertible network $f$ maps the inputs $x$ to a representation
 $z \triangleq f(x)$.

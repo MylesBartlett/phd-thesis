@@ -3,7 +3,7 @@ In this section, we illustrate and formalise the problem of classes with incompl
 subgroup-support. 
 %
 We start by defining requisite notation for conveying our setup and in
-Sec.~\ref{ssec:problem_formalism} expand on this notation to construct a more general and compact
+\S\ref{ssec:problem_formalism} expand on this notation to construct a more general and compact
 description of said problem. 
 %
 Let \( x \in \gX \subset \R^d \), \( y \in \gY \) and \( s \in \gS \) denote the observed input
@@ -68,10 +68,10 @@ summing to 1) we have that \(y\) is completely determined by \(s\) in \( \gD^{tr
 extreme form of the \ac{SC} problem which is statistically intractable without access to additional
 sources of data \citep{KehBarThoQua20} or multiple environments \citep{arjovsky2019invariant}. 
 %
-The MS problem can be viewed as a relaxation of this \ac{SC} wherein the elements of \( \mathbf{P}^{tr}
-\) respect the constraint that all columns contain at least one non-zero value, i.e. we observe all
-class labels but not all possible pairs of class and subgroup labels -- we say that we have
-\emph{missing sources}, \(\gM\ \triangleq \gG^{te} \setminus \gG^{tr}\). 
+The \ac{MS} problem can be viewed as a relaxation of this \ac{SC} wherein the elements of \(
+\mathbf{P}^{tr} \) respect the constraint that all columns contain at least one non-zero value,
+i.e. we observe all class labels but not all possible pairs of class and subgroup labels -- we say
+that we have \emph{missing sources}, \(\gM\ \triangleq \gG^{te} \setminus \gG^{tr}\). 
 %
 This setup still leads to spurious correlations but ones that are statistically tractable due to
 asymmetry.
@@ -94,8 +94,8 @@ assuredly fail, consider a binary classification problem with binary subgroups, 
   S=1 & 1.0 & 0.0}~.
 \end{align}
 %
-This represents a special case of the MS problem that we refer to as the \emph{Subgroup Bias} (SB)
-problem, distinguished by the fact that we observe all subgroups. 
+This represents a special case of the \ac{MS} problem that we refer to as the \emph{Subgroup Bias}
+(SB) problem, distinguished by the fact that we observe all subgroups. 
 %
 Here, we have samples from $S=0$ evenly distributed across both the negative and positive classes;
 for $Y=1$, however, we only observe samples from the negative class. 
@@ -170,27 +170,27 @@ This is patently problematic as \(Y\) is the very thing we wish to predict and a
 to \(S\) does little good if our classifier can no longer utilise features predictive of \(Y\). 
 
 Since we cannot achieve optimality for the competing invariance and classification terms
-simultaneously, we instead have a set of Pareto optimal solutions that collectively make up the
-Pareto front -- learning the solutions corresponding to different trade-offs, or preference
-vectors, is the domain of multi-objective optimisation (MOO; \citep{deb2014multi}). 
+simultaneously, we instead have a set of \ac{PO} solutions that collectively make up the Pareto
+front -- learning the solutions corresponding to different trade-offs, or preference vectors, is
+the domain of \acl{MOO} (\acs{MOO}; \citealp{deb2014multi}). 
 %
 Specifically, Eq.~\ref{eq:moo}, with \(\lambda\) controlling the preference direction,
 characterises the most straightforward approach to MOO, called \emph{linear scalarisation}.
 \citep{boyd2004convex}. 
 %
-MOO has recently been explored in the context of unsupervised domain adaptation (UDA), for
-controlling the descent direction, in unsupervised domain adaptation (UDA) in light of the conflict
-arising between the gradients of the alignment and classification terms \citep{liang2021pareto},
-and in FairML for controlling the inherent trade-off between predictive performance and fairness
-(typified by the \emph{Accuracy-Fairness trade-off}; \citet{martinez2020minimax}). 
+\Ac{MOO} has recently been explored in the context of \ac{UDA}, for controlling the descent
+direction, in unsupervised domain adaptation (UDA) in light of the conflict arising between the
+gradients of the alignment and classification terms \citep{liang2021pareto}, and in \acf{AF} for
+controlling the inherent trade-off between predictive performance and fairness (typified by the
+\emph{Accuracy-Fairness trade-off}; \citet{martinez2020minimax}).
 %
-While our missing-sources problem admits a MOO-based approach, we are instead interested in
+While our missing-sources problem admits a \acs{MOO}-based approach, we are instead interested in
 leveraging unlabelled data to sidestep the implied trade-off altogether.
 % -------------------------------------------------------------------------------
 \subsection{Formalising the problem}\label{ssec:problem_formalism}
 % -------------------------------------------------------------------------------
-In order to provide a general formulation of the MS problem exemplified above, we begin by defining
-additional notation for reasoning over label-conditioned subsets and their support. 
+In order to provide a general formulation of the \ac{MS} problem exemplified above, we begin by
+defining additional notation for reasoning over label-conditioned subsets and their support. 
 %
 For a given dataset, \( \gD \), we denote by \( \gD_{S=s^\prime} \) its subset with subgroup label
 \( s^\prime \in \gS \), by \( \gD_{Y=y^\prime} \) its subset with class label \( y^\prime \in \gY

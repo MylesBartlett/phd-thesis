@@ -94,12 +94,12 @@
 To investigate how our method scales with the number of sources, we look to a 3-digit, 3-colour
 variant of the dataset in the \emph{subgroup bias} setting where four sources are missing from
 $\gD^{tr}$.
-Results for this configuration are shown in fig.~\ref{fig:cmnist-3dig-4miss}. We see that the
+Results for this configuration are shown in Fig.~\ref{fig:cmnist-3dig-4miss}. We see that the
 performance of \texttt{Ours (No Balancing)} is quite close to that of \texttt{Ours (Bag Oracle)}.
 We suspect this is because balancing is less critical with the increased number of subgroups
 strengthening the training signal. As inter-subgroup ratios do not make for suitable metric for
-non-binary $S$, we instead quantify the invariance of the predictions to the subgroup with the HGR
-maximal correlation \cite{renyi1959measures}.
+non-binary $S$, we instead quantify the invariance of the predictions to the subgroup with the
+\ac{HGRMC} \cite{renyi1959measures}.
 
 \begin{figure*}[htp]
   \centering
@@ -122,10 +122,11 @@ maximal correlation \cite{renyi1959measures}.
 %
 As alluded to in main text, for three out of four of the missing gender/smiling quadrants, the
 \texttt{GEORGE} baseline produced an extreme outlier for one out of the five total repeats - these
-outliers were omitted from the plots to ensure the discriminability of the other results. We
-reproduce the full, untruncated versions of these plots here in fig.
-\ref{fig:celeba-gender-smiling-full}. We have also included \texttt{Accuracy} metric in fig.
-\ref{fig:celeba-gender-smiling-full}.
+outliers were omitted from the plots to ensure the discriminability of the other results.
+%
+We reproduce the full, untruncated versions of these plots here in
+Fig.~\ref{fig:celeba-gender-smiling-full}. We have also included \texttt{Accuracy} metric in
+Fig.~\ref{fig:celeba-gender-smiling-full}.
 
 
 \begin{figure*}[htp]
@@ -188,7 +189,7 @@ It is essential that \((s=\text{\color{purple}{purple}}, y=4)\) from the deploym
 to \((s=\text{\color{green}{green}}, y=4)\) from the training set, and not
 \((s=\text{\color{purple}{purple}}, y=2)\).
 % The latter would produce an invariance to $y$, which is undesirable.
-This procedure is illustrated in fig. \ref{fig:matching-repeated-correct}, and contrasted with an
+This procedure is illustrated in Fig.~\ref{fig:matching-repeated-correct}, and contrasted with an
 incorrect procedure based on balancing the bag according to $s$ in
 \ref{fig:matching-repeated-incorrect} -- such a procedure would result in invariance to $y$ instead
 of $s$, which is obviously undesirable.
@@ -371,7 +372,7 @@ which is equivalent to just \(\tilde{O}(\sqrt{1/N})\).
 \subsection{Coloured MNIST and biasing parameters}
 %
 The MNIST dataset \cite{lecun1998gradient} consists of 70,000 (60,000 designated for training,
-10,000 for testing) images of gray-scale hand-written digits. We colour the digits following the
+10,000 for testing) images of grey-scale hand-written digits. We colour the digits following the
 procedure outlined in \cite{KehBarThoQua20}, randomly assigning each sample one of ten distinct RGB
 colours. Each source is then a combination of digit-class (class label) and colour (subgroup label).
 We use no data-augmentation aside from symmetrically zero-padding the images to be of size 32x32.
@@ -578,9 +579,9 @@ output is the binary prediction for a given bag of samples.
  ~\\
 \end{table*}
 
-The hyperparameters and architectures for the AutoEncoder (\texttt{AE}), Predictor and
-Discriminator subnetworks are detailed in Table \ref{tab:hparams} for all three datasets.We train
-all models using \texttt{Adam} \cite{KinBa15}.
+The hyperparameters and architectures for the \acf{AE} (\texttt{AE}), Predictor and Discriminator
+sub-networks are detailed in Table \ref{tab:hparams} for all three datasets.We train all models
+using \texttt{Adam} \cite{KinBa15}.
 
 For the Coloured MNIST and CelebA datasets, the baseline \texttt{ERM}, \texttt{DRO}, \texttt{LfF}
 (in the case of the former) and \texttt{gDRO} (in the case of the latter) models use a
@@ -591,7 +592,7 @@ respectively. The output of the backbone is flattened and fed to a  single fully
 size $|Y|$ in order to obtain the class-prediction, $\hat{y_i}$, for a given instance. To evaluate
 our method, we simply train a linear classifier on top of $z$; this is sufficient due to
 linear-separability being encouraged during training by the $y$-predictor. For the Adult Income
-dataset, we use an MLP composed of a single hidden layer 35 units in size, followed by a SELU
+dataset, we use an \ac{MLP} composed of a single hidden layer 35 units in size, followed by a SELU
 activation \cite{klambauer2017self}, as both the downstream classifier for our method, and as the
 network architecture of the baselines. All baselines and downstream classifiers alike were trained
 for $60$ epochs with a learning rate of $1 \times 10^{-3}$ and a batch size of $256$.
@@ -677,20 +678,25 @@ determined by a grid-search over the space $\{0.01, 0.1, 0.3, 1.0\}$.
     \centering
     \includegraphics[width=\textwidth]{supmatch/example_images/zany-glade-2191_context_reconstructions_9900.png}
     \caption{
-    Different reconstructions on the deployment set. Corresponding to: original, full
-    reconstruction, reconstruction of $z$ ($\tilde{s}$ zeroed out), reconstruction of $\tilde{s}$
-    ($z$ zeroed out).
+    Different reconstructions on the deployment set. 
+    %
+    Corresponding to: original, full reconstruction, reconstruction of $z$ ($\tilde{s}$ zeroed
+    out), reconstruction of $\tilde{s}$ ($z$ zeroed out).
     }%
     \label{fig:cmnist-recon-deployment-failure}
   \end{subfigure}
   \caption{
+    %
    Visualisation of a failure of our method for the Coloured MNIST dataset, with
-   {\color{purple}purple} as the missing subgroup. In each of the subfigures
-   \ref{fig:cmnist-recon-training-failure} and \ref{fig:cmnist-recon-deployment-failure}: Column 1
-   shows the original images from $x$ from the respective set. Column 2 shows plain reconstructions
-   generated from $x_\textit{recon}=g(f(x), t(x))$. Column 3 shows reconstruction with zeroed-out
-   $\tilde{s}$: $g(f(x), 0)$, which effectively visualises $z$. Column 4 shows the result of an
-   analogous process where $z$ was zeroed out instead.
+   {\color{purple}purple} as the missing subgroup. 
+   %
+   In each of the subfigures \ref{fig:cmnist-recon-training-failure} and
+   \ref{fig:cmnist-recon-deployment-failure}: Column 1 shows the original images from $x$ from the
+   respective set. Column 2 shows plain reconstructions generated from $x_\textit{recon}=g(f(x),
+   t(x))$. Column 3 shows reconstruction with zeroed-out $\tilde{s}$: $g(f(x), 0)$, which
+   effectively visualises $z$. Column 4 shows the result of an analogous process where $z$ was
+   zeroed out instead.
+   %
   }%
   \label{fig:cmnist-recon-failure}
 \end{figure}%
@@ -699,12 +705,19 @@ determined by a grid-search over the space $\{0.01, 0.1, 0.3, 1.0\}$.
      \centering
      \includegraphics[width=0.5\textwidth]{supmatch/example_images/reconstructions_celeba.png}
      \caption{%
-     Visualisation of our method's solutions for the CelebA dataset, with ``smiling females'' as
-     the missing subgroup. Column 1 shows the original images from $x$ from the deployment set of
-     CelebA. Column 2 shows plain reconstructions generated from $x_\textit{recon}=g(f(x), t(x))$.
-     Column 3 shows reconstruction with zeroed-out $\tilde{s}$: $g(f(x), 0)$, which effectively
-     visualises $z$. Column 4 shows the result of an analogous process where $z$ was zeroed out
-     instead.
+       %
+       Visualisation of our method's solutions for the CelebA dataset, with ``smiling females'' as
+       the missing subgroup. 
+     %
+       Column 1 shows the original images from $x$ from the deployment set of CelebA. 
+     %
+       Column 2 shows plain reconstructions generated from $x_\textit{recon}=g(f(x), t(x))$.
+     %
+       Column 3 shows reconstruction with zeroed-out $\tilde{s}$: $g(f(x), 0)$, which effectively
+       visualises $z$. 
+     %
+       Column 4 shows the result of an analogous process where $z$ was zeroed out instead.
+     %
      }%
      \label{fig:celeba-recons}
 \end{figure}%
@@ -720,14 +733,22 @@ determined by a grid-search over the space $\{0.01, 0.1, 0.3, 1.0\}$.
     \end{subfigure}
   \caption{
     Example sample-wise attention maps for bags of CelebA (left) and CMNIST (right) images sampled
-    from a balanced deployment set. The training set is biased according to the \emph{subgroup
-    bias} setting where for CelebA ``smiling females'' constitute the missing source and for
-    Coloured MNIST {\color{purple}purple} fours constitute the missing source. The attention
-    weights are used during the discriminator's aggregation step to compute a weighted sum over the
-    bag. The attention-weight assigned to each sample is proportional to the lightness of its
-    frame, with black signifying a weight of 0, white a weight of 1. Those samples belonging to the
-    missing subgroup are assigned the highest weight as they signal from which dataset (training
-  vs. deployment) the bag containing them was drawn from. }
+    from a balanced deployment set. 
+    %
+    The training set is biased according to the \emph{subgroup bias} setting where for CelebA
+    ``smiling females'' constitute the missing source and for Coloured MNIST {\color{purple}purple}
+    fours constitute the missing source. 
+    %
+    The attention weights are used during the discriminator's aggregation step to compute a
+    weighted sum over the bag. 
+    %
+    The attention-weight assigned to each sample is proportional to the lightness of its frame,
+    with black signifying a weight of 0, white a weight of 1. 
+    %
+    Those samples belonging to the missing subgroup are assigned the highest weight as they signal
+    from which dataset (training versus deployment) the bag containing them was drawn from. 
+%
+}
   \label{fig:attn_maps}
 \end{figure*}%
 %
@@ -735,37 +756,49 @@ We show qualitative results of the disentangling in figures \ref{fig:cmnist-reco
 \ref{fig:cmnist-recon-failure} (both Coloured MNIST), and \ref{fig:celeba-recons} (CelebA).
 Fig.~\ref{fig:cmnist-recon} shows successful disentangling (from a run that achieved close to 100\%
 accuracy); in the deployment set the representation $z$ has lost all colouring (see column 3 in the
-figures). Fig.~\ref{fig:cmnist-recon-failure} on the other hand, shows a visualisation from a
-\emph{failed} run; Instead of encoding purple 2's and green 2's with the same representation, the
-model here encoded purple 2's and green 4's as similar. This is a valid solution of the given
-optimisation problem -- the representation is invariant to training set vs deployment set -- but it
-is definitely not the intended solution.
+figures). 
+%
+Fig.~\ref{fig:cmnist-recon-failure} on the other hand, shows a visualisation from a \emph{failed}
+run; instead of encoding purple 2's and green 2's with the same representation, the model here
+encoded purple 2's and green 4's as similar. 
+%
+This is a valid solution of the given optimisation problem -- the representation is invariant to
+training set vs deployment set -- but it is definitely not the intended solution.
 
-Fig.\ref{fig:celeba-recons} shows visualisations for CelebA. With a successful disentangling,
-column 3 (visualisation of $z$) should show a version of the image that is ``gender-neutral''
-(i.e., invariant to gender). Furthermore, column 4 (visualisation of $\tilde{s}$) should be
-invariant to the class label (i.e., ``smiling''), so the images should either be all with smiles or
-all without smiles.
+Fig.~\ref{fig:celeba-recons} shows visualisations for CelebA. 
+%
+With a successful disentangling, column 3 (visualisation of $z$) should show a version of the image
+that is ``gender-neutral'' (i.e., invariant to gender). 
+%
+Furthermore, column 4 (visualisation of $\tilde{s}$) should be invariant to the class label (i.e.,
+``smiling''), so the images should either be all with smiles or all without smiles.
 
-Fig.~\ref{fig:attn_maps} shows attention maps for bags from the deployment set. We can see that the
-model pays special attention to those samples that are not included in the training set. For
-details, see the captions.
+Fig.~\ref{fig:attn_maps} shows attention maps for bags from the deployment set. 
+%
+We can see that the model pays special attention to those samples that are not included in the
+training set. For details, see the captions.
 
 \subsection{Additional metrics}\label{sec:additional-metrics}
+%
 Figures~\ref{fig:cmnist-2v4-partial-add}, \ref{fig:cmnist-2v4-miss-s-add},  and
-\ref{fig:celeba-gender-smiling-add} show the true positive rate (TPR) ratio and the true negative
-rate (TNR) ratio as additional metrics for Coloured MNIST (2 digits) and CelebA. These are computed
-as the ratio of TPR (or TNR) on subgroup $s=0$ over the TPR (or TNR) on subgroup $s=1$; if this
-gives a number greater than 1, the inverse is taken. Similarly to the PR ratio reported in the main
-paper, these ratios give an indication of how much the prediction of the classifier depends on the
-subgroup label $s$.
+\ref{fig:celeba-gender-smiling-add} show the \ac{TPR} ratio and the \ac{TNR} ratio as additional
+metrics for Coloured MNIST (2 digits) and CelebA. 
+%
+These are computed as the ratio of \ac{TPR} (or \ac{TNR}) on subgroup $s=0$ over the \ac{TPR} (or
+\ac{TNR}) on subgroup $s=1$; if this gives a number greater than 1, the inverse is taken. 
+%
+Similarly to the PR ratio reported in the main paper, these ratios give an indication of how much
+the prediction of the classifier depends on the subgroup label $s$.
 
-Figure~\ref{fig:cmnist-3dig-4miss-add} shows metrics specific to multivariate $s$ (i.e., non-binary
-$s$). We report the minimum (i.e. farthest away from 1) of the pairwise ratios (TPR/TNR ratio min)
-as well as the largest difference between the raw values (TPR/TNR diff max). Additionally, we
-compute the Hirschfeld-Gebe\-lein-R\'enyi (HGR) maximal correlation \cite{renyi1959measures}
-between $S$ and $Y$, serving as a measure of dependence defined between two variables with
-arbitrary support.
+Fig.~\ref{fig:cmnist-3dig-4miss-add} shows metrics specific to multivariate $s$ (i.e., non-binary
+$s$). 
+%
+We report the minimum (i.e. farthest away from 1) of the pairwise ratios (\ac{TPR}/\ac{TNR} ratio
+min) as well as the largest difference between the raw values (\ac{TPR}/\ac{TNR} diff max). 
+%
+Additionally, we compute the \ac{HGRMC} between $S$ and $Y$, serving as a measure of dependence
+defined between two variables with arbitrary support.
+%
 \begin{figure*}[htp]
   \centering
 %   \includegraphics[width=\columnwidth]{supmatch/figures/cmnist_2v4_partial_acc.pdf}

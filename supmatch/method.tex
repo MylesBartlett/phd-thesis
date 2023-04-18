@@ -16,10 +16,10 @@ instead of individual samples. These bags need to be balanced with respect to ($
 we can interpret them as approximating $\gG$ as opposed to the joint probability distribution,
 $P(S, Y)$.
 %
-Details on how these bags are constructed can be found in in Sec.~\ref{ssec:realisation}
-and Sec.~\ref{sec:implementation}.
+Details on how these bags are constructed can be found in in \S\ref{ssec:realisation}
+and \S\ref{sec:implementation}.
 % These sets correspond to the "perfect bags" introduced in the next section,
-% Sec.~\ref{ssec:perfect-bags}:
+% \S\ref{ssec:perfect-bags}:
 
 
 \subsection{Objective}\label{ssec:objective}
@@ -39,7 +39,7 @@ resulting from sampling \(x\) from \(P^{tr}\) and then transforming \(x\) with \
 Analogously for the deployment set: $q_f(Z=z')=P^{dep}(f(X)=z')$. 
 %
 For the conditioned distributions we write $p_f|_{S=s',Y=y'}$, following the convention established
-in Sec.~\ref{ssec:problem_formalism} but with the added `\(|\)' to clearly delimit the
+in \S\ref{ssec:problem_formalism} but with the added `\(|\)' to clearly delimit the
 conditioning.
 
 The objective makes a distinction between those classes, \(y \in \gY\), for which there is overlap
@@ -217,14 +217,14 @@ For aggregating information over the bags, we use a self-attention-based
 \citep{vaswani2017attention} pooling layer in which the query vector is averaged over the bag
 dimension.
 For more details see Appendix~\ref{ssec:attention-mechanism}. 
-Furthermore, in Appendix~\ref{ssec:no-mil}, we
-validate that having the discriminator operate over sets (bags) of samples rather than independent samples
-(with the same balancing scheme) is essential for achieving good and robust (\wrt{} balancing quality)
-performance.
+%
+Furthermore, in Appendix~\ref{ssec:no-mil}, we validate that having the discriminator operate over
+sets (bags) of samples rather than independent samples (with the same balancing scheme) is
+essential for achieving good and robust (\wrt{} balancing quality) performance.
 
-% Our goal is to make $z$ invariant to the subgroup $s$.
-% However, what the adversarial loss actually enforces is that $z$ generates bags with the same support over $S \times Y$ irrespective of the dataset they were drawn from.
-% To ensure that the disentangling aligns with our objective,
+% Our goal is to make $z$ invariant to the subgroup $s$. However, what the adversarial loss
+% actually enforces is that $z$ generates bags with the same support over $S \times Y$ irrespective
+% of the dataset they were drawn from. To ensure that the disentangling aligns with our objective,
 Our goal is to disentangle $x$ into two subspaces: a subspace $z$, representing the class, and a
 subspaces $\tilde{s}$,
 representing the subgroup.

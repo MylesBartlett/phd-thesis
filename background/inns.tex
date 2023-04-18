@@ -1,32 +1,33 @@
 % % ********************************************************************************
 \section{Invertible neural networks}\label{sec:inns}
 % % ********************************************************************************
-\epigraph{
-    \emph{
-        %
-        ``Living backwards!'' Alice repeated in great astonishment. ``I never heard of such a
-        thing!''\\
-        %
-        ``--but there's one great advantage in it, that one's memory works both ways.''\\
-        %
-        ``I'm sure mine only works one way,'' Alice remarked. ``I can't remember things before they
-        happen.''\\
-        %
-        ``It's a poor sort of memory that only works backwards,'' the Queen remarked.
-        %
-    }
-}
+% \epigraph{
+%     \emph{
+%         %
+%         ``Living backwards!'' Alice repeated in great astonishment. ``I never heard of such a
+%         thing!''\\
+%         %
+%         ``--but there's one great advantage in it, that one's memory works both ways.''\\
+%         %
+%         ``I'm sure mine only works one way,'' Alice remarked. ``I can't remember things before they
+%         happen.''\\
+%         %
+%         ``It's a poor sort of memory that only works backwards,'' the Queen remarked.
+%         %
+%     }
+% }
 %
-{Through the Looking-Glass\\Lewis Carroll}
-
-Chapter 3 of this thesis explores the application of \acf{INN}s to \acf{FRL} and so will afford
-some brief discussion to their basic workings here.
+% {Through the Looking-Glass\\Lewis Carroll}
+%
+Chapter \ref{ch:nifr} of this thesis explores the application of \acp{INN} to \ac{FRL} and so will
+afford some brief discussion to their basic workings here.
 %
 \marginpar{\textbf{Bijectivity}}
 %
-An INN \citep{kobyzev2020normalizing}, as the name suggests, refers to any neural network for which
-both the usual forward mapping, \(f(\cdot)\), and its inverse \(f(\cdot)\) are defined, with the
-assumed property that both are differentiable and as such that the function belongs to the class of
+An \acl{INN} \citep{kobyzev2020normalizing}, as the name suggests, refers to any neural network for
+which both the usual forward mapping, \(f(\cdot)\), and its inverse \(f(\cdot)\) are defined, with
+the assumed property that both are differentiable and as such that the function belongs to the
+class of
 \emph{diffeomorphisms}, \(f \in \text{Diff}(\gX)\). 
 %
 Thus, we have a function that is an invertible bicontinuous map from input space, \(\gX \subset
@@ -39,10 +40,10 @@ then \(f\) in its totality, also satisfies this property, allowing us to build a
 INNs by chaining together layers defining these subfunctions.
 %
 
-The usual bailiwick of INNs is density estimation -- and by complement, generative modelling --
-due to their hallmark diffeomorphic property that make it possible for densities under the models
-to be calculated \emph{exactly}, in contrast to variational methods that only do so up to a lower
-bound (the so-called ELBO). 
+The usual bailiwick of INNs is density estimation -- and by complement, generative modelling -- due
+to their hallmark diffeomorphic property that make it possible for densities under the models to be
+calculated \emph{exactly}, in contrast to variational methods that only do so up to a lower bound
+(the so-called \ac{ELBO}). 
 %
 \marginpar{\textbf{Normalising flows}}
 %
@@ -50,11 +51,11 @@ This calculation is enabled by the change-of-variables theorem, allowing one to 
 density of the distribution changes as the INN warps a known (and tractable) base distribution into
 a complex, highly-multimodal, one.
 %
-Like with variational auto-encoders \citep{kingma2014auto}, the base density, \(P(Z)\), is
-generally taken to be an Isotropic Gaussian distribution; the posterior density, \(P(X)\), `flows'
-through the network -- in a manner reminiscent of a Galton Board -- into this normalised base
-density, earning this class of methods the name \emph{Normalising Flows} (\ac{NF}s;
-\cite{rezende2015variational, kobyzev2020normalizing}).
+Like with \aclp{VAE} (\acsp{VAE}; \citealp{kingma2014auto}), the base density, \(P(Z)\), is generally
+taken to be an Isotropic Gaussian distribution; the posterior density, \(P(X)\), `flows' through
+the network -- in a manner reminiscent of a Galton Board -- into this normalised base density,
+earning this class of methods the name \aclp{NF} (\acsp{NF}; \citealp{rezende2015variational,
+kobyzev2020normalizing}).
 %
 Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), with base density
 \(\gN(\cdot; 0, \sI)\) the aforementioned Gaussian distribution, can be computed as
@@ -78,17 +79,17 @@ Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), w
 and training the model simply amounts to maximising this quantity over the empirical training
 distribution in the usual fashion.
 %
-As with \ac{GAN}s and \ac{VAE}s, to sample from \(P(X)\), one needs only draw a random sample from the
-corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
+As with \acp{GAN} and \acp{VAE}, to sample from \(P(X)\), one needs only draw a random sample from
+the corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
 
 
 \marginpar{\textbf{Losslessness}}
 %
-In Chapter 3, however, it is not the foregoing density-estimation capabilities of INNs that we are
-interested in, rather the diffeomorphic property itself, insofar as it guarantees the learned
-representations are \emph{lossless} \wrt{} the inputs, as well as a means to visualise the factors
-of said representations due to its having an exact inverse (whereas auto-encoders have only an
-approximate inverse (the decoder) that must be trained separately from the encoder).
+In Chapter \ref{ch:nifr}, however, it is not the foregoing density-estimation capabilities of INNs
+that we are interested in, rather the diffeomorphic property itself, insofar as it guarantees the
+learned representations are \emph{lossless} \wrt{} the inputs, as well as a means to visualise the
+factors of said representations due to its having an exact inverse (whereas auto-encoders have only
+an approximate inverse (the decoder) that must be trained separately from the encoder).
 %
 That is to say, while \(f\) may deform manifold \(\gX\) in arbitrarily non-linear ways, since each
 point is mapped uniquely from the domain to codomain only the form of the information contained in
@@ -103,7 +104,7 @@ Other works have also capitalised on this information-preservation explicitly, e
 lossless image compression.
 %
 Contrastingly, in work postdating that done in Chapter 3, normalising flows have been applied
-applied to FairML problems with the insight that one can leverage the exact-density computation to
+applied to \ac{AF} problems with the insight that one can leverage the exact-density computation to
 define define an optimal adversary \citep{balunovic2021fair, cerrato2022fair}. 
 %
 This allows for obtaining provably fair representations while also obviating the optimisation

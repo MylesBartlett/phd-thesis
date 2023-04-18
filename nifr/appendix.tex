@@ -17,7 +17,7 @@ chequerboard reshaping and invertible $1\times1$ convolutions) for the convoluti
 %
 Table \ref{tab:inn_architectures} summarises the INN architectures used for each dataset.
 
-For the image datasets each level of the cVAE encoder consists of two gated convolutional layers
+For the image datasets each level of the \ac{cVAE} encoder consists of two gated convolutional layers
 \citep{van2016conditional} with ReLU activation. 
 %
 At each subsequent level, the number of filters is doubled, starting with an initial value 32 and
@@ -56,7 +56,7 @@ CelebA                      & 3      & 32     & 512      & Encodings        \\ \
 
 \begin{table}[tp]
 \caption{
-cVAE encoder architecture used for each dataset. The decoder architecture in each case mirrors that
+    \ac{cVAE} encoder architecture used for each dataset. The decoder architecture in each case mirrors that
 of its encoder counterpart through use of transposed convolutions. For the adult dataset we apply
 $\ell_2$ and cross-entropy losses to the reconstructions of the continuous features and discrete
 features, respectively. }
@@ -84,10 +84,10 @@ CelebA    & 32               & 5      & 1       & $\ell_1$ \\
 % continuous representation with an autoencoder. This step only has to be done once at the
 % beginning.
 
-% The next question is whether to use the cFlow or cVAE variant of the method. For initial
+% The next question is whether to use the \ac{cFlow} or cVAE variant of the method. For initial
 % experiments, we would recommend the cVAE model as it is quicker to train, and will lead to
 % shorter feedback cycles when validating the code. If the computational budget allows it, we would
-% recommend switching to the cFlow model once cVAE is working as it provides better guarantees
+% recommend switching to the \ac{cFlow} model once cVAE is working as it provides better guarantees
 % regarding the retention of information from the input data.
 
 % For choosing the network architecture, the only advice we have is to look at what architectures
@@ -200,7 +200,7 @@ Results can be found in figure~\ref{fig:multi-s}.\\
 \end{tabular}
 \end{table}
 \noindent\textsc{Investigation into the size of $z_b$.}
-\;\; In the cFlow model, the size of $z_b$ is an important hyperparameter which can affect the
+\;\; In the \ac{cFlow} model, the size of $z_b$ is an important hyperparameter which can affect the
 result significantly.
 %
 Here we investigate the sensitivity of the model to the choice of $z_b$ size.
@@ -250,9 +250,10 @@ In addition to \emph{DP diff}, we report here the result from other fairness mea
 These results are from the same setup as those reported in the main paper. 
 %
 We report the difference in \acp{TPR} between the two groups (male and female), which corresponds
-to a measure of Equality of Opportunity, and the difference in \acp{TNR} between the two groups.
+to a measure of \acf{EqOd}, and the difference in \acp{TNR} between the two groups.
 
 \subsection{Optimisation Details}\label{sec:optimisation-details}
+%
 \noindent All our models were trained using the RAdam optimiser \citep{liu2019variance} with
 learning rates $3\times10^{-4}$ and $1\times10^{-3}$ for the encoder/discriminator pair and
 classifier respectively. 
@@ -262,13 +263,13 @@ A batch size of 128 was used for all experiments.
 We now detail the optimisation settings, including the choice of adversary, specific to each
 dataset.
 %
-Details of the cVAE and cFlow architectures can be found in table \ref{tab:vae_architectures} and
+Details of the \ac{cVAE} and \ac{cFlow} architectures can be found in table \ref{tab:vae_architectures} and
 table \ref{tab:inn_architectures}, respectively.
 
 \paragraph{UCI Adult.}
 %
 For this dataset our experiment benefited from using null-samples as inputs to the adversary of the
-cFlow model. 
+\ac{cFlow} model. 
 %
 Unlike for the image datasets, we found a single adversary to be sufficient. 
 %
@@ -279,7 +280,7 @@ The \ac{INN} performs a bijection of the form $f: \mathbb{R}^n \rightarrow \math
 However, the adult dataset is composed of mostly discrete (binary/categorical) features. 
 %
 To achieve good performance, we found it necessary to first pre-process the inputs with a
-pretrained autoencoder, using its encodings as the input to the cFlow model, as well as to the
+pretrained autoencoder, using its encodings as the input to the \ac{cFlow} model, as well as to the
 adversary. 
 %
 The learned representations were evaluated with a logistic regression model from scikit-learn
@@ -287,7 +288,7 @@ The learned representations were evaluated with a logistic regression model from
 %
 All baseline models were trained for 200 epochs. 
 %
-The Ln2L \citep{kim2019learning} and \ac{MLP} baselines share the architecture of the cVAE's
+The Ln2L \citep{kim2019learning} and \ac{MLP} baselines share the architecture of the \ac{cVAE}'s
 encoder, only with a classification layer affixed.
 
 \paragraph{Coloured MNIST.} Each level of the architecture used for the downstream classifier and
@@ -305,7 +306,7 @@ fully-connected classification layer is applied.
 To allow for an additional level in the \ac{INN} (the downsampling operations requiring the number
 of spatial dimensions to be even), the data was zero-padded to a size of $32\times32$. 
 %
-The cVAE and cFlow models were trained for 50 and 200 epochs respectively, using $\ell_2$
+The \ac{cVAE} and \ac{cFlow} models were trained for 50 and 200 epochs respectively, using $\ell_2$
 reconstruction loss for the former. The downstream classifier and all baselines were trained for 40
 epochs. 
 %
@@ -332,7 +333,7 @@ convolutional layer.
 These models were again trained for 40 epochs, which we found to be sufficient for convergence for
 the tasks in question. 
 %
-The cVAE and cFlow models were respectively trained for 100 epochs and 30 epochs, using $\ell_1$
+The \ac{cVAE} and \ac{cFlow} models were respectively trained for 100 epochs and 30 epochs, using $\ell_1$
 reconstruction loss for the former. 
 %
 Compared with cMNIST, the size of the adversarial ensemble was increased to 10, the
@@ -344,9 +345,9 @@ Adversarial learning has become one of the go-to methods for enforcing invarianc
 representation learning \citep{ganin2016domain} with \ac{MMD} \citep{louizos2016variational} and HSIC
 \citep{QuaShaTho19}, being popular non-parametric alternatives. 
 %
-\citet{ganin2016domain} proposed adversarial learning for domain adaptation problems, with
+\citet{ganin2016domain} proposed \acf{AdvL} for \acf{DA} problems, with
 \citet{edwards2016censoring} soon after making this and learning a representation promoting
-demographic parity. 
+\ac{DP}. 
 %
 The adversarial approach carries the benefits of being both efficient and scalable to multi-class
 categorical variables, which many sensitive attributes are in practice, whereas the non-parametric
@@ -359,7 +360,7 @@ do exist, but which sacrifice expressiveness).
 Thus, it can happen that the representation learner optimises for the surrogate objective of
 eluding the adversary rather than the real objective of expelling $s$-related information. 
 %
-Moreover, the non-stationarity of the dynamics can lead to cyclic-equilibria, irrespective of the
+Moreover, the non-stationarity of the dynamics can lead to cyclic equilibria, irrespective of the
 capacity of the adversary.
 
 When working with a partitioned latent space, this behaviour can be averted by instead encouraging
@@ -475,17 +476,17 @@ zero-initialising $f$ results in the coupling layers initially performing an ide
       \label{fig:cvae_celeba_original_x}
   }
   \hfill
-  \subfloat[$x_u$ null-samples generated by the cVAE model.]{%
+  \subfloat[$x_u$ null-samples generated by the \ac{cVAE} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/celeba/vae_recon_y.png}}%
       \label{fig:cvae_celeba_recon_y}
   }
   \hfill
-  \subfloat[$x_b$ null-samples generated by the cVAE model.]{%
+  \subfloat[$x_b$ null-samples generated by the \ac{cVAE} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/celeba/vae_recon_s.png}}%
       \label{fig:cvae_celeba_recon_s}
   }
   \caption{
-    CelebA null-samples learned by our cVAE model, with gender as the sensitive attribute.
+      CelebA null-samples learned by our \ac{cVAE} model, with gender as the sensitive attribute.
     %
     (a) The original, untransformed samples from the CelebA dataset
     %
@@ -495,7 +496,7 @@ zero-initialising $f$ results in the coupling layers initially performing an ide
     %
     The model learns to disentangle gender from the non-gender related information. 
     %
-    Compared with the cFlow model, there is a severe degradation in reconstruction quality due to
+    Compared with the \ac{cFlow} model, there is a severe degradation in reconstruction quality due to
     the model trying to simultaneously satisfy conflicting objectives.
     % Attributes such as \emph{make-up} and \emph{hair length} are also often modified in the
     % process due to inherent correlations between them and the sensitive attribute, which the
@@ -510,17 +511,17 @@ zero-initialising $f$ results in the coupling layers initially performing an ide
       \label{fig:cflow_celeba_original_x_suppmat}
   }
   \hfill
-  \subfloat[$x_u$ null-samples generated by the cFlow model.]{%
+  \subfloat[$x_u$ null-samples generated by the \ac{cFlow} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/celeba/cflow_xd_suppmat.png}}%
       \label{fig:cflow_celeba_recon_y_suppmt}
   }
   \hfill
-  \subfloat[$\mathbf{x}_b$ null-samples generated by the cFlow model.]{%
+  \subfloat[$\mathbf{x}_b$ null-samples generated by the \ac{cFlow} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/celeba/cflow_xb_suppmat.png}}%
       \label{fig:cflow_celeba_recon_s_suppmat}
   }
   \caption{
-    CelebA null-samples learned by our cFlow model, with gender as the sensitive attribute.
+      CelebA null-samples learned by our \ac{cFlow} model, with gender as the sensitive attribute.
     %
     (a) The original, untransformed samples from the CelebA dataset
     %
@@ -543,7 +544,7 @@ enables us to probe the behaviour of the model that produced it, and any biases 
 implicitly captured due to entanglement between the sensitive attribute and other attributes
 present in the data. 
 %
-We highlight a few examples of such biases manifesting in the cFlow model's CelebA null-samples in
+We highlight a few examples of such biases manifesting in the \ac{cFlow} model's CelebA null-samples in
 fig.~\ref{fig:celeba_cflow_suppmat}. 
 %
 In these cases, make-up and hair style have been inadvertently modified during the null-sampling
@@ -568,24 +569,24 @@ interpretability that comes with the representations being in the data domain.
   %---
   \vspace{10pt}
  
-  \subfloat[Test data input to the cFlow model.]{%
+  \subfloat[Test data input to the \ac{cFlow} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/cmnist/cflow_tl_original.png}}%
       \label{fig:cflow_tl_original}
   }
   ~~~
 %   \hfill
-  \subfloat[$x_u$ null-samples generated by the cFlow model.]{%
+  \subfloat[$x_u$ null-samples generated by the \ac{cFlow} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/cmnist/cflow_tl_xd.png}}%
       \label{fig:cflow_tl_xd}
   }
   
-    \subfloat[Test data input to the cVAE model.]{%
+  \subfloat[Test data input to the \ac{cVAE} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/cmnist/cvae_tl_original.png}}%
       \label{fig:cvae_tl_original}
   }
   ~~~
 %   \hfill
-  \subfloat[$x_u$ null-samples generated by the cVAE model.]{%
+  \subfloat[$x_u$ null-samples generated by the \ac{cVAE} model.]{%
       \scalebox{0.3}{\includegraphics[width=\textwidth]{nifr/Images/cmnist/cvae_tl_xd.png}}%
       \label{fig:cvae_tl_xd}
   }
@@ -596,14 +597,14 @@ interpretability that comes with the representations being in the data domain.
     %
     (a) Quantitative results for different $\sigma$-values. 
     %
-    (b-c) Qualitative results for the cFlow model. 
+    (b-c) Qualitative results for the \ac{cFlow} model. 
     %
-    (d-e) Qualitative results for the cVAE model. 
+    (d-e) Qualitative results for the \ac{cVAE} model. 
     %
     The qualitative results provide comparisons of the images before (left) and after (right)
     null-sampling. 
     %
-    Note that for some of the cVAE samples, the clarity of the digits has clearly changed due to
+    Note that for some of the \ac{cVAE} samples, the clarity of the digits has clearly changed due to
     null-sampling, serving as an explanation for the non-increasing downstream performance.
   }%
   \label{fig:cmnist-transfer-all}
@@ -639,7 +640,7 @@ partition, without presupposing similarity to the $\neg s$ observed during pre-t
 %
 \paragraph{Transferring from mixed-NIST to MNIST.}
 %
-We test our hypothesis by comparing the performance of the cFlow and cVAE models pre-trained on a
+We test our hypothesis by comparing the performance of the \ac{cFlow} and \ac{cVAE} models pre-trained on a
 mixture of datasets belonging to the NIST family, colourised in the same way as cMNIST, while the
 downstream train and test sets remain the same as in the original cMNIST experiments. 
 %
@@ -647,7 +648,7 @@ Specifically, we create this representative set by sampling 24,000 images (to ma
 of the original representative set) from EMNIST (letters only)~\citep{cohen2017emnist},
 Fashion\-MNIST~\citep{xiao2017fashion} and KMNIST~\citep{clanuwat2018deep}, in equal proportion. 
 %
-We use the same architectures for the cVAE and cFlow models as we did in the non-transfer learning
+We use the same architectures for the \ac{cVAE} and \ac{cFlow} models as we did in the non-transfer learning
 setting. 
 %
 In terms of hyperparameters, the only change made was to the KL-divergence's pre-factor, finding it
@@ -658,19 +659,19 @@ The results for the range of $\sigma$ values are shown in fig.~\ref{fig:cmnist-t
 Unsurprisingly, the performance of both models suffers when the representative and test sets do not
 completely correspond. 
 %
-However, the cFlow model consistently outperforms the cVAE model, with the gap increasing as the
+However, the \ac{cFlow} model consistently outperforms the \ac{cVAE} model, with the gap increasing as the
 bias decreases. 
 %
-Although some colour information is retained in the cFlow null-samples, symptomatic of an imperfect
+Although some colour information is retained in the \ac{cFlow} null-samples, symptomatic of an imperfect
 transfer, semantic information is almost entirely retained as well. 
 %
-Conversely, the cVAE is very much flawed in this respect; as can be seen in the bottom row of
+Conversely, the \ac{cVAE} is very much flawed in this respect; as can be seen in the bottom row of
 fig.~\ref{fig:cmnist-transfer}, for some samples, semantic information is degraded to the point of
 the digit's identity being altered. 
 %
 As a result of this semantic degradation, the performance of the downstream classifier is curtailed
 by the noisiness of the digit's identity and is relatively unchanging across $\sigma$-values, in
-contrast to the monotonic improvement of that achieved on the cFlow null-samples.
+contrast to the monotonic improvement of that achieved on the \ac{cFlow} null-samples.
 
 % \begin{figure}
 %   \includegraphics[width=0.6\textwidth]{nifr/Figures/nosinn_cmnist_transfer.pdf}
