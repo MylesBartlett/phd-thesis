@@ -946,54 +946,81 @@ of the chosen balancing scheme.
 
 
 \subsection{Clustering with an incorrect number of clusters}\label{sec:overclustering}
-We also investigate what happens when the number of clusters is set incorrectly. For 2-digit
-Coloured MNIST, we expect 4 clusters, corresponding to the 4 possible combinations of the binary
-class label $y$ and the binary subgroup label $s$. However, there might be circumstances where the
-correct number of clusters is not known; how does the batch balancing work in this case? We run
-experiments with the number of clusters set to 6 and to 8, with all other aspects of the pipeline
-kept the same. It should be noted that this is a very na\"ive way of dealing with an unknown number
-of clusters. There are methods specifically designed for identifying the right number of clusters
+We also investigate what happens when the number of clusters is set incorrectly. 
+%
+For 2-digit Coloured MNIST, we expect 4 clusters, corresponding to the 4 possible combinations of
+the binary class label $y$ and the binary subgroup label $s$. 
+%
+However, there might be circumstances where the correct number of clusters is not known; how does
+the batch balancing work in this case? 
+%
+We run experiments with the number of clusters set to 6 and to 8, with all other aspects of the
+pipeline kept the same. 
+%
+It should be noted that this is a very na\"ive way of dealing with an unknown number of clusters. 
+%
+There are methods specifically designed for identifying the right number of clusters
 \cite{hamerly2004learning,chazal2013persistence}, and that is what would be used if this situation
 arose in practice.
 
-The results can be found in figures~\ref{fig:cmnist-2v4-partial-add} and
-\ref{fig:cmnist-2v4-miss-s-add}. Bags and batches are constructed by drawing an equal number of
-samples from each cluster. Unsurprisingly, the method performs worse than with the correct number
-of clusters. When investigating how the clustering methods deal with the larger number of clusters,
-we found that it is predominantly those samples that do not appear in the training set which get
-spread out among the additional clusters. This is most likely due to the fact that the clustering
-is semi-supervised, with those clusters that occur in the training set having supervision. The
-overall effect is that the samples which are not appearing in the training set are over-represented
-in the drawn bags, which means it is easier for the adversary to identify where the bags came from,
-and the encoder cannot properly learn to produce an invariant encoding.
+The results can be found in Fig.~\ref{fig:cmnist-2v4-partial-add} and
+Fig.~\ref{fig:cmnist-2v4-miss-s-add}. 
+%
+Bags and batches are constructed by drawing an equal number of samples from each cluster. 
+%
+Unsurprisingly, the method performs worse than with the correct number of clusters. 
+%
+When investigating how the clustering methods deal with the larger number of clusters, we found
+that it is predominantly those samples that do not appear in the training set which get spread out
+among the additional clusters. 
+%
+This is most likely due to the fact that the clustering is semi-supervised, with those clusters
+that occur in the training set having supervision. 
+%
+The overall effect is that the samples which are not appearing in the training set are
+over-represented in the drawn bags, which means it is easier for the adversary to identify where
+the bags came from, and the encoder cannot properly learn to produce an invariant encoding.
 
 \section{Adapting GEORGE}\label{adapting_g}
-
+%
 As discussed in the main text, GEORGE \cite{SohDunAngGuetal20} was originally developed to address
 the uneven performance resulting from hidden stratification, though hidden stratification of a
-different kind to the one we consider. In \cite{SohDunAngGuetal20} the training set comes with
-(super-)class labels but without subclass (or \emph{subgroup} in our terminology) labels. The
-training set is unlabelled with respect to the subclass, but all superclass-subclass combinations
-(or ``sources'') are assumed to be present in the training data and therefore discoverable via
-clustering. (Note that the clustering in \cite{SohDunAngGuetal20} is -- in contrast to our method
--- completely without supervision and there is nothing to guide the clustering towards discovering
-the subgroups of interest, apart from the assumption that they are the most salient.) On the other
-hand, in our setting, we do have access to all sources expected at deployment time, but not all of
-them are present in the training data -- some are exclusively found in the \emph{unlabelled}
-deployment set.
+different kind to the one we consider. 
+%
+In \cite{SohDunAngGuetal20} the training set comes with (super-)class labels but without subclass
+(or \emph{subgroup} in our terminology) labels. 
+%
+The training set is unlabelled with respect to the subclass, but all superclass-subclass
+combinations (or ``sources'') are assumed to be present in the training data and therefore
+discoverable via clustering. 
+%
+(Note that the clustering in \cite{SohDunAngGuetal20} is -- in contrast to our method -- completely
+without supervision and there is nothing to guide the clustering towards discovering the subgroups
+of interest, apart from the assumption that they are the most salient.) 
+%
+On the other hand, in our setting, we do have access to all sources expected at deployment time,
+but not all of them are present in the training data -- some are exclusively found in the
+\emph{unlabelled} deployment set.
+%
 % (See table~\ref{tab:george-comparison} for a direct comparison of the label requirements of our
 % method with those of GEORGE.)
 
 This necessitates propagating the labels from the training set to the deployment set, which can be
 done within the clustering step to ensure consistency between the cluster labels and the propagated
-superclass labels. Doing so requires us to modify the clustering algorithm such that instead of
-predicting each source independently of one another, we factorise the joint distribution of the
-super- and subclasses, $P(Y, S)$ into their respective marginal distributions, $P(Y)$ and $P(S)$.
+superclass labels. 
+%
+Doing so requires us to modify the clustering algorithm such that instead of predicting each source
+independently of one another, we factorise the joint distribution of the super- and subclasses,
+$P(Y, S)$ into their respective marginal distributions, $P(Y)$ and $P(S)$.
+%
 In practice, this is achieved by applying two separate cluster-prediction heads to the image
 representation, $z$: one, $\mu_y$, predicting the superclass, $y$, the other, $\mu_s$ predicting
-the subclass, $s$. This allows us to decouple the supervised loss for the two types of label and to
-always be able to recover $y$ due to having full supervision in terms of its ground-truth labels
-from the training set -- this means we can identify all the $y$ clusters with the right $y$ labels.
+the subclass, $s$. 
+%
+This allows us to decouple the supervised loss for the two types of label and to always be able to
+recover $y$ due to having full supervision in terms of its ground-truth labels from the training
+set -- this means we can identify all the $y$ clusters with the right $y$ labels.
+%
 This is not necessarily possible for $s$, because some $s$ values might be completely missing from
 the labelled training set (missing subgroup setting).
 
@@ -1008,10 +1035,14 @@ the two heads:
 \end{align}
 %
 where $\mu_y(z_i)$ and $\mu_s(z_i)$ are vectors, $\otimes$ is the outer product, and
-$\mathrm{vec}(A)$ is the vectorisation of matrix $A$. After training the clustering model, we can
-then use it to generate predictions $\hat{Y}^{dep}$, as well as the cluster labels
-$\hat{\Omega}^{dep}$, for the deployment set, and use them together to train a robust classifier
-with gDRO \cite{sagawa2019distributionally}, as in \cite{SohDunAngGuetal20}.
-
+$\mathrm{vec}(A)$ is the vectorisation of matrix $A$. 
+%
+After training the clustering model, we can then use it to generate predictions $\hat{Y}^{dep}$, as
+well as the cluster labels $\hat{\Omega}^{dep}$, for the deployment set, and use them together to
+train a robust classifier with gDRO \cite{sagawa2019distributionally}, as in
+\cite{SohDunAngGuetal20}.
+%
 \section{Code}
+%
 The code can be found here: \url{https://github.com/wearepal/support-matching}.
+%

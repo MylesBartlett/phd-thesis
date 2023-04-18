@@ -28,7 +28,9 @@
 
 \subsection{Problem Statement}
 %
-\noindent We assume we are given inputs $x \in \gX$ and corresponding labels $y \in \gY$.
+\noindent
+%
+We assume we are given inputs $x \in \gX$ and corresponding labels $y \in \gY$.
 %
 Furthermore, there is some spurious variable $s \in \gS$ associated with each input $x$ which
 we do \emph{not} want to predict. 
@@ -56,9 +58,7 @@ meaning the model cannot rely on shortcuts provided by $S$ if it is to generalis
 set.
 
 We call this scenario where we only have access to the labels of a biasedly-sampled subpopulation
-an \emph{aggravated fairness problem}. 
-%
-These are not uncommon in the real-world. 
+an \emph{aggravated fairness problem}; scenarios of this nature are not uncommon in the real-world. 
 %
 For instance, in long-feedback systems such as mortgage-approval where the demographics of the
 subpopulation with observed outcomes is \emph{not} representative of the subpopulation on which the
@@ -82,10 +82,10 @@ models to be described.
 %To satisfy this objective, we introduce an additional regularisation term that can be viewed from
 %an information-theoretic perspective as minimising the mutual information between the random
 %variables:
-The requirement for $Z_u$ can be expressed in terms of \acf{MI} as
+The requirement for $Z_u$ can be expressed in terms of \ac{MI} as
 %
 \begin{align}
-  \gI(Z_u; S) \neq 0~,
+  \gI(Z_u; S) \neq 0~.
   \label{eq:migoal}
 \end{align}
 %
@@ -112,7 +112,7 @@ should be understood to mean \( f \circ X(\omega) \) for some event \( \omega \i
 which basis \( f(x) \) can be reinterpreted as \( f(X=x) \).
 %
 In practice, we optimise this loss in an adversarial fashion by playing a minimax game, in which
-our encoder acts as the generative component from a \ac{GAN} \citep{goddfellow2014generative}
+our encoder acts as the generative component from a \ac{GAN} \citep{goodfellow2014generative}
 perspective.
 %
 The adversary is an auxiliary classifier \(g: \to \bigtriangleup^{|\gS|} \) trained to predict the
@@ -256,10 +256,10 @@ For all our experiments, $p(z_u)$ is the standard Isotropic Gaussian prior.
 Fig.~\ref{fig:cvae_diagram} summarises the procedure as a diagram.
 
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
-us have, we show that it lacks scalability due to disagreement between the components of the loss.
+us have, we show that it lacks scalability due to conflict between the components of the loss.
 %
 Since information about $s$ is only available to the decoder as a binary encoding, if the
-relationship between $s$ and $x$ is highly non-linear and cannot be summarised by a simple on-off
+relationship between $s$ and $x$ is highly non-linear and unsummarisable by a simple on-off
 mechanism, as is the case if $s$ is an attribute such as gender, off-loading information to the
 decoder by conditioning is no longer possible. 
 %
@@ -272,17 +272,19 @@ of the latent space as in  \citet{creager2019flexibly}.
 However, we question whether an \ac{AE} is the best choice for this setup, with the view that an
 invertible model is the better tool for the task. 
 %
-Using an invertible model has several guarantees, namely complete information-preservation
-and freedom from a reconstruction loss, the importance of which we elaborate on below.
+Using an invertible model affords several guarantees, principal of which being complete that of
+information-preservation and freedom from a reconstruction loss, the importance of which we
+expatiate on below.
 
 \subsection{Conditional Flow}\label{cflow}
 %
 \paragraph{Invertible Neural Networks.}
 %
-\Acp{INN} define a class of \ac{NN} architecture characterised by a bijective mapping between their
+\Acp{INN} embody a class of \ac{NN} characterised by a bijective mapping between their
 inputs and output \citep{Dinh2014}. 
 %
-The transformations are designed such that their inverses and Jacobians are efficiently computable.
+The transformations are designed such that their inverses and Jacobians are exactly and efficiently
+computable.
 %
 These flow-based models permit \emph{exact} likelihood estimation \citep{normflows2015} through the
 warping of a base density with a series of invertible transformations and computing the resulting,
@@ -336,7 +338,7 @@ over other approaches.
 Ordinarily, the main benefit of flow-based models is that they permit exact density estimation.
 %
 However, since we are not interested in sampling from the model's distribution, in our case the
-likelihood term serves as a regulariser, as it does in \citet{JacSmeOya18}.
+likelihood term serves as a regulariser, in the same vain as \citet{JacSmeOya18}.
 %
 Critically, this forces the mean of each latent dimension to zero, thereby enabling null-sampling.
 %
@@ -386,8 +388,8 @@ We can then raise or lower the information capacity of $z_b$ by adjusting its di
 \text{dim}(z_b) \); practically, it should be set to the smallest size sufficient to capture all
 information about $s$, so as not to sacrifice class-relevant information. 
 %
-Section~\ref{sec:additional-results} explores the influence of \( \mathrm{dim}(z_b) \) empirically.
-
+\S\ref{sec:additional-results} explores the influence of \( \mathrm{dim}(z_b) \) empirically.
+%
 % Eq~\eqref{eq:zreconstruct} defines how to obtain $x$. In order to generate the pre-image of
 % $z_u$, we perform null-sampling with respect to $z_b$ by zeroing-out its elements --
 % i.e. setting them to the mean of the prior density imposed on $z$, $\mathcal{N}(z;0, I)$ --

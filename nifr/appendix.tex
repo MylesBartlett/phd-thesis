@@ -175,12 +175,11 @@ The other experiment is with a combination of age and gender, where $s$ has four
 each of which is a combination of a gender and an age: Young/Female, Young/Male, Old/Female and
 Old/Male. 
 %
-To evaluate the fairness for multinomial $s$, we use the Hirschfeld-Gebelein-R\'enyi Maximum
-Correlation Coefficient (HGR) \citep{mary2019fairness} that is defined on the domain $[0, 1]$ and
-gives \( \text{HGR}(Y,S)=0 \) iff $Y \perp S$ and 1 if there is a deterministic function to map
-between them. 
+To evaluate the fairness for multinomial $s$, we use \acf{HGRMC} \citep{mary2019fairness}, defined
+on the domain $[0, 1]$ and yielding \( \text{HGR}(Y,S)=0 \) iff $Y \perp S$, \(1\) if there is a
+deterministic mapping between the variables. 
 %
-Results can be found in figure~\ref{fig:multi-s}.\\
+Results can be found in Fig.~\ref{fig:multi-s}.\\
 
 \begin{table}[tp]
 \caption{Results on the CelebA dataset with different sizes of $z_b$.}
@@ -207,14 +206,15 @@ Here we investigate the sensitivity of the model to the choice of $z_b$ size.
 Table~\ref{tab:zs-ablation} shows accuracy and fairness (as measured by \emph{DP diff}) for
 different sizes of $z_b$. 
 %
-The results show that both too large and too small $z_b$ is detrimental. However, they also show
-that the model is not overly sensitive to this parameter: both sizes 5 and 10 achieve nearly
-identical results.
+The results show that both too large and too small $z_b$ is detrimental. 
+%
+However, they also show that the model is not overly sensitive to this parameter: both sizes 5 and
+10 achieve nearly identical results.
 
 \begin{table}[tbp]
     \caption{
         Additional fairness metrics for the experiments on the CelebA dataset
-        (fig.~\ref{fig:celeba-multiplot} from the main text). \emph{TPR diff.}\ refers to the
+        (Fig.~\ref{fig:celeba-multiplot} from the main text). \emph{TPR diff.}\ refers to the
         difference in true positive rate. \emph{TNR diff.}\ refers to the difference in true
         negative rate. \textsc{Left:} $\eta = 0$. \textsc{Right:} $\eta=1$.
     }

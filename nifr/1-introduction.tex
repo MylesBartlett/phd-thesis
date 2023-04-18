@@ -37,9 +37,8 @@ satisfying the aforementioned constraints.
 % having $s$ and $y$ labels be present together.
 
 As unlabelled data is much more freely available than labelled data, it is of interest to learn the
-representation in an unsupervised manner. 
-%
-This will allow us to draw on a much more diverse pool of data to learn from.
+representation in an unsupervised manner, for allowing us to draw on a much more diverse pool of
+data to learn from.
 % ; this is particularly pertinent for fair representation learning as unlabelled data affords us a
 % much more diverse pool of data to learn from.
 %To this end, \cite{locatello2019fairness} recently made the connection from disentangled
@@ -60,7 +59,7 @@ This is in contrast to most other representation learning methods.
 % labels whose distribution matches the deployment setting
 We call the set used to learn the representation the \emph{representative} set, because its
 distribution is meant to match the distribution of the deployment setting (and is thus
-representative).
+representative thereof).
 % We call this set the \emph{representative} set and its distribution is meant to match the
 % distribution of the deployment setting.
 
@@ -68,11 +67,10 @@ Once we have learnt the mapping from $x$ to $z$, we can transform the \emph{trai
 which, in contrast to the representative set, has the $y$ labels (and $s$ labels). 
 %
 In order to make our method more widely applicable, we consider an \emph{aggravated fairness
-problem}
-% we allow the case
-in which the training set contains a strong spurious correlation between $s$ and $y$, which makes
-it impossible to learn from it a representation which is invariant to $s$ but not invariant to $y$,
-variance to $y$ being important as this is the variable we care about predicting accurately. 
+problem} in which the training set contains a strong \acf{SC} between $s$ and $y$, making it
+impossible -- without some overriding inductive bias -- to learn from it a representation invariant
+to $s$ but variant to $y$, variance to $y$ being important as this is the variable we care about
+predicting accurately. 
 %
 The training set thus does \emph{not} match the deployment setting, thereby rendering the
 representative set essential for learning the right invariance.
@@ -89,7 +87,7 @@ to.
 %showing that pre-trained models can exploit biases in the data by learning patterns semantically
 %unrelated to the target, an issue that can be difficult to identify when the bias pervades both
 %the training and test sets.
-We can draw a connection between learning in the presence of spurious correlations and what
+We can draw a connection between learning in the presence of \acp{SC} and what
 \citet{kallus2018residual} call \emph{residual unfairness}. 
 %
 Consider the Stop, Question and Frisk (SQF) dataset for example: the data was collected in New York
@@ -97,7 +95,7 @@ City, but the demographics of the recorded cases do not represent the true demog
 well. 
 %
 The demographic attributes of the recorded individuals might correlate so strongly with the
-prediction target that the two are nearly indistinguishable. 
+prediction target that the two are nigh-indistinguishable from a statistical perspective. 
 %
 This is the scenario that we are investigating: $s$ and $y$ are so closely correlated in the
 labelled dataset that they cannot be distinguished, but the learning of
@@ -112,21 +110,21 @@ explicitly invariant solely with respect to $s$.
 In our approach, we make use of the (partially labelled) representative set to learn this invariant
 representation.
 
-While there is a substantial body of literature devoted to the problems of fair
-representation-learning, exactly how the invariance in question is achieved is often overlooked.
+Despite there being a substantial body of existing literature devoted to the problems of \ac{FRL},
+exactly how the invariance in question is achieved is often overlooked.
 %
 When critical decisions, such as who should receive bail or be released from jail, are being
 deferred to an automated decision making system, it is critical that people be able to trust the
 logic of the model underlying it, whether it be via semantic or visual explanations. 
 %
 We build on the work of \citet{QuaShaTho19} and learn a decomposition ($f^{-1}: (\gZ_s \times
-\gZ_{\neg s}) \to \gX$) of the \emph{data domain} ($X$) into independent subspaces
-\emph{invariant} to  $s$ ($\gZ_{\neg s}$) and \emph{variant} to $s$ ($\gZ_{s}$), which lends an
-interpretability that is absent from most representation-learning methods. 
+\gZ_{\neg s}) \to \gX$) of the \emph{data domain} ($X$) into independent subspaces \emph{invariant}
+to  $s$ ($\gZ_{\neg s}$) and \emph{variant} to $s$ ($\gZ_{s}$), which lends an interpretability
+that is absent from most representation-learning methods. 
 %
 While model interpretability has no strict definition \citep{zhang2018visual}, we follow the
 intuition of \citet{adel2018discovering} -- \emph{a simple relationship to something we can
-understand}, a definition which representations in the data domain naturally fulfil.
+understand}, a definition which representations in the data domain inherently fulfil.
 
 Whether as a result of the aforementioned sampling bias or simply because the features necessarily
 co-occur, it is not rare for features to correlate with one another in real-world datasets.
@@ -139,10 +137,10 @@ This is arguably the desired behaviour.
 However, unforeseen biases in the data may engender cases which are less justifiable. 
 %
 By baking interpretability into our model (by having representations in the data domain), though we
-still have no better control over what is learned, we can at least diagnose such pathologies.
+still have no better control over what is learned, we might at least diagnose such pathologies.
 
 To render our representations interpretable, we rely on a simple transformation we call
-\emph{null-sampling} to map invariant representations in the data domain. 
+\emph{null-sampling} for mapping invariant representations into the data domain. 
 %
 Previous approaches to fair representation learning
 (\cite{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter alia)
@@ -153,38 +151,32 @@ arguing that the bijectivity of \ac{INN}~\citep{Dinh2014} makes them better suit
 %
 We refer to the variant of our method based on these as \ac{cFlow}. 
 %
-INNs have several properties that make them appealing for unsupervised representation learning. 
+\Acp{INN} have several properties that make them appealing for unsupervised representation
+learning. 
 %
-The focus of our approach is on creating invariant representations that preserve the non-sensitive
-information maximally, with only knowledge of $s$ and not of the target $y$, while at the same time
-having the ability to easily probe what has been learnt.
-
-% The problem of fair representations can also be viewed through a similar lens. A good toy model
-% for this setup is the Coloured MNIST (cMNIST) dataset. In this example, the colour is a spurious
-% variable which is very closely correlated with the prediction target in the training set but not
-% in the deployment setting. An interpretable invariant representation in this case is the images
-% uniform in colour. More details regarding the setup and synthesis of the dataset can be found in
-% section~\ref{ssec:cmnist}.
-
-% As a more real-world dataset, we consider the CelebA dataset. We treat the CelebA dataset as it
-% is, as the deployment setting and construct deliberately biased subsets of CelebA to serve as the
-% training set. In our experiments we use gender as the sensitive attribute. Sample images can be
-% seen in \thomas{Fig.??}. Attributes that are correlated with gender in the \emph{deployment
-% setting} (like the use of lipstick) will also be removed by our method. We do not consider this a
-% defect of our method and instead argue that this is the correct behaviour: As long as the
-% deployment setting is sufficiently diverse, the model may make use of correlations found in
-% there.
-%wearing lipstick is a valid indicator of gender. \thomas{maybe don't include the previous
-%sentence}
-
+The focus of our approach is on learning invariant representations that preserve the non-sensitive
+information maximally, with knowledge of only $s$ -- and none of the target $y$ -- while at the
+same time having the ability to easily probe what has been learnt.
+%
 Our contributions are thus two-fold: 
 %
-1) We propose a simple approach to generating representations that are invariant to a feature $s$,
-while having the benefit of interpretability that comes with being in the data domain. 
+\begin{enumerate}
+        %
+        \item 
+            %
+            We propose a simple approach to generating representations that are invariant to a
+            feature $s$, while having the benefit of interpretability that comes with being in the
+            data domain. 
+            %
+            We call our method \textbf{NIFR} (\textbf{N}ull-sampling for \textbf{I}nterpretable and \textbf{F}air
+            \textbf{R}epresentations).
+        %
+        \item
+            %
+            We explore a setting where the labelled training set suffers from varying levels of
+            sampling bias, demonstrating an approach based on transferring information from a more
+            diverse representative set, with guarantees of the non-spurious (semantic) information
+            being preserved.
+        %
+\end{enumerate}
 %
-We call our method \textbf{NIFR} (\textbf{N}ull-sampling for \textbf{I}nterpretable and \textbf{F}air
-\textbf{R}epresentations).
-%
-2) We explore a setting where the labelled training set suffers from varying levels of sampling
-bias, demonstrating an approach based on transferring information from a more diverse
-representative set, with guarantees of the non-spurious information being preserved.

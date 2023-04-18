@@ -102,9 +102,9 @@ complex relationships.
 Strong spurious correlations make the task of learning a robust classifier challenging: the
 classifier may learn to exploit correlations unrelated to the true causal relationship between the
 features and label, and thereby fail to generalise to novel settings. This problem was recently
-tackled by \citet{kim2019learning} who apply a penalty based on the mutual information between the
-feature embedding and the spurious variable. While the method is effective under mild biasing, we
-show experimentally that it is not robust to the range of settings we consider.
+tackled by \citet{kim2019learning} who apply a penalty based on the \ac{MI} between the feature
+embedding and the spurious variable. While the method is effective under mild biasing, we show
+experimentally that it is not robust to the range of settings we consider.
 
 \citet{JacBehZemBet19} explore the vulnerability of traditional neural networks to spurious
 variables -- e.g., textures, in the case of ImageNet \citep{Geir18} -- and propose a \ac{INN}-based
@@ -114,8 +114,8 @@ the semantic label. Information related to the nuisance variable is ``pulled out
 a result of maximising $\log p(s|z_n)$. This specific approach, however, is incompatible with the
 settings we consider, due to its requirement that both $s$ and $y$ be available at training time.
 
-Viewing the problem from a causal perspective, \citet{arjovsky2019invariant} develop a variant of
-\acl{ERM} called invariant risk minimisation (IRM).
+Taking a causal perspective, \citet{arjovsky2019invariant} propose a variant of \ac{ERM} they call
+invariant risk minimisation (IRM).
 %
 The goal of IRM is to train a predictor that generalises across a large set of unseen environments;
 because variables with spurious correlations do not represent a stable causal mechanism, the
