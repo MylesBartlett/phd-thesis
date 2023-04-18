@@ -1,17 +1,17 @@
 % ********************************************************************************
 \section{Algorithmic fairness}\label{sec:fairml}
 % ********************************************************************************
-Research into algorithmic fairness (AF) has flourished in recent years, the subfield growing
-from what was once an arguably niche one to one of great prominence, borne by ML's proliferation --
-and thus increased capacity to affect real lives consequentially -- in all sectors of society.
+Research into \acf{AF} has flourished in recent years, the subfield growing from what was once an
+arguably niche one to one of great prominence, borne by \ac{ML}'s proliferation -- and thus
+increased capacity to affect real lives consequentially -- in all sectors of society.
 %
 Indeed, a multitude of high-profile cases/studies have highlighted the discriminatory (unfair)
-nature of unchecked ML systems -- \cite{kasperkevic2015google}, \cite{angwin2016machine},
+nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwin2016machine},
 \cite{dastin2018amazon}, and \cite{buolamwini2018gender} -- further spurring research to develop
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
 %
-There are many strands of AF following different criteria for what it means for a
+There are many strands of \ac{AF} following different criteria for what it means for a
 predictor to be \emph{fair}; in this thesis we focus on those corresponding to group definitions of
 fairness \citep{barocas2019fairness}, where `group' refers to some demographic group, such as
 gender or ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are
@@ -19,7 +19,7 @@ often used interchangeably throughout the literature; we will favour the former)
 %
 We will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
 realisation \(s\) -- and will assume that this variable along with the target variable are discrete
-(and in most cases binary); this is the most common setup considered in the AF literature --
+(and in most cases binary); this is the most common setup considered in the \ac{AF} literature --
 and toward which many standard metrics of fairness are geared \citep{feldman2015certifying,
 hardt2016equality, woodworth2017learning} -- though there are works that extend notions of -- and
 methods for enforcing -- fairness to settings with categorical and continuous (\( S \) and \( Y \))
@@ -42,7 +42,7 @@ relevant constraint on the predictive rates is met).
 
 %
 
-Simply put, the unified goal of AF is to learn some predictor, \(\Gamma: \gX \to \gY \) that
+Simply put, the unified goal of \ac{AF} is to learn some predictor, \(\Gamma: \gX \to \gY \) that
 is, according to some definition, non-discriminatory -- that does not deprive a given individual of
 opportunities by dint of belonging to a particular sensitive group.
 %
@@ -64,7 +64,7 @@ Through Unawareness} (FTU).
 
 \subsection{Equalised rates}\label{sec:equalised-rates}
 %
-A long-standing and vigorously-debated problem in AF spheres is how exactly one should define
+A long-standing and vigorously-debated problem in \ac{AF} spheres is how exactly one should define
 the concept of `fairness`; indeed what constitutes a `fair` decision depends both on the
 (individual, social, or institutional) value system and the context in question.
 %
@@ -72,22 +72,22 @@ Much of the fairness literature has focussed on notions of fairness based on enf
 predictor to output equal rates (e.g. of positive or correct predictions) across the sensitive
 groups.
 %
-Here, we briefly discuss and formulate \emph{Demographic Parity}, \emph{Equal of Opportunity}, and
-\emph{Equalised Odds} as the standard triad of metrics based on this tenet of equalisation of
-inter-group rates, and do so for the binary-classification regime to which they are most commonly
-applied, even though generalisations exist \citep{woodworth2017learning}. 
+Here, we briefly discuss and formulate \emph{\acf{DP}}, \emph{\acf{EqOp}}, and \emph{\acf{EqOd}}
+as the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do
+so for the binary-classification regime to which they are most commonly applied, even though
+generalisations exist \citep{woodworth2017learning}. 
 %
 These metrics naturally share similarity of form, only differing in their conditioning and bear
-direct relevance to Chapter 3, the constituent paper of which being fairness-oriented and adopting
-these metrics as measures of invariance, though the method is applicable to spurious correlation
-problems in general, decontextualised from fairness.
+direct relevance to Chapter \ref{ch:nifr}, the constituent paper of which being fairness-oriented
+and adopting these metrics as measures of invariance, though the method is applicable to spurious
+correlation problems in general, decontextualised from fairness.
 %
-Chapter 4 adopts a perspective in line with the domain generalisation literature
+Chapter \ref{ch:supmatch} adopts a perspective in line with the domain generalisation literature
 \cite{sagawa2019distributionally}, a perspective which is known under the guise of \emph{minimax
-fairness} in the AF literature.
+fairness} in the \ac{AF} literature.
 %
 While perhaps obvious, it is relevant to note that that a predictive distribution provably cannot
-simultaneously satisfy all three notions of fairness dictated by DP, EqOp and EO
+simultaneously satisfy all three notions of fairness dictated by \ac{DP}, \ac{EqOp} and \ref{EqOp}
 \citep{kleinberg2016inherent}.
 %
 It is also relevant to note that these metrics presuppose scenarios in which the budget, the pool
@@ -99,7 +99,7 @@ corresponds to a type of resource allocation problem, from an econometric perspe
 
 \marginpar{\textbf{Demographic Parity}}
 %
-The simplest of the triad, \emph{Demographic parity} (DP; \cite{zemel2013learning,
+The simplest of the triad, \emph{Demographic parity} (\ac{DP}; \cite{zemel2013learning,
 feldman2015certifying}) -- known also as statistical parity, group fairness, disparate impact,
 inter alia -- demands that the probability of a positive prediction (positive rate) be uniform
 (at parity) across all sensitive groups. 
@@ -141,7 +141,7 @@ taking the maximum over the resulting set.
 %
 \marginpar{\textbf{Mutual-information minimisation}}
 %
-This idea of statistical independence, upon which DP hinges, can be expressed generally in terms of
+This idea of statistical independence, upon which \ac{DP} hinges, can be expressed generally in terms of
 the mutual information (MI) between \(Y\) and \(S\) such that
 % , where
 % , itself expressible as the KL divergence
@@ -165,10 +165,10 @@ the representations learned by encoder \(g: \gX \to \gZ \) and the sensitive att
 %
 \marginpar{\textbf{Equality of Opportunity}}
 %
-Equality of Opportunity (EO) relaxes this desideratum of unconditional statistical independence,
-\(\hat{Y} \perp S\), to one of \emph{separation} (or conditional independence), dictating that
-\(\hat{Y}\) and \(S\) need only be independent conditioned on the ground-truth label, \(Y\) (albeit
-only in the positive case).
+\ac{EqOp} relaxes this desideratum of unconditional statistical independence, \(\hat{Y} \perp S\),
+to one of \emph{separation} (or conditional independence), dictating that \(\hat{Y}\) and \(S\)
+need only be independent conditioned on the ground-truth label, \(Y\) (albeit only in the positive
+case).
 %
 To phrase this conversely: whenever the outputs of our predictor are dependent on \(S\), such must be
 justified by a dependence on \(Y\) for the predictor to be a fair one.
@@ -184,8 +184,8 @@ Thus, EO can be written, as above, as
 \marginpar{\textbf{Equalised Odds}}
 %
 By making this symmetric \wrt{} \(Y\), such that not only do we demand parity of the TPRs but also
-false-positive rates (FPRs) we obtain the final of the ERs-based metrics, \emph{Equalised Odds}
-(EqOd; \cite{hardt2016equality}) -- also known as disparate mistreatment:
+false-positive rates (FPRs) we obtain the final of the ERs-based metrics, \ac{EqOd}
+\citep{hardt2016equality} -- also known as disparate mistreatment:
 % Plainly, EqOd is tantamount to requiring that no additional information about \(S\) should be
 % gleanable from observing \(\hat{Y}\) given that we have already observed \(Y\). 
 % %
@@ -209,15 +209,15 @@ Given the existence of such a trade-off, the problem of learning a useful classi
 constraints induces not one optimal solution (or one equivalence class of optimal solutions, more
 accurately) -- as one would have when focussed on only the utility -- but rather a set of
 \emph{Pareto optimal} solutions, the discovery of which is the remit of multi-objective
-optimisation (MOO; \cite{sawaragi1985theory, deb2013multi}). 
+optimisation (\ac{MOO}; \cite{sawaragi1985theory, deb2013multi}). 
 %
-MOO has appeared both implicitly and explicitly throughout the AF literature, the latter only
+MOO has appeared both implicitly and explicitly throughout the \ac{AF} literature, the latter only
 relatively recently (e.g. in \cite{navon2020learning}). 
 %
 Indeed, examples of the former include the methods of \cite{louizos2015variational} and
 \cite{madras2018learning} which entail learning a \emph{linear scalarised} solution
-\citep{boyd2004convex},  with position of this solution on the \emph{Pareto frontier} controlled by
-a linear weighting of loss terms optimising for utility and fairness separately.
+\citep{boyd2004convex},  with position of this solution on the \acf{PF} controlled by a linear
+weighting of loss terms optimising for utility and fairness separately.
 %
 % ------------------------------------------------------------------------------ 
 \subsection{Going beyond the fairness-accuracy trade-off with minimax group
@@ -240,9 +240,8 @@ is instead to aim to maximise fairness while incurring minimal (ideally, no) deg
 performance on any given group \citep{ustun2019fairness}.
 %
 This is the remit of \emph{minimax fairness}, as originally formulated by
-\citep{martinez2020minimax} in Pareto-optimal terms, though the same idea has long existed in
-distributionally robust optimisation (DRO), and an idea which has been inherited by domain
-generalisation as an instantiation of DRO. 
+\citep{martinez2020minimax} in \acf{PO} terms, though the same idea has long existed in \acf{DRO},
+and an idea which has been inherited by \ac{DG} as an instantiation of \ac{DRO}. 
 %
 
 The `distributionally robust' part of DRO corresponds to the desire to find a solution that works

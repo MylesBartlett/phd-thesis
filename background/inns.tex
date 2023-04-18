@@ -1,26 +1,26 @@
 % % ********************************************************************************
 \section{Invertible neural networks}\label{sec:inns}
 % % ********************************************************************************
-% \epigraph{
-%     \emph{
-%         %
-%         ``Living backwards!'' Alice repeated in great astonishment. ``I never heard of such a
-%         thing!''\\
-%         %
-%         ``--but there's one great advantage in it, that one's memory works both ways.''\\
-%         %
-%         ``I'm sure mine only works one way,'' Alice remarked. ``I can't remember things before they
-%         happen.''\\
-%         %
-%         ``It's a poor sort of memory that only works backwards,'' the Queen remarked.
-%         %
-%     }
-% }
-% %
-% {Through the Looking-Glass\\Lewis Carroll}
+\epigraph{
+    \emph{
+        %
+        ``Living backwards!'' Alice repeated in great astonishment. ``I never heard of such a
+        thing!''\\
+        %
+        ``--but there's one great advantage in it, that one's memory works both ways.''\\
+        %
+        ``I'm sure mine only works one way,'' Alice remarked. ``I can't remember things before they
+        happen.''\\
+        %
+        ``It's a poor sort of memory that only works backwards,'' the Queen remarked.
+        %
+    }
+}
 %
-Chapter 3 of this thesis explores the application of invertible neural networks (INNs) to
-fair-representation learning and so will afford some brief discussion to their basic workings here.
+{Through the Looking-Glass\\Lewis Carroll}
+
+Chapter 3 of this thesis explores the application of \acf{INN}s to \acf{FRL} and so will afford
+some brief discussion to their basic workings here.
 %
 \marginpar{\textbf{Bijectivity}}
 %
@@ -53,7 +53,7 @@ a complex, highly-multimodal, one.
 Like with variational auto-encoders \citep{kingma2014auto}, the base density, \(P(Z)\), is
 generally taken to be an Isotropic Gaussian distribution; the posterior density, \(P(X)\), `flows'
 through the network -- in a manner reminiscent of a Galton Board -- into this normalised base
-density, earning this class of methods the name \emph{Normalising Flows} (NFs;
+density, earning this class of methods the name \emph{Normalising Flows} (\ac{NF}s;
 \cite{rezende2015variational, kobyzev2020normalizing}).
 %
 Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), with base density
@@ -78,7 +78,7 @@ Practically, for a given sample \(x\), its log-likelihood under the INN \(f\), w
 and training the model simply amounts to maximising this quantity over the empirical training
 distribution in the usual fashion.
 %
-As with GANs and VAEs, to sample from \(P(X)\), one needs only draw a random sample from the
+As with \ac{GAN}s and \ac{VAE}s, to sample from \(P(X)\), one needs only draw a random sample from the
 corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
 
 

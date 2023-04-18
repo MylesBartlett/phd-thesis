@@ -42,22 +42,22 @@ conjoined by a notion of distributional-robustness.
 \marginpar{\textbf{Synopsis}}
 %
 To briefly recount, and thereby set the scene for the discussion to follow: in Chapter 3 we
-proposed an INN-based transfer-learning approach -- transferring invariance from a
+proposed an \ac{INN}-based transfer-learning approach -- transferring invariance from a
 partially-labelled representative set to the training set -- for solving a spurious correlation
 problem where for training samples the target is completely determined by the sensitive attribute
 and because the latter is easier to learn it constitutes a shortcut;
 %
-in Chapter 4 we proposed to match in representation-space the support (of intersectional groups) of
-the training and deployment sets in order to overcome a relaxed version of aforesaid
-spurious-correlation problem where the deployment set is a dataset representative (in support) of
-the test set, but for which no annotations are required, in contrast to the representative set
-featured in Chapter 3;
+in Chapter \ref{ch:supmatch} we proposed to match in representation-space the support (of
+intersectional groups) of the training and deployment sets in order to overcome a relaxed version
+of aforesaid spurious-correlation problem where the deployment set is a dataset representative (in
+support) of the test set, but for which no annotations are required, in contrast to the
+representative set featured in Chapter 3;
 %
-finally, in Chapter 5 we grappled with the problem of semi-supervised DG -- by which I mean the
-problem of how to make effective use of unlabelled data drawn from extra domains to bolster
-out-of-distribution performance -- and proposed a consistency-regularised approach employing a
-robust, causally-inspired algorithm as a match-generation engine, with the matches bootstrapped
-from encodings guided (in optimisation) by past matches.
+finally, in Chapter \ref{ch:okapi} we grappled with the problem of semi-supervised DG -- by which I
+mean the problem of how to make effective use of unlabelled data drawn from extra domains to
+bolster out-of-distribution performance -- and proposed a consistency-regularised approach
+employing a robust, causally-inspired algorithm as a match-generation engine, with the matches
+bootstrapped from encodings guided (in optimisation) by past matches.
 %
 Again, all of these works are mine but not unshared, for I owe much gratitude to all my
 co{\"a}uthors -- my colleagues, my advisors, my friends -- for allowing this thesis to become what
@@ -78,9 +78,9 @@ these annotations.
 
 %
 In journeying through this thesis, we have witnessed a progressive relaxation of the former `part',
-such that in Chapter 4 we need only know in advance all possible (\wrt{} the test set) sources (and
-know that the deployment set contains them); by Chapter 5 we need only be able to partition the
-data into two disjoint sets, across which the matching is performed.
+such that in Chapter \ref{ch:supmatch} we need only know in advance all possible (\wrt{} the test
+set) sources (and know that the deployment set contains them); by Chapter \ref{ch:okapi} we need
+only be able to partition the data into two disjoint sets, across which the matching is performed.
 %
 We argued in Chapter 3 that partially-labelled data, for which the subgroup- but not the
 target-attribute is provided, is generally more `readily available'. 
@@ -111,28 +111,28 @@ However, one must unavoidably rely on certain assumptions (inductive biases deri
 knowledge of the task/domain) to compensate for the lack of information and the referenced methods
 can fall flat (in the sense of underperforming the ERM baseline) should such not be satisfiable.
 %
-Chapter 4 entails this to a degree, in that the sources contained in the deployment set need be
-discovered for constructing support-representative batches, although the (annotated) sources in the
-training set can subserve this process of discovery, for it is not entire subgroups or classes that
-are excluded from annotation but their intersections.
+Chapter \ref{ch:supmatch} entails this to a degree, in that the sources contained in the deployment
+set need be discovered for constructing support-representative batches, although the (annotated)
+sources in the training set can subserve this process of discovery, for it is not entire subgroups
+or classes that are excluded from annotation but their intersections.
 %
-Nonetheless, this discovery can fail to align with expectation, and we assume in Chapter 4 that the
-subgroups/targets are sufficiently salient to be well-clustered by un-/semi-supervised means -- one
-would not expect a source formed from gender/pulmonary infiltration (subgroup and target
-attributes, respectively) to lend itself to natural clusters, to adduce a fail-case born from
-experiments conducted on the Chest Xray8 dataset. 
+Nonetheless, this discovery can fail to align with expectation, and we assume in Chapter
+\ref{ch:supmatch} that the subgroups/targets are sufficiently salient to be well-clustered by
+un-/semi-supervised means -- one would not expect a source formed from gender/pulmonary
+infiltration (subgroup and target attributes, respectively) to lend itself to natural clusters, to
+adduce a fail-case born from experiments conducted on the Chest Xray8 dataset. 
 
 Speaking of the discreteness assumption, we have throughout assumed that the subgroup can be
 represented, innately or by simple preprocessing, by some index; while this accords with much of
 the literature (because of its simplicity and prevalence) there are nonetheless cases where this
 assumption is untenable.
 %
-This is particularly germane to the method proposed in Chapter 4 which expects the data to both be
-clusterable and for the sources to be finite (and, practically, small enough to be computationally
-tractable) sets, such that one can balance batches \wrt{} them -- how one might extend the method
-to continuous subgroups is unclear -- the notion perhaps not even sensible -- and in order to
-maintain tractability in pursuit of generality it would seem necessarily give up the theoretical
-guarantees established.
+This is particularly germane to the method proposed in Chapter \ref{ch:supmatch} which expects the
+data to both be clusterable and for the sources to be finite (and, practically, small enough to be
+computationally tractable) sets, such that one can balance batches \wrt{} them -- how one might
+extend the method to continuous subgroups is unclear -- the notion perhaps not even sensible -- and
+in order to maintain tractability in pursuit of generality it would seem necessarily give up the
+theoretical guarantees established.
 %
 The adversarial-infomin approach adopted in Chapter 3, on the other hand, can be readily adapted to
 continuous subgroups, for instance, by substituting cross-entropy with the
@@ -141,10 +141,10 @@ as an objective but as a fairness metric for tasks involving \emph{categorical} 
 
 \marginpar{\textbf{The idiosyncrasies and iniquities of adversarial infomin}}
 %
-I have spoken before of the practical deficiencies of the AdvL paradigm in a DL context --
-namely the fragility of optimisation, disposition to cyclical dynamics, architectural dependency,
-and the loss of guarantees incurred by estimating the best-response dynamics with a finite
-(typically small) number of steps -- but it is apposite that we revisit these points again here,
+I have spoken before of the practical deficiencies of the AdvL paradigm in a DL context -- namely
+the fragility of optimisation, disposition to cyclical dynamics, architectural dependency, and the
+loss of guarantees incurred by estimating the best-response dynamics with a finite (typically
+small) number of steps -- but it is apposite that we revisit these points again here,
 retrospectively instead of prospectively.
 %
 Indeed -- as again spoken of before but of which there is again no harm recalling -- said
@@ -162,9 +162,10 @@ harried by them, often demanding careful and exhaustive tuning to coax the respe
 working as desired, the `tuning' itself problematic due to the underspecified nature of the problem
 setups.
 %
-We found the inherent instability of AdvL particularly pronounced in the case of Chapter 3,
-specifically, owing to the compounding instabilities imparted by the invertible architectures, a
-problem which itself would not be addressed \emph{in toto} until \cite{behrmann2021understanding}.
+We found the inherent instability of AdvL particularly pronounced in the case of Chapter
+\ref{ch:nifr}, specifically, owing to the compounding instabilities imparted by the invertible
+architectures, a problem which itself would not be addressed \emph{in toto} until
+\cite{behrmann2021understanding}.
 %
 In light of the forgoing, exploring non-adversarial methods, of the kind referenced, as alternative
 infomin engines for the higher-level methods proposed in said chapters is well-founded (for those
@@ -174,13 +175,13 @@ would note in defence of the chapters, however, that for neither higher-level me
 said engine integral to its identity, and is in fact modular, such that we may conceivably freely
 interchange engines subject to their respective requirements.
 %
-In Chapter 5 we induce invariance by non-adversarial means ourselves, namely by enforcing
-similarity between matching samples from different domains within representation space -- the
-adversary substituted with a non-parametric match-generator -- and we thereby avert
-many of the optimisation difficulties plaguing the aforementioned chapters, though the problem of
-judicious hyperparameter-selection lingers, or arguably amplified by the non-parametricity -- we
-point in the paper to adaptive-configuration of the calipers being an obvious (in motivation but
-not implementation) avenue of extension.
+In Chapter \ref{ch:okapi} we induce invariance by non-adversarial means ourselves, namely by
+enforcing similarity between matching samples from different domains within representation space --
+the adversary substituted with a non-parametric match-generator -- and we thereby avert many of the
+optimisation difficulties plaguing the aforementioned chapters, though the problem of judicious
+hyperparameter-selection lingers, or arguably amplified by the non-parametricity -- we point in the
+paper to adaptive-configuration of the calipers being an obvious (in motivation but not
+implementation) avenue of extension.
 %
 
 \marginpar{\raggedleft\textbf{On the problem of identifiability}}
@@ -220,9 +221,9 @@ diagnose the use of background as a shortcut, per the now-canonical example from
 even use the resulting attribution maps directly for this purpose as proposed by
 \cite{taghanaki2022masktune}.
 %
-It is for this reason that we emphasise the interpretability aspect in Chapter 3, for even if we
-cannot sufficiently debias a model (if it need be debiased), we might glean when this is the case
-and for what reason without need for quantification.
+It is for this reason that we emphasise the interpretability aspect in Chapter \ref{ch:nifr}, for
+even if we cannot sufficiently debias a model (if it need be debiased), we might glean when this is
+the case and for what reason without need for quantification.
 %
 This is, of course, easier for some domains than others -- images being naturally interpretable due
 to their underlying structure and familiarity (the window through which we, quite literally, see
@@ -236,20 +237,22 @@ model-vetting it should beget, irrespective of the theoretical trustability of t
 As far as limitations go, I shall last speak expressly of empirical and theoretical claims, and the
 desire to couple the two.
 %
-In Chapter 4 we provided theoretical guarantees regarding when the proposed support-matching should
-succeed, subject to certain (relatively-loose) assumptions about the data-generating distributions.
+In Chapter \ref{ch:supmatch} we provided theoretical guarantees regarding when the proposed
+support-matching should succeed, subject to certain (relatively-loose) assumptions about the
+data-generating distributions.
 %
-Chapter 5, however, features no such proofs -- only intuition -- for the efficacy of its respective
-method, that being a notable weakness of the current incarnation of the paper -- having such may
-serve to guide us regarding the configuration of the matching algorithm and thereby obviate the
-somewhat-lengthy hyperparameter-selection procedure went through to obtain the presented results.
+Chapter \ref{ch:okapi}, however, features no such proofs -- only intuition -- for the efficacy of
+its respective method, that being a notable weakness of the current incarnation of the paper --
+having such may serve to guide us regarding the configuration of the matching algorithm and thereby
+obviate the somewhat-lengthy hyperparameter-selection procedure went through to obtain the
+presented results.
 %
-In Chapter 3, on the other hand, we leverage an established infomin framework, around which (or in
-the vicinity of which) there is a significant body of existing theoretical work -- both within the
-context of the various subfields ML concerned with it (DA, DG, AF) and within the broader context
-of game theory, dynamical systems theory, and information theory -- however, we again furnish only
-intuition and empirical claims for the stabilisation techniques, for which (proof-driven)
-theoretical-grounding would be demonstrably desirable.
+In Chapter \ref{ch:nifr}, on the other hand, we leverage an established infomin framework, around
+which (or in the vicinity of which) there is a significant body of existing theoretical work --
+both within the context of the various subfields ML concerned with it (DA, DG, AF) and within the
+broader context of game theory, dynamical systems theory, and information theory -- however, we
+again furnish only intuition and empirical claims for the stabilisation techniques, for which
+(proof-driven) theoretical-grounding would be demonstrably desirable.
 
 %
 \section*{Of what has since become and might yet be}
@@ -265,10 +268,10 @@ only as the model-to be-supervised, but also as the supervisor, acting according
 Such supervisors exhibit the ability to accurately, and well-calibratedly, detect biases violating
 said constitution in generated responses and provide feedback for redressing them; this feedback
 may be used to further align the supervised model, as substitute for the human-generated feedback
-fuelling the eponymous Reinforcement Learning from Human Feedback (RLHF; \cite{christiano2017deep,
-stiennon2020learning, bai2022training}), analogously termed RLAIF (AIF standing for AI feedback).
+fuelling the eponymous Reinforcement Learning from Human Feedback (\ac{HF};
+\cite{christiano2017deep, stiennon2020learning, bai2022training}), analogously termed \acf{RLAIF}.
 %
-While RLHF does not allow for sidestepping of annotations (which has been ameliorated by
+While \ac{RLHF} does not allow for sidestepping of annotations (which has been ameliorated by
 unprecedented levels of crowdsourcing), tuning based on preferences (given for pairs of responses)
 allows for increased expressivity compared with traditional supervised approaches, pertinent when
 the bias exists on a (difficult-to-quantify) spectrum or is fundamentally subjective in nature
@@ -300,8 +303,8 @@ superseded).
 %
 
 %
-% I have already spoken of foundation models \citep{bommasani2021opportunities}, albeit in the narrow
-% context of AI-alignment, but 
+% I have already spoken of foundation models \citep{bommasani2021opportunities}, albeit in the
+% narrow context of AI-alignment, but 
 Beyond this alignment-centric perspective, it is also appropriate to speak of the merits of
 large-scale pre-training, and subsequent fine-tuning, from a non-generative perspective and rather
 in terms of the distributional-robustness representations it may give rise to; whereas the focus
@@ -359,24 +362,24 @@ training, albeit with the aforementioned caveat on compute standing.
 % correlation.
 
 % Using pre-trained models to automatically detect biases (according to a `constitution
-% \citep{bai2022constitutional}): for text-based tasks, RLHF has emerged as the leading paradigm
+% \citep{bai2022constitutional}): for text-based tasks, \ac{RLHF} has emerged as the leading paradigm
 % for aligning the output of generative models with human values (along the competing axes of
 % `helpfulness'  \citep{scheurer2022training}, `harmlessness' \citep{bai2022training} and `honest'). While
-% RLHF is annotation-intensive -- though this can be ameliorated with crowdsourcing --
-% \cite{bai2022constitutional} showed that given an existing RLHF-trained model, one can improve
+% \ac{RLHF} is annotation-intensive -- though this can be ameliorated with crowdsourcing --
+% \cite{bai2022constitutional} showed that given an existing \ac{RLHF}-trained model, one can improve
 % performance along the harmlessness axis (i.e. de-bias the model) based on the guidance of the
-% RLHF model itself, as given by some constitution (a set of values encoded in the form of
-% prompts); this variant of RLHF has been appropriately termed RLAIF (Reinforcement Learning from
+% \ac{RLHF} model itself, as given by some constitution (a set of values encoded in the form of
+% prompts); this variant of \ac{RLHF} has been appropriately termed RLAIF (Reinforcement Learning from
 % AI feedback).
-% While RLHF was initially conceived for, and has been almost-exclusively since applied to,
+% While \ac{RLHF} was initially conceived for, and has been almost-exclusively since applied to,
 % text-generation (giving rise to a wave of AI assistants, most famously embodied by ChatGPT), the
 % paradigm is a fundamentally modality-agnostic, this fact recently capitalised on by
-% \cite{lee2023aligning} in extending RLHF to text-to-image generation.
+% \cite{lee2023aligning} in extending \ac{RLHF} to text-to-image generation.
 %
 % One might fancy a further broadening of the paradigm to conventional supervised-learning
 % tasks, wherein the model is constructed to give natural-language explanations (which goes beyond,
 % thinking of vision-language tasks, beyond standard captioning which entail no explanation, only
-% description) for its classification, rather than mere logits; RLHF/RLAIF can then be conducted
+% description) for its classification, rather than mere logits; \ac{RLHF}/RLAIF can then be conducted
 % using said explanations.
 %
 % Such an approach, however, if practically realisable, while powerful, would only apply to cases

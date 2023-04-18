@@ -11,60 +11,59 @@ specific methodologies -- of which there are many and many more being proposed b
 favour of keeping broader perspectives regarding the motivations of, assumptions made by, and
 interconnections between, the considered learning paradigms. 
 %
-This is to say, this chapter does not aspire to be a comprehensive survey of Domain Adaptation
-(DA), Domain Generalisation (DG), Algorithmic Fairness (AF), and the other germane subfields
-touched on herein; producing such for any one of these subfields is in itself a considerable
-undertaking given the breadth and depth the Machine Learning literature, the field having grown
-precipitously over the last decade since the onset of the deep-learning revolution heralded by
-\cite{krizhevsky2012imagenet}.
+This is to say, this chapter does not aspire to be a comprehensive survey of \ac{DA}, \ac{DG},
+\ac{AF}, and the other germane subfields touched on herein; producing such for any one of these
+subfields is in itself a considerable undertaking given the breadth and depth the Machine Learning
+literature, the field having grown precipitously over the last decade since the onset of the
+deep-learning revolution heralded by \cite{krizhevsky2012imagenet}.
 %
 The aspirations of this chapter, on the contrary, are much more humble, simply being to provide the
 requisite (high-level) background for, and unified and alternative perspectives of, the problems
-and methodologies featured in Chapters 3, 4 and 5.
+and methodologies featured in Chapters \ref{ch:nifr}, \ref{ch:supmatch} and \ref{ch:okapi}.
 %
 Indeed, each of said chapters contain their own background sections drawing direct comparisons to
 related work and we wish to avoid repetition in this respect.
 
-The main themes of this thesis, as indicated by the title, are Semi-Supervised Learning (SemiSL)
-and Distributional Robustness (DR), the latter in the context of AF (Chapters 3 and 4) and DG
-(Chapter 5), specifically. 
+The main themes of this thesis, as indicated by the title, are \ac{SemiSL} and \acf{DR}, the latter
+in the context of \ac{AF} (Chapters \ref{ch:nifr} and \ref{ch:supmatch}) and \ac{DG} (Chapter
+\ref{ch:okapi}), specifically. 
 %
 We will cover these topics directly, but to properly contextualise and motivate them requires
 visiting both foundational and adjacent areas of ML.
 
 %
 With the above in mind, we begin our discussion of the classical supervised learning setup and how
-standard empirical-risk minimisation (ERM) is ill-suited to long-tailedness and distribution shifts,
-both pervasive phenomena in real-world applications. \emph{Distributions shift} as a term is highly
-polysemous, meaning very different things, and demanding commensurately different solutions,
-depending on the underlying mechanisms and the direction of causality. We will give a brief
-taxonomy of the different kinds of distribution shifts in terms of how the marginal and conditional
-distributions are affected, and what may cause them. 
+standard \acf{ERM} is ill-suited to long-tailedness and distribution shifts,
+both pervasive phenomena in real-world applications. 
+%
+\emph{Distributions shift} as a term is highly polysemous, meaning very different things, and
+demanding commensurately different solutions, depending on the underlying mechanisms and the
+direction of causality. We will give a brief taxonomy of the different kinds of distribution shifts
+in terms of how the marginal and conditional distributions are affected, and what may cause them. 
 
 %
-Spurious correlations (SCs), or (statistical) shortcuts (we will use the terms interchangeably
-throughout), give rise to a particularly aggressive form of distribution shift as a result of
-features in the training data being highly (conceivably to the degree of a one-to-one
-correspondence) correlated with the target but not in a way that is causally consistent, and thus
-in a way that should not be expected to hold consistently at test time. 
+\acf{SC}s, or (statistical) shortcuts (we will use the terms interchangeably throughout), give rise
+to a particularly aggressive form of distribution shift as a result of features in the training
+data being highly (conceivably to the degree of a one-to-one correspondence) correlated with the
+target but not in a way that is causally consistent, and thus in a way that should not be expected
+to hold consistently at test time. 
 %
-The idea of SCs is central to both Chapters 3 and 4 (manifested in different ways) and the idea of
-Shortcut Learning (SCL) has close ties to DG \citep{arjovsky2019invariant}, the focus of Chapter 5;
-in light of this, we afford dedicated discussion of the SCL problem and what conditions are needed
-to engender it.
+The idea of \ac{SC}s is central to both Chapters \ref{ch:nifr} and \ref{ch:supmatch} (manifested in
+different ways) and the idea of \acf{SCL} has close ties to \ac{DG} \citep{arjovsky2019invariant},
+the focus of Chapter \ref{okapi}; in light of this, we afford dedicated discussion of the \ac{SCL}
+problem and what conditions are needed to engender it.
 
 %
 Before branching off into discussion of the specific learning paradigms, we first reframe the
 problem of supervised learning and distribution shift through the lens of causality, yielding a
-unified perspective of the latter and when one should expect SemiSL to be efficacious.
+unified perspective of the latter and when one should expect \ac{SemiSL} to be efficacious.
 %
 While this thesis does not directly tangle with questions of causal inference, the field of
-causality \citep{pearl2009causality} provides, through Causal Bayesian graphs (CBGs) and
-interventions thereof, the means of expressing different distribution shifts and the
-desired/undesired variances/invariances using a single, formalised calculus.
+causality \citep{pearl2009causality} provides, through \acf{CBG}s and interventions thereof, the
+means of expressing different distribution shifts and the desired/undesired variances/invariances
+using a single, formalised calculus.
 %
 Equipped with this calculus, we conclude this section -- as alluded to above -- with a discussion
 of the specific subfields and learning paradigms of relevance to the three papers constituting this
-thesis, namely:  DA, DG, AF, SemiSL, Adversarial Learning (AL), and Normalising
-Flows/Invertible Neural Networks (NFs/INNs).
+thesis, namely:  \ac{DA}, \ac{DG}, \ac{AF}, \ac{SemiSL}, \acf{AdvL}}, and \acf{INN}s.
 

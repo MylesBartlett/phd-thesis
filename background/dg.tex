@@ -1,14 +1,14 @@
 % ********************************************************************************
 \section{Domain generalisation}\label{sec:domain_generalisation}
 % ********************************************************************************
-While closely-related to DA, Domain Generalisation (DG) is distinct in the respect that the task is
+While closely-related to \ac{DA}, \acf{DG} is distinct in the respect that the task is
 fundamentally, as the name suggests, one of \ood{} generalisation rather than one of adaptation.
 %
 By this we mean that while in (U)DA one is given a labelled dataset, \( \gD^{src} \triangleq
 \{x_i, y_i \}_{i=1}^{N^{src}} \), belonging to the source domain, along with an unlabelled
 dataset \( \gD^{tgt} \triangleq \{ x_i \}_{i=1}^{N^{tgt}} \) belonging to the target domain,
 and the goal is to train a classifier to generalise from the former to the latter (which entails a
-degree of invariance), DG is more general, in that one is instead given datasets from multiple
+degree of invariance), \ac{DG} is more general, in that one is instead given datasets from multiple
 domains and seeks to train a classifier that can generalise to previously unseen ones. 
 %
 That is, given the (empirical) meta distribution \( \mathfrak{D} \triangleq \{\gD_e \}_{e \in \gE}
@@ -23,7 +23,7 @@ the task remains consistent), this is sadly impossible given finite data
 \citep{david2010impossibility}, and so our expectations must be tempered to being able to generalise
 within some region the training distribution.
 %
-The justification of DG can then be viewed from two perspectives:
+The justification of \ac{DG} can then be viewed from two perspectives:
 \begin{enumerate}
         %
         \item
@@ -35,7 +35,7 @@ The justification of DG can then be viewed from two perspectives:
         %
         The principle here is similar to that of vicinal risk minimisation
         \citep{chapelle2000vicinal} as in \cite{zhang2017mixup}, wherein data augmentation fulfils
-        the role of a perturbation set that the environments fulfil in DG.
+        the role of a perturbation set that the environments fulfil in \ac{DG}.
         %
         \item
         %
@@ -46,11 +46,11 @@ The justification of DG can then be viewed from two perspectives:
         %
         This idea of treating environments as interventions and using them to perform explicit or
         implicit causal inference has notably been exploited in \cite{peters2016causal} and in the
-        foundational (to DG) work of \cite{arjovsky2019invariant}.
+        foundational (to \ac{DG}) work of \cite{arjovsky2019invariant}.
         %
         Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
         gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem
-        setup of DG and its desiderata in causal terms, and we will do so ourselves in
+        setup of \ac{DG} and its desiderata in causal terms, and we will do so ourselves in
         \S\ref{sec:lens-of-causality} in order to provide a more unified perspective of the
         distribution shift problems discussed thus far.
         %

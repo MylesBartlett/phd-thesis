@@ -4,8 +4,8 @@
 In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
 %
-To this end, we draw heavily upon the works of \cite{moreno2012unifying} and
-\cite{castro2020causality} in our definitions, noting that the ML literature is not of a
+To this end, we draw heavily upon the works of \citet{moreno2012unifying} and
+\citet{castro2020causality} in our definitions, noting that the ML literature is not of a
 single mind regarding the terminology and its semantics.
 %
 In \S\ref{sec:lens-of-causality} we will reframe these distribution shifts in causal terms by
@@ -21,7 +21,7 @@ conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \a
 %
 % NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
 % much meaning unless we presuppose the direction of causality.
-Departing from \cite{moreno2012unifying}, we do not restrict its definition to problems of a causal
+Departing from \citet{moreno2012unifying}, we do not restrict its definition to problems of a causal
 (\( X \to Y\)) nature and do away with the distinction between covariate shift and its anticausal
 (\( Y \to X \)) analogue in \emph{prior shift} to simplify exposition.
 %
@@ -29,10 +29,10 @@ Changes in the distribution of the target variable, \(Y\), will be referred to a
 shift}, as explained in the subsection below.
 %
 This is not to say that we disregard the importance of distinguishing between the two causal
-directions; in the context of DA and SemiSL, we will discuss at some length the dependence of these
+directions; in the context of \ac{DA} and \ac{SemiSL}, we will discuss at some length the dependence of these
 paradigms on this characteristic of the problem.
 %
-Indeed, a common assumption in DA is that the source and target domains are separated by covariate
+Indeed, a common assumption in \ac{DA} is that the source and target domains are separated by covariate
 shift \citep{david2010impossibility}, however this assumption breaks down when the problem is
 anticausal (when we have what \cite{moreno2012unifying} term prior shift).
 
@@ -41,16 +41,16 @@ anticausal (when we have what \cite{moreno2012unifying} term prior shift).
 % --------------------------------------------------------------------------------
 % NOTE: As noted in the note above, we might want to specify that this type of shift only applies
 % to anticausal tasks
-Diametric to the above, target shift describes, as the name suggests, a shift in the
-marginal distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \not\approx P^{te}(Y) \).
+Diametric to the above, target shift describes, as the name suggests, a shift in the marginal
+distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \not\approx P^{te}(Y) \).
 %
 In the classification setting, this means that classes do not appear equifrequently in the training
 and test data; many real-world datasets used for training exhibit long tails, \wrt{} the classes
 (or targets generally), in which the most-frequent class can appear orders-of-magnitude more
 frequently than the least-frequent class, while the test data has more even coverage.
 %
-As discussed in \S\ref{sec:iid}, a classic approach to rectifying this kind of shift, in the case of
-the discriminative models we are usually concerned with, is to  importance-weight the instance
+As discussed in \S\ref{sec:iid}, a classic approach to rectifying this kind of shift, in the case
+of the discriminative models we are usually concerned with, is to  importance-weight the instance
 losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)}
 \), or simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the
 case).
@@ -127,7 +127,7 @@ more liberal than on average.
 %
 Indeed, this a problem is particularly well-noted in experimental psychology, in which cohorts
 overwhelmingly consist of a very narrow band of individuals from the so-called WEIRD (White,
-Educated, Industrialized, Rich, Democratic)\citep{henrich2010weirdest} group.
+Educated, Industrialized, Rich, Democratic; \citet{henrich2010weirdest}) group.
 %
 The experimental data obtained from such homogeneous cohorts has been used by numerous high-profile
 journal papers to support broad claims about the general population, despite obvious issues with
@@ -142,8 +142,8 @@ models have been studied under the guises of Delayed Impact \citep{liu2018delaye
 Unfairness \citep{kallus2018residual}.
 %
 Indeed, the systematic censoring problem posed by \cite{kallus2018residual} served as a prime
-motivator for the setup considered in Chapter 3, such that in the case of a binary decision system
--- one designed for automated hiring, for instance -- and a population comprised of two subgroups,
-only positive outcomes are observed for the advantaged subgroup, while only negative outcomes are
-observed for the disadvantaged subgroup.
+motivator for the setup considered in Chapter \ref{ch:nifr}, such that in the case of a binary
+decision system -- one designed for automated hiring, for instance -- and a population comprised of
+two subgroups, only positive outcomes are observed for the advantaged subgroup, while only negative
+outcomes are observed for the disadvantaged subgroup.
 %

@@ -2,14 +2,14 @@
 \section{Underspecification}\label{sub:underspecification}
 % ********************************************************************************
  
-As we discussed in the previous section, one of the major dangers posed by SCL is its
+As we discussed in the previous section, one of the major dangers posed by \ac{SCL} is its
 diaganosability: since data used for testing the model during development is generally drawn from
 the same distribution as the training data -- and thus inherits the same biases -- it is only once
 the model is deployed on \ood{} data that the potential shortcut-dependencies are revealed, unless
 one takes measures to properly vet the model's solutions using tools from the interpretability
 literature, such as feature attribution.
 %
-Thus, there is an element of what is termed \emph{underspecification} involved in the SCL problem,
+Thus, there is an element of what is termed \emph{underspecification} involved in the \ac{SCL} problem,
 and in \ood{} generalisation generally, and is what makes this class of problem so challenging, or
 even ill-posed without sufficient inductive bias of the underlying problem or foreknowledge of the
 downstream distribution.
@@ -33,15 +33,15 @@ shape, posture, part-whole relations, etc.), one of which will fail in the \ood{
 spurious correlation fuelling the shortcut solution no longer holds.
 
 %
-One can formalise the problem underspecification in terms of \emph{Raashomon sets}
+One can formalise the problem underspecification in terms of \emph{Rashomon sets}
 \citep{semenova2019study}.
 % defined \wrt{} the test set used to guide model-selection and indeed
 % assess the feasibility of performing a given task with a machine learning system given the data
 % available. 
 The Rashomon effect \citep{breiman2001statistical},
 %
-\footnote{taking its name from the Kurosawa film
-in which four witnesses recount wildly differing versions of the same crime}
+\footnote{Taking its name from the Kurosawa film
+in which four witnesses recount wildly-differing versions of the same crime.}
 %
 which lends Rashomon sets their name, describes the phenomenon in which there exists a
 non-singular set of equally-performing predictors from a given function class $\gF$.
@@ -68,15 +68,15 @@ problems Rashomon sets exist, combining seemingly-equivalent (in terms of \iid{}
 models to construct a composite predictor that draws upon a wider set of views and is thus more
 robust to distribution shift.
 %
-However, as noted before, in the case of the SCL problem, this Rashomon set could well be a
+However, as noted before, in the case of the \ac{SCL} problem, this Rashomon set could well be a
 singleton (in that all models are functionally equivalent) when the spurious feature is of low
 enough complexity (and thus easy to learn) and strongly predictive of the target, thus nullifying
 traditional ensemble-based approaches.
 %
-For \ood{} problems more generally, such as the one addressed in Chapter 5, the idea of
-underspecification, and Rashomon sets with it, is a pertinent one.
+For \ood{} problems more generally, such as the one addressed in Chapter \ref{ch:okapi}, the idea
+of underspecification, and Rashomon sets with it, is a pertinent one.
 %
 Indeed, the problem of model-selection, due to underspecification, was underscored in
-\cite{gulrajani2020search} in the context of domain generalisation and how to best conduct it is
-still very much an open question.
+\cite{gulrajani2020search} in the context of \ac{DG} -- how to best conduct it is still very much
+an open question.
 

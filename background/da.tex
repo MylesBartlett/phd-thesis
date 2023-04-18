@@ -1,8 +1,8 @@
 % ********************************************************************************
 \section{Domain adaptation}\label{sec:domain-adaptation}
 % ********************************************************************************
-Domain adaptation is a subfield of machine learning that deals with the problem of adapting a model
-trained on one distribution (the \emph{source domain}) to a different but related distribution (the
+\acf{DA} is a subfield of machine learning that deals with the problem of adapting a model trained
+on one distribution (the \emph{source domain}) to a different but related distribution (the
 \emph{target domain}), in such a way that the relevant shared structure is exploited while nuisance
 factors that are domain-specific (and not relevant to the prediction task) ignored.
 %
@@ -15,7 +15,7 @@ To proffer a real-world example, in building a spam detector, one might have ann
 distribution shift.
 
 %
-In the classical DA setting, one assumes the distribution shift is \emph{covariate}
+In the classical \ac{DA} setting, one assumes the distribution shift is \emph{covariate}
 \citep{david2010impossibility} in nature, that is, localised to the marginal distribution \(P(X)\),
 with both the conditional, \(P(Y|X)\) (corresponding to changes in the ground-truth labelling
 mechanism, \( f^\star: \gX \to \gY \)), and label, \(P(Y)\), distributions consistent across
@@ -38,9 +38,9 @@ diagnose patients based only on dermoscopic images using labels derived from (ex
 time-consuming but reliable) histopathological analysis \citep{castro2020causality}.
 %
 The distinction between causal and anticausal tasks is an important one in ML generally, and we
-will revisit the idea on several occasions throughout the remainder of this chapter; for SemiSL,
-said distinction is particularly important as the efficacy of the paradigm hinges on \( P(X) \)
-carrying information about \(f^\ast\), and thus the task being an anticausal one.
+will revisit the idea on several occasions throughout the remainder of this chapter; for
+\ac{SemiSL}, said distinction is particularly important as the efficacy of the paradigm hinges on
+\( P(X) \) carrying information about \(f^\ast\), and thus the task being an anticausal one.
 %
 % \subsection{Taxonomy of methods} 
 %

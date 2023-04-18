@@ -36,13 +36,13 @@ meaning by the latter \( f \circ X(\omega) \) for some event \( \omega \in \Omeg
 % -------------------------------------------------------------------------------
 \subsection{Spurious correlations from missing sources}\label{ssec:walkthrough}
 % -------------------------------------------------------------------------------
-The spurious correlation (SC; \cite{arjovsky2019invariant}), or shortcut-learning
+The spurious correlation (\ac{SC}; \cite{arjovsky2019invariant}), or shortcut-learning
 \citep{valle2018deep, geirhos2020shortcut}, problem is characterised by the presence of some
 secondary attribute \(s\) (such as background \citep{beery2018recognition}, texture
 \citep{geirhos2018imagenet}, or gender \citep{sagawa2019distributionally, seyyed2020chexclusion}
 that confounds the prediction task.
 %
-We refer to this attribute as the ``subgroup'', in line with fair machine learning (FairML;
+We refer to this attribute as the ``subgroup'', in line with algorithmic fairness (\ac{AF};
 \citet{barocas-hardt-narayanan}) that is strongly correlated with the target attribute, \(y\), in
 the training set, but spuriously so in the sense that the correlation the mapping \( \gS \to \gY \)
 is acausal and thus cannot be expected to hold at deployment time. 
@@ -56,19 +56,19 @@ pezeshki2021gradient, SohDunAngGuetal20, krueger2021out} due to their pervasive,
 catastrophic \citep{codevilla2019exploring, de2019causal, castro2020causality}, nature.
 %
 In this paper, we introduce, and propose a semi-supervised solution for, a hierarchical and
-class-asymmetric variant of the SC problem that we term the \emph{Missing Sources} (MS) problem .
+class-asymmetric variant of the \ac{SC} problem that we term the \emph{\acf{MS}} problem .
 
-To illustrate the general SC problem and the MS problem as a particular instantiation of it, we
-define the conditional-probability matrix, \( \mathbf{P}^{tr} \in [0, 1]^{|\gS| \times |\gY|} \),
-where each element \( \mathbf{P}^{tr}_{ij} \) encodes the conditional probability \(
+To illustrate the general \ac{SC} problem and the \ac{MS} problem as a particular instantiation of
+it, we define the conditional-probability matrix, \( \mathbf{P}^{tr} \in [0, 1]^{|\gS| \times
+|\gY|} \), where each element \( \mathbf{P}^{tr}_{ij} \) encodes the conditional probability \(
 P^{tr}(Y=j|S=i) \) in the training set, \( \gD^{tr} \). 
 %
 When \( \mathbf{P}^{tr} \) is both binary and doubly stochastic (that is, has all rows and columns
 summing to 1) we have that \(y\) is completely determined by \(s\) in \( \gD^{tr} \) -- this is an
-extreme form of the SC problem which is statistically intractable without access to additional
+extreme form of the \ac{SC} problem which is statistically intractable without access to additional
 sources of data \citep{KehBarThoQua20} or multiple environments \citep{arjovsky2019invariant}. 
 %
-The MS problem can be viewed as a relaxation of this SC wherein the elements of \( \mathbf{P}^{tr}
+The MS problem can be viewed as a relaxation of this \ac{SC} wherein the elements of \( \mathbf{P}^{tr}
 \) respect the constraint that all columns contain at least one non-zero value, i.e. we observe all
 class labels but not all possible pairs of class and subgroup labels -- we say that we have
 \emph{missing sources}, \(\gM\ \triangleq \gG^{te} \setminus \gG^{tr}\). 
@@ -81,9 +81,9 @@ restrictive, and as such we instead view the problem setup as extending to cases
 not be altogether missing but have sample sizes too small to constitute meaningful supervision. 
 %
 To understand the non-triviality of this problem, and why aiming for invariance to \(s\) in the
-training set alone -- as is characteristic of many representation-learning methods in FairML
+training set alone -- as is characteristic of many representation-learning methods in \ac{AF}
 \citep{edwards2015censoring, madras2018learning, quadrianto2019discovering}  and domain adaptation
-(DA; \citep{ganin2016domain, zhao2018adversarial, saito2018maximum, lee2019sliced}) -- will
+(\ac{DA}; \citep{ganin2016domain, zhao2018adversarial, saito2018maximum, lee2019sliced}) -- will
 assuredly fail, consider a binary classification problem with binary subgroups, where \(\gY = \{ 0,
 1 \}\) and \( \gS = \{ 0, 1 \}\) and for which \( \mathbf{P}^{tr} \) takes the form
 %

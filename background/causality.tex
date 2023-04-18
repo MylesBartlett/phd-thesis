@@ -3,17 +3,18 @@
 % ********************************************************************************
 
 We now introduce a causal formalism of the distribution-shift problem, a formalism which has been
-frequently exploited in the DG and AF literature as it provides a simple calculus with which to
-reason about desired (and undesired) variances.
+frequently exploited in the \ac{DG} and \ac{AF} literature as it provides a simple calculus with
+which to reason about desired (and undesired) variances.
 %
 It should be noted in advance that we only draw upon this formalism in order to provide a unified
 formulation of the distribution-shift problems considered in this thesis; we do not operate on the
 domain of causal graphs nor attempt to perform causal inference. 
 %
 The background on causality is thus commensurably light and we refer the reader to
-\cite{pearl2009causality} for full exposition of the topic.
+\citet{pearl2009causality} for full exposition of the topic.
 
-While the term `domain' typically refers to the observed distributions as a whole in both DA and DG
+While the term `domain' typically refers to the observed distributions as a whole in both \ac{DA}
+and \ac{DG}
 alike (i.e. `source' versus 'target'), such terminology is somewhat rigid, as it fails to capture
 that the distributions share an underlying structure and how and which variables are shifted.
 %
@@ -23,22 +24,22 @@ distributions -- or subgraphs in the discrete case -- and explains how one is tr
 (`shifted') into the other.
 %
 We will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
-DG literature \citep{arjovsky2019invariant}), which need satisfy only the loose requirement that it
+\ac{DG} literature \citep{arjovsky2019invariant}), which need satisfy only the loose requirement that it
 belong to some Borel space (and thus may in theory be continuous or discrete).
 %
-Most simply, in the case of DA, \(E\) is simply a binary random variable, such that we have \(E:
+Most simply, in the case of \ac{DA}, \(E\) is simply a binary random variable, such that we have \(E:
 \Omega \to \{ \text{source}, \text{target} \}\), with \( \Omega \) being the sample space.
 %
 
 We view then view variables in our prediction task as constituting the nodes \( \gV \) in a Causal
-Bayesian Network (CBN; \cite{pearl1995bayesian}) where the direction of arrows (directed edges)
+Bayesian Network (\ac{CBN}; \cite{pearl1995bayesian}) where the direction of arrows (directed edges)
 between nodes indicate the direction of causality (e.g. \(\rmA \to \rmB \) means that \textbf{A}
 causes (is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
 \textbf{B} indicates independence between them when conditioned on their parents, i.e. \( \rmA |
 \text{Pa}(\rmA) \perp \rmB | \text{Pa}(\rmB) \), where \( \text{Pa}(\cdot) \) denotes the causal
 parents of its argument node.
 %
-Formally, a CBG is a kind of Directed Acyclic Graph (DAG), \(\rmG \triangleq \langle \gV, \xi
+Formally, a \ac{CBN} is a kind of \acf{DAG}, \(\rmG \triangleq \langle \gV, \xi
 \rangle \) with node-set (variables), \(\gV\), and (directed) edge-set, \(\xi\) consisting of
 tuples \((ij)\) meaning \(i \to j \), or `node \(i\) is a parent of node \(j\)'.
 %
@@ -68,14 +69,12 @@ correlations.
 We illustrate in Fig.~\ref{fig:ds_cbgs} CBGs corresponding to different distribution shifts for a
 causal prediction task.
 %
-
 \import{background}{ds_cbgs.tex}
-
 %
 We will see that such a formulation is particularly useful when we come to discuss domain
 generalisation which involves a multitude of source distributions, going beyond the dyadic
 source-target setup characterising DA.
-
+%
 
 One common \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} and intuitive way
 of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
@@ -100,7 +99,7 @@ interventions of the causal factorisation of \(P(X, Y\)).
 %
 It follows that, for Eq.\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
 domains, \(\gE^\dagger\) outside \(\gE\) (\( \gE^\dagger \cap \gE = \varnothing \); i.e. the goal
-of DG), \(\gE\) must be a representative (well-covering) set of samples from the generating
+of \ac{DG}), \(\gE\) must be a representative (well-covering) set of samples from the generating
 distribution, \( P(E) \), such that smooth interpolation along the underlying manifold is possible.
 %
 When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set},
@@ -117,10 +116,10 @@ stable across environments would allow it to better approximate the true causal 
 prediction task. 
 %
 This idea has been explored extensively in recent years in both the causal discovery
-\citep{peters2016causal, bengio2019meta} and domain generalisation \citep{arjovsky2019invariant,
-ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of
-inductive bias or additional information is necessary to provably identify the proper causal
-relations based on it \citep{lin2022zin}.
+\citep{peters2016causal, bengio2019meta} and \ac{DG} \citep{arjovsky2019invariant,
+ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of inductive
+bias or additional information is necessary to provably identify the proper causal relations based
+on it \citep{lin2022zin}.
 %
 
 % % ------------------------------------------------------------------------------

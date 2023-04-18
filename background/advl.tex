@@ -1,14 +1,13 @@
 % ********************************************************************************
 \section{Adversarial Learning}\label{sec:adv-learning}
 % ********************************************************************************
-Adversarial learning (AdvL) is a general, multi-field-spanning learning paradigm, characterising --
-in game-theoretical parlance -- non-co{\"o}perative (competitive) systems, or `games' in which
-two or more `players' compete over shared or interdependent
-\emph{utility} \citep{fudenberg1991game}.
+\acf{AdvL} is a general, multi-field-spanning learning paradigm, characterising -- in
+game-theoretical parlance -- non-co{\"o}perative (competitive) systems, or `games' in which two or
+more `players' compete over shared or interdependent \emph{utility} \citep{fudenberg1991game}.
 %
 \marginpar{\textbf{Minimax}}
 %
-In two-player cases -- accounting for the majority of AdvL setups (notable exceptions to this
+In two-player cases -- accounting for the majority of \ac{AdvL} setups (notable exceptions to this
 include those based on self-play in which one computes the best response against a mixture of
 adversarial policies \citep{silver2017mastering, vinyals2019grandmaster}) and those that we shall
 discuss here -- the game can be formulated as a (zero-sum) minimax problem in which one player,
@@ -80,25 +79,25 @@ dynamics altogether and obtain approximately domain-invariant representations wi
 through concurrent (single-step) updates to the players' strategies.
 
 Notable concrete applications of adversarial learning include artificial curiosity
-\citep{schmidhuber1992learning}, Generative Adversarial Networks (GANs;
+\citep{schmidhuber1992learning}, Generative Adversarial Networks (\ac{GAN};
 \cite{goodfellow14generative}), self-play \citep{silver2018general}, adversarial robustness
 \citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant
-\citep{ganin2016domain, zhao2019learning} and fair-representation learning
-\citep{edwards2015censoring, madras2018learning}.
+\citep{ganin2016domain, zhao2019learning} and \ac{FRL} \citep{edwards2015censoring,
+madras2018learning}.
 %
 \marginpar{\textbf{Adversarial infomin}}
 %
 In the latter applications, adversarial learning is frequently leveraged as an engine for
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
-related to the domain or sensitive group in DA/DG and AF, respectively.
+related to the domain or sensitive group in \ac{DA}/\ac{DG} and \ac{AF}, respectively.
 %
-For this, both players take the form of an NN with strategies defined by their parameters --
+For this, both players take the form of an \ac{NN} with strategies defined by their parameters --
 \(\theta_{min} \in \Theta_{min}\) and \(\theta_{min} \in \Theta_{max}\) for the learner and
 adversary, respectively -- which they play according to their respective architectures, together
 constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time \Psi \to
 \R \).
 %
-We note, incidentally, that due to the continuity and non-convexity of NNs, it is unfortunately not
+We note, incidentally, that due to the continuity and non-convexity of \ac{NN}s, it is unfortunately not
 possible to guarantee the existence of Nash Equilibria for the resulting games, only ones that are
 locally defined \citep{unterthiner2018coulomb}.
 %
@@ -146,7 +145,7 @@ useful for some task (other than foiling the adversary) -- a trivial solution on
 \(\mu_{min}\) would, for instance, be to simply ignore the input and output a constant
 representation.
 %
-In many cases, however -- especially those arising in AF and DA -- there is competition not
+In many cases, however -- especially those arising in \ac{AF} and \ac{DA} -- there is competition not
 only between the adversary and the learner, but between the objectives themselves \wrt{} the latter
 alone.
 %
@@ -163,7 +162,7 @@ preference direction, leading to a Pareto front and suggesting treatment with MO
 %
 More generally, unconditional infomin is problematic whenever there is conditional shift between
 the training (source) and test (target) sets, as anatomised by \cite{zhao2019learning} in the
-context of UDA. 
+context of \ac{UDA}. 
 %
 Given full observability of \(y\) and \(s\) and consistent support of their joint distribution,
 i.e. \(\text{supp}(\hat{P}^{tr}(S, Y)) = \text{supp}(\hat{P}^{te}(S, Y))\), one can realign the
@@ -171,12 +170,12 @@ objective by computing the infomin component class-conditionally (practically, i
 based on the empirical distribution \(\hat{P}^{tr}(Y)\)). 
 %
 When this observability does not hold, generally or for a subset of the data (the target domain in
-the case of UDA), then matters are complicated, however, and approximations are required (e.g by
+the case of \ac{UDA}), then matters are complicated, however, and approximations are required (e.g by
 clustering).
 %
-In Chapter 4 we consider a problem of this nature and recast the problem as one of aligning the
-supports of the training -- which is systematically missing certain combinations of \(s\) and \(y\)
--- and deployment -- which is presumed unlabelled, as in UDA -- sets.
+In Chapter \ref{ch:supmatch} we consider a problem of this nature and recast the problem as one of
+aligning the supports of the training -- which is systematically missing certain combinations of
+\(s\) and \(y\) -- and deployment -- which is presumed unlabelled, as in \ac{UDA} -- sets.
 
 We have already alluded to some of the challenges entailed in adversarial infomin
 approaches; here, we summarise the two most salient ones:
@@ -185,7 +184,9 @@ approaches; here, we summarise the two most salient ones:
         %
         \marginpar{\textbf{Approximation errors}}
         %
-        \item The strength of information-minimisation is proportional to the strength adversary
+        \item 
+          %
+          The strength of information-minimisation is proportional to the strength adversary
           used to drive it -- a fixed point attained by one adversary  is not guaranteed to hold
           for any other adversary (differing in architecture, optimisation scheme, etc.) unless the
           fixed point corresponds to the desired invariance. 
@@ -204,7 +205,9 @@ approaches; here, we summarise the two most salient ones:
         %
         \marginpar{\textbf{Cyclic dynamics}}
         %
-        \item Adversarial setups are generally susceptible to cycles (oscillations) in strategy
+        \item 
+          %
+          Adversarial setups are generally susceptible to cycles (oscillations) in strategy
           space, e.g. where two players repeatedly switch between two non-NE strategies because
           doing so is mutually locally optimal. 
           %
@@ -215,8 +218,8 @@ approaches; here, we summarise the two most salient ones:
           while this allows for avoiding the aforementioned cycles it comes at a significant
           computational cost.
           %
-          In Chapter 3 we consider this pitfall and propose a middle ground of training against a
-          stochastic ensemble of adversaries.
+          In Chapter \ref{ch:nifr} we consider this pitfall and propose a middle ground of training
+          against a stochastic ensemble of adversaries.
          % 
 \end{enumerate}
 

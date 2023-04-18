@@ -14,8 +14,7 @@ that is the minimiser of the \emph{risk}, $\gR$, defined according to some stati
 \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted, \(\hat{Y}
 \triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution, \(P^{tr}(X,
 Y)\). 
-% often taken to be the (negative) Kullback-Leibler divergence, \( D_{KL} \) (also known as
-% \emph{relative entropy}).
+%
 A canonical example of such a distance for classifications tasks is the \emph{cross-entropy loss};
 in information-theoretic terms, this can be couched as the amount of information (here, in nats)
 required to identify a sample from the true distribution given a coding scheme optimised for the
@@ -26,7 +25,7 @@ predictive distribution and takes the form
 \end{equation}
 %
 An alternative, and perhaps more natural, way of viewing this function is by its decomposition into
-the sum of the Kullback-Leibler (KL) Divergence (also known as the \emph{relative entropy}),
+the sum of the \ac{KL} Divergence (also known as the \emph{relative entropy}),
 \(D_{KL}(P(f(X))||P(Y))\), and entropy of the marginal target distribution, \(H(Y)\). 
 %
 When the latter carries no dependence on the learned parameters -- as is generally the case, save
@@ -44,10 +43,10 @@ In practice, of course, one does not have access to the true generative distribu
 finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
 observed input-target pairs \( (x, y) \). 
 %
-Thus, we are instead doing \emph{empirical} risk minimisation (ERM; \cite{vapnik1991principles}),
-defined as the risk is instead defined over the empirical distribution, a finite set of
-observations, rather than over the underlying distribution from which those observations were
-drawn.
+Thus, we are instead doing \emph{empirical} risk minimisation (\ac{ERM};
+\cite{vapnik1991principles}), defined as the risk is instead defined over the empirical
+distribution, a finite set of observations, rather than over the underlying distribution from which
+those observations were drawn.
 % %
 To accommodate this discrepancy, two things need to be accounted for. 
 %

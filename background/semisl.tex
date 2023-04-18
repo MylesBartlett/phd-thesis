@@ -2,16 +2,21 @@
 \section{ Semi-supervised learning }\label{sec:semisl}
 % ********************************************************************************
 %
-Given that this thesis references semi-supervised learning (SemiSL)
+Given that this thesis references \acf{SemiSL}
 %
-\footnote{ Since self-supervised learning also features prominently in this thesis (primarily in
-Chapter 5) we must depart from the typical initialism, SSL, so as to be able to differentiate the
-two learning paradigms. }
+\footnote{ 
+  %
+  Since self-supervised learning is also referenced in this thesis (primarily in Chapter
+  \ref{ch:okapi}) we must depart from the typical initialism, `SSL', so as to be able to
+  differentiate the two learning paradigms.
+%
+}
 %
 in its title, it is only appropriate that a part of this background section be devoted to the
 topic.
 %
-However, we note that the methods introduced in this thesis are not tailored for the typical SemiSL
+However, we note that the methods introduced in this thesis are not tailored for the typical
+\ac{SemiSL}
 regime wherein one hopes to draw upon a large corpus of unlabelled data to shore up the paucity of
 annotated data available for direct supervision, with the assumption being that the unlabelled and
 labelled data are drawn from the same distribution.
@@ -19,18 +24,18 @@ labelled data are drawn from the same distribution.
 Rather, the unifying theme across the constituent papers is how one can use unlabelled data to
 buttress against different types of distribution shift.
 %
-The problem setups considered thus more closely align with those found in DG and DA. 
+The problem setups considered thus more closely align with those found in \ac{DG} and \ac{DA}. 
 
 We would refer the reader to \cite{chapelle2009semi} for excellent (in both clarity and depth)
-exposition of the theoretical underpinnings of SemiSL and methods for it from the pre-deep-learning
-era (many of which are still fundamentally applicable today, however), a book we will reference
-extensively throughout this brief overview of the topic.
+exposition of the theoretical underpinnings of \ac{SemiSL} and methods for it from the
+pre-deep-learning era (many of which are still fundamentally applicable today, however), a book we
+will reference extensively throughout this brief overview of the topic.
 %
-For a comprehensive and current survey of SemiSL methods in the post-deep-learning, on the other
+For a comprehensive and current survey of \ac{SemiSL} methods in the post-deep-learning, on the other
 hand, we would refer the reader to \cite{yang2022survey}.
 %
 
-The premise of SemiSL is a simple one: given that in many real-world cases collecting annotated
+The premise of \ac{SemiSL} is a simple one: given that in many real-world cases collecting annotated
 data is expensive (monetarily or temporally) or even prohibitive (for instance, if the data is tied
 to a transient phenomenon) but collecting data in general is not, how can one exploit the
 unannotated data to improve a model's predictive power?
@@ -41,23 +46,23 @@ override here with the notation \( \gD^{tr}_l \triangleq \{ x_i \}_{i=1}^{N^{tr}
 clarity's sake, and a second partition corresponding to the unannotated data, which we will denote
 by \( \gD^{tr}_u  \triangleq \{ x_i \}_{i=1}^{N^{tr}_u} \).
 %
-One is generally motivated to employ some form of SemiSL in cases when \( N^{tr}_l \ll N^{tr}_u \),
+One is generally motivated to employ some form of \ac{SemiSL} in cases when \( N^{tr}_l \ll N^{tr}_u \),
 though this not need be the case and it may be that the unlabelled data can be useful beyond simply
 providing more data from the same distribution (as the labelled data), as epitomised by UDA and as
 explored in other contexts throughput this thesis.
 %
-There exist many different branches and perspectives of SemiSL, as a learning paradigm with deep
+There exist many different branches and perspectives of \ac{SemiSL}, as a learning paradigm with deep
 roots reaching as far back as the 60s \citep{scudder1965probability, fralick1967learning}. 
 %
-On the perspective side, one can, for instance, view SemiSL as unsupervised learning subject to
+On the perspective side, one can, for instance, view \ac{SemiSL} as \ac{USL} learning subject to
 constraints -- which is especially pertinent in the case of semi-supervised clustering
 \citep{bair2013semi} -- though it is usually more natural to frame it from the opposite
-perspective, namely, as supervised learning with additional information \citep{chapelle2009semi}.
+perspective, namely, as \ac{SL} with additional information \citep{chapelle2009semi}.
 
 %
 \marginpar{\textbf{Transduction}}
 %
-Closely related to SemiSL is the idea of \emph{Transductive Learning} (TL), as pioneered by Vapnik
+Closely related to \ac{SemiSL} is the idea of \emph{Transductive Learning} (TL), as pioneered by Vapnik
 \citep{gammerman1998learning}. 
 %
 With TL, rather than pursuing the lofty goal of learning a predictor that can generalise across the
@@ -74,10 +79,10 @@ given that one has the access to said subset and has the necessary time/resource
 take the more circuitous approach of learning general rules and applying them to specific cases
 (the process of \emph{deduction}).
 %
-To couch TL in SemiSL terms then simply requires equating \(\gD^{tr}_u \) with the test set
+To couch TL in \ac{SemiSL} terms then simply requires equating \(\gD^{tr}_u \) with the test set
 \(\gD^{te} \).
 %
-We can view this distinction between TL and (inductive) SemiSL as analogous to the distinction
+We can view this distinction between TL and (inductive) \ac{SemiSL} as analogous to the distinction
 between domain adaptation and domain generalisation, in the sense that former has the transductive
 goal of generalising between two specific domains -- with the target domain given at training time
 -- while the latter has the inductive goal of generalising to all possible domains.
@@ -90,15 +95,15 @@ reference dataset for the proposed matching procedure.
 % --------------------------------------------------------------------------------
 \subsection{Justifying SemiSL}\label{ssec:assumptions}
 % --------------------------------------------------------------------------------
-While SemiSL is a tantalising prospect whenever one has a large corpus of unlabelled data, and
+While \ac{SemiSL} is a tantalising prospect whenever one has a large corpus of unlabelled data, and
 relatively sparing labelled data, it is unfortunately not the case that whenever there is
 unlabelled data available that one can mine it for additional information about the given task. 
 %
 In fact, in some cases -- those in which there is an element of distribution shift -- one might
-find a degradation in performance when using SemiSL, relative to the supervised baseline trained on
+find a degradation in performance when using \ac{SemiSL}, relative to the supervised baseline trained on
 a small fraction of the samples.
 %
-SemiSL theory requires that certain assumptions about the data-generating process be met in order
+\ac{SemiSL} theory requires that certain assumptions about the data-generating process be met in order
 for the learning paradigm to bear fruit (in sense of reduced generalisation-error/improved sample
 efficiency), whatever the chosen method, though this is not to say that there one can't observe
 practical benefits -- such as improved convergence-rates or stability -- detached from those
@@ -106,7 +111,7 @@ assumptions.
 %
 We will broach the importance of the direction of causality -- that is how the data-generating
 process factorises -- later in this section; to begin with, following \citep{chapelle2009semi}, we
-summarise the justifying assumptions for SemiSL.
+summarise the justifying assumptions for \ac{SemiSL}.
 %
 These assumptions are not complementary, in the sense that they can, or need be, simultaneously
 satisfied; rather they provide three different perspectives leading to different classes of
@@ -127,7 +132,7 @@ This is precisely the assumption that drives many traditional (density-based) cl
 aiming to separate the data into groups of samples, or `clusters', using density (estimable, for
 instance, with kernel methods or neighbourhood graphs) as a surrogate for ground-truth labels.
 %
-Within SemiSL itself, the cluster assumption is well encapsulated by the method of \emph{label
+Within \ac{SemiSL} itself, the cluster assumption is well encapsulated by the method of \emph{label
 propagation} \citep{szummer2001partially} which (with great simplification) involves 1) building a
 neighbourhood graph with the labelled and unlabelled samples as its vertices and the edges weighted
 according to local correlation strength; 2) propagating the label distributions from the labelled
@@ -148,7 +153,7 @@ grouping together those that are sufficiently close (dense) -- rather than on th
 them -- that is, the problem of choosing the set of separating planes with sufficiently-low path
 integrals.
 %
-A classical example of a SemiSL method derived from this principle is Transductive Support Vector
+A classical example of a \ac{SemiSL} method derived from this principle is Transductive Support Vector
 Machines (TSVMs; \cite{joachims1999transductive}), which share inductive Support Vector Machines
 (SVMs) aim of maximising the margin between the decision boundary and nearest data-points (the
 \emph{support vectors}) -- yielding the \emph{maximum margin hyperplane} -- yet consider both the
@@ -185,7 +190,7 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  neighbourhood graph) and then seek to minimise the distance between them in \( \gY \), thereby
  partially discretising the problem but allowing for increased flexibility.
  %
- This is capitalised on in Chapter 4 we propose a consistency-regularised method for DG where pairs
+ This is capitalised on in Chapter 4 we propose a consistency-regularised method for \ac{DG} where pairs
  are determined by a cross-domain causal-matching algorithm and consistency is enforced between the
  members of those pairs.
  %
@@ -198,10 +203,10 @@ causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausa
 As discussed before, the ICM principle states that modules in a joint distribution's causal
 decomposition do not inform or influence one another, i.e. \(\gI(X, Y) = 0 \); this implies that in
 the when \(X\) is the causal parent to \(Y\), as in the supposed case, a better estimate of
-\(P(X)\) does not yield a better estimate of \(P(Y|X)\) and it is the former that SemiSL
+\(P(X)\) does not yield a better estimate of \(P(Y|X)\) and it is the former that \ac{SemiSL}
 compasses to learn using unlabelled data.
 %
-However, that is not to say that SemiSL as in its totality is misguided, it merely requires the
+However, that is not to say that \ac{SemiSL} as in its totality is misguided, it merely requires the
 right condition to be met, that condition (which applies to a wide-range of real-world problems)
 being the contrary factorisation, \(Y \to X \), which is to say that that the task under
 consideration is anticausal.
@@ -213,7 +218,7 @@ marginal distribution to better estimate the conditional distribution; in
 %
  
 While perhaps often overlooked, this requirement, in fact, well-aligned with the motivating
-arguments for SemiSL that we discussed at the beginning of this section.
+arguments for \ac{SemiSL} that we discussed at the beginning of this section.
 %
 The \emph{cluster assumption} predicates that points belonging to the same cluster in \(P(X)\)
 abide by the same labelling mechanism; 
