@@ -11,11 +11,11 @@ nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwi
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
 %
-There are many strands of \ac{AF} following different criteria for what it means for a
-predictor to be \emph{fair}; in this thesis we focus on those corresponding to group definitions of
-fairness \citep{barocas2019fairness}, where `group' refers to some demographic group, such as
-gender or ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are
-often used interchangeably throughout the literature; we will favour the former).
+There are many strands of \ac{AF} following different criteria for what it means for a predictor to
+be \emph{fair}; in this thesis we focus on those corresponding to group definitions of fairness
+\citep{barocas2019fairness}, where `group' refers to some demographic group, such as gender or
+ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are often used
+interchangeably throughout the literature; we will favour the former).
 %
 We will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
 realisation \(s\) -- and will assume that this variable along with the target variable are discrete
@@ -26,8 +26,8 @@ methods for enforcing -- fairness to settings with categorical and continuous (\
 attributes.
 %
 Though the focus is on group fairness, at the tail-end of the section, we will touch briefly on the
-premise of \ac{IF} \citep{dwork2012fairness} to take the opportunity to draw a parallel
-between it and the idea of consistency/smoothness in \ac{SemiSL}.
+premise of \acl{IF} (\acs{IF}; \citealp{dwork2012fairness}) to take the opportunity to draw a
+parallel between it and the idea of consistency/smoothness in \ac{SemiSL}.
 
 %
 Particularly, we will consider two particular kinds of group-oriented notions of fairness: 1) the
@@ -72,9 +72,9 @@ Much of the fairness literature has focussed on notions of fairness based on enf
 predictor to output equal rates (e.g. of positive or correct predictions) across the sensitive
 groups.
 %
-Here, we briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}}
-as the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do
-so for the binary-classification regime to which they are most commonly applied, even though
+Here, we briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}} as
+the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do so
+for the binary-classification regime to which they are most commonly applied, even though
 generalisations exist \citep{woodworth2017learning}. 
 %
 These metrics naturally share similarity of form, only differing in their conditioning and bear
@@ -264,21 +264,20 @@ P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as
 %
 recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random variables.
 %
-Thus, in contrast to standard \ac{ERM}, which would optimise over the `flattened' meta distribution, the
-DRO objective defines a bilevel optimisation problem in which only the supremum of the loss
-over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be minimised by our
-predictor, \(\Gamma\).
+Thus, in contrast to standard \ac{ERM}, which would optimise over the `flattened' meta
+distribution, the DRO objective defines a bilevel optimisation problem in which only the supremum
+of the loss over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be minimised by
+our predictor, \(\Gamma\).
 %
-One can view this as a sparse form of \ac{IW}-\ac{ERM} where the weighting function is the indicator function
-returning \(1\) if a sample belongs to the `worst` distribution, else \(0\).
+One can view this as a sparse form of \ac{IW}-\ac{ERM} where the weighting function is the
+indicator function returning \(1\) if a sample belongs to the `worst` distribution, else \(0\).
 
 %
 For evaluation of classification tasks, one can align the standard notion of accuracy with minimax
 fairness by conditioning on the sensitive attributes and taking the minimum (worst) over the
 resulting set of \(|\gS|\) values. 
 %
-In the domain-generalisation/group-robustness literature this quantity is commonly known as
-\ac{RobAcc}.
+In the \ac{DG}/group-robustness literature this quantity is commonly known as \ac{RobAcc}.
 %
 For convenience and clarity, we first restate standard (non-conditional) accuracy as 
 %
@@ -300,17 +299,16 @@ The `robust' version (\acs{RobAcc}) is then simply the minimum accuracy computed
  \end{equation}
 %
  with \( \gD^{eval}_{S=s} \) denoting the \(s\)th one of such subsets.
-
-% ------------------------------------------------------------------------------ 
- \subsection{\Acf{IF}}\label{ssec:individual-fairness}
-% ------------------------------------------------------------------------------ 
-While notions of group fairness consider fairness at the level of demographic groups,
-\ac{IF} focusses -- as expected of the name -- on fairness at the individual
-level, and may be pithily summed up with the apophthegm `similar individuals should receive similar
-treatments'.
 %
-As alluded to before, the premise of \ac{IF} greatly resembles the smoothness
-assumption from SemiSL. 
+% ------------------------------------------------------------------------------ 
+ \subsection{\Acl{IF}}\label{ssec:individual-fairness}
+% ------------------------------------------------------------------------------ 
+While notions of group fairness consider fairness at the level of demographic groups, \ac{IF}
+focusses -- as expected of the name -- on fairness at the individual level, and may be pithily
+summed up with the apophthegm `similar individuals should receive similar treatments'.
+%
+As alluded to before, the premise of \ac{IF} greatly resembles the smoothness assumption from
+SemiSL. 
 %
 We mentioned in its associated section that the smoothness assumption can be seen as a
 \(K\)-Lipschitz constraint on our function class and this is the manner in which the \emph{Fairness
@@ -319,7 +317,7 @@ Through Awareness} (FTA) -- the most general concept of \ac{IF} -- is couched in
 %
 The central question implied by FTA then is what constitutes an appropriate measure of similarity
 -- in the input and output spaces separately -- for the population and task under consideration.
-
+%
 % ------------------------------------------------------------------------------ 
 \subsection{Bias propagation and systematic censoring}\label{ssec:residual-unfairness}
 % ------------------------------------------------------------------------------ 
