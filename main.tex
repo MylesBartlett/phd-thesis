@@ -143,8 +143,7 @@ titlepage,numbers=noenddot,%1headlines,
   %\def\bflabel#1{{#1\hfill}}
   \def\bflabel#1{{\acsfont{#1}\hfill}}
   \def\aclabelfont#1{\acsfont{#1}}
-% \usepackage{glossaries}
-% \input{glossary.tex}
+% \usepackage[acronym]{glossaries}
 
 \makeatletter
 \newcommand{\acposs}[1]{%
@@ -554,18 +553,19 @@ margin=35mm]{geometry}
   \printbibliography
 \end{refsection}
 %
-\begin{refsection}[background]
-  \include{background/main}
-  \printbibliography
-\end{refsection}
+\begin{refsection}[background] \include{background/main} \printbibliography \end{refsection}
 %
 \cleardoublepage
 %
 \ctparttext{
+  %
   This part comprises three publications, two peer-reviewed and published at top ML conferences,
-  one a work-in-progress; the former have been adapted for this thesis textually, to improve
-  clarity, technical correctness, and consistency (both internally and between works) but are
-  limited in scope and the preponderance of the text remains as-published.
+  one forever work-in-progress (but is no less a paper for it, I might opine);
+  %
+  the former have been adapted for this thesis textually, with the view to improve clarity,
+  technical correctness, and consistency (both internally and between works) but are limited in
+  scope and the preponderance of the text remains as-published.
+  %
 }\part{Middle}\label{pt:middle}
 %
 \begin{refsection}[nifr]
@@ -583,7 +583,15 @@ margin=35mm]{geometry}
   \printbibliography
 \end{refsection}
 %
-\ctparttext{}\part{End}\label{pt:end}
+\ctparttext{
+  %
+  This part marks the end of this thesis and the thread of its tale.
+  %
+  Herein, I discuss the works presented in Part~\ref{pt:middle} retrospectively, including their
+  merits and demerits, their broader context (both contemporaneous and present), and what the
+  future may yet hold for the avenues explored given current trends.
+  %
+}\part{End}\label{pt:end}
 %
 \begin{refsection}[all]
   \include{discussion}

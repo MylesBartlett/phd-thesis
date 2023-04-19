@@ -1,6 +1,7 @@
 \section{Preliminaries}\label{sec:prelims}
 % ----------------------------------------
 \subsection{Problem setting}
+%
 In the standard supervised setting, one is given a dataset, \( \gD_l \triangleq \{x_i,
 y_i\}_{i=1}^{N_l} \), and trains a model, parameterised by \(\theta\), to well-approximate the
 empirical distribution as \( p_\theta(y | x) \).
@@ -9,12 +10,11 @@ Labelled data is limited by the cost of annotation yet one often has access to a
 of unlabelled data, \( \gD_u \triangleq \{x_i\}_{i=1}^{N_u} \), which can be used to supplement
 \(\gD_l\). 
 %
-Semi-supervised learning is motivated by the idea that this additional data can often be used to
-improve the ID and/or OOD performance of \(p_\theta(y | x)\).
+\Acf{SemiSL} is motivated by the idea that this additional data can often be used to improve the
+\ac{ID} and/or \ac{OOD} performance of \(p_\theta(y | x)\).
 %
-We can view unsupervised domain adaptation (UDA) as a special case of semi-supervised learning,
-where there is assumed to be some distribution shift (adverse to a na\"ively-trained predictor)
-between \( \gD_l \) and \( \gD_u \).
+We can view \acf{UDA} as a special case of \ac{SemiSL}, where there is assumed to be some
+distribution shift (adverse to a na\"ively-trained predictor) between \( \gD_l \) and \( \gD_u \).
 %
 Here, \( \gD_u \) comes from the domain on which \(p_\theta(y | x)\) is to be evaluated, such that
 we have \( \gD_u \triangleq \gD_\mr{OOD} \), where \( \gD_\mr{OOD} \) denotes the target domain,
@@ -39,20 +39,20 @@ training data sourced from a mixture of domains which can be leveraged to learn 
 invariance that extends to those domains outside the training distribution
 \cite{arjovsky2019invariant}.
 %
-Such a learning paradigm is referred to as domain generalisation (DG).
+Such a learning paradigm is referred to as \acf{DG}.
 %
-While some DG works consider the more extreme case of $s$ being unobserved
+While some \ac{DG} works consider the more extreme case of $s$ being unobserved
 \citep{creager2021environment}, we follow the more conventional setup \citep{arjovsky2019invariant,
-krueger2021out, SagWeiLeeGaoetal22} in which the domain(s) associated with each sample (labelled and
-unlabelled) is indicated by the discrete label (set of labels) $s$. 
+krueger2021out, SagWeiLeeGaoetal22} in which the domain(s) associated with each sample (labelled
+and unlabelled) is indicated by the discrete label (set of labels) $s$. 
 %
-We denote the set of possible domains for the in-distribution labelled and unlabelled data, as \(
-\gS_l$ and $\gS_u \), respectively, and their union as \( \gS \triangleq S_l \cup S_u \).
+We denote the set of possible domains for the \ac{ID} labelled and unlabelled data, as \( \gS_l$
+and $\gS_u \), respectively, and their union as \( \gS \triangleq S_l \cup S_u \).
 %
-Following the setup established in \cite{SagWeiLeeGaoetal22}, \( \gD_u \) is assumed to be unlabelled
-only w.r.t the targets and not w.r.t the domain labels and thus that both \( \gD_l \) and \( \gD_u
-\) can be augmented with the latter to give the re-definitions \( \gD_l \triangleq \{ x_i, y_i, s_i
-\}_{i=1}^{N_l} \) and \( \gD_u \triangleq \{x_i, s_i \}_{i=1}^{N_u} \).
+Following the setup established in \cite{SagWeiLeeGaoetal22}, \( \gD_u \) is assumed to be
+unlabelled only \wrt{} the targets and not w.r.t the domain labels and thus that both \( \gD_l \)
+and \( \gD_u \) can be augmented with the latter to give the re-definitions \( \gD_l \triangleq \{
+  x_i, y_i, s_i \}_{i=1}^{N_l} \) and \( \gD_u \triangleq \{x_i, s_i \}_{i=1}^{N_u} \).
 
 \subsection{Statistical matching} 
 \import{./}{matching.tex}

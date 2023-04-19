@@ -98,7 +98,7 @@ Incorporating this requirement naturally gives rise to the following objective f
   \min_{\theta}
   \E_{(X,S) \sim P^{tr}_{(X, S)}} [
   \lambda \gI(f_\theta(X);S) -\log p_\theta(X) 
-  ]
+  ],
   \label{eq:objectivetheory}
 \end{align}
 %
@@ -138,9 +138,9 @@ tr }_{ (x, s) } \), and \( H(\cdot, \cdot) \) denotes the cross-entropy between 
 probabilities and the degenerate target distribution given by the one-hot-encoded labels, $e_{s}
 \in \{0, 1\}^{|\gS|}$.
 %
-In practice, this adversarial term is realised using a gradient reversal layer (GRL;
+In practice, this adversarial term is realised using a Gradient Reversal Layer (GRL;
 \cite{ganin2016domain}) between \(z_u\) and \(g\), as is common for adversarial approaches for
-domain adaptation and fair representation learning~\citep{edwards2016censoring}.
+\acl{DA} and \acl{FRL}~\citep{edwards2016censoring}.
 %
 \subsection{The Disentanglement Dilemma}
 %
@@ -280,7 +280,7 @@ expatiate on below.
 %
 \paragraph{Invertible Neural Networks.}
 %
-\Acp{INN} embody a class of \ac{NN} characterised by a bijective mapping between their
+\Acp{INN} embody a subclass of neural networks characterised by a bijective mapping between their
 inputs and output \citep{Dinh2014}. 
 %
 The transformations are designed such that their inverses and Jacobians are exactly and efficiently
@@ -345,7 +345,7 @@ Critically, this forces the mean of each latent dimension to zero, thereby enabl
 The invertible property of the network guarantees the preservation of all information relevant to
 $y$ which is independent of $s$, regardless of how it is allocated in the output space. 
 %
-Secondly, we conjecture that the encodings are more robust to out-of-distribution data. 
+Secondly, we conjecture that the encodings are more robust to \ac{OOD} data. 
 %
 Whereas an \acf{AE} could map a previously seen input and a previously unseen input to the same
 representation, an invertible network sidesteps this due to the network's bijective property,
@@ -361,7 +361,7 @@ We interpret the representation $z$ as being the concatenation of two subembeddi
 \triangleq [z_u, z_b] \). 
 %
 The dimensionality of $z_b$ (and $z_u$, by complement) is a free parameter (see
-section~\ref{sec:optimisation-details} for tuning strategies). 
+\S\ref{sec:nifr-optimisation-details} for tuning strategies). 
 %
 As $f$ is invertible, $x$ can be recovered as such:
 %

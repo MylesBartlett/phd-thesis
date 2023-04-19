@@ -1,4 +1,5 @@
 \paragraph{Invariant learning}
+%
 \citet{SohDunAngGuetal20} and \citet{creager2021environment} both consider a similar problem, where
 the data also exhibits a two-level hierarchy formed by classes and subgroups.
 %
@@ -14,9 +15,9 @@ however their particular clustering method requires access to the class labels n
 deployment set, as does the training of the robust classifier.
 
 \paragraph{Unsupervised domain adaptation}
-In unsupervised domain adaptation (UDA), there are typically one or more source domains, for which
-training labels are available, and one or more unlabelled target domains to which we hope to
-generalise the classifier.
+%
+In \acf{UDA}, there are typically one or more source domains, for which training labels are
+available, and one or more unlabelled target domains to which we hope to generalise the classifier.
 %
 A popular approach for solving this problem is to learn a representation that is invariant to the
 domain using adversarial networks \citep{ganin2016domain} or non-parametric discrepancy measures
@@ -35,22 +36,25 @@ when this is not the case, matching will result in misalignment due to differenc
 class-conditional support.
 %
 The second comparison is more germane but ignores an important aspect of our problem: the presence
-of spurious correlations.
+of \acp{SC}.
 %
 
 Similar to us, \citet{tong2022adversarial} utilise adversarial methods to align the support of two
 distributions in a semi-supervised regime -- specifically, they propose to use symmetric support
 difference as a divergence measure which they realise using a discriminator. 
-However, their method focuses on label-shift in the UDA
-setting and does not consider the hierarchical structure that exists within the source (training)
-and target (deployment) domains, and as such they do not consider the notion of ``missing sources''
-that can arise due to said structure -- the characterisation of this problem is one of the two
-main contributions of this work (the other being our proposed solution). Furthermore, the
-discriminator used therein is applied instance-wise; we show in \ref{sec:ablations} that allowing
-the discriminator to model inter-sample relationships has tangible addition benefits when
-performing support-matching.
+%
+However, their method focuses on label-shift in the \ac{UDA} setting and does not consider the
+hierarchical structure that exists within the source (training) and target (deployment) domains,
+and as such they do not consider the notion of ``missing sources'' that can arise due to said
+structure -- the characterisation of this problem is one of the two main contributions of this work
+(the other being our proposed solution). 
+%
+Furthermore, the discriminator used therein is applied instance-wise; we show in
+\ref{sec:sm-ablations} that allowing the discriminator to model inter-sample relationships has
+tangible addition benefits when performing support-matching.
 
 \paragraph{Multiple instance learning}
+%
 Multiple instance learning \citep{maron1998framework} is a form of weakly-supervised learning in
 which samples are not labelled individually part as part of a set or \emph{bag} of samples.
 %
@@ -66,17 +70,22 @@ the training and deployment sets in the representation space of an encoder netwo
 %
 
 \paragraph{Positive unlabelled learning}
+%
 Learning from positive and unlabelled data, or \emph{PU learning}, refers to the
 binary-classification setup in which the labelled training data consists of only positive samples
 while additional unlabelled data is assumed to contain both positive and negative samples
-\citep{liu2002partially, liu2003building, bekker2020learning}. This is analogous to our problem
-setting if we consider the positive class to be all samples sources represented in the training
-set, collectively, while the missing sources collectively make up the negative class. However, the
-goal here is not merely to learn the classification boundary between the present and missing
-sources but to learn to classify the target class of a given sample independently of its subgroup.
+\citep{liu2002partially, liu2003building, bekker2020learning}. 
+%
+This is analogous to our problem setting if we consider the positive class to be all samples
+sources represented in the training set, collectively, while the missing sources collectively make
+up the negative class. 
+%
+However, the goal here is not merely to learn the classification boundary between the present and
+missing sources but to learn to classify the target class of a given sample independently of its
+subgroup.
+%
 This is equivalent to requiring that a classifier trained to distinguish between positive and
 negative classes, according to the aforementioned PU learning setup, from the pre-logits layer of
 our desired classifier be maximally entropic -- we propose to use adversarial learning to achieve
 this.
-
-% \paragraph{Fairness}
+%

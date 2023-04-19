@@ -10,7 +10,7 @@ Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and 
 respectively.
 %
 Based on this assumption, the method of Risk Minimisation seeks the hypothesis \( f^\ast \in \gF \)
-that is the minimiser of the \emph{risk}, $\gR$, defined according to some statistical distance, of
+that is the minimiser of the \emph{risk}, $\gR$, defined according to some statistical distance, or
 \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted, \(\hat{Y}
 \triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution, \(P^{tr}(X,
 Y)\). 
@@ -30,12 +30,12 @@ the sum of the \ac{KL} Divergence (also known as the \emph{relative entropy}),
 %
 When the latter carries no dependence on the learned parameters -- as is generally the case, save
 for certain cases of model-distillation, consistency-regularisation etc. -- the term vanishes from
-the gradient, leaving just the KL term.
+the gradient, leaving just the \acs{KL} term.
 %
 Returning from this brief aside, we can formally define the (population or true) risk as
 %
 \begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ D ( f(X,
-    Y) )]
+    Y) )].
     % \gR(f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } \[ D (f(X), Y) \].
 \end{equation}
 %
@@ -43,10 +43,9 @@ In practice, of course, one does not have access to the true generative distribu
 finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
 observed input-target pairs \( (x, y) \). 
 %
-Thus, we are instead doing \emph{empirical} risk minimisation (\ac{ERM};
-\cite{vapnik1991principles}), defined as the risk is instead defined over the empirical
-distribution, a finite set of observations, rather than over the underlying distribution from which
-those observations were drawn.
+Thus, we are instead doing \acf{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
+is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
+than over the underlying distribution from which those observations were drawn.
 % %
 To accommodate this discrepancy, two things need to be accounted for. 
 %
@@ -96,7 +95,7 @@ then generalise Eq.~\ref{eq:emp_risk} to
 \begin{equation*} \label{eq:emp_risk_weighted} \hat{\gR}(f) \triangleq \sum_{(x, y) \in \gD^{tr}} w
 \cdot \ell (f(x), y), \end{equation*}
 % %
-with `\( \cdot \)' denoting regular scalar multiplication (over \(\gR\)), noting that this form
+with `\( \cdot \)' denoting regular scalar multiplication (over \(\R\)), noting that this form
 subsumes the unweighted form, which itself can be recovered by simply fixing \(w\) to \(
 |\gD^{tr}|^{-1} \) for all instances.
 %
@@ -119,14 +118,14 @@ intersections, such that they are equifrequent, and \iid{} sampling from that su
 \gD^{tr}_{\text{US}} \subset \gD^{tr} \) (or, conversely by duplicating instances from the minority
 classes to the same end).
 % %
-Under- and over-sampling (US and OS, respectively) have long been used as a remedy for class
-imbalance \citep{chawla2002smote} but the former has recently been shown to be effective --
-matching or exceeding in performance more sophisticated algorithms -- for group robustness and
+Under- and over-sampling have long been used as a remedy for class imbalance
+\citep{chawla2002smote} but the former has recently been shown to be effective -- matching or
+exceeding in performance more sophisticated algorithms -- for group robustness and
 spurious-correlation problems \citep{sagawa2020investigation, idrissi2022simple} in part due to its
 early-stopping effect.
 
 Despite its intuitiveness and long history, with roots in early statistical modelling, the
-practical usefulness of importance-weighted \ac{ERM} in the context of modern deep learning has recently
+practical usefulness of importance-weighted \ac{ERM} in the context of modern \acf{DL} has recently
 been impugned \citep{byrd2019effect, zhai2022understanding}.
 %
 \cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
@@ -186,17 +185,17 @@ distribution.
 %
 By `confounding variable', or \emph{confounder}, we mean some variable that is that is the causal
 parent of two or more other variables and explains the statistical dependency between them despite
-those variables not being causally related themselves; in the trivariate case this corresponds to
+those variables not being causally-related themselves; in the trivariate case this corresponds to
 the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
 and \(Y\) that is eliminated by conditioning on the confounder \(S\).
 %
-In the \ac{SCL} problems addressed in Chapters \ref{ch:nifr} and \ref{ch:supmatch}, we will see
-statistical learning breakdown in a similar way yet for essentially the opposite reason.
+In the \ac{SCL} problems addressed in Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, we will see
+statistical learning break down in a similar way yet for essentially the opposite reason.
 %
-Namely, instead of having latent variable that explains the statistical dependency \(X\) between
-\(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\) on
-which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to be
-the true causal mechanism.
+Namely, instead of having latent variable that explains the statistical dependency between \(X\)
+and \(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\)
+on which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to
+be the true causal mechanism.
 %
 We will delve more deeply into what \ac{SCL} is and how the mechanisms that give rise to it in
 \S\ref{sec:shortcut-learning}.

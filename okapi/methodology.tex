@@ -99,9 +99,9 @@ optimisation process.
 %
 To address this, we replace the standard $\mr{NN}$ algorithm with a propensity-score-based variant,
 inspired by the statistical matching framework \citep{rosenbaum1983central}.
-
+%
 \subsection{Cross-domain matching}\label{subsec:matching}
-
+%
 For the matching component of our algorithm, we propose to use a variant of $k$-NN which, in
 addition to incorporating the above cross-domain constraint, filters the queries and keys that
 represent probable outliers, according to their learned propensity scores.
@@ -128,17 +128,16 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
 
 %
 The propensity score, $e$, for a given sample $x$ is estimated as $p(s|z)$ using a linear
-classifier $f_\theta$, $h_\psi: \R^d \to \bigtriangleup^{|\gS|}$ where
-$\bigtriangleup^{|\gS|}$ is the probability simplex over possible domain labels, $\gS$.
-$h_\psi^d$ is trained via maximum (weighted) likelihood to predict the domain label of a given
-sample for all samples within the aggregate dataset $\gD$, or (typically) a subset of it,
-encoded by $f_\theta$.
+classifier $f_\theta$, $h_\psi: \R^d \to \bigtriangleup^{|\gS|}$ where $\bigtriangleup^{|\gS|}$ is
+the probability simplex over possible domain labels, $\gS$. $h_\psi^d$ is trained via maximum
+(weighted) likelihood to predict the domain label of a given sample for all samples within the
+aggregate dataset $\gD$, or (typically) a subset of it, encoded by $f_\theta$.
 %
 Since we apply both calipers to the learned propensity score, the shape of this distribution can
 have a significant effect on the outcome of matching.
 %
-Accordingly, we apply temperature-scaling, with scalar $\tau \in \R^+_\ast$, to the logits
-of $h_\psi$ (where $\bigtriangleup^{|\gS|}$ is induced by the softmax function) to modulate the
+Accordingly, we apply temperature-scaling, with scalar $\tau \in \R^+_\ast$, to the logits of
+$h_\psi$ (where $\bigtriangleup^{|\gS|}$ is induced by the softmax function) to modulate the
 resulting propensity-score distribution.
 %
 We denote the set of associated parameters (\{ $t_{f}, t_{\sigma}, \tau \}$, as the threshold for
@@ -163,8 +162,6 @@ aforementioned cross-domain and caliper-based constraints. We allow for the fact
 no valid matches for some samples due to these constraints; in such cases we have $\emptyset$ as
 the second element of their tuples, indicating that $\gL_{\mr{unsup}}$ should be set to $0$.
 %
-
-
 \subsection{Scaling up with Online Learning}\label{subsec:ol}
 %
 Re-encoding the dataset following each update of the feature-extractor, in order to recompute
@@ -233,9 +230,10 @@ that $V_k(z_q^\prime) \neq \emptyset$ (that is, under the condition that the est
 score for $z_q^\prime$ does not violate the caliper(s) and there are at least $k$ valid matches
 whose estimated propensity scores also do not), with the loss simply $0$ otherwise.
 %
-Since $\textcolor{tecol}{ f_{\theta^\prime} }$ is frozen, $\mbf{z}_k$ carries an implicit stop-gradient and gradients
-are computed only w.r.t. $\textcolor{oecol}{ \theta}$.
-These steps are illustrated pictorially in Fig~\ref{fig:pipeline} and as pseudocode in
+Since $\textcolor{tecol}{ f_{\theta^\prime} }$ is frozen, $\mbf{z}_k$ carries an implicit
+stop-gradient and gradients are computed only w.r.t. $\textcolor{oecol}{ \theta}$.
+%
+These steps are illustrated pictorially in Fig~\ref{fig:okapi-pipeline} and as pseudocode in
 Appendix~\ref{appx:pseudocode}.
 
 Similarly, rather than solving for the optimal parameters, $\psi^\star$ for the propensity scorer
@@ -243,55 +241,68 @@ given the current values of $\mbf{z}_k$, which is infeasible for the large value
 to well-approximate the full dataset, we resort to a biased estimate of $\psi^\star$.
 %
 Namely, we train $h_\psi$ in an online fashion to minimise the per-batch loss 
+%
 \begin{equation}
 \gL_\mr{ps} = \frac{1}{|\mbf{z}_k|} \sum_{ z \in \mbf{z}_k, s \in \mbf{s}_k } w_{\mbf{s}_k}(s) \gH(h_{\psi}(z), s), 
 \end{equation}
+%
 where $\gH$ is the standard cross-entropy loss between the predictive distribution and the
 (degenerate) ground-truth distribution, given by the one-hot encoded domain labels, and
 $w_{\mbf{s}_k}: \gS \to \R^+_*$ is a function assigning to each $s$ an importance weight
-\citep{shimodaira2000improving} based on the inverse of its frequency in $\mbf{s}_k$ to counteract label imbalance.
+\citep{shimodaira2000improving} based on the inverse of its frequency in $\mbf{s}_k$ to counteract
+label imbalance.
 %
 In the special case in which the $\gD_l$ and $\gD_u$ are known to have disjoint support over $S$
 (that is, $\gS_l \cap \gS_u = \varnothing$), we can substitute their domain labels with $1$ and
 $0$, respectively (such that we have $\gD_l \triangleq \{ x_i, y_i, 1 \}_{i=1}^{N_l}$ and $\gD_u
-\triangleq \{x_i, 0 \}_{i=1}^{N_u}$), thus reducing the propensity scorer and \CNN{} to their binary
+\triangleq \{x_i, 0 \}_{i=1}^{N_u}$), thus reducing the propensity scorer and \CNN{} to their
+binary
 forms. 
 %
-Knowing whether this condition is satisfied a priori (and thus whether the use
-of domain labels can be forgone completely from our pipeline) is not unrealistic: one may, for
-example know that two sets of satellite imagery cover two different parts of the world (e.g. Africa
-and Asia) yet not know the exact co{\"o}rdinates underlying their respective coverage.
+Knowing whether this condition is satisfied a priori (and thus whether the use of domain labels can
+be forgone completely from our pipeline) is not unrealistic: one may, for example know that two
+sets of satellite imagery cover two different parts of the world (e.g. Africa and Asia) yet not
+know the exact co{\"o}rdinates underlying their respective coverage.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/ol_pipe_new_new.pdf}
   \caption{
+    %
   Overview of Okapi's online-learning pipeline based using the iWildCam dataset for the sake of
   illustration.
+  %
   For simplicity, we limit $k$ to 1 so that the output of matching is a single vector rather than a
-  set of vectors; for the same reason we illustrate the process for only a single sample 
-  taken from the labelled data set $\gD_l$, annotated with both domain ($s$; in this case, \emph{camera
+  set of vectors; for the same reason we illustrate the process for only a single sample taken from
+  the labelled data set $\gD_l$, annotated with both domain ($s$; in this case, \emph{camera
   location}) and class ($y$) information.
+  %
   Inspired by recent advances in self-supervised learning, we maintain a copy (the target encoder)
   of the online encoder, $f_\theta$, whose parameters, $\theta^\prime$, are an exponential moving
   average (EMA) of $\theta$. 
+  %
   This EMA update is performed at the beginning of each training set at a rate governed by the
   decay coefficient, $\zeta$. 
-  For a given sample, we first compute its embedding using the target encoder to
-  produce the query vector, $z_q^\prime$, and by the online encoder to produce $z_q$, which will
-  serve as the 'anchor' in the consistency loss. 
+  %
+  For a given sample, we first compute its embedding using the target encoder to produce the query
+  vector, $z_q^\prime$, and by the online encoder to produce $z_q$, which will serve as the
+  'anchor' in the consistency loss. 
+  %
   This query vector is then used -- alongside the output of the propensity scorer -- by \CNN\ to
   compute its cross-domain nearest neighbour, $z_n$, where the keys are taken to be the current and
   past (stored in the Memory Bank) $N_\gM$ encodings of the data.
-  The cross-domain constraint, prohibiting matching of samples belonging to the same domain,
-  is denoted through a red colouring of the location identifiers, the nearest sample obeying
-  this constraint and the constraints of the calipers with purple highlighting.
+  %
+  The cross-domain constraint, prohibiting matching of samples belonging to the same domain, is
+  denoted through a red colouring of the location identifiers, the nearest sample obeying this
+  constraint and the constraints of the calipers with purple highlighting.
+  %
   The consistency loss is the distance between $z_q$ and $z_n$, defined by function some distance
   function $d$. 
+  %
   Finally, the supervised loss, $\gL_\mr{sup}$ (here instantiated as the standard cross-entropy
-  loss, $\gH$), is computed using the output of the predictor
-  acting on $z_q$ and the ground-truth given by $y$.
+  loss, $\gH$), is computed using the output of the predictor acting on $z_q$ and the ground-truth
+  given by $y$.
 %
   }
-  \label{fig:pipeline}
+  \label{fig:okapi-pipeline}
 \end{figure}

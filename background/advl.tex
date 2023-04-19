@@ -12,7 +12,7 @@ include those based on self-play in which one computes the best response against
 adversarial policies \citep{silver2017mastering, vinyals2019grandmaster}) and those that we shall
 discuss here -- the game can be formulated as a (zero-sum) minimax problem in which one player,
 \(\mu_{max}\), plays the role of the `maximiser', the other player, \(\mu_{min}\), the role of the
-minimiser; given that in ML we optimise some parametric model to minimise a loss function (via
+minimiser; given that in \ac{ML} we optimise some parametric model to minimise a loss function (via
 gradient descent), it is natural to view \(\mu_{min}\) as the model of interest, or `learner', and
 \(\mu_{max}\) as the `adversary` which frustrates \(\mu_{min}\) in order to improve its own payoffs
 (but with the end goal of the game ultimately being to improve \(\mu_{min}\) in some respect, such
@@ -28,7 +28,7 @@ response of the adversary at the previous iterate, i.e. \( \sigma_{max}^\ast|_{\
 %
 The best response is determined by each players respective utility, as measured by the
 player-specific function \(\pi: \Sigma \to \R^+\), with \(\Sigma\) denoting the space of strategic
-profiles,  a strategic profile itself referring to tuple of chosen strategies characterising a game
+profiles, a strategic profile itself referring to tuple of chosen strategies characterising a game
 state.
 %
 \marginpar{\textbf{Nash equilibria}}
@@ -91,31 +91,32 @@ In the latter applications, adversarial learning is frequently leveraged as an e
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
 related to the domain or sensitive group in \ac{DA}/\ac{DG} and \ac{AF}, respectively.
 %
-For this, both players take the form of an \ac{NN} with strategies defined by their parameters --
-\(\theta_{min} \in \Theta_{min}\) and \(\theta_{min} \in \Theta_{max}\) for the learner and
-adversary, respectively -- which they play according to their respective architectures, together
-constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time \Psi \to
-\R \).
+For this, both players take the form of a neural network with strategies defined by their
+parameters -- \(\theta_{min} \in \Theta_{min}\) and \(\theta_{min} \in \Theta_{max}\) for the
+learner and adversary, respectively -- which they play according to their respective architectures,
+together constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time
+\Psi \to \R \).
 %
-We note, incidentally, that due to the continuity and non-convexity of \ac{NN}s, it is unfortunately not
-possible to guarantee the existence of Nash Equilibria for the resulting games, only ones that are
-locally defined \citep{unterthiner2018coulomb}.
+We note, incidentally, that due to the continuity and non-convexity of the players in this case, it
+is unfortunately not possible to guarantee the existence of Nash Equilibria for the resulting
+games, only ones that are locally defined \citep{unterthiner2018coulomb}.
 %
-The game in question can then be couched in terms of the following countervailing objectives:
+The game in question can then be couched in terms of the following countervailing objectives,
+respective to the learner and its adversary:
 %
 \begin{itemize}
   %
-  \item \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
-    \(s\) associated with given a input \(x\), while having access to only the censored version
-    (representation) of the input produced by \(f_i\).
-    %
-  \item \textbf{learner}: create a censored version of the input, \(z\), that maximally minimises the
-    amount of information about \(s\) determinable from it. 
+  \item \textbf{learner}: create a censored version (representation) of the input, \(z\), that
+    maximally minimises the amount of information about \(s\) that is determinable from it. 
   %
+  \item \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
+    \(s\) associated with given a input \(x\), while having access to only said representation,
+    \(z\) produced by the learner.
+    %
 \end{itemize}
 %
 This game then gives rise to the following minimax objective function, for some dataset \(\gD\)
-made up of pairs of inputs, \(x\), and attributes to be censored, \(s\)
+made up of pairs of inputs, \(x\), and attribute(s) to be censored, \(s\)
 %
 \begin{align}
   %
@@ -151,10 +152,10 @@ alone.
 %
 
 Assume, for instance, that the task of interest is a classification one, such that we have on top
-of the infomin objective defined Eq.~\ref{eq:adv-infomin} an \emph{infomax} objective \wrt{} the
+of the infomin objective defined by Eq.~\ref{eq:adv-infomin} an \emph{infomax} objective \wrt{} the
 ground-truth label \(y\).
 %
-Only if the condition \(\gI(S; Y) \approx 0 \) (i.e. the target labels are uniformly distributed
+Only if the condition \( \gI(S; Y) \approx 0 \) (i.e. the target labels are uniformly distributed
 across \(\gS\)) holds can the infomin and infomax objectives be simultaneously satisfied, which is
 to say, in optimisation terms, that the inner product of the gradients of the two respective losses
 (\wrt{} \(\theta_{min}\)) is consistently non-negative and there is no trade-off, governed by the
@@ -173,7 +174,7 @@ When this observability does not hold, generally or for a subset of the data (th
 the case of \ac{UDA}), then matters are complicated, however, and approximations are required (e.g by
 clustering).
 %
-In Chapter \ref{ch:supmatch} we consider a problem of this nature and recast the problem as one of
+In Chapter~\ref{ch:supmatch} we consider a problem of this nature and recast the problem as one of
 aligning the supports of the training -- which is systematically missing certain combinations of
 \(s\) and \(y\) -- and deployment -- which is presumed unlabelled, as in \ac{UDA} -- sets.
 
@@ -218,8 +219,8 @@ approaches; here, we summarise the two most salient ones:
           while this allows for avoiding the aforementioned cycles it comes at a significant
           computational cost.
           %
-          In Chapter \ref{ch:nifr} we consider this pitfall and propose a middle ground of training
-          against a stochastic ensemble of adversaries.
+          In Chapter~\ref{ch:nifr} we consider this pitfall of cyclic dynamics and propose a middle
+          ground of training against a stochastic ensemble of adversaries.
          % 
 \end{enumerate}
 

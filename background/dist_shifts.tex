@@ -5,7 +5,7 @@ In this section, we provide a brief taxonomy of the types of distribution shift 
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
 %
 To this end, we draw heavily upon the works of \citet{moreno2012unifying} and
-\citet{castro2020causality} in our definitions, noting that the ML literature is not of a
+\citet{castro2020causality} in our definitions, noting that the \ac{ML} literature is not of a
 single mind regarding the terminology and its semantics.
 %
 In \S\ref{sec:lens-of-causality} we will reframe these distribution shifts in causal terms by
@@ -15,9 +15,10 @@ them in more general terms.
 % --------------------------------------------------------------------------------
 \subsection{Covariate shift}\label{ssec:covariate-shift}
 % --------------------------------------------------------------------------------
-The most well-studied of the shifts, simply put, covariate shift refers to a change in the marginal
+As the most well-studied of the shifts, covariate shift refers to a change in the marginal
 distribution of the inputs, that is to say we have \( P^{tr}(X) \not\approx P^{te}(X) \) while the
-conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \approx P^{te}(Y|X) \).
+conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \approx P^{te}(Y|X)
+\).
 %
 % NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
 % much meaning unless we presuppose the direction of causality.
@@ -81,12 +82,12 @@ Thus, in the classification setting, concept shift corresponds to a change in th
 annotate the data; this might entail, for example, changes in the class definitions, differences in
 annotation protocol or grading scales between sites,  or different proclivities/standards in the
 annotators in the case of human-driven annotation should the task possess an element of
-subjectivity (AI-alignment via RLHF \citep{bai2022training} being a prime and topical example of
-such a task).
+subjectivity (alignment via \ac{RLHF} being a prime and topical example of such a task
+\citep{bai2022training}).
 %
 In addition to the shifts discussed, one can naturally also consider their composition, giving rise
 to \emph{compound shifts}, in which both the marginal and conditional distributions are subject to
-change. Such shifts, however. are unusual in the literature, and, perhaps more pertinently,
+change. Such shifts, however, are unusual in the literature, and, perhaps more pertinently,
 impossible to solve unless one can draw upon strict assumptions, due to the need to decouple the
 constituent shifts (a problem of identifiability).
 %
@@ -113,11 +114,11 @@ modelled.
 That is to say, the data is not missing at random but rather conditionally, and most notably when
 the conditioning is on the target or some other characteristic, such as a particular demographic.
 %
-Thus, sampling bias is not a type of distribution shift in itself, but rather a mechanism by which the
-above-described distribution shifts can emerge, and it is particularly germane to Chapters 3 and 4
-of this thesis in which we consider extreme cases of it in which certain demographics, or outcomes
-for certain demographics, are omitted from the training data, promoting spurious correlations
-between said demographics and the outcome.
+Thus, sampling bias is not a type of distribution shift in itself, but rather a mechanism by which
+the above-described distribution shifts can emerge, and it is particularly germane to
+Chapters~\ref{ch:nifr} and \ref{ch:supmatch} of this thesis in which we consider extreme cases of
+it in which certain demographics, or outcomes for certain demographics, are omitted from the
+training data, promoting spurious correlations between said demographics and the outcome.
 %
 To give an example, in conducting a local survey there will invariably be subsets of the general
 population which are under-represented, or altogether excluded, from data-collection due to
@@ -142,7 +143,7 @@ models have been studied under the guises of Delayed Impact \citep{liu2018delaye
 Unfairness \citep{kallus2018residual}.
 %
 Indeed, the systematic censoring problem posed by \cite{kallus2018residual} served as a prime
-motivator for the setup considered in Chapter \ref{ch:nifr}, such that in the case of a binary
+motivator for the setup considered in Chapter~\ref{ch:nifr}, such that in the case of a binary
 decision system -- one designed for automated hiring, for instance -- and a population comprised of
 two subgroups, only positive outcomes are observed for the advantaged subgroup, while only negative
 outcomes are observed for the disadvantaged subgroup.

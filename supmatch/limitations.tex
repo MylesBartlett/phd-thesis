@@ -1,5 +1,5 @@
 \subsection{Limitation and intended use}
-\label{sec:limitations}
+\label{sec:sm-limitations}
 % First, dataset consumers should take extra care about the cost-benefit analysis of selecting particular datasets for their machine learning tasks. 
 %
 Although having zero labelled examples for some subgroups is not uncommon due to the effects of
@@ -13,8 +13,9 @@ We can then decide whether or not to take corrective action as described in this
 A limitation of the presented approach is that, for constructing the perfect bags used to train the
 disentangling algorithm, we have relied on knowing the number of clusters \emph{a priori},
 something that, in practice, is perhaps not the case. However, for person-related data, such
-information can, for example, be gleaned from recent census data. (see also
-Appendix~\ref{sec:overclustering} for results with misspecified numbers of clusters.)
+information can, for example, be gleaned from recent census data. 
+%
+(see also Appendix~\ref{sec:sm-overclustering} for results with misspecified numbers of clusters.)
 %
 % Removing this dependency through automatic determination of the number of clusters would
 % generalize our method further but this line of research is beyond the scope of the current paper. 

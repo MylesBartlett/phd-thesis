@@ -37,27 +37,27 @@
 \section*{Of what was said and the silence between}\label{sec:what-was-said}
 %
 I have introduced three methods, each a solution to a different problem, though with all problems
-conjoined by a notion of distributional-robustness.
+conjoined by a notion of distributional robustness.
 %
 \marginpar{\textbf{Synopsis}}
 %
 To briefly recount, and thereby set the scene for the discussion to follow: in
 Chapter~\ref{ch:nifr} we proposed an \ac{INN}-based transfer-learning approach -- transferring
 invariance from a partially-labelled representative set to the training set -- for solving a
-spurious correlation problem where for training samples the target is completely determined by the
+\ac{SC} problem where for training samples the target is completely determined by the
 sensitive attribute and because the latter is easier to learn it constitutes a shortcut;
 %
 in Chapter~\ref{ch:supmatch} we proposed to match in representation-space the support (of
 intersectional groups) of the training and deployment sets in order to overcome a relaxed version
-of aforesaid spurious-correlation problem where the deployment set is a dataset representative (in
-support) of the test set, but for which no annotations are required, in contrast to the
-representative set featured in Chapter~\ref{ch:nifr};
+of aforesaid \ac{SC} problem where the deployment set is a dataset representative (in support) of
+the test set, but for which no annotations are required, in contrast to the representative set
+featured in Chapter~\ref{ch:nifr};
 %
 finally, in Chapter~\ref{ch:okapi} we grappled with the problem of semi-supervised \ac{DG} -- by
 which I mean the problem of how to make effective use of unlabelled data drawn from extra domains
-to bolster out-of-distribution performance -- and proposed a consistency-regularised approach
-employing a robust, causally-inspired algorithm as a match-generation engine, with the matches
-bootstrapped from encodings guided (in optimisation) by past matches.
+to bolster \ac{OOD} performance -- and proposed a consistency-regularised approach employing a
+robust, causally-inspired algorithm as a match-generation engine, with the matches bootstrapped
+from encodings guided (in optimisation) by past matches.
 %
 Again, all of these works are mine but not unshared, for I owe much gratitude to all my
 co{\"a}uthors -- my colleagues, my advisors, my friends -- for allowing this thesis to become what
@@ -93,8 +93,9 @@ explicitly, or implicitly, gleaned -- for instance, by virtue of the images appe
 gender-specific catalogues -- whereas `Smiling' is not a feature to innately partition by (and we
 would assume that in the forgoing catalogue case that most models will be smiling), and these two
 attributes would indeed realistically serve well as the subgroup and target attributes,
-respectively, for Chapter 3's framework; it is less easy to intuit whether a shortcut would emerge
-though we contend there is no harm in taking the precaution if using a lossless encoder.
+respectively, for Chapter~\ref{ch:nifr}'s framework; it is less easy to intuit whether a shortcut
+would emerge though we contend there is no harm in taking the precaution if using a lossless
+encoder.
 %
 If it were `Hair Colour' that we sought invariance to and `Age' we were targeting (this combination
 plausible enough), however, we would not expect things to pan out nearly so neatly.
@@ -102,9 +103,8 @@ plausible enough), however, we would not expect things to pan out nearly so neat
 %
 The problem of learning distributional-robust models from biased data, and circumventing spurious
 correlations thereof, when the distributions (subgroups) in question are unknown has attracted
-considerable attention as of late -- \cite{HasSriNamLia18, SohDunAngGuetal20,
-creager2021environment, liu2021just, pezeshki2021gradient, taghanaki2022masktune, kim2022learning},
-inter alia.
+considerable attention as of late (\cite{HasSriNamLia18, SohDunAngGuetal20, creager2021environment,
+liu2021just, pezeshki2021gradient, taghanaki2022masktune, kim2022learning}, inter alia).
 %
 However, one must unavoidably rely on certain assumptions (inductive biases derived from prior
 knowledge of the task/domain) to compensate for the lack of information and the referenced methods
@@ -140,10 +140,10 @@ metric for tasks involving \emph{categorical} subgroups).
 
 \marginpar{\textbf{The idiosyncrasies and iniquities of adversarial infomin}}
 %
-I have spoken before of the practical deficiencies of the \ac{AdvL} paradigm in a DL context --
-namely the fragility of optimisation, disposition to cyclic dynamics, architectural dependency, and
-the loss of guarantees incurred by estimating the best-response dynamics with a finite (typically
-small) number of steps -- but it is apposite that we revisit these points again here,
+I have spoken before of the practical deficiencies of the \ac{AdvL} paradigm in a \ac{DL} context
+-- namely the fragility of optimisation, disposition to cyclic dynamics, architectural dependency,
+and the loss of guarantees incurred by estimating the best-response dynamics with a finite
+(typically small) number of steps -- but it is apposite that we revisit these points again here,
 retrospectively instead of prospectively.
 %
 Indeed -- as again spoken of before but of which there is again no harm recalling -- said
@@ -175,7 +175,7 @@ said engine integral to its identity, and is in fact modular, such that we may c
 interchange engines subject to their respective requirements.
 %
 In Chapter~\ref{ch:okapi} we induce invariance by non-adversarial means ourselves, namely by
-enforcing similarity between matching samples from different domains within representation space --
+enforcing similarity between matched samples from different domains within representation space --
 the adversary substituted with a non-parametric match-generator -- and we thereby avert many of the
 optimisation difficulties plaguing the aforementioned chapters, though the problem of judicious
 hyperparameter-selection lingers, or arguably amplified by the non-parametricity -- we point in the
@@ -186,7 +186,7 @@ implementation) avenue of extension.
 \marginpar{\raggedleft\textbf{On the problem of identifiability}}
 %
 A central question that I have perhaps given shorter shrift to than due, is that of the
-identifiability of bias -- a question of two aspects: 1) diagnosing those cases warranting
+identifiability of bias -- a question of two parts 1) diagnosing those cases warranting
 methodological (or data-sided) interventions, such as those delineated; 2) and evaluating the
 success of those interventions -- given the element of underspecification
 \citep{semenova2019study}.
@@ -198,11 +198,11 @@ may (and often will not be) practically realisable -- one need only ensure that 
 not degrade based on what is evaluable.
 %
 %
-This ethos of `do the best we can with what's available, regardless of the outcome', however is
-patently not an admirable one, however, and realistically one (a practitioner or collective) does,
-or should, aim to deploy models subject to their being sensible/unbiased (if only for reputation's
-sake) and to thoroughly diagnose, and attempt to remedy failure cases via well-measured and
-iterative processes.
+This cavalier ethos of `do the best we can with what's available [short of bringing humans into the
+loop], regardless of the consequences', however is patently not an admirable one, however, and
+realistically one (a practitioner or collective) does, or should, aim to deploy models subject to
+their being sensible/unbiased (if only for reputation's sake) and to thoroughly diagnose, and
+attempt to remedy failure cases via well-measured and iterative processes.
 %
 The problem of underspecification -- of validating models without access to data representative of
 that to-be-encountered at deployment time, as defines \ac{DG} -- that encapsulates the second
@@ -214,8 +214,8 @@ context of \ac{DG} specifically, where it risks invalidating inter-method compar
 %
 In absence of a such validation set by which to quantify biases and generalisation-failures, one
 may draw upon methods from the explainability/interpretability literature \citep{gunning2019xai} to
-determine the learned solutions align with the intended solutions; one may, for instance, readily
-diagnose the use of background as a shortcut, per the now-canonical example from
+determine whether the learned solutions align with the intended solutions; one may, for instance,
+readily diagnose the use of background as a shortcut, per the now-canonical example from
 \cite{beery2018recognition}, with a standard-method-in-that-literature in Grad-cam
 \cite{selvaraju2017grad}, allowing for a targeted intervention (e.g. by augmentation) -- one may
 even use the resulting attribution maps directly for this purpose as proposed by
@@ -274,9 +274,9 @@ bai2022training}), analogously termed \acf{RLAIF}.
 While \ac{RLHF} does not allow for sidestepping of annotations (which has been ameliorated by
 unprecedented levels of crowdsourcing), tuning based on preferences (given for pairs of responses)
 allows for increased expressivity compared with traditional supervised approaches, pertinent when
-the bias exists on a (difficult-to-quantify) spectrum or is fundamentally subjective in nature
-(different individuals or entire cultures have different conceptions may what is considered
-`offensive', for example).
+the bias exists on a (difficult-to-quantify) spectrum or is fundamentally subjective in nature.
+% (different individuals or entire cultures have different conceptions may what is considered
+% `offensive', for example).
 %
 RLXF (to coin a catch-all initialism for reinforcement learning from some kind of feedback) affords
 a spectacularly simple and general paradigm in terms of alignment and distributional robustness
@@ -316,13 +316,13 @@ downstream robustness for visual tasks, in both covariate \citep{hendrycks2019us
 hendrycks2020pretrained, radford2021learning} and target/subgroup senses \citep{liu2021self,
 goyal2022vision}, with \cite{goyal2022vision} showing that the pre-training corpus, if of
 sufficient scale (here being on the order of millions of samples), need not be curated for this to
-apply -- curation being the natural enemy of scalability, which itself can implies diversity and
-robustness, at least in the out-of-distribution sense (for it cannot  necessarily imply invariance
+apply -- curation being the natural enemy of scalability, which begets diversity which itself
+subserves robustness, at least in the \ac{OOD} sense (for it cannot  necessarily imply invariance
 in general).
 %
-Thus, for some \ood{}/\ac{DG} tasks, one may not need to resort to dedicated algorithms, but instead
-simply fine-tune, or use as is, the representations of such foundation models -- one may even be
-able to obviate the need to perform any manner of fine-tuning if the task in question is
+Thus, for some \ac{OOD}/\ac{DG} tasks, one may not need to resort to dedicated algorithms, but
+instead simply fine-tune, or use as is, the representations of such foundation models -- one may
+even be able to obviate the need to perform any manner of fine-tuning if the task in question is
 sufficiently general as to admit zero-shot solutions by vision-language models
 \citep{radford2021learning, alayrac2022flamingo}.
 %

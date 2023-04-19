@@ -1,7 +1,7 @@
 %
-\subsection{Perfect bags}\label{sec:implementation}
+\subsection{Perfect bags}\label{sec:sm-implementation}
 %
-A visual overview of our pipeline is given in Fig.~\ref{fig:pipeline}. 
+A visual overview of our pipeline is given in Fig.~\ref{fig:sm-pipeline}. 
 %
 Borrowing from the \ac{AF} literature \citep{chouldechova17,KleMulRag16}, we refer to a bag in
 which all elements of $\gG$ appear in equal proportions as a ``perfect bag'' (even if the balancing
@@ -9,7 +9,7 @@ is only approximate).
 %
 Our pipeline can be broken down into two steps: 1) sample perfect bags from an unlabelled
 deployment set; and 2) produce disentangled representations using the perfect bags via adversarial
-support-matching as described in \S\ref{ssec:realisation}.
+support-matching as described in \S\ref{ssec:sm-realisation}.
 
 \textbf{Constructing perfect bags via clustering.}
 %
@@ -54,7 +54,7 @@ to bound.
 For this error-bounding, we assume that the probability distribution distance measure used in
 Eq.~\ref{eq:objective} is the \emph{total variation distance} \(TV\). 
 %
-The proof can be found in Appendix~\ref{sec:theoretical-analysis}.
+The proof can be found in Appendix~\ref{sec:sm-theoretical-analysis}.
 
 \begin{theorem}
 %

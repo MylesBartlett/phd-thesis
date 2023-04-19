@@ -76,7 +76,7 @@
   \pdfbookmark[1]{Acronyms}{acronyms}
   \markboth{\spacedlowsmallcaps{Acronyms}}{\spacedlowsmallcaps{Acronyms}}
   \chapter*{Acronyms}
-  % \import{./}{acronyms}
+  %
   \begin{acronym}[UMLX]
     %
     \acro{AE}{Auto-encoder}
@@ -88,6 +88,7 @@
     \acro{DA}{Domain Adaptation}
     \acro{DG}{Domain Generalisation}
     \acro{DL}{Deep Learning}
+    \acro{DNN}{Deep Neural Network}
     \acro{DP}{Demographic Parity}
     \acro{DRO}{Distributional Robust Optimisation}
     \acro{DR}{Distributional Robustness}
@@ -96,12 +97,11 @@
     \acro{ER}{Equalised Rate}
     \acro{EqOd}{Equalised Odds}
     \acro{EqOp}{Equality of Opportunity}
-    \acro{FNR}{False Negative Rate}
     \acro{FPR}{False Positive Rate}
     \acro{FRL}{Fair-Representation Learning}
     \acro{GAN}{Generative Adversarial Network}
     \acro{HGRMC}{Hirschfeld-Gebe\-lein-R\'enyi Maximal Correlation}
-    \acro{HGR}{Hirschfeld-Gebe\-lein-R\'enyi}
+    \acro{ID}{In-Distribution}
     \acro{IF}{Individual Fairness}
     \acro{INN}{Invertible Neural Network}
     \acro{IW}{Importance Weight}
@@ -114,7 +114,7 @@
     \acro{MOO}{Multi-objective Optimisation}
     \acro{MS}{Missing Sources}
     \acro{NF}{Normalising Flow}
-    \acro{NN}{Neural Network}
+    \acro{OOD}{Out-of-Distribution}
     \acro{PF}{Pareto Frontier}
     \acro{PO}{Pareto Optimal}
     \acro{RLAIF}{Reinforcement Learning from AI Feedback}
@@ -122,10 +122,10 @@
     \acro{RobAcc}{Robust Accuracy}
     \acro{SCL}{Shortcut Learning}
     \acro{SC}{Spurious Correlation}
+    \acro{SGD}{Stochastic Gradient Descent}
     \acro{SL}{Supervised Learning}
     \acro{SelfSL}{Self-Supervised Learning}
     \acro{SemiSL}{Semi-Supervised Learning}
-    \acro{SGD}{Stochastic Gradient Descent}
     \acro{TNR}{True Negative Rate}
     \acro{TPR}{True Positive Rate}
     \acro{UDA}{Unsupervised Domain Adaptation}
@@ -143,22 +143,22 @@
   %*******************************************************
   % Nomenclature
   %*******************************************************
-  \pdfbookmark[1]{Nomenclature}{nomenclature}
-  \markboth{\spacedlowsmallcaps{Nomenclature}}{\spacedlowsmallcaps{Nomenclature}}
-  \begin{nomenclature}
-    \entry{$P$}{Probability}
-    \entry{$s$}{Sensitive attribute/spurious attribute/subgroup label}
-    \entry{$S$}{Random variable for the sensitive attribute/spurious attribute/subgroup label}
-    \entry{$\gS$}{Set of possible values for the sensitive attribute/spurious attribute/subgroup label}
-    \entry{$\vx$}{Input features (without the \(s\) attribute)}
-    % \entry{$\hat{\vx}$}{Reconstructed input}
-    \entry{$y$}{Class label (ground truth)}
-    \entry{$Y$}{Random variable for the class label}
-    \entry{$\gY$}{Set of possible values for the class label}
-    \entry{$\hat{y}$}{Predicted label}
-    \entry{$\bar{y}$}{Fair target label}
-    \entry{$\vz$}{Encoding of $\vx$}
-  \end{nomenclature}
+  % \pdfbookmark[1]{Nomenclature}{nomenclature}
+  % \markboth{\spacedlowsmallcaps{Nomenclature}}{\spacedlowsmallcaps{Nomenclature}}
+  % \begin{nomenclature}
+  %   \entry{$P$}{Probability}
+  %   \entry{$s$}{Sensitive attribute/spurious attribute/subgroup label}
+  %   \entry{$S$}{Random variable for the sensitive attribute/spurious attribute/subgroup label}
+  %   \entry{$\gS$}{Set of possible values for the sensitive attribute/spurious attribute/subgroup label}
+  %   \entry{$\vx$}{Input features (without the \(s\) attribute)}
+  %   % \entry{$\hat{\vx}$}{Reconstructed input}
+  %   \entry{$y$}{Class label (ground truth)}
+  %   \entry{$Y$}{Random variable for the class label}
+  %   \entry{$\gY$}{Set of possible values for the class label}
+  %   \entry{$\hat{y}$}{Predicted label}
+  %   \entry{$\bar{y}$}{Fair target label}
+  %   \entry{$\vz$}{Encoding of $\vx$}
+  % \end{nomenclature}
 
   % \vspace{8ex}
   % \clearpage
@@ -170,17 +170,89 @@
   \pdfbookmark[1]{Glossary}{glossary}
   \markboth{\spacedlowsmallcaps{Glossary}}{\spacedlowsmallcaps{Glossary}}
   \begin{glossaryenv}
-    \entry{Adult/Census Income}{A popular fairness dataset based on census data from the U.S.}
-    \entry{CelebA}{Face attributes dataset with more than 200K ce\-le\-bri\-ty images}
-    \entry{MNIST}{Dataset of handwritten digits}
-    \entry{demographic group}{Set induced by the sensitive attribute}
-    \entry{fairness definition}{An aspirational (often legally inspired) specification of a fair classifier}
-    \entry{fairness metric}{A metric which quantifies how well a fairness definition is satisfied}
-    \entry{sensitive attribute}{An attribute that, usually for legal or ethical reasons, should not be the basis for classification}
-    \entry{spurious attribute}{An attribute that is correlated with the prediction target in the training set but not in the deployment setting}
-    \entry{subgroup label}{A label indicating subgroups that should all be handled equally well by the classifier}
-  \end{glossaryenv}
+    %
+    \entry{CelebA}{
+        %
+      A popular benchmark computer-vision dataset comprising more than 200K celebrity head-shots
+      annotated with various physical and affective attributes, such as `Smiling', `Gender', and
+      `Age'.
+      %
+      The dataset has cemented itself as one of the principal benchmark datasets in the \ac{AF} and
+      \ac{DRO} literature due to the \acp{SC} consequent of its (conditional) label-imbalance (
+      `Blond' individuals being predominantly female, for instance).
+      %
+    } 
+    %
+    \entry{Domain}{ 
+      %
+      The 'source' of a particular subset of the data, each domain assumed to embody a different
+      sub-distribution of the collective data induced by, for instance, variations in recording
+      equipment, category (in the context of sentiment analysis), environs, geography (in the
+      context of remote sensing), and weather conditions. 
+      %
+      Thus, like with sensitive attribute, the domain imposes some secondary structure on the data
+      and in the context of \ac{DA} and \ac{DG} I will talk of desiring invariance to this
+      structure, a desideratum that aligns with that of \ac{AF} (at least in certain senses).
+      %
+      I would note that I also use, with some frequency, \textbf{domain} in the functional-analysis
+      sense, referring to the space of expected input values (correlatively with codomain),
+      however, it should hopefully always be clear from the context which sense I am invoking.
+    %
+    } 
+    %
+    \entry{Environment}{
+      %
+      See \textbf{domain}.
+      %
+    }.
+    %
+    \entry{MNIST}{
+      \noindent
+      %
+      A dataset of handwritten digits (itself derived from a larger dataset known as the NIST
+      Special Database) and a foundational computer-vision benchmark that continues to see use even
+      to this day under a variety guises, despite its simplicity (this simplicity, making it
+      well-suited for demonstrating feasibility).
+      %
+      In this thesis I will talk of a colourised version of the dataset, in both
+      Chapters~\ref{ch:nifr} and \ref{ch:supmatch} -- variants of which have seen widespread
+      adoption in the \ac{DG} literature, most notably in \citep{arjovsky2019invariant} -- where
+      the colourisation is performed correlatively with the digit labels so as to induce a \ac{SC}.
+      %
+    } \entry{Protected attribute}{
+      %
+      See \textbf{sensitive attribute}.
+      %
+    } \entry{Sensitive attribute}{
+      %
+      An attribute of the data that, for legal or ethical reasons, should not be factored into the
+      predictions of a model, and \wrt{} fairness metrics are computed to judge the degree of this
+      violation.
+    %
+    } \entry{Subgroup}{
+      %
+      The general term  (void of any subfield-specific connotations) for sensitive attribute and
+      domain (and, transitively, their synonyms), and thus referring to a given secondary group,
+      partition, or sub-distribution of the data.
+    %
+    }
 
+    \entry{UCI Adult (Income)}{
+      %
+      A popular tabular \ac{AF} dataset derived from U.S. census data; the canonical task is to
+      predict whether an individual earns $\$50$K or more (positive class) or not (negative class)
+      and the sensitive attribute, \wrt{} which fairness is computed, is typically taken to be
+      `Sex' `Race', or `Age`.
+      %
+    } \entry{WILDS}{
+      %
+      A suite of datasets (spanning various tasks, domains, and modalities) for evaluating the
+      distributional-robustness/\ac{DG} capabilities of models under in-the-wild (real-world)
+      distributions shifts.
+      %
+    }
+  %
+  \end{glossaryenv}
 
 
 \endgroup

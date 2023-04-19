@@ -2,7 +2,7 @@
 \section{ Semi-supervised learning }\label{sec:semisl}
 % ********************************************************************************
 %
-Given that this thesis references \acf{SemiSL}
+Given that this thesis references \ac{SemiSL}
 %
 \footnote{ 
   %
@@ -16,10 +16,9 @@ in its title, it is only appropriate that a part of this background section be d
 topic.
 %
 However, we note that the methods introduced in this thesis are not tailored for the typical
-\ac{SemiSL}
-regime wherein one hopes to draw upon a large corpus of unlabelled data to shore up the paucity of
-annotated data available for direct supervision, with the assumption being that the unlabelled and
-labelled data are drawn from the same distribution.
+\ac{SemiSL} regime wherein one hopes to draw upon a large corpus of unlabelled data to shore up the
+paucity of annotated data available for direct supervision, with the assumption being that the
+unlabelled and labelled data are drawn from the same distribution.
 %
 Rather, the unifying theme across the constituent papers is how one can use unlabelled data to
 buttress against different types of distribution shift.
@@ -62,8 +61,8 @@ perspective, namely, as \ac{SL} with additional information \citep{chapelle2009s
 %
 \marginpar{\textbf{Transduction}}
 %
-Closely related to \ac{SemiSL} is the idea of \emph{Transductive Learning} (TL), as pioneered by Vapnik
-\citep{gammerman1998learning}. 
+Closely related to \ac{SemiSL} is the idea of \emph{Transductive Learning} (TL;
+\citealp{gammerman1998learning}).
 %
 With TL, rather than pursuing the lofty goal of learning a predictor that can generalise across the
 entire input domain, \( \gX \) -- reflecting the inductive process of extrapolation -- one instead
@@ -88,8 +87,8 @@ goal of generalising between two specific domains -- with the target domain give
 -- while the latter has the inductive goal of generalising to all possible domains.
 %
 Niceness of this inter-field parallel aside, we afford TL particular mention here due to its
-pertinence in Chapter 4, wherein we consider the possibility of using the test set itself as a
-reference dataset for the proposed matching procedure.
+pertinence in Chapter~\ref{ch:supmatch}, wherein we consider the possibility of using the test set
+itself as a reference dataset for the proposed matching procedure.
 
 
 % --------------------------------------------------------------------------------
@@ -153,13 +152,12 @@ grouping together those that are sufficiently close (dense) -- rather than on th
 them -- that is, the problem of choosing the set of separating planes with sufficiently-low path
 integrals.
 %
-A classical example of a \ac{SemiSL} method derived from this principle is Transductive Support Vector
-Machines (TSVMs; \cite{joachims1999transductive}), which share inductive Support Vector Machines
-(SVMs) aim of maximising the margin between the decision boundary and nearest data-points (the
-\emph{support vectors}) -- yielding the \emph{maximum margin hyperplane} -- yet consider both the
-(labelled) training and (unlabelled) test data during this procedure.
+A classical example of a \ac{SemiSL} method derived from this principle is the Transductive Support
+Vector Machine (TSVM; \cite{joachims1999transductive}), which shares the inductive Support Vector
+Machine's (SVM's) aim of maximising the margin between the decision boundary and nearest
+data-points (the \emph{support vectors}) -- yielding the \emph{maximum margin hyperplane} -- yet
+considers both the (labelled) training and (unlabelled) test data during fitting.
 %
-
 \marginpar{\textbf{Smoothness Assumption}} 
 %
 The final member of the triad, the \emph{smoothness assumption}, can be viewed as imposing a kind
@@ -190,9 +188,9 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  neighbourhood graph) and then seek to minimise the distance between them in \( \gY \), thereby
  partially discretising the problem but allowing for increased flexibility.
  %
- This is capitalised on in Chapter 4 we propose a consistency-regularised method for \ac{DG} where pairs
- are determined by a cross-domain causal-matching algorithm and consistency is enforced between the
- members of those pairs.
+ This is capitalised on in Chapter~\ref{ch:okapi} we propose a consistency-regularised method for
+ \ac{DG} where pairs are determined by a cross-domain causal-matching algorithm and consistency is
+ enforced between the members of those pairs.
  %
 % --------------------------------------------------------------------------------
  \subsection{Causal connections: when should(n't) \acs{SemiSL} work?}\label{ssec:semisl-causality}
@@ -207,7 +205,7 @@ the when \(X\) is the causal parent to \(Y\), as in the supposed case, a better 
 compasses to learn using unlabelled data.
 %
 However, that is not to say that \ac{SemiSL} as in its totality is misguided, it merely requires the
-right condition to be met, that condition (which applies to a wide-range of real-world problems)
+right condition to be met, that condition (which applies to a wide range of real-world problems)
 being the contrary factorisation, \(Y \to X \), which is to say that that the task under
 consideration is anticausal.
 %

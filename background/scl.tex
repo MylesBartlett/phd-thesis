@@ -14,11 +14,11 @@
 %
 While the notoriety of \acf{SCL} in the \ac{ML} sphere is relatively recent, the phenomenon
 underpinning it is a fundamental one in statistics, one that may be summed up with the age-old
-aphorism \emph{correlation does not imply causation}.
+aphorism \emph{cum hoc ergo propter hoc}, or \emph{correlation does not imply causation}.
 %
-DNNs define deeply expressive function classes, yet the solutions encoded by their parameter space
-need not be commensurately complex; in fact, it is well established that these models -- in the
-absence of an countervailing (inductive) bias -- exhibit a \emph{simplicity bias} (SB;
+\Acp{DNN} define highly expressive function classes, yet the solutions encoded by their parameter
+space need not be commensurately complex; in fact, it is well established that these models -- in
+the absence of an countervailing (inductive) bias -- exhibit a \emph{simplicity bias} (SB;
 \cite{valle2018deep}), that is, the tendency to favour simpler solutions, should those solutions
 serve sufficiently well for the task (as defined by the training set and loss function) at hand.
 %
@@ -71,7 +71,7 @@ The landmark study by \cite{buolamwini2018gender}, for example, revealed signifi
 the performance of face analysis algorithms on individuals from marginalised (dark skin, female)
 vs. non-marginalised (light skin, male).
 
-There are two sides to shortcut-learning that impair generalisation.
+There are two facets of \ac{SCL} that impair generalisation.
 %
 The obvious one, which we have already belaboured, is \emph{variance} to spurious features --
 features that are statistically but not causally related to the target; the second one, however, is
@@ -91,10 +91,10 @@ higher-level semantics, like shape and global structure, that human judgements a
 strongly attributed to.
 %
 High-frequency cues, such as colour and texture, are readily modulated by (unstable under) changes
-in lighting, for instance, making them less reliably cues for object classification in a dynamic
+in lighting, for instance, making them less reliable cues for object classification in a dynamic
 environment; we are not wont, for example, to classify an object in the shape of a cat as an
 elephant simply because the texture of the latter has been transplanted, \emph{ceteris paribus}, to
-the former, a failure mode (in)famously shown by \cite{geirhos2018imagenet} to apply to DNNs
+the former, a failure mode (in)famously shown by \cite{geirhos2018imagenet} to apply to \acp{DNN}
 trained on ImageNet.
 
 With the above in mind, it is obvious why more traditional approaches to improving group- and

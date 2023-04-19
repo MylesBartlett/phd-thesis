@@ -6,11 +6,11 @@ We perform experiments on a combination of publicly-available image datasets -- 
 We report the \texttt{Robust Accuracy} -- the minimum accuracy over the subgroups -- for all
 datasets but the Chest-Xray8 dataset. 
 %
-For this dataset, we instead report \texttt{Robust TPR} -- analogously, the minimum TPR over the
+For this dataset, we instead report \texttt{Robust TPR} -- analogously, the minimum \ac{TPR} over the
 subgroups -- as the primary metric given the emphasis on positive classifications in medical
 contexts. 
 %
-Additional plots showing the Accuracy, Positive Rate, TPR, and TNR ratios can be found in
+Additional plots showing the Accuracy, Positive Rate, \ac{TPR}, and \ac{TNR} ratios can be found in
 Appendix~\ref{sec:additional-metrics}.
 
 % To validate the step of constructing the perfect bags,
@@ -65,7 +65,7 @@ over predefined subgroups but is only applicable when $|\gS^{tr}| > 1$; the four
 purposely-biased sister network.
 %
 For fair comparison, the training set is balanced according to the rules defined in
-Sec.~\ref{sec:adversarialsm} for all baselines.
+\S\ref{sec:sm-adversarialsm} for all baselines.
 
 Fig.~\ref{fig:cmnist-2v4-partial} shows the results for the SB setting. 
 %
@@ -117,8 +117,8 @@ suggest that the extreme outliers correspond to the degenerate solution mentione
 %
 To demonstrate our method generalises to real-world computer vision problems, we consider the
 CelebA dataset~\cite{liu2015celeba} comprising over 200,000 images of different celebrities. The
-dataset comes with per-image annotations of physical and affective attributes such as smiling,
-gender, hair colour, and age.
+dataset comes with per-image annotations of physical and affective attributes such as `Smiling',
+`Gender', hair colour, and `Age'.
 %
 Since the dataset exhibits natural imbalance with respect to $\gG$, we perform no additional
 sub-sampling of either the training set or the deployment set. We predict ``smiling'' as the class

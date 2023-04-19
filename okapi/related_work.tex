@@ -1,16 +1,17 @@
 \section{Related Work}\label{sec:related_work}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Domain Generalisation} 
-The goal of domain generalisation (DG) is to produce models that are robust to a wide range of
-distribution shifts (including those outside the training distribution), given a training set
-consisting of samples sourced from multiple domains.
+%
+The goal of \acf{DG} is to produce models that are robust to a wide range of distribution shifts
+(including those outside the training distribution), given a training set consisting of samples
+sourced from multiple domains.
 %
 Despite the various techniques (many well theoretically-motivated) designed to improve the
 generalisation of deep neural networks current methods continue to fall short in the face of
 natural distribution shifts \citep{gulrajani2020search, koh2021wilds}.
 %
 Indeed, ERM has repeatedly shown to be a strong baseline -- frequently outperforming dedicated
-methods that leverage domain information or additional unlabelled data -- for DG
+methods that leverage domain information or additional unlabelled data -- for \ac{DG}
 \citep{gulrajani2020search, SagWeiLeeGaoetal22}, despite the theoretical problems associated with
 using it when the training and test sets are misaligned.
 %
@@ -23,10 +24,10 @@ data too closely can undo any such benefit conferred by the pre-training
 % leverage only the labelled and unlabelled from a given dataset to create models that are more
 % robust to unseen variations of it, given that the data is sufficiently diverse.
 %
-Similar to Okapi, MatchDG \citep{mahajan2021domain} draws upon causal matching to tackle DG.
-Despite the surface-level similarity, there are a number of significant differences, principally in the
-respects that we consider semi-supervised DG (whereas MatchDG requires full-labeling w.r.t.
-$y$) and employ an augmented form of k-NN for bias-reduction in the absence of $y$.
+Similar to Okapi, MatchDG \citep{mahajan2021domain} draws upon causal matching to tackle \ac{DG}.
+Despite the surface-level similarity, there are a number of significant differences, principally in
+the respects that we consider semi-supervised \ac{DG} (whereas MatchDG requires full-labelling
+w.r.t. $y$) and employ an augmented form of k-NN for bias-reduction in the absence of $y$.
 % , and bootstrap the matches continually rather than periodically.
 % in the respects that: 1) we consider the problem of
 % semi-supervised DG whereas \cite{mahajan2021domain} consider the fully-supervised case and require
@@ -35,14 +36,14 @@ $y$) and employ an augmented form of k-NN for bias-reduction in the absence of $
 % number of epochs; 3) we use propensity score matching over standard k-NN for bias reduction.
 
 \paragraph{Self-Supervised Learning} 
-In self-supervised learning (SelfSL), models are trained to solve pretext tasks constructed from
-the input data.
+%
+In \ac{SelfSL}, models are trained to solve pretext tasks constructed from the input data.
 %
 This learning paradigm has led to significant breakthroughs in unsupervised learning in recent
 years, with performance now approaching (or even surpassing, along some axes such as adversarial
 robustness) that of supervised methods for many tasks while requiring significantly less labelled data.
 %
-Due to its generality, SelfSL has seen use across the complete spectrum of applications and
+Due to its generality, \ac{SelfSL} has seen use across the complete spectrum of applications and
 modalities and underlies many of the foundation models \citep{bommasani2021opportunities} that have
 emerged in NLP \citep{brown2020language, chowdhery2022palm, devlin2018bert}, Computer Vision
 \citep{goyal2022vision}, and at their intersection \citep{alayrac2022flamingo, yu2022coca}.
@@ -76,10 +77,10 @@ Semi-supervised learning (SemiSL) encompasses a broad class of algorithms that c
 learning with supervised learning in order to improve the performance of the latter, especially
 when labelled data is limited.
 %
-Many SemiSL methods are based on the self-training paradigm which can trace its roots back decades
-to the early work in pattern recognition by \cite{scudder1965probability} and continues to be
-relevant in the modern era due to its generality, both within SemiSL itself and in related fields
-such as domain adaptation \citep{ganin2016domain}, and fledgling field of SelfSL
+Many \ac{SemiSL} methods are based on the self-training paradigm which can trace its roots back
+decades to the early work in pattern recognition by \cite{scudder1965probability} and continues to
+be relevant in the modern era due to its generality, both within \ac{SemiSL} itself and in related
+fields such as domain adaptation \citep{ganin2016domain}, and fledgling field of \ac{SelfSL}
 \citep{caron2021emerging} discussed above.
 %
 Self-training applies to any framework predicated on using a model's own predictions to produce

@@ -158,10 +158,12 @@ Fig.~\ref{fig:celeba-gender-smiling-full}.
  \label{fig:celeba-gender-smiling-full}
 \end{figure*}
 
-\section{Theoretical analysis}\label{sec:theoretical-analysis}
+\section{Theoretical analysis}\label{sec:sm-theoretical-analysis}
+%
 In this section, we present our theoretical results concerning the validity of our support-matching
-objective and the bound on the error introduced into it by clustering. We use notation consistent
-with that used throughout the main text.
+objective and the bound on the error introduced into it by clustering. 
+%
+We use notation consistent with that used throughout the main text.
 
 \subsection{Sampling function for the objective}%
 \label{sub:sampling_function_for_objective}
@@ -819,7 +821,7 @@ defined between two variables with arbitrary support.
     \textbf{Bottom right}: True negative rate ratio.
     For \texttt{Ours (Clustering)}, the clustering accuracy was 96\% $\pm$ 6\%.
     % for \texttt{K-means} it was 64\% $\pm$ 10\%.
-    For an explanation of \texttt{Ours (Clustering; k=6/8)} see section~\ref{sec:overclustering}.
+    For an explanation of \texttt{Ours (Clustering; k=6/8)} see \S\ref{sec:sm-overclustering}.
   }%
   \label{fig:cmnist-2v4-partial-add}
 \end{figure*}
@@ -839,7 +841,7 @@ defined between two variables with arbitrary support.
     \textbf{Bottom right}: True negative rate ratio.
     For \texttt{Ours (Clustering)}, the clustering accuracy was 88\% $\pm$ 5\%.
     % for \texttt{K-means} it was 72\% $\pm$ 16\%.
-    For an explanation of \texttt{Ours (Clustering; k=6/8)} see section~\ref{sec:overclustering}.
+    For an explanation of \texttt{Ours (Clustering; k=6/8)} see \S\ref{sec:sm-overclustering}.
   }%
   \label{fig:cmnist-2v4-miss-s-add}
 \end{figure*}
@@ -891,7 +893,7 @@ as the denominator. \textbf{Left:} TNR ratio. \textbf{Right}: TNR ratio. }%
  \label{fig:celeba-gender-smiling-add}
 \end{figure*}
 
-\section{Ablation studies}\label{sec:ablations}
+\section{Ablation studies}\label{sec:sm-ablations}
 \subsection{Using an instance-wise loss instead of a set-wise loss}\label{ssec:no-mil}
 \begin{figure*}[htp]
   \centering
@@ -945,7 +947,7 @@ Accuracy} to the point of being only marginally above that of the \texttt{ERM} b
 of the chosen balancing scheme.
 
 
-\subsection{Clustering with an incorrect number of clusters}\label{sec:overclustering}
+\subsection{Clustering with an incorrect number of clusters}\label{sec:sm-overclustering}
 We also investigate what happens when the number of clusters is set incorrectly. 
 %
 For 2-digit Coloured MNIST, we expect 4 clusters, corresponding to the 4 possible combinations of

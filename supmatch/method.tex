@@ -16,13 +16,13 @@ instead of individual samples. These bags need to be balanced with respect to ($
 we can interpret them as approximating $\gG$ as opposed to the joint probability distribution,
 $P(S, Y)$.
 %
-Details on how these bags are constructed can be found in in \S\ref{ssec:realisation}
-and \S\ref{sec:implementation}.
+Details on how these bags are constructed can be found in in \S\ref{ssec:sm-realisation} and
+\S\ref{sec:sm-implementation}.
 % These sets correspond to the "perfect bags" introduced in the next section,
 % \S\ref{ssec:perfect-bags}:
 
 
-\subsection{Objective}\label{ssec:objective}
+\subsection{Objective}\label{ssec:sm-objective}
 %
 We now present our overall support-matching objective. 
 %
@@ -94,7 +94,7 @@ we need to implement \(\Pi(s',y')\) with hierarchical balancing.
 As the implications of the given objective might not be immediately clear,
 we provide the following proposition.
 %
-The proof can be found in Appendix~\ref{sec:theoretical-analysis}.
+The proof can be found in Appendix~\ref{sec:sm-theoretical-analysis}.
 %
 \begin{theorem}
 %
@@ -119,7 +119,7 @@ P(S=s'|f(X)=z', Y=y')=\frac{1}{n_s}~.
 In other words: for \(Y=y'\), \(f(x)\) is not predictive of \(s\).
 \end{theorem}
 
-\subsection{Implementation}\label{ssec:realisation}
+\subsection{Implementation}\label{ssec:sm-realisation}
 %
 The implementation of above objective combines elements from unsupervised representation-learning and
 adversarial learning.
@@ -233,7 +233,7 @@ in terms of which sources are present and not in terms of other aspects.
 % with respect to the class-subgroup combinations present and not with respect to the shape of the
 % underlying distribution.
 We thus sample the bags according to the following set of rules which operationalize $\Pi$. Please
-refer to Fig.~\ref{fig:pipeline} for a visualisation of the effect of these rules. 
+refer to Fig.~\ref{fig:sm-pipeline} for a visualisation of the effect of these rules. 
 %
 \begin{enumerate}\label{ls:rules}
   %

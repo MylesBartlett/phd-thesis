@@ -175,9 +175,9 @@ The other experiment is with a combination of age and gender, where $s$ has four
 each of which is a combination of a gender and an age: Young/Female, Young/Male, Old/Female and
 Old/Male. 
 %
-To evaluate the fairness for multinomial $s$, we use \acf{HGRMC} \citep{mary2019fairness}, defined
-on the domain $[0, 1]$ and yielding \( \text{HGR}(Y,S)=0 \) iff $Y \perp S$, \(1\) if there is a
-deterministic mapping between the variables. 
+To evaluate the fairness for multinomial $s$, we use \acl{HGRMC} (\acs{HGRMC},
+\citep{mary2019fairness}), defined on the domain $[0, 1]$ and yielding \( \text{HGR}(Y,S)=0 \) iff
+$Y \perp S$, \(1\) if there is a deterministic mapping between the variables. 
 %
 Results can be found in Fig.~\ref{fig:multi-s}.\\
 
@@ -252,7 +252,7 @@ These results are from the same setup as those reported in the main paper.
 We report the difference in \acp{TPR} between the two groups (male and female), which corresponds
 to a measure of \acf{EqOd}, and the difference in \acp{TNR} between the two groups.
 
-\subsection{Optimisation Details}\label{sec:optimisation-details}
+\subsection{Optimisation Details}\label{sec:nifr-optimisation-details}
 %
 \noindent All our models were trained using the RAdam optimiser \citep{liu2019variance} with
 learning rates $3\times10^{-4}$ and $1\times10^{-3}$ for the encoder/discriminator pair and
@@ -645,7 +645,7 @@ mixture of datasets belonging to the NIST family, colourised in the same way as 
 downstream train and test sets remain the same as in the original cMNIST experiments. 
 %
 Specifically, we create this representative set by sampling 24,000 images (to match the cardinality
-of the original representative set) from EMNIST (letters only)~\citep{cohen2017emnist},
+of the original representative set) from EMNIST (letters only; \citealp{cohen2017emnist}),
 Fashion\-MNIST~\citep{xiao2017fashion} and KMNIST~\citep{clanuwat2018deep}, in equal proportion. 
 %
 We use the same architectures for the \ac{cVAE} and \ac{cFlow} models as we did in the non-transfer learning

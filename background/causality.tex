@@ -59,12 +59,12 @@ One can, for example characterise the case of covariate-shift with causal \(f^\s
 edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
 P(Y|X)P(X|E)P(E) \). 
 %
-In Chapters 3 and 4 we go beyond the bivariate (excepting \( E \)) and covariate case and consider
-label-shift problems with an additional auxiliary label \(S\) -- corresponding to an identifier of
-some subgroup or spurious feature we wish to be invariant to in the name of fairness or
-generalisation --  in which \(E\) influences the joint distribution \( P(S, Y) \) but not the
-marginal distribution \(P(X)\), giving rise to representation bias and, from it, spurious
-correlations.
+In Chapters~\ref{ch:nifr} and \ref{ch:supmatch} we go beyond the bivariate (excepting \( E \)) and
+covariate case and consider label-shift problems with an additional auxiliary label \(S\) --
+corresponding to an identifier of some subgroup or spurious feature we wish to be invariant to in
+the name of fairness or generalisation --  in which \(E\) influences the joint distribution \( P(S,
+Y) \) but not the marginal distribution \(P(X)\), giving rise to representation bias and, from it,
+spurious correlations.
 %
 We illustrate in Fig.~\ref{fig:ds_cbns} \acp{CBN} corresponding to different distribution shifts
 for a causal prediction task.
