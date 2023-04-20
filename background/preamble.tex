@@ -3,10 +3,10 @@
 % ****************************************************************************** 
 \noindent
 %
-In this chapter we aim to provide background on the topics encompassed by the works in this thesis,
+In this chapter I aim to provide background on the topics encompassed by the works in this thesis,
 both individually, and holistically.
 %
-While we will on occasion point to exemplar methods, generally we will eschew delving deep into
+While I will on occasion point to exemplar methods, generally I will eschew delving deep into
 specific methodologies -- of which there are many and many more being proposed by the day -- in
 favour of keeping broader perspectives regarding the motivations of, assumptions made by, and
 interconnections between, the considered learning paradigms. 
@@ -22,27 +22,29 @@ requisite (high-level) background for, and unified and alternative perspectives 
 and methodologies featured in Chapters \ref{ch:nifr}, \ref{ch:supmatch} and \ref{ch:okapi}.
 %
 Indeed, each of said chapters contain their own background sections drawing direct comparisons to
-related work and we wish to avoid repetition in this respect.
+related work and I wish to avoid repetition in this respect.
 
 The main themes of this thesis, as indicated by the title, are \ac{SemiSL} and \ac{DR}, the latter
 in the context of \ac{AF} (Chapters \ref{ch:nifr} and \ref{ch:supmatch}) and \ac{DG} (Chapter
 \ref{ch:okapi}), specifically. 
 %
-We will cover these topics directly, but to properly contextualise and motivate them requires
-visiting both foundational and adjacent areas of ML.
+I will cover these topics directly, but to properly contextualise and motivate them requires
+visiting both foundational and adjacent areas of \acl{ML}.
 
 %
-With the above in mind, we begin our discussion of the classical supervised learning setup and how
-standard \ac{ERM} is ill-suited to long-tailedness and distribution shifts,
-both pervasive phenomena in real-world applications. 
+With the above in mind, I begin with discussion of the classical supervised learning setup and how
+standard \ac{ERM} is ill-suited to long-tailedness and distribution shifts, both pervasive
+phenomena in real-world applications. 
 %
-\emph{Distributions shift} as a term is highly polysemous, meaning very different things, and
-demanding commensurately different solutions, depending on the underlying mechanisms and the
-direction of causality. We will give a brief taxonomy of the different kinds of distribution shifts
-in terms of how the marginal and conditional distributions are affected, and what may cause them. 
+`Distributions shift' as a term is highly polysemous, meaning very different things, and demanding
+commensurately different solutions, depending on the underlying mechanisms and the direction of
+causality. 
+%
+I will give a brief taxonomy of the different kinds of distribution shifts in terms of how the
+marginal and conditional distributions are affected, and what may cause them. 
 
 %
-\acp{SC}, or (statistical) shortcuts (we will use the terms interchangeably throughout), give rise
+\acp{SC}, or (statistical) shortcuts (I will use the terms interchangeably throughout), give rise
 to a particularly aggressive form of distribution shift as a result of features in the training
 data being highly (conceivably to the degree of a one-to-one correspondence) correlated with the
 target but not in a way that is causally consistent, and thus in a way that should not be expected
@@ -50,11 +52,11 @@ to hold consistently at test time.
 %
 The idea of \acp{SC} is central to both Chapters \ref{ch:nifr} and \ref{ch:supmatch} (manifested in
 different ways) and the idea of \ac{SCL} has close ties to \ac{DG} \citep{arjovsky2019invariant},
-the focus of Chapter~\ref{ch:okapi}; in light of this, we afford dedicated discussion of the
+the focus of Chapter~\ref{ch:okapi}; in light of this, I afford dedicated discussion of the
 \ac{SCL} problem and what conditions are needed to engender it.
 
 %
-Before branching off into discussion of the specific learning paradigms, we first reframe the
+Before branching off into discussion of the specific learning paradigms, I first reframe the
 problem of supervised learning and distribution shift through the lens of causality, yielding a
 unified perspective of the latter and when one should expect \ac{SemiSL} to be efficacious.
 %
@@ -63,7 +65,7 @@ causality \citep{pearl2009causality} provides, through \acp{CBN} and interventio
 means of expressing different distribution shifts and the desired/undesired variances/invariances
 using a single, formalised calculus.
 %
-Equipped with this calculus, we conclude this section -- as alluded to above -- with a discussion
-of the specific subfields and learning paradigms of relevance to the three papers constituting this
+Equipped with this calculus, I conclude this section -- as alluded to above -- with discussion of
+the specific subfields and learning paradigms of relevance to the three papers constituting this
 thesis, namely:  \ac{DA}, \ac{DG}, \ac{AF}, \ac{SemiSL}, \ac{AdvL}, and \acp{INN}.
 

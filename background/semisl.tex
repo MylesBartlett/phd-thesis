@@ -15,7 +15,7 @@ Given that this thesis references \ac{SemiSL}
 in its title, it is only appropriate that a part of this background section be devoted to the
 topic.
 %
-However, we note that the methods introduced in this thesis are not tailored for the typical
+However, I note that the methods introduced in this thesis are not tailored for the typical
 \ac{SemiSL} regime wherein one hopes to draw upon a large corpus of unlabelled data to shore up the
 paucity of annotated data available for direct supervision, with the assumption being that the
 unlabelled and labelled data are drawn from the same distribution.
@@ -27,11 +27,11 @@ The problem setups considered thus more closely align with those found in \ac{DG
 
 We would refer the reader to \cite{chapelle2009semi} for excellent (in both clarity and depth)
 exposition of the theoretical underpinnings of \ac{SemiSL} and methods for it from the
-pre-deep-learning era (many of which are still fundamentally applicable today, however), a book we
+pre-deep-learning era (many of which are still fundamentally applicable today, however), a book I
 will reference extensively throughout this brief overview of the topic.
 %
 For a comprehensive and current survey of \ac{SemiSL} methods in the post-deep-learning, on the other
-hand, we would refer the reader to \cite{yang2022survey}.
+hand, I would refer the reader to \cite{yang2022survey}.
 %
 
 The premise of \ac{SemiSL} is a simple one: given that in many real-world cases collecting annotated
@@ -40,10 +40,10 @@ to a transient phenomenon) but collecting data in general is not, how can one ex
 unannotated data to improve a model's predictive power?
 %
 Thus, we can think of our dataset as having two partitions: one corresponding to the labelled
-dataset, as in \S\ref{sec:iid}, which we can use for standard supervised learning and which we will
-override here with the notation \( \gD^{tr}_l \triangleq \{ x_i \}_{i=1}^{N^{tr}_l} \) for
-clarity's sake, and a second partition corresponding to the unannotated data, which we will denote
-by \( \gD^{tr}_u  \triangleq \{ x_i \}_{i=1}^{N^{tr}_u} \).
+dataset, as in \S\ref{sec:iid}, which we can use for standard \acl{SL} and which we will override
+here with the notation \( \gD^{tr}_l \triangleq \{ x_i \}_{i=1}^{N^{tr}_l} \) for clarity's sake,
+and a second partition corresponding to the unannotated data, which we will denote by \( \gD^{tr}_u
+\triangleq \{ x_i \}_{i=1}^{N^{tr}_u} \).
 %
 One is generally motivated to employ some form of \ac{SemiSL} in cases when \( N^{tr}_l \ll
 N^{tr}_u \), though this not need be the case and it may be that the unlabelled data can be useful
@@ -86,7 +86,7 @@ between domain adaptation and domain generalisation, in the sense that former ha
 goal of generalising between two specific domains -- with the target domain given at training time
 -- while the latter has the inductive goal of generalising to all possible domains.
 %
-Niceness of this inter-field parallel aside, we afford TL particular mention here due to its
+Niceness of this inter-field parallel aside, I afford TL particular mention here due to its
 pertinence in Chapter~\ref{ch:supmatch}, wherein we consider the possibility of using the test set
 itself as a reference dataset for the proposed matching procedure.
 
@@ -109,7 +109,7 @@ practical benefits -- such as improved convergence-rates or stability -- detache
 assumptions.
 %
 We will broach the importance of the direction of causality -- that is how the data-generating
-process factorises -- later in this section; to begin with, following \citep{chapelle2009semi}, we
+process factorises -- later in this section; to begin with, following \citep{chapelle2009semi}, I
 summarise the justifying assumptions for \ac{SemiSL}.
 %
 These assumptions are not complementary, in the sense that they can, or need be, simultaneously
@@ -216,7 +216,7 @@ marginal distribution to better estimate the conditional distribution; in
 %
  
 While perhaps often overlooked, this requirement, in fact, well-aligned with the motivating
-arguments for \ac{SemiSL} that we discussed at the beginning of this section.
+arguments for \ac{SemiSL} that I discussed at the beginning of this section.
 %
 The \emph{cluster assumption} predicates that points belonging to the same cluster in \(P(X)\)
 abide by the same labelling mechanism; 

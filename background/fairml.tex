@@ -10,14 +10,15 @@ nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwi
 \cite{dastin2018amazon}, and \cite{buolamwini2018gender} -- further spurring research to develop
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
+\marginpar{\textbf{Notions of fairness}}
 %
 There are many strands of \ac{AF} following different criteria for what it means for a predictor to
-be \emph{fair}; in this thesis we focus on those corresponding to group definitions of fairness
+be \emph{fair}; in this thesis I focus on those corresponding to group definitions of fairness
 \citep{barocas2019fairness}, where `group' refers to some demographic group, such as gender or
 ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are often used
-interchangeably throughout the literature; we will favour the former).
+interchangeably throughout the literature; I will favour the former).
 %
-We will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
+I will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
 realisation \(s\) -- and will assume that this variable along with the target variable are discrete
 (and in most cases binary); this is the most common setup considered in the \ac{AF} literature --
 and toward which many standard metrics of fairness are geared \citep{feldman2015certifying,
@@ -25,12 +26,12 @@ hardt2016equality, woodworth2017learning} -- though there are works that extend 
 methods for enforcing -- fairness to settings with categorical and continuous (\( S \) and \( Y \))
 attributes.
 %
-Though the focus is on group fairness, at the tail-end of the section, we will touch briefly on the
+Though the focus is on group fairness, at the tail-end of the section, I will touch briefly on the
 premise of \acl{IF} (\acs{IF}; \citealp{dwork2012fairness}) to take the opportunity to draw a
 parallel between it and the idea of consistency/smoothness in \ac{SemiSL}.
 
 %
-Particularly, we will consider two particular kinds of group-oriented notions of fairness: 1) the
+Particularly, I will consider two particular kinds of group-oriented notions of fairness: 1) the
 family of notions predicated on equalised rates, imposing constraints on the predictive
 distribution; 2) the notion of \emph{minimax fairness} predicated on maximising the worst-group
 performance, and which imposes no constraints on the relative performance between groups.
@@ -42,7 +43,7 @@ labels until the relevant constraint on the predictive rates is met).
 
 %
 
-Simply put, the unified goal of \ac{AF} is to learn some predictor, \(\Gamma: \gX \to \gY \) that
+Simply put, the unified goal of \ac{AF} is to learn some predictor, \(f: \gX \to \gY \) that
 is, according to some definition, non-discriminatory -- that does not deprive a given individual of
 opportunities by dint of belonging to a particular sensitive group.
 %
@@ -50,12 +51,12 @@ A frequently-invoked example is that of financial institution employing an autom
 decision-making system to determine which loan applicants should/should not have their applications
 approved.
 %
-In addition to financial information (e.g. credit-score history) the input features to \(\Gamma\),
+In addition to financial information (e.g. credit-score history) the input features to \(f\),
 \(\gX\), may encode, explicitly or implicitly, sensitive information such as an individual's gender
 or ethnicity, with the general assumption being that such information is acausal to the task at
 hand (one's gender should have no impact on one's eligibility for a loan).
 %
-By `implicitly`, we mean that such information may be inferable (or predictable with above random
+By `implicitly`, I mean that such information may be inferable (or predictable with above random
 accuracy) from other features, such as one's location, housing history, or level of education, such
 that solving problems of fairness is not so straightforward as simply excising the elements of
 \(\gX\) that directly correspond to the \(\gS\) -- an approach referred to as \emph{Fairness
@@ -72,7 +73,7 @@ Much of the fairness literature has focussed on notions of fairness based on enf
 predictor to output equal rates (e.g. of positive or correct predictions) across the sensitive
 groups.
 %
-Here, we briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}} as
+Here, I briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}} as
 the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do so
 for the binary-classification regime to which they are most commonly applied, even though
 generalisations exist \citep{woodworth2017learning}. 
@@ -154,12 +155,15 @@ Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be stati
 \ac{MI} admits various decompositions into sums of marginal and joint/conditional entropies that
 make it particularly amenable for optimisation purposes. 
 %
-In invariant representation learning (encompassing \ac{FRL}, \ac{DA}, and \ac{DG}), for example, a
-common method for imparting independence, \(Z \perp S \) -- which is sufficient for \(Y \perp S\),
-given a predictor head, \(c: \gZ \to \gY \) -- between the representations learned by encoder \(g:
-\gX \to \gZ \) and the sensitive attribute to train \(g\) to maximise the conditional entropy \(
-H(\hat{S}|Z) \) generated by an adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\)
-(itself trained via \ac{MLE}).
+In invariant-representation learning (encompassing \ac{FRL}, \ac{DA}, and \ac{DG} and referred to
+within the context of the former suitably as \ac{FRL}), for example, a common method for imparting
+independence, \(Z \perp S \) -- which is sufficient for \(Y \perp S\), given a predictor head, \(g:
+\gZ \to \gY \) -- between the representations learned by encoder \(h: \gX \to \gZ \) and the
+sensitive attribute to train \(h\) to maximise the conditional entropy \( H(\hat{S}|Z) \) of an
+adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\) (itself trained via \ac{MLE}).
+%
+I shall expatiate on \ac{AdvL} broadly, and \wrt{} to its use as an infomin engine -- as in the
+forgoing -- in \S\ref{sec:advl}.
 
 %
 \marginpar{\textbf{Equality of Opportunity}}
@@ -257,9 +261,9 @@ Given a meta distribution \(\mathfrak{P}(X, Y)\), from which we sample the bivar
 P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as 
 %
 \begin{equation}
-    \underset{\Gamma}{\text{inf}} 
+    \underset{f}{\text{inf}} 
     \underset{P(X, Y) \sim \mathfrak{P}(X, Y)}{\text{sup}}
-    \E_{(X, Y) \sim P(X, Y)}[\gL(\Gamma(X), Y) ],
+    \E_{(X, Y) \sim P(X, Y)}[\gL(f(X), Y) ],
  \end{equation}
 %
 recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random variables.
@@ -267,7 +271,7 @@ recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random 
 Thus, in contrast to standard \ac{ERM}, which would optimise over the `flattened' meta
 distribution, the DRO objective defines a bilevel optimisation problem in which only the supremum
 of the loss over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be minimised by
-our predictor, \(\Gamma\).
+our predictor, \(f\).
 %
 One can view this as a sparse form of \ac{IW}-\ac{ERM} where the weighting function is the
 indicator function returning \(1\) if a sample belongs to the `worst` distribution, else \(0\).
@@ -279,7 +283,7 @@ resulting set of \(|\gS|\) values.
 %
 In the \ac{DG}/group-robustness literature this quantity is commonly known as \ac{RobAcc}.
 %
-For convenience and clarity, we first restate standard (non-conditional) accuracy as 
+For convenience and clarity, I first reformulate the standard (non-conditional) accuracy as 
 %
 \begin{equation}
     \text{Acc}(f, \gD^{eval}) \triangleq 
@@ -310,7 +314,7 @@ summed up with the apophthegm `similar individuals should receive similar treatm
 As alluded to before, the premise of \ac{IF} greatly resembles the smoothness assumption from
 SemiSL. 
 %
-We mentioned in its associated section that the smoothness assumption can be seen as a
+I mentioned in its associated section that the smoothness assumption can be seen as a
 \(K\)-Lipschitz constraint on our function class and this is the manner in which the \emph{Fairness
 Through Awareness} (FTA) -- the most general concept of \ac{IF} -- is couched in
 \cite{dwork2012fairness}, the name standing in contrast to FTU.
@@ -321,7 +325,7 @@ The central question implied by FTA then is what constitutes an appropriate meas
 % ------------------------------------------------------------------------------ 
 \subsection{Bias propagation and systematic censoring}\label{ssec:residual-unfairness}
 % ------------------------------------------------------------------------------ 
-We conclude this section with a brief discussion of the residual unfairness, as termed by
+I conclude this section with a brief discussion of the residual unfairness, as termed by
 \cite{kallus2018residual}, and the problem setting giving rise to it, owing to its pertinence to
 both Chapter~\ref{ch:nifr} and Chapter~\ref{ch:supmatch}.
 %

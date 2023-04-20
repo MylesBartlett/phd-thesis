@@ -138,13 +138,14 @@ readily adapted to continuous subgroups, for instance, by substituting cross-ent
 \ac{HGRMC} (recalling that we use \ac{HGRMC} in said chapter not as an objective but as a fairness
 metric for tasks involving \emph{categorical} subgroups).
 
-\marginpar{\textbf{The idiosyncrasies and iniquities of adversarial infomin}}
 %
 I have spoken before of the practical deficiencies of the \ac{AdvL} paradigm in a \ac{DL} context
 -- namely the fragility of optimisation, disposition to cyclic dynamics, architectural dependency,
 and the loss of guarantees incurred by estimating the best-response dynamics with a finite
 (typically small) number of steps -- but it is apposite that we revisit these points again here,
 retrospectively instead of prospectively.
+%
+\marginpar{\textbf{The iniquities of adversarial infomin}}
 %
 Indeed -- as again spoken of before but of which there is again no harm recalling -- said
 deficiencies have been well noted in the infomin-related literature, motivating attempts to develop
@@ -186,7 +187,7 @@ implementation) avenue of extension.
 \marginpar{\raggedleft\textbf{On the problem of identifiability}}
 %
 A central question that I have perhaps given shorter shrift to than due, is that of the
-identifiability of bias -- a question of two parts 1) diagnosing those cases warranting
+identifiability of bias -- a question of two parts: 1) diagnosing those cases warranting
 methodological (or data-sided) interventions, such as those delineated; 2) and evaluating the
 success of those interventions -- given the element of underspecification
 \citep{semenova2019study}.
@@ -198,17 +199,17 @@ may (and often will not be) practically realisable -- one need only ensure that 
 not degrade based on what is evaluable.
 %
 %
-This cavalier ethos of `do the best we can with what's available [short of bringing humans into the
-loop], regardless of the consequences', however is patently not an admirable one, however, and
-realistically one (a practitioner or collective) does, or should, aim to deploy models subject to
-their being sensible/unbiased (if only for reputation's sake) and to thoroughly diagnose, and
+This cavalier ethos of `do the best we can with what's available [short of bringing humans directly
+into the fold], regardless of the consequences', however is patently not an admirable one, however,
+and realistically one (a practitioner or collective) does, or should, aim to deploy models subject
+to their being sensible/unbiased (if only for reputation's sake) and to thoroughly diagnose, and
 attempt to remedy failure cases via well-measured and iterative processes.
 %
 The problem of underspecification -- of validating models without access to data representative of
 that to-be-encountered at deployment time, as defines \ac{DG} -- that encapsulates the second
 aspect of the question remains an outstanding one, that has been discussed broadly and in the
-context of \ac{DG} specifically, where it risks invalidating inter-method comparisons
-\citep{gulrajani2020search}.
+context of \ac{DG} specifically, posing a threat to the validity of inter-method
+comparisons\citep{gulrajani2020search}.
 %
 \marginpar{\raggedleft\textbf{Interpretability and oversight}}
 %
@@ -265,11 +266,11 @@ only as the model-to be-supervised, but also as the supervisor, acting according
 (in the form of prompts), or `constitution', specified by the practitioner
 \citep{bowman2022measuring, bai2022constitutional}.
 %
-Such supervisors exhibit the ability to accurately, and well-calibratedly, detect biases violating
-said constitution in generated responses and provide feedback for redressing them; this feedback
-may be used to further align the supervised model, as substitute for the human-generated feedback
-fuelling the eponymous \acl{RLHF} (\acs{RLHF}; \cite{christiano2017deep, stiennon2020learning,
-bai2022training}), analogously termed \acf{RLAIF}.
+Such AI supervisors exhibit the ability to accurately, and well-calibratedly, detect biases
+violating said constitution in generated responses and provide feedback for redressing them; this
+feedback may be used to further align the supervised model, as substitute for the human-generated
+feedback fuelling the eponymous \acl{RLHF} (\acs{RLHF}; \cite{christiano2017deep,
+    stiennon2020learning, bai2022training}), analogously termed \acf{RLAIF}.
 %
 While \ac{RLHF} does not allow for sidestepping of annotations (which has been ameliorated by
 unprecedented levels of crowdsourcing), tuning based on preferences (given for pairs of responses)

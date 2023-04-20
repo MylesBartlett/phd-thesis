@@ -1,16 +1,16 @@
 % ********************************************************************************
 \section{A (brief) taxonomy of distribution shifts}\label{sec:dist-shift}
 % ********************************************************************************
-In this section, we provide a brief taxonomy of the types of distribution shift that arise in the
+In this section, I provide a brief taxonomy of the types of distribution shift that arise in the
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
 %
-To this end, we draw heavily upon the works of \citet{moreno2012unifying} and
+To this end, I draw heavily upon the works of \citet{moreno2012unifying} and
 \citet{castro2020causality} in our definitions, noting that the \ac{ML} literature is not of a
 single mind regarding the terminology and its semantics.
 %
-In \S\ref{sec:lens-of-causality} we will reframe these distribution shifts in causal terms by
+In \S\ref{sec:lens-of-causality} I will reframe these distribution shifts in causal terms by
 introduction of an exogenous variable -- allowing for an elegant formulation of the distribution
-shift problem and its relation to invariance -- but we leave that aside for now and seek to present
+shift problem and its relation to invariance -- but I leave that aside for now and seek to present
 them in more general terms.
 % --------------------------------------------------------------------------------
 \subsection{Covariate shift}\label{ssec:covariate-shift}
@@ -22,15 +22,15 @@ conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \a
 %
 % NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
 % much meaning unless we presuppose the direction of causality.
-Departing from \citet{moreno2012unifying}, we do not restrict its definition to problems of a causal
+Departing from \citet{moreno2012unifying}, I do not restrict its definition to problems of a causal
 (\( X \to Y\)) nature and do away with the distinction between covariate shift and its anticausal
 (\( Y \to X \)) analogue in \emph{prior shift} to simplify exposition.
 %
 Changes in the distribution of the target variable, \(Y\), will be referred to as \emph{target
 shift}, as explained in the subsection below.
 %
-This is not to say that we disregard the importance of distinguishing between the two causal
-directions; in the context of \ac{DA} and \ac{SemiSL}, we will discuss at some length the dependence of these
+This is not to say that I disregard the importance of distinguishing between the two causal
+directions; in the context of \ac{DA} and \ac{SemiSL}, I will discuss at some length the dependence of these
 paradigms on this characteristic of the problem.
 %
 Indeed, a common assumption in \ac{DA} is that the source and target domains are separated by covariate
@@ -51,10 +51,9 @@ and test data; many real-world datasets used for training exhibit long tails, \w
 frequently than the least-frequent class, while the test data has more even coverage.
 %
 As discussed in \S\ref{sec:iid}, a classic approach to rectifying this kind of shift, in the case
-of the discriminative models we are usually concerned with, is to  importance-weight the instance
-losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)}
-\), or simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the
-case).
+of the discriminative models we are usually concerned with, is to \acl{IW} the instance losses or,
+near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)} \), or
+simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the case).
 %
 % This can arise from different predispositions in the training and test populations, or from
 % variations in environmental factors.
@@ -73,7 +72,7 @@ case).
 % --------------------------------------------------------------------------------
 \subsection{Concept shift}\label{ssec:concept-shift}
 % --------------------------------------------------------------------------------
-To complete the triad of bivariate distribution shifts (we will later revisit distribution shift
+To complete the triad of bivariate distribution shifts (I will later revisit distribution shift
 under the influence of an exogenous domain or environment variable) we have \emph{concept shift},
 referring to changes in the conditional distributions, \( P(Y|X) \) or \( P(X|Y) \), while the
 respective (\( P(X) \) and \( P(Y) \)) marginal distributions are preserved.
@@ -106,7 +105,7 @@ constituent shifts (a problem of identifiability).
 % --------------------------------------------------------------------------------
 \subsection{Sampling bias}\label{ssec:sampling-bias}
 % --------------------------------------------------------------------------------
-Sampling (which we use synonymously with \emph{selection} and \emph{representational}) bias refers
+Sampling (which I use synonymously with \emph{selection} and \emph{representational}) bias refers
 to distribution shifts that arise due to systematic flaws in the data-collection process that cause
 training samples to be selected in a non-uniform fashion from the general population being
 modelled.
@@ -116,7 +115,7 @@ the conditioning is on the target or some other characteristic, such as a partic
 %
 Thus, sampling bias is not a type of distribution shift in itself, but rather a mechanism by which
 the above-described distribution shifts can emerge, and it is particularly germane to
-Chapters~\ref{ch:nifr} and \ref{ch:supmatch} of this thesis in which we consider extreme cases of
+Chapters~\ref{ch:nifr} and \ref{ch:supmatch} of this thesis in which I consider extreme cases of
 it in which certain demographics, or outcomes for certain demographics, are omitted from the
 training data, promoting spurious correlations between said demographics and the outcome.
 %

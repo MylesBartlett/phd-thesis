@@ -1,15 +1,15 @@
 % ********************************************************************************
-\section{Adversarial Learning}\label{sec:adv-learning}
+\section{Adversarial Learning}\label{sec:advl}
 % ********************************************************************************
 \acf{AdvL} is a general, multi-field-spanning learning paradigm, characterising -- in
 game-theoretical parlance -- non-co{\"o}perative (competitive) systems, or `games' in which two or
 more `players' compete over shared or interdependent \emph{utility} \citep{fudenberg1991game}.
 %
-\marginpar{\textbf{Minimax}}
+% \marginpar{\textbf{Minimax}}
 %
 In two-player cases -- accounting for the majority of \ac{AdvL} setups (notable exceptions to this
 include those based on self-play in which one computes the best response against a mixture of
-adversarial policies \citep{silver2017mastering, vinyals2019grandmaster}) and those that we shall
+adversarial policies \citep{silver2017mastering, vinyals2019grandmaster}) and those that I shall
 discuss here -- the game can be formulated as a (zero-sum) minimax problem in which one player,
 \(\mu_{max}\), plays the role of the `maximiser', the other player, \(\mu_{min}\), the role of the
 minimiser; given that in \ac{ML} we optimise some parametric model to minimise a loss function (via
@@ -97,7 +97,7 @@ learner and adversary, respectively -- which they play according to their respec
 together constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time
 \Psi \to \R \).
 %
-We note, incidentally, that due to the continuity and non-convexity of the players in this case, it
+I note, incidentally, that due to the continuity and non-convexity of the players in this case, it
 is unfortunately not possible to guarantee the existence of Nash Equilibria for the resulting
 games, only ones that are locally defined \citep{unterthiner2018coulomb}.
 %
@@ -106,16 +106,20 @@ respective to the learner and its adversary:
 %
 \begin{itemize}
   %
-  \item \textbf{learner}: create a censored version (representation) of the input, \(z\), that
-    maximally minimises the amount of information about \(s\) that is determinable from it. 
-  %
-  \item \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
-    \(s\) associated with given a input \(x\), while having access to only said representation,
-    \(z\) produced by the learner.
+  \item 
+    %
+    \textbf{learner}: create a censored version (representation) of the input, \(z\), that
+    maximally minimises the amount of information about \(s\) that can be extracted.
+    %
+  \item 
+    %
+    \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
+    \(s\) associated with given a input \(x\), while having access to only the censored version of
+    the input, \(z\), given by the learner.
     %
 \end{itemize}
 %
-This game then gives rise to the following minimax objective function, for some dataset \(\gD\)
+This game gives rise to the following minimax objective function, for some dataset \(\gD\)
 made up of pairs of inputs, \(x\), and attribute(s) to be censored, \(s\)
 %
 \begin{align}
@@ -128,7 +132,7 @@ made up of pairs of inputs, \(x\), and attribute(s) to be censored, \(s\)
 \label{eq:adv-infomin}
 \end{align}
 %
-where we have negated the expectation (converting the loss into utility) to remain consistent with
+where I have negated the expectation (converting the loss into utility) to remain consistent with
 the idea of the adversary being the maximiser and defined the optima over the parameter spaces to
 make clear the idea that the parameters define the chosen strategies. 
 %
@@ -178,52 +182,42 @@ In Chapter~\ref{ch:supmatch} we consider a problem of this nature and recast the
 aligning the supports of the training -- which is systematically missing certain combinations of
 \(s\) and \(y\) -- and deployment -- which is presumed unlabelled, as in \ac{UDA} -- sets.
 
-We have already alluded to some of the challenges entailed in adversarial infomin
-approaches; here, we summarise the two most salient ones:
+I have already alluded to some of the challenges entailed in adversarial infomin
+approaches; here, I summarise the two most salient ones.
+\marginpar{\textbf{Approximation errors}}
 %
-\begin{enumerate}
-        %
-        \marginpar{\textbf{Approximation errors}}
-        %
-        \item 
-          %
-          The strength of information-minimisation is proportional to the strength adversary
-          used to drive it -- a fixed point attained by one adversary  is not guaranteed to hold
-          for any other adversary (differing in architecture, optimisation scheme, etc.) unless the
-          fixed point corresponds to the desired invariance. 
-          %
-          Theory dictates that one computes the best response of each player at each iteration,
-          however this is generally infeasible when working with models with many parameters and
-          datasets with many samples. 
-          %
-          Thus, approximations are required -- e.g. by limiting the number of updates per iteration
-          and by bootstrapping the best response from the previous one -- but these can lead to
-          unstable training dynamics or entrapment in bad optima. 
-          %
-          Indeed, a number of recent studies have shown that many adversarial approaches fail to
-          faithfully produce infomin representations when probed \citep{moyer2018invariant,
-          feng2019learning, balunovic2021fair}.
-        %
-        \marginpar{\textbf{Cyclic dynamics}}
-        %
-        \item 
-          %
-          Adversarial setups are generally susceptible to cycles (oscillations) in strategy
-          space, e.g. where two players repeatedly switch between two non-NE strategies because
-          doing so is mutually locally optimal. 
-          %
-          In reinforcement learning, for instance, this has led to the development of fictitious
-          self-play algorithms \citep{brown1951iterative, heinrich2015fictitious,
-          vinyals2019grandmaster} wherein each player has its best response computed against a
-          uniform mixture of past opposing strategies (this mixture provably converging to a NE);
-          while this allows for avoiding the aforementioned cycles it comes at a significant
-          computational cost.
-          %
-          In Chapter~\ref{ch:nifr} we consider this pitfall of cyclic dynamics and propose a middle
-          ground of training against a stochastic ensemble of adversaries.
-         % 
-\end{enumerate}
-
+\textbf{First}, the strength of information-minimisation is proportional to the strength
+adversary used to drive it, and, moreover, a fixed point attained by one adversary is not
+guaranteed to hold for any other adversary (differing in architecture, optimisation
+scheme, etc.) unless the fixed point corresponds to the desired invariance. 
+%
+Theory dictates that one computes the best response of each player at each iteration,
+however this is generally infeasible when working with models with many parameters and
+datasets with many samples. 
+%
+Thus, approximations are required -- e.g. by limiting the number of updates per iteration
+and by bootstrapping the best response from the previous one -- but these can lead to
+unstable training dynamics or entrapment in bad optima. 
+%
+Indeed, a number of recent studies have shown that many adversarial approaches fail to
+faithfully produce infomin representations when probed \citep{moyer2018invariant,
+feng2019learning, balunovic2021fair}.
+%
+\marginpar{\textbf{Cyclic dynamics}}
+%
+\textbf{Second}, adversarial setups are generally susceptible to cycles (oscillations) in strategy
+space, e.g. where two players repeatedly switch between two non-NE strategies because doing so is
+mutually locally optimal. 
+%
+In reinforcement learning, for instance, this has led to the development of fictitious self-play
+algorithms \citep{brown1951iterative, heinrich2015fictitious, vinyals2019grandmaster} wherein each
+player has its best response computed against a uniform mixture of past opposing strategies (this
+mixture provably converging to a NE); while this allows for avoiding the aforementioned cycles it
+comes at a significant computational cost.
+%
+In Chapter~\ref{ch:nifr}, we recognise the pitfall of cyclic dynamics and propose a middle ground
+of training against a stochastic ensemble of adversaries.
+% 
 
 % If a pure strategy is strictly dominated by another pure strategy then it cannot be played with
 % positive probability at a Nash equilibrium.

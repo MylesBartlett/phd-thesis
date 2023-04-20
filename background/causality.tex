@@ -2,15 +2,15 @@
 \section{Through the lens of causality}\label{sec:lens-of-causality}
 % ********************************************************************************
 
-We now introduce a causal formalism of the distribution-shift problem, a formalism which has been
+I now introduce a causal formalism of the distribution-shift problem, a formalism which has been
 frequently exploited in the \ac{DG} and \ac{AF} literature as it provides a simple calculus with
 which to reason about desired (and undesired) variances.
 %
-It should be noted in advance that we only draw upon this formalism in order to provide a unified
+It should be noted in advance that I only draw upon this formalism in order to provide a unified
 formulation of the distribution-shift problems considered in this thesis; we do not operate on the
 domain of causal graphs nor attempt to perform causal inference. 
 %
-The background on causality is thus commensurably light and we refer the reader to
+The background on causality is thus commensurably light and I would refer the reader to
 \citet{pearl2009causality} for full exposition of the topic.
 
 While the term `domain' typically refers to the observed distributions as a whole in both \ac{DA}
@@ -23,7 +23,7 @@ as some exogenous latent variable, which, by its conditioning, gives rise to the
 distributions -- or subgraphs in the discrete case -- and explains how one is transformed
 (`shifted') into the other.
 %
-We will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
+I will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
 \ac{DG} literature \citep{arjovsky2019invariant}), which need satisfy only the loose requirement that it
 belong to some Borel space (and thus may in theory be continuous or discrete).
 %
@@ -59,15 +59,15 @@ One can, for example characterise the case of covariate-shift with causal \(f^\s
 edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
 P(Y|X)P(X|E)P(E) \). 
 %
-In Chapters~\ref{ch:nifr} and \ref{ch:supmatch} we go beyond the bivariate (excepting \( E \)) and
+In Chapters~\ref{ch:nifr} and \ref{ch:supmatch} I go beyond the bivariate (excepting \( E \)) and
 covariate case and consider label-shift problems with an additional auxiliary label \(S\) --
 corresponding to an identifier of some subgroup or spurious feature we wish to be invariant to in
 the name of fairness or generalisation --  in which \(E\) influences the joint distribution \( P(S,
 Y) \) but not the marginal distribution \(P(X)\), giving rise to representation bias and, from it,
 spurious correlations.
 %
-We illustrate in Fig.~\ref{fig:ds_cbns} \acp{CBN} corresponding to different distribution shifts
-for a causal prediction task.
+To reify this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN} corresponding to
+different distribution shifts for a (causal) prediction task.
 %
 \import{background}{ds_cbns.tex}
 %
@@ -117,9 +117,9 @@ prediction task.
 %
 This idea has been explored extensively in recent years in both the causal discovery
 \citep{peters2016causal, bengio2019meta} and \ac{DG} \citep{arjovsky2019invariant,
-ahuja2020invariant, creager2021environment} literature, with the caveat that a degree of inductive
-bias or additional information is necessary to provably identify the proper causal relations based
-on it \citep{lin2022zin}.
+ahuja2020invariant, creager2021environment} literature (as I shall elaborate on in \S\ref{sec:dg}),
+with the caveat that a degree of inductive bias or additional information is necessary to provably
+identify the proper causal relations based on it \citep{lin2022zin}.
 %
 
 % % ------------------------------------------------------------------------------

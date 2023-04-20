@@ -1,10 +1,12 @@
 % ********************************************************************************
-\section{Domain generalisation}\label{sec:domain_generalisation}
+\section{Domain generalisation}\label{sec:dg}
 % ********************************************************************************
 While closely-related to \ac{DA}, \acf{DG} is distinct in the respect that the task is
 fundamentally, as the name suggests, one of \ac{OOD} generalisation rather than one of adaptation.
 %
-By this we mean that while in \ac{UDA} one is given a labelled dataset, \( \gD^{src} \triangleq
+\marginpar{\textbf{The design of \ac{DG}}}
+%
+By this I mean that while in \ac{UDA} one is given a labelled dataset, \( \gD^{src} \triangleq
 \{x_i, y_i \}_{i=1}^{N^{src}} \), belonging to the source domain, along with an unlabelled
 dataset \( \gD^{tgt} \triangleq \{ x_i \}_{i=1}^{N^{tgt}} \) belonging to the target domain,
 and the goal is to train a classifier to generalise from the former to the latter (which entails a
@@ -20,41 +22,36 @@ novel domain \( e^{te} \notin  \gE \).
 %
 While we would ideally have a model that could generalise to any arbitrary environment (assuming
 the task remains consistent), this is sadly impossible given finite data
-\citep{david2010impossibility}, and so our expectations must be tempered to being able to generalise
-within some region the training distribution.
+\citep{david2010impossibility}, and so our expectations must be tempered to being able to
+generalise within some region the training distribution.
 %
-The justification of \ac{DG} can then be viewed from two perspectives:
-\begin{enumerate}
+\marginpar{\textbf{Justifying \ac{DG}}}
+%
+The justification of \ac{DG} might then be viewed according to the following perspectives,
+respectively rooted in \ac{DRO} and causality. \textbf{First}, given a set of known variances --
+induced by the domains -- one should expect to be able to leverage these variances to learn a
+predictor able to generalise both within the convex hull (affine combinations of elements of the
+set) they define as well as to those variances within the vicinity -- proximal to -- this hull
+\citep{krueger2021out}.
         %
-        \item
-        %
-        It stands to reason that one should be able to exploit information about known the known
-        set of variances -- due to the domain -- in order to learn a predictor that can generalise
-        within the convex set (affine combinations of those variances) they define as well as to
-        those variances that are proximal.
-        %
-        The principle here is similar to that of vicinal risk minimisation
-        \citep{chapelle2000vicinal} as in \cite{zhang2017mixup}, wherein data augmentation fulfils
-        the role of a perturbation set that the environments fulfil in \ac{DG}.
-        %
-        \item
-        %
-        Given a set of interventions on the underlying causal graph defined by the set of
-        environments, recover the causal relationship between the input features and the target
-        such that the predictive mechanism is unaffected by causally-independent changes (by
-        interventions on variables not among the target variable's causal parents).
-        %
-        This idea of treating environments as interventions and using them to perform explicit or
-        implicit causal inference has notably been exploited in \cite{peters2016causal} and in the
-        foundational (to \ac{DG}) work of \cite{arjovsky2019invariant}.
-        %
-        Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
-        gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem
-        setup of \ac{DG} and its desiderata in causal terms, and we do so ourselves in
-        \S\ref{sec:lens-of-causality} to provide a unified perspective of the distribution shift
-        problems discussed.
-        %
-\end{enumerate}
+The principle here is similar to that of vicinal risk minimisation \citep{chapelle2000vicinal} as
+in \cite{zhang2017mixup}, wherein data augmentation fulfils the role of a perturbation set that the
+environments fulfil in \ac{DG}.
+%
+\textbf{Second}, given a set of interventions on the underlying causal graph defined by the set of
+environments, one would expect to be able to recover -- if only partially -- the causal
+relationship between the input features and the target such that the predictive mechanism is
+unaffected by causally-independent changes (by interventions on variables not among the target
+variable's causal parents).
+%
+This idea of treating environments as interventions and using them to perform explicit or
+implicit causal inference has notably been exploited in \cite{peters2016causal} and in the
+foundational (to \ac{DG}) work of \cite{arjovsky2019invariant}.
+%
+Indeed, in the wake of \cite{arjovsky2019invariant}, it has become common \citep{
+gulrajani2020search, krueger2021out, mahajan2021domain, lin2022zin} to express the problem setup of
+\ac{DG} and its desiderata in causal terms, in the fashion of \S\ref{sec:lens-of-causality}.
+%
 
 % % --------------------------------------------------------------------------------
 % \subsection{Connection between Fairness and DG}\label{ssec:fairml-dg-cxn}

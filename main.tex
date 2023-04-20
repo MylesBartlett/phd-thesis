@@ -239,10 +239,10 @@ titlepage,numbers=noenddot,%1headlines,
 % ****************************************************************************************************
 \usepackage{classicthesis}
 % for compatibility with Sussex requirements
-% \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
+\reversemarginpar
 % !!! for drafting, I'll use slightly incorrect margins, because it's annoying if the text isn't centered
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt,marginparwidth=20mm,
-margin=35mm]{geometry}
+% \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=3cm,right=3cm,headsep=10pt,marginparwidth=20mm, margin=35mm]{geometry}
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{TeX Gyre Pagella} % Palatino clone
 \linespread{1.05} % a bit more for Palatino
 % \setmainfont[Ligatures=TeX,Numbers=OldStyle]{Linux Libertine O}
@@ -516,7 +516,7 @@ margin=35mm]{geometry}
 % \include{FrontBackmatter/DirtyTitlepage}
 \include{FrontBackmatter/Titlepage}
 % \include{FrontBackmatter/Titleback}
-% \cleardoublepage\include{FrontBackmatter/Dedication}
+\cleardoublepage\include{FrontBackmatter/Dedication}
 % \cleardoublepage\include{FrontBackmatter/Foreword}
 \begin{refsection}[all]
   \cleardoublepage\include{FrontBackmatter/Abstract}
