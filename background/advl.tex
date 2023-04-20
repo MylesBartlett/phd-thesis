@@ -1,9 +1,9 @@
 % ********************************************************************************
 \section{Adversarial Learning}\label{sec:advl}
 % ********************************************************************************
-\acf{AdvL} is a general, multi-field-spanning learning paradigm, characterising -- in
-game-theoretical parlance -- non-co{\"o}perative (competitive) systems, or `games' in which two or
-more `players' compete over shared or interdependent \emph{utility} \citep{fudenberg1991game}.
+\acf{AdvL} is a general, multi-field-spanning learning paradigm, describing -- in game-theoretical
+parlance -- non-co{\"o}perative (competitive) systems, or `games' in which two or more `players'
+compete over shared, or at least interdependent, \emph{utility} \citep{fudenberg1991game}.
 %
 % \marginpar{\textbf{Minimax}}
 %
@@ -19,23 +19,23 @@ gradient descent), it is natural to view \(\mu_{min}\) as the model of interest,
 as robustness or fairness).
 %
 
-\marginpar{\textbf{Bilevel optimisation}}
-%
 Such a problem can alternatively be viewed as an alternating (turn-based) bilevel optimisation
 problem, where at the \(t\)th iterate the learner selects (via some optimisation procedure) from \(
 \Sigma_{min} \), the strategy that gives the best response, \(\sigma_{min, t}^{\ast}\), to the best
 response of the adversary at the previous iterate, i.e. \( \sigma_{max}^\ast|_{\sigma_{min,t-1}^\ast} \).
+%
+\marginpar{\textbf{Bilevel optimisation}}
 %
 The best response is determined by each players respective utility, as measured by the
 player-specific function \(\pi: \Sigma \to \R^+\), with \(\Sigma\) denoting the space of strategic
 profiles, a strategic profile itself referring to tuple of chosen strategies characterising a game
 state.
 %
-\marginpar{\textbf{Nash equilibria}}
-%
 A hallmark of the adversarial regime is that the strategy of maximiser is dependent on the
 state of the minimiser and if the state of the minimiser changes so does the best-response, unless 
 in a state of \emph{Nash Equilibrium} (NE; or at least a local one).  
+%
+\marginpar{\textbf{Nash equilibria}}
 %
 The concept of a NE is fundamental to game theory, referring to strategic profiles, \(\sigma^\ast \in
 \Sigma^\ast\), from which no player can unilaterally deviate and achieve greater payoff, or,
@@ -61,10 +61,10 @@ theoretically-achievable utility for each player (given the utilities of every o
 solely \wrt{} the relative utilities of the players and the resulting fixed points.
 
 %
-The minimax formulations we saw in the context of minimax fairness and (worst-group) distributional
-robustness comply -- perhaps subtly -- with this definition as the strategy of the maximiser can be
-interpreted as a weighting function whose best-response is the one under which only the loss of the
-highest-loss group contributes to the overall loss. 
+The minimax formulations presented in the context of minimax fairness and (worst-group)
+distributional robustness comply -- perhaps subtly -- with this definition as the strategy of the
+maximiser can be interpreted as a weighting function whose best-response is the one under which
+only the loss of the highest-loss group contributes to the overall loss. 
 %
 Practically, computing the best response for each player over the entire dataset for each iterate is
 computationally intractable for most non-trivial cases, especially so if said players are deep
@@ -81,7 +81,7 @@ through concurrent (single-step) updates to the players' strategies.
 Notable concrete applications of adversarial learning include artificial curiosity
 \citep{schmidhuber1992learning}, Generative Adversarial Networks (\ac{GAN};
 \cite{goodfellow14generative}), self-play \citep{silver2018general}, adversarial robustness
-\citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant
+\citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant learning
 \citep{ganin2016domain, zhao2019learning} and \ac{FRL} \citep{edwards2015censoring,
 madras2018learning}.
 %

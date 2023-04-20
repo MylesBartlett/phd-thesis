@@ -59,8 +59,6 @@ constraints -- which is especially pertinent in the case of semi-supervised clus
 perspective, namely, as \ac{SL} with additional information \citep{chapelle2009semi}.
 
 %
-\marginpar{\textbf{Transduction}}
-%
 Closely related to \ac{SemiSL} is the idea of \emph{Transductive Learning} (TL;
 \citealp{gammerman1998learning}).
 %
@@ -68,6 +66,8 @@ With TL, rather than pursuing the lofty goal of learning a predictor that can ge
 entire input domain, \( \gX \) -- reflecting the inductive process of extrapolation -- one instead
 focuses on predicting well on a restricted domain defined by the test points -- reflecting the
 transductive process of transferring rules between specific cases. 
+%
+\marginpar{\textbf{Transduction}}
 %
 That is, the optimisation problem is reduced from finding the (loss-function) minimiser over \(f
 \in \gF \)  to the considerably more tractable problem of finding the minimiser over \(
@@ -92,40 +92,40 @@ itself as a reference dataset for the proposed matching procedure.
 
 
 % --------------------------------------------------------------------------------
-\subsection{Justifying \acs{SemiSL}}\label{ssec:assumptions}
+\subsection{Justifying \acl{SemiSL}}\label{ssec:assumptions}
 % --------------------------------------------------------------------------------
-While \ac{SemiSL} is a tantalising prospect whenever one has a large corpus of unlabelled data, and
-relatively sparing labelled data, it is unfortunately not the case that whenever there is
-unlabelled data available that one can mine it for additional information about the given task. 
+While \ac{SemiSL} is a tantalising prospect whenever one has a large corpus of unlabelled data
+coupled with a relatively sparing labelled data, it is unfortunately not the case that whenever
+there is unlabelled data available that one can mine it for additional information about the given
+task. 
 %
 In fact, in some cases -- those in which there is an element of distribution shift -- one might
 find a degradation in performance when using \ac{SemiSL}, relative to the supervised baseline trained on
 a small fraction of the samples.
 %
-\ac{SemiSL} theory requires that certain assumptions about the data-generating process be met in order
-for the learning paradigm to bear fruit (in sense of reduced generalisation-error/improved sample
-efficiency), whatever the chosen method, though this is not to say that there one can't observe
-practical benefits -- such as improved convergence-rates or stability -- detached from those
-assumptions.
+Indeed, theory prescribes that certain assumptions about the data-generating process be met in
+order for the learning paradigm to bear fruit (in sense of reduced generalisation-error/improved
+sample efficiency), whatever the chosen method, though this is not to say that there one can't
+observe practical benefits -- such as improved convergence-rates or stability -- detached from
+those assumptions.
 %
-We will broach the importance of the direction of causality -- that is how the data-generating
+I will broach the importance of the direction of causality -- that is how the data-generating
 process factorises -- later in this section; to begin with, following \citep{chapelle2009semi}, I
 summarise the justifying assumptions for \ac{SemiSL}.
 %
 These assumptions are not complementary, in the sense that they can, or need be, simultaneously
-satisfied; rather they provide three different perspectives leading to different classes of
-algorithms. 
+satisfied; rather they provide three different perspectives (`perspective' being perhaps the more
+apposite term) engendering different classes of algorithms. 
 %
 The cluster and low-density-separation (LDS) assumptions most obviously form a dual-view of the same
 fundamental principle, understanding `cluster' to mean `high-density-connectedness'.
 %
 
-% Cite TLSVM as an example of an LDS-motivated approach 
-
-\marginpar{\textbf{Cluster Assumption}}
 %
 To elaborate, the \emph{cluster assumption} posits that data-points that are connected by a path
 through density regions should belong to the same class.
+%
+\marginpar{\textbf{Cluster Assumption}}
 %
 This is precisely the assumption that drives many traditional (density-based) clustering algorithms
 aiming to separate the data into groups of samples, or `clusters', using density (estimable, for
@@ -138,12 +138,12 @@ according to local correlation strength; 2) propagating the label distributions 
 samples to the adjacent unlabelled samples in a Markovian fashion.
 %
 
-\marginpar{\textbf{Low-density-separation Assumption}}
-%
 If one flips the cluster assumption, such that we have instead have the axiom `data-points that are
 not connected by paths through high-density regions belong to different clusters', then one obtains
 the LDS assumption, though this is more commonly expressed in terms of the decision boundary,
 namely that the plane separating any two classes should carve out a region of low density.
+%
+\marginpar{\textbf{Low-density-separation Assumption}}
 %
 Despite the equivalence, the two afford very different perspectives, from an optimisation
 standpoint. Indeed, the aforementioned density-based clustering algorithms, of which DBSCAN
@@ -176,8 +176,9 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  \) (the output space) and \( \gX \) (the input space), respectively.
  %
  Plainly speaking, the assumption embodies the desire to have similar inputs map to similar outputs
- (that distance should be preserved up to some relaxation factor) and from this assumption one
- naturally obtains the class of \emph{consistency-regularised} methods. 
+ (that distance should be preserved up to some relaxation factor, hearkening back to the earlier
+ discussion on \ac{IF}) and from this assumption one naturally obtains the class of
+ \emph{consistency-regularised} methods. 
  %
  Equally, it should be possible to smoothly interpolate between the images of \(x\) and \( x^\prime
  \) without straying into low-density regions (which, per the LDS assumption, define separating
@@ -188,12 +189,12 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  neighbourhood graph) and then seek to minimise the distance between them in \( \gY \), thereby
  partially discretising the problem but allowing for increased flexibility.
  %
- This is capitalised on in Chapter~\ref{ch:okapi} we propose a consistency-regularised method for
- \ac{DG} where pairs are determined by a cross-domain causal-matching algorithm and consistency is
- enforced between the members of those pairs.
+ This is capitalised on in Chapter~\ref{ch:okapi} wherein we propose a consistency-regularised
+ method for \ac{DG} where pairs are determined by a cross-domain causal-matching algorithm and
+ consistency is enforced between the members of those pairs.
  %
 % --------------------------------------------------------------------------------
- \subsection{Causal connections: when should(n't) \acs{SemiSL} work?}\label{ssec:semisl-causality}
+ \subsection{Causal connections: when should(n't) \acl{SemiSL} work?}\label{ssec:semisl-causality}
 % --------------------------------------------------------------------------------
 Following \cite{scholkopf2021toward}, start by supposing that our prediction task follows the
 causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausal, one.

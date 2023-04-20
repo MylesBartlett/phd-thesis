@@ -31,21 +31,23 @@ premise of \acl{IF} (\acs{IF}; \citealp{dwork2012fairness}) to take the opportun
 parallel between it and the idea of consistency/smoothness in \ac{SemiSL}.
 
 %
-Particularly, I will consider two particular kinds of group-oriented notions of fairness: 1) the
-family of notions predicated on equalised rates, imposing constraints on the predictive
-distribution; 2) the notion of \emph{minimax fairness} predicated on maximising the worst-group
-performance, and which imposes no constraints on the relative performance between groups.
+Particularly, I will consider two kinds of group-oriented notions of fairness: 1) the family of
+notions predicated on \emph{equalised rates}, imposing constraints on the predictive distribution;
+2) the notion of \emph{minimax fairness} predicated on maximising the worst-group performance, and
+which imposes no constraints on the relative performance between groups -- the entailed objective
+corresponds to that discussed in \S\ref{sec:causality} (Eq.\ref{eq:rob-erm-obj}, specifically),
+however, I revisit the idea here as it is important enough to be worth revisiting with proper
+contextualisation.
 %
-It is interesting to note that, from an optimisation perspective, the latter partially subsumes the
-former: by solving its entailed problem, one can subsequently readily solve the former by
-artificially inflating the error on the advantaged group (systematically flipping the predicted
+It is interesting to note that, from an optimisation perspective, the latter kind partially
+subsumes the former: by solving its entailed problem, one can subsequently readily solve the former
+by artificially inflating the error on the advantaged group (systematically flipping the predicted
 labels until the relevant constraint on the predictive rates is met).
 
 %
-
-Simply put, the unified goal of \ac{AF} is to learn some predictor, \(f: \gX \to \gY \) that
-is, according to some definition, non-discriminatory -- that does not deprive a given individual of
-opportunities by dint of belonging to a particular sensitive group.
+Simply put, the unified goal of \ac{AF} is to learn some predictor, \(f: \gX \to \gY \) that is,
+according to some definition, non-discriminatory -- that does not deprive a given individual of
+opportunities by virtue of belonging to a particular sensitive group.
 %
 A frequently-invoked example is that of financial institution employing an automated
 decision-making system to determine which loan applicants should/should not have their applications
@@ -65,13 +67,12 @@ Through Unawareness} (FTU).
 
 \subsection{Equalised rates}\label{sec:equalised-rates}
 %
-A long-standing and vigorously-debated problem in \ac{AF} spheres is how exactly one should define
-the concept of `fairness`; indeed what constitutes a `fair` decision depends both on the
+A long-standing, and vigorously-debated, problem in \ac{AF} spheres is how exactly one should
+define the concept of `fairness`; indeed what constitutes a `fair` decision depends both on the
 (individual, social, or institutional) value system and the context in question.
 %
-Much of the fairness literature has focussed on notions of fairness based on enforcing the
-predictor to output equal rates (e.g. of positive or correct predictions) across the sensitive
-groups.
+Much of the \ac{AF} literature has focussed on notions of fairness based on enforcing the predictor
+to output equal rates (e.g. of positive or correct predictions) across the sensitive groups.
 %
 Here, I briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}} as
 the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do so
@@ -113,7 +114,7 @@ That is
 %
 where \(\hat{Y}\) denotes the random variable corresponding to the predictions of a given
 predictor, \(f\), and `constant` denotes some placeholder constant value, noting that this could be
-any arbitrary value and does not take into account utility, such that a majority or randomly
+any arbitrary value and does not take into account utility, such that a majority or randoml
 classifier would degenerately satisfy the condition. 
 %
 This above constraint is equivalent to requiring, according to the standard notion of statistical
@@ -124,7 +125,7 @@ independence, namely the equality of the conditional and marginal distributions,
 \end{equation}
 %
 %
-Since requiring that this condition be satisfied exactly is generally overly strict when doing
+Since requiring this condition be satisfied exactly is, generally, over-strict when doing
 constrained optimisation, it is common to introduce some relaxation factor, \(\epsilon\), that
 expands the constraint to a feasible region so that with some minor rearrangement we may instead
 write:
@@ -155,12 +156,12 @@ Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be stati
 \ac{MI} admits various decompositions into sums of marginal and joint/conditional entropies that
 make it particularly amenable for optimisation purposes. 
 %
-In invariant-representation learning (encompassing \ac{FRL}, \ac{DA}, and \ac{DG} and referred to
-within the context of the former suitably as \ac{FRL}), for example, a common method for imparting
-independence, \(Z \perp S \) -- which is sufficient for \(Y \perp S\), given a predictor head, \(g:
-\gZ \to \gY \) -- between the representations learned by encoder \(h: \gX \to \gZ \) and the
-sensitive attribute to train \(h\) to maximise the conditional entropy \( H(\hat{S}|Z) \) of an
-adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\) (itself trained via \ac{MLE}).
+In invariant-representation learning (encompassing \ac{FRL}, \ac{DA}, and \ac{DG}), for example, a
+common method for imparting independence, \(Z \perp S \) -- which is sufficient for \(Y \perp S\),
+given a predictor head, \(g: \gZ \to \gY \) -- between the representations learned by encoder \(h:
+\gX \to \gZ \) and the sensitive attribute to train \(h\) to maximise the conditional entropy \(
+H(\hat{S}|Z) \) of an adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\) (itself trained
+via \ac{MLE}).
 %
 I shall expatiate on \ac{AdvL} broadly, and \wrt{} to its use as an infomin engine -- as in the
 forgoing -- in \S\ref{sec:advl}.
@@ -187,8 +188,8 @@ Thus, \ac{EqOp} can be written, as above, as
 \marginpar{\textbf{Equalised Odds}}
 %
 By making this symmetric \wrt{} \(Y\), such that not only do we demand parity of the \acp{TPR} but
-also \acp{FPR} we obtain the final of the \ac{ER}-based metrics, \ac{EqOd} \citep{hardt2016equality} --
-also known as disparate mistreatment:
+also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
+\citep{hardt2016equality} -- also known as disparate mistreatment:
 % Plainly, EqOd is tantamount to requiring that no additional information about \(S\) should be
 % gleanable from observing \(\hat{Y}\) given that we have already observed \(Y\). 
 % %
@@ -200,13 +201,15 @@ also known as disparate mistreatment:
 %
 \marginpar{\textbf{Accuracy-fairness trade-off}}
 %
-It has long been recognised that there exists an inherent trade-off between the utility, as
-measured by aggregate performance and fairness under conceptions of fairness based on \aclp{ER}
-(\acsp{ER}; \citealp{kaplow1999conflict}); with accuracy being the principal measure of said
-utility in the context of classification, this trade-off is commonly referred to as the
-\emph{accuracy-fairness trade-off}, though as we will see in the next subsection, such a trade-off
-does not apply to fairness in general, as in the case for notions of fairness defined by
-\emph{minimax fairness} where one seeks to maximise worst-group utility rather than group parity.
+The inherent trade-off between the utility, as measured by aggregate performance and fairness under
+conceptions of fairness based on \aclp{ER} (\acsp{ER} has long been recognised;
+\citealp{kaplow1999conflict}). 
+%
+With accuracy being the principal measure of said utility in the context of classification, this
+trade-off is commonly referred to as the \emph{accuracy-fairness trade-off}, though as we will see
+in the next subsection, such a trade-off does not apply to fairness in general, as in the case for
+notions of fairness defined by \emph{minimax fairness} where one seeks to maximise worst-group
+utility rather than group parity.
 %
 Given the existence of such a trade-off, the problem of learning a useful classifier subject to
 \ac{ER}
@@ -236,8 +239,8 @@ phrased econometrically -- scenarios not characterised by limited resources  and
 `Robin Hood' principle of `stealing from the rich to give to the poor` is inapplicable.
 %
 Healthcare defines a whole host of applications to which this consideration applies, where
-accurately detecting positive cases can be a matter of life-or-death, and any marked degradation in
-this respect in the name of fairness is unacceptable. 
+accurately detecting positive cases amounts to a matter of life-or-death, and any marked
+degradation in this respect in the name of fairness is unacceptable. 
 %
 Rather than satisfying constraints on predictive parity, a more reasonable tact in such scenarios
 is instead to aim to maximise fairness while incurring minimal (ideally, no) degradation in the
@@ -254,8 +257,8 @@ works well over a range of proximal distributions/problems (also referred to as 
 \emph{perturbation set} in some texts \citep{ben2009robust}). 
 %
 This desire naturally arises in any regime which naturally contends with some kind of meta
-distribution -- a distribution over distributions -- such as meta-learning \citep{collins2020task},
-domain generalisation (as already noted; \cite{sagawa2019distributionally}), or, indeed, fairness.
+distribution -- a distribution over distributions -- such as Meta Learning \citep{collins2020task},
+\ac{DG} (as already noted; \cite{sagawa2019distributionally}), or, indeed, \ac{AF}.
 %
 Given a meta distribution \(\mathfrak{P}(X, Y)\), from which we sample the bivariate distributions \(
 P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as 
@@ -269,12 +272,18 @@ P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as
 recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random variables.
 %
 Thus, in contrast to standard \ac{ERM}, which would optimise over the `flattened' meta
-distribution, the DRO objective defines a bilevel optimisation problem in which only the supremum
-of the loss over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be minimised by
-our predictor, \(f\).
+distribution, the \ac{DRO} objective defines a bilevel optimisation problem in which only the
+supremum of the loss over \( \mathfrak{P}(X, Y) \) contributes to the overall objective to be
+minimised by our predictor, \(f\).
 %
 One can view this as a sparse form of \ac{IW}-\ac{ERM} where the weighting function is the
 indicator function returning \(1\) if a sample belongs to the `worst` distribution, else \(0\).
+%
+Note, that this is effectively a general restatement of the objective presented in
+Eq.~\ref{eq:rob-erm-obj} save with the conditioning on the exogenous environment variable excised,
+i.e. with \(\gE\) and \(P(X, Y)\) conflated, for to formulate minimax fairness under that objective
+one need only substitute that variable with the sensitive attribute in the classical uni-domain
+setting.
 
 %
 For evaluation of classification tasks, one can align the standard notion of accuracy with minimax
@@ -312,22 +321,24 @@ focusses -- as expected of the name -- on fairness at the individual level, and 
 summed up with the apophthegm `similar individuals should receive similar treatments'.
 %
 As alluded to before, the premise of \ac{IF} greatly resembles the smoothness assumption from
-SemiSL. 
+\ac{SemiSL} that I shall introduce formally in \S\ref{sec:semisl}. 
 %
-I mentioned in its associated section that the smoothness assumption can be seen as a
-\(K\)-Lipschitz constraint on our function class and this is the manner in which the \emph{Fairness
-Through Awareness} (FTA) -- the most general concept of \ac{IF} -- is couched in
-\cite{dwork2012fairness}, the name standing in contrast to FTU.
+Glimpsing ahead, the smoothness assumption can be seen as a \(K\)-Lipschitz constraint on our
+function class; this is the very manner in which the \emph{Fairness Through Awareness} (FTA) -- the
+most general concept of \ac{IF} -- is couched in \cite{dwork2012fairness}, its name contrasting
+with FTU.
 %
-The central question implied by FTA then is what constitutes an appropriate measure of similarity
--- in the input and output spaces separately -- for the population and task under consideration.
+The central question thus implied by FTA then is what constitutes an appropriate measure of
+similarity -- in both the domain and codomain -- for the population and task being considered;
+while being freed from the fetters of group fairness and its notional issues, this question is
+itself far from trivial.
 %
 % ------------------------------------------------------------------------------ 
 \subsection{Bias propagation and systematic censoring}\label{ssec:residual-unfairness}
 % ------------------------------------------------------------------------------ 
-I conclude this section with a brief discussion of the residual unfairness, as termed by
-\cite{kallus2018residual}, and the problem setting giving rise to it, owing to its pertinence to
-both Chapter~\ref{ch:nifr} and Chapter~\ref{ch:supmatch}.
+I conclude this section with a brief discussion of residual unfairness, as termed by
+\cite{kallus2018residual}, and the problem setting engendering it, owing to its pertinence to both
+Chapter~\ref{ch:nifr} and Chapter~\ref{ch:supmatch}.
 %
 Residual unfairness refers to lingering inter-group disparities, stemming from sampling bias -- in
 the fairness-contextualised sense of resulting from prejudiced historical policies engendered by
@@ -359,6 +370,10 @@ mixture of men and women.
 %
 \cite{kallus2018residual} show that in such cases, enforcing fairness on the training distribution
 provably does not guarantee fairness on the true population.
+%
+In terms of the established causal calculus, we have the target and subgroup distributions jointly
+influenced by the environment variable -- here corresponding to an indicator of the
+recruited/unrecruited population -- i.e. .
 
 
 % We consider a model of biased data where systematic censoring affects whether or not entire

@@ -1,17 +1,30 @@
 % ********************************************************************************
 \section{Domain generalisation}\label{sec:dg}
 % ********************************************************************************
-While closely-related to \ac{DA}, \acf{DG} is distinct in the respect that the task is
-fundamentally, as the name suggests, one of \ac{OOD} generalisation rather than one of adaptation.
+In \S\ref{sec:lens-of-causality} I already discussed how the underlying problem may be couched in
+terms of exogenous variables, over which a bilevel optimisation problem is defined, and this
+section shall be, accordingly, reasonably brief in eschewing redundancy; I will focus on
+distinguishing \ac{DG} from its sister field of \ac{DA} and in providing intuition for why \ac{DG}
+can work despite some impossibilities.
+
+
+Indeed, \Acl{DA} is closely-related to \acl{DG} in that both contend with transferring knowledge
+between domains while achieving invariance to domain-specific factors. 
+%
+However, they are distinct in the respect that the task entailed by \ac{DA} is fundamentally, as
+per its name, one of \ac{OOD} generalisation -- in the strict sense of achieving positive transfer
+to novel domains -- rather than adaptation to a closed set of given, and thus known and seen,
+domains.
 %
 \marginpar{\textbf{The design of \ac{DG}}}
 %
-By this I mean that while in \ac{UDA} one is given a labelled dataset, \( \gD^{src} \triangleq
-\{x_i, y_i \}_{i=1}^{N^{src}} \), belonging to the source domain, along with an unlabelled
-dataset \( \gD^{tgt} \triangleq \{ x_i \}_{i=1}^{N^{tgt}} \) belonging to the target domain,
-and the goal is to train a classifier to generalise from the former to the latter (which entails a
-degree of invariance), \ac{DG} is more general, in that one is instead given datasets from multiple
-domains and seeks to train a classifier that can generalise to previously unseen ones. 
+To endow some formalism this, while in \ac{UDA} one is given a labelled dataset, \( \gD^{src}
+\triangleq \{x_i, y_i \}_{i=1}^{N^{src}} \), belonging to the source domain, along with an
+unlabelled dataset \( \gD^{tgt} \triangleq \{ x_i \}_{i=1}^{N^{tgt}} \) belonging to the target
+domain, and the goal is to train a classifier to generalise from the former to the latter (which
+entails a degree of invariance), \ac{DG} is more general, in that one is instead given datasets
+from multiple domains and seeks to train a classifier that can generalise to previously unseen
+ones. 
 %
 That is, given the (empirical) meta distribution \( \mathfrak{D} \triangleq \{\gD_e \}_{e \in \gE}
 \) consisting of \( |\gE| \) distributions drawn from different domains, or \emph{environments},
@@ -20,14 +33,14 @@ optimally, or with minimal degradation, when presented with distribution \( \gD_
 novel domain \( e^{te} \notin  \gE \).
 
 %
-While we would ideally have a model that could generalise to any arbitrary environment (assuming
-the task remains consistent), this is sadly impossible given finite data
-\citep{david2010impossibility}, and so our expectations must be tempered to being able to
-generalise within some region the training distribution.
+While we would ideally have our model generalise to any arbitrary environment (assuming the task
+remains consistent), this is sadly impossible given finite data \citep{david2010impossibility}, and
+so our expectations must be tempered to being able to generalise within some region the training
+distribution.
 %
 \marginpar{\textbf{Justifying \ac{DG}}}
 %
-The justification of \ac{DG} might then be viewed according to the following perspectives,
+Justification for \ac{DG} might then be viewed according to the following perspectives,
 respectively rooted in \ac{DRO} and causality. \textbf{First}, given a set of known variances --
 induced by the domains -- one should expect to be able to leverage these variances to learn a
 predictor able to generalise both within the convex hull (affine combinations of elements of the

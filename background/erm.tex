@@ -3,16 +3,17 @@
 % ********************************************************************************
 %
 Traditional learning algorithms usually assume  that (or are only optimal when) the training and
-test samples are \emph{both} variables identically-and-independently distributed (\iid{}) random
-variables, such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \). 
+test samples are \emph{both} identically-and-independently distributed (\iid{}) random variables,
+such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \). 
 %
 Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
 respectively.
 %
 Based on this assumption, the method of Risk Minimisation seeks the hypothesis \( f^\ast \in \gF \)
-that is the minimiser of the \emph{risk}, $\gR$, defined according to some statistical distance, or
-\emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted, \(\hat{Y}
-\triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution, \(P^{tr}(X,
+that is the minimiser of the eponymous \emph{risk}, $\gR$, defined according to some statistical
+distance, or \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted,
+\(\hat{Y} \triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution,
+\(P^{tr}(X,
 Y)\). 
 %
 A canonical example of such a distance for classifications tasks is the \emph{cross-entropy loss};
@@ -34,7 +35,7 @@ the gradient, leaving just the \acs{KL} term.
 %
 Returning from this brief aside, we can formally define the (population or true) risk as
 %
-\begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ D ( f(X,
+\begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ L ( f(X,
     Y) )].
     % \gR(f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } \[ D (f(X), Y) \].
 \end{equation}
@@ -46,7 +47,9 @@ observed input-target pairs \( (x, y) \).
 Thus, we are instead doing \acf{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
 is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
 than over the underlying distribution from which those observations were drawn.
-% %
+%
+\marginpar{\textbf{\acl{ERM}}}
+%
 To accommodate this discrepancy, two things need to be accounted for. 
 %
 \textbf{First} we need to  substitute \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
@@ -72,6 +75,8 @@ With the foregoing adjustments in mind, one can then define the standard \ac{ERM
 %
 This version of the objective is simply a uniform (unweighted) average over all training pairs; it
 does not take into account the distribution of the inputs or targets.
+%
+\marginpar{\textbf{Long-tailedness and importance-weighting}}
 %
 This is mentionable as many real-world datasets exhibit significant class class-imbalance
 \citep{zhu2014capturing, van2017devil}, or, more generally, `long-tailedness', which is to say that
@@ -157,6 +162,8 @@ losses (for binary classification; \cite{wang2021importance}) and logit-adjustme
 As statistical models are only required model correlations in the data to satisfy the loss
 function, they ultimately only capture a superficial representation of the true physical processes
 involved.
+%
+\marginpar{\textbf{The pitfalls of statistical modelling}}
 %
 In the discriminative case (that this thesis is concerned with), for a given \( X \) and \( Y \) we
 are interested in approximating the conditional distribution \( P(Y|X) \); this  corresponds to

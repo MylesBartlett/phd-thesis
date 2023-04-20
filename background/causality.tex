@@ -1,7 +1,6 @@
 % ********************************************************************************
 \section{Through the lens of causality}\label{sec:lens-of-causality}
 % ********************************************************************************
-
 I now introduce a causal formalism of the distribution-shift problem, a formalism which has been
 frequently exploited in the \ac{DG} and \ac{AF} literature as it provides a simple calculus with
 which to reason about desired (and undesired) variances.
@@ -14,9 +13,11 @@ The background on causality is thus commensurably light and I would refer the re
 \citet{pearl2009causality} for full exposition of the topic.
 
 While the term `domain' typically refers to the observed distributions as a whole in both \ac{DA}
-and \ac{DG}
-alike (i.e. `source' versus 'target'), such terminology is somewhat rigid, as it fails to capture
-that the distributions share an underlying structure and how and which variables are shifted.
+and \ac{DG} alike (i.e. `source' versus 'target'), such terminology is somewhat rigid, as it fails
+to capture that the distributions share an underlying structure and how and which variables are
+shifted.
+%
+\marginpar{\textbf{The domain as an exogenous variable}}
 %
 It is more arguably flexible then, consistent with \citep{mooij2020joint}, to think of the domain
 as some exogenous latent variable, which, by its conditioning, gives rise to the different observed
@@ -43,8 +44,8 @@ Formally, a \ac{CBN} is a kind of \ac{DAG}, \(\rmG \triangleq \langle \gV, \xi
 \rangle \) with node-set (variables), \(\gV\), and (directed) edge-set, \(\xi\) consisting of
 tuples \((ij)\) meaning \(i \to j \), or `node \(i\) is a parent of node \(j\)'.
 %
-Each node in \( \rmG \) then defines a probability distribution, conditional on its parents, such that
-the joint distribution of \(\gV\), \( P(V) \), factorises as \( P(V) = \prod_{v \in \gV} P(v |
+Each node in \( \rmG \) then defines a probability distribution, conditional on its parents, such
+that the joint distribution of \(\gV\), \( P(V) \), factorises as \( P(V) = \prod_{v \in \gV} P(v |
 \text{Pa}(v)) \) where we can now define \(\text{Pa}(\cdot)\) as a function that returns all nodes
 in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j \in \xi, j = v \}
 \).
@@ -59,26 +60,26 @@ One can, for example characterise the case of covariate-shift with causal \(f^\s
 edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
 P(Y|X)P(X|E)P(E) \). 
 %
-In Chapters~\ref{ch:nifr} and \ref{ch:supmatch} I go beyond the bivariate (excepting \( E \)) and
+In Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, I go beyond the bivariate (excepting \( E \)) and
 covariate case and consider label-shift problems with an additional auxiliary label \(S\) --
 corresponding to an identifier of some subgroup or spurious feature we wish to be invariant to in
 the name of fairness or generalisation --  in which \(E\) influences the joint distribution \( P(S,
 Y) \) but not the marginal distribution \(P(X)\), giving rise to representation bias and, from it,
-spurious correlations.
+\acp{SC}.
 %
 To reify this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN} corresponding to
 different distribution shifts for a (causal) prediction task.
 %
 \import{background}{ds_cbns.tex}
 %
-We will see that such a formulation is particularly useful when we come to discuss domain
-generalisation which involves a multitude of source distributions, going beyond the dyadic
-source-target setup characterising DA.
+We will see that such a formulation is particularly useful when I come to discuss \acl{DG} in
+\S\ref{sec:dg}, defining a problem setup involving a multitude of source distributions and thus
+going beyond the dyadic source-target setup characterising \ac{DA}.
 %
 
-A popular \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} and intuitive way
-of formulating the robust-prediction problem is as one of bilevel optimisation, where the inner
-loop entails computing the empirical risk over each domain and the outer loop corresponds to
+A common \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} way of
+formulating the robust-prediction problem is as one of bilevel, or minimax, optimisation, where the
+inner loop entails computing the empirical risk over each domain and the outer loop corresponds to
 finding the function that minimises the maximum of said risks.
 %
 We can then define, accordingly, the optimal predictor as 
@@ -97,19 +98,19 @@ We can then define, accordingly, the optimal predictor as
 As discussed at length before, domains/environments can be modelled as deriving from different
 interventions of the causal factorisation of \(P(X, Y\)).
 %
-It follows that, for Eq.\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
+It follows that, for Eq.~\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
 domains, \(\gE^\dagger\) outside \(\gE\) (\( \gE^\dagger \cap \gE = \varnothing \); i.e. the goal
 of \ac{DG}), \(\gE\) must be a representative (well-covering) set of samples from the generating
 distribution, \( P(E) \), such that smooth interpolation along the underlying manifold is possible.
 %
-When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set},
-accordant with the robust optimisation literature \citep{ben2009robust}.
+When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
+with the robust optimisation literature \citep{ben2009robust}.
 %
 While generalisation to arbitrary perturbations is provably hard (or impossible), in general
 \citep{david2010impossibility}, when \(\gE\) encodes prior information about the kinds of
 perturbations one expects to encounter at test-time then incorporating it into the optimisation
-process can be fruitful, both for allowing interpolation within the convex hull defined by the
-set and to an extrapolated region outside of it \citep{krueger2021out}.
+process can be fruitful, both for allowing interpolation within the convex hull defined by the set
+and to an extrapolated region outside of it \citep{krueger2021out}.
 %
 Indeed, it stands to reason that by allowing the model to glean which features are and are not
 stable across environments would allow it to better approximate the true causal structure of the
@@ -119,7 +120,7 @@ This idea has been explored extensively in recent years in both the causal disco
 \citep{peters2016causal, bengio2019meta} and \ac{DG} \citep{arjovsky2019invariant,
 ahuja2020invariant, creager2021environment} literature (as I shall elaborate on in \S\ref{sec:dg}),
 with the caveat that a degree of inductive bias or additional information is necessary to provably
-identify the proper causal relations based on it \citep{lin2022zin}.
+identify the correct causal relations \citep{lin2022zin}.
 %
 
 % % ------------------------------------------------------------------------------
