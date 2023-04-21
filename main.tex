@@ -525,7 +525,10 @@ titlepage,numbers=noenddot,%1headlines,
 % \cleardoublepage\include{FrontBackmatter/Publications}
 % \cleardoublepage\include{FrontBackmatter/Declaration}
 % \cleardoublepage\include{FrontBackmatter/Acknowledgments}
-\cleardoublepage\include{FrontBackmatter/Contents}
+\cleardoublepage
+%
+\include{FrontBackmatter/Contents}
+%
 %********************************************************************
 % Mainmatter
 %*******************************************************
@@ -547,7 +550,7 @@ titlepage,numbers=noenddot,%1headlines,
   %
   This part comprises the introduction to the thesis -- wherein I set the scene for what is to come
   and the order in which that is to occur -- along with some rudimentary background on those topics
-  thought relevant to part~\ref{pt:middle}.
+  thought relevant to Part~\ref{pt:middle}.
   %
 }\part{Beginning}\label{pt:beginning}
 %
@@ -571,20 +574,20 @@ titlepage,numbers=noenddot,%1headlines,
   %
 }\part{Middle}\label{pt:middle}
 %
-% \begin{refsection}[nifr]
-%   \include{nifr/main}
-%   \printbibliography
-% \end{refsection}
-% %
-% \begin{refsection}[supmatch]
-%   \include{supmatch/main}
-%   \printbibliography
-% \end{refsection}
-% %
-% \begin{refsection}[okapi]
-%   \include{okapi/main}
-%   \printbibliography
-% \end{refsection}
+\begin{refsection}[nifr]
+  \include{nifr/main}
+  \printbibliography
+\end{refsection}
+%
+\begin{refsection}[supmatch]
+  \include{supmatch/main}
+  \printbibliography
+\end{refsection}
+%
+\begin{refsection}[okapi]
+  \include{okapi/main}
+  \printbibliography
+\end{refsection}
 %
 \ctparttext{
   %
@@ -596,10 +599,10 @@ titlepage,numbers=noenddot,%1headlines,
   %
 }\part{End}\label{pt:end}
 %
-% \begin{refsection}[all]
-%   \include{discussion}
-%   \printbibliography
-% \end{refsection}
+\begin{refsection}[all]
+  \include{discussion}
+  \printbibliography
+\end{refsection}
 
 % ********************************************************************
 % Appendix

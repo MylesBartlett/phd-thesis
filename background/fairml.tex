@@ -3,7 +3,7 @@
 % ********************************************************************************
 Research into \acf{AF} has flourished in recent years, the subfield growing from what was once an
 arguably niche one to one of great prominence, borne by \ac{ML}'s proliferation -- and thus
-increased capacity to affect real lives consequentially -- in all sectors of society.
+increased capacity to affect real lives in consequential ways -- in all sectors of society.
 %
 Indeed, a multitude of high-profile cases/studies have highlighted the discriminatory (unfair)
 nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwin2016machine},
@@ -24,7 +24,7 @@ realisation \(s\) -- and will assume that this variable along with the target va
 and toward which many standard metrics of fairness are geared \citep{feldman2015certifying,
 hardt2016equality, woodworth2017learning} -- though there are works that extend notions of -- and
 methods for enforcing -- fairness to settings with categorical and continuous (\( S \) and \( Y \))
-attributes.
+attributes \citep{grari2021fairness}.
 %
 Though the focus is on group fairness, at the tail-end of the section, I will touch briefly on the
 premise of \acl{IF} (\acs{IF}; \citealp{dwork2012fairness}) to take the opportunity to draw a
@@ -34,10 +34,7 @@ parallel between it and the idea of consistency/smoothness in \ac{SemiSL}.
 Particularly, I will consider two kinds of group-oriented notions of fairness: 1) the family of
 notions predicated on \emph{equalised rates}, imposing constraints on the predictive distribution;
 2) the notion of \emph{minimax fairness} predicated on maximising the worst-group performance, and
-which imposes no constraints on the relative performance between groups -- the entailed objective
-corresponds to that discussed in \S\ref{sec:causality} (Eq.\ref{eq:rob-erm-obj}, specifically),
-however, I revisit the idea here as it is important enough to be worth revisiting with proper
-contextualisation.
+which imposes no constraints on the relative performance between groups.
 %
 It is interesting to note that, from an optimisation perspective, the latter kind partially
 subsumes the former: by solving its entailed problem, one can subsequently readily solve the former
@@ -96,7 +93,7 @@ It is also relevant to note that these metrics presuppose scenarios in which the
 of allocatable resources, is limited (a cap on the number of grantable loans or the number of
 people that can be employed, for example), such that any resources allocated to an individual of
 one group are concomitantly being withheld from the other group(s) -- fairness in this context thus
-corresponds to a type of resource allocation problem, from an econometric perspective.
+corresponds to a type of resource-allocation problem, from an econometric perspective.
 %
 
 \marginpar{\textbf{Demographic Parity}}
@@ -114,7 +111,7 @@ That is
 %
 where \(\hat{Y}\) denotes the random variable corresponding to the predictions of a given
 predictor, \(f\), and `constant` denotes some placeholder constant value, noting that this could be
-any arbitrary value and does not take into account utility, such that a majority or randoml
+any arbitrary value and does not take into account utility, such that a majority or random
 classifier would degenerately satisfy the condition. 
 %
 This above constraint is equivalent to requiring, according to the standard notion of statistical
@@ -144,8 +141,8 @@ summarised by taking the maximum over the resulting set.
 \marginpar{\textbf{Mutual-information minimisation}}
 %
 This idea of statistical independence, upon which \ac{DP} hinges, can be expressed generally in
-terms of the \acf{MI} between \(Y\) and \(S\) such that , itself expressible as the KL divergence
-between the joint and product of the marginal distributions:
+terms of the \acf{MI} between \(Y\) and \(S\), itself expressible as the KL divergence between the
+joint and product of the marginal distributions:
 %
 \begin{equation}
     \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
@@ -212,10 +209,9 @@ notions of fairness defined by \emph{minimax fairness} where one seeks to maximi
 utility rather than group parity.
 %
 Given the existence of such a trade-off, the problem of learning a useful classifier subject to
-\ac{ER}
-constraints induces not one optimal solution (or one equivalence class of optimal solutions, more
-accurately) -- as one would have when focussed on only the utility -- but rather a set of
-\emph{Pareto optimal} solutions, the discovery of which is the remit of multi-objective
+\ac{ER} constraints induces not one optimal solution (or one equivalence class of optimal
+solutions, more accurately) -- as one would have when focussed on only the utility -- but rather a
+set of \ac{PO} solutions, the discovery of which is the remit of multi-objective
 optimisation (\ac{MOO}; \cite{sawaragi1985theory, deb2013multi}). 
 %
 \Ac{MOO} has appeared both implicitly and explicitly throughout the \ac{AF} literature, the latter
@@ -236,13 +232,14 @@ range of applications to which they may be reasonably used as a lodestar for fai
 However, the fact that they require degrading performance of the advantaged groups is problematic
 for applications where the quality of service -- the utility of the model -- is cardinal, or --
 phrased econometrically -- scenarios not characterised by limited resources  and thus to which the
-`Robin Hood' principle of `stealing from the rich to give to the poor` is inapplicable.
+`Robin Hood' principle of `stealing from the rich [the majority] to give to the poor [the
+minority]` is inapplicable.
 %
 Healthcare defines a whole host of applications to which this consideration applies, where
 accurately detecting positive cases amounts to a matter of life-or-death, and any marked
 degradation in this respect in the name of fairness is unacceptable. 
 %
-Rather than satisfying constraints on predictive parity, a more reasonable tact in such scenarios
+Rather than satisfying constraints on predictive parity, a more reasonable tack in such scenarios
 is instead to aim to maximise fairness while incurring minimal (ideally, no) degradation in the
 performance on any given group \citep{ustun2019fairness}.
 %
@@ -264,12 +261,15 @@ Given a meta distribution \(\mathfrak{P}(X, Y)\), from which we sample the bivar
 P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as 
 %
 \begin{equation}
-    \underset{f}{\text{inf}} 
+    \underset{f \in \gF}{\text{inf}} 
     \underset{P(X, Y) \sim \mathfrak{P}(X, Y)}{\text{sup}}
     \E_{(X, Y) \sim P(X, Y)}[\gL(f(X), Y) ],
+    \label{eq:dro-obj}
  \end{equation}
 %
-recalling that we use \(\gL(\cdot, \cdot)\) to denote a loss function of random variables.
+recalling that we use \( \gL: \R^\Omega \times \gY^\Omega \to \R \) to denote a loss function of
+random variables, and overloading \(f\) such that its codomain is implied by \(\gL\), as before in
+\S\ref{sec:erm} (the cross-entropy loss implying a codomain of the standard simplex, for example).
 %
 Thus, in contrast to standard \ac{ERM}, which would optimise over the `flattened' meta
 distribution, the \ac{DRO} objective defines a bilevel optimisation problem in which only the
@@ -279,18 +279,23 @@ minimised by our predictor, \(f\).
 One can view this as a sparse form of \ac{IW}-\ac{ERM} where the weighting function is the
 indicator function returning \(1\) if a sample belongs to the `worst` distribution, else \(0\).
 %
-Note, that this is effectively a general restatement of the objective presented in
-Eq.~\ref{eq:rob-erm-obj} save with the conditioning on the exogenous environment variable excised,
-i.e. with \(\gE\) and \(P(X, Y)\) conflated, for to formulate minimax fairness under that objective
-one need only substitute that variable with the sensitive attribute in the classical uni-domain
-setting.
+In the context of minimax fairness, \(\mathfrak{P}\) would be induced by the sensitive attribute
+(each element corresponding to the distribution of a sensitive group); the same might naturally be
+accomplished by conditioning, an alternative I shall pursue in \ref{sec:lens-of-causality} after
+establishing a causal basis.
+%
+% Note, that this is effectively a general restatement of the objective presented in
+% Eq.~\ref{eq:rob-erm-obj} save with the conditioning on the exogenous environment variable excised,
+% i.e. with \(\gE\) and \(P(X, Y)\) conflated, for to formulate minimax fairness under that objective
+% one need only substitute that variable with the sensitive attribute in the classical uni-domain
+% setting.
 
 %
 For evaluation of classification tasks, one can align the standard notion of accuracy with minimax
 fairness by conditioning on the sensitive attributes and taking the minimum (worst) over the
 resulting set of \(|\gS|\) values. 
 %
-In the \ac{DG}/group-robustness literature this quantity is commonly known as \ac{RobAcc}.
+In the \ac{DRO} literature (where ) this quantity is commonly known as \ac{RobAcc}.
 %
 For convenience and clarity, I first reformulate the standard (non-conditional) accuracy as 
 %
@@ -318,7 +323,7 @@ The `robust' version (\acs{RobAcc}) is then simply the minimum accuracy computed
 % ------------------------------------------------------------------------------ 
 While notions of group fairness consider fairness at the level of demographic groups, \ac{IF}
 focusses -- as expected of the name -- on fairness at the individual level, and may be pithily
-summed up with the apophthegm `similar individuals should receive similar treatments'.
+summarised with the apophthegm `similar individuals should receive similar treatments'.
 %
 As alluded to before, the premise of \ac{IF} greatly resembles the smoothness assumption from
 \ac{SemiSL} that I shall introduce formally in \S\ref{sec:semisl}. 
@@ -330,7 +335,7 @@ with FTU.
 %
 The central question thus implied by FTA then is what constitutes an appropriate measure of
 similarity -- in both the domain and codomain -- for the population and task being considered;
-while being freed from the fetters of group fairness and its notional issues, this question is
+while being free from the fetters of group fairness and its notional issues, this question is
 itself far from trivial.
 %
 % ------------------------------------------------------------------------------ 

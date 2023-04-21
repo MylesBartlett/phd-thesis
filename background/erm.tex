@@ -52,12 +52,12 @@ than over the underlying distribution from which those observations were drawn.
 %
 To accommodate this discrepancy, two things need to be accounted for. 
 %
-\textbf{First} the substitution of \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
-\triangleq \{(x_i, y_i) \}_{i=1}^{N^{tr}} \); since we are now operating over a finite set of \(
-N^{tr} \) tuples, the expectation can be replaced with a finite sum (with normalisation). 
+First the substitution of \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr} \triangleq
+\{(x_i, y_i) \}_{i=1}^{N^{tr}} \); since we are now operating over a finite set of \( N^{tr} \)
+tuples, the expectation can be replaced with a finite sum (with normalisation). 
 %
-\textbf{Second}, given the variables are deterministic rather than random, one can no longer frame
-the optimisation objective in terms of a statistical distance explicitly. 
+Second, given the variables are deterministic rather than random, one can no longer frame the
+optimisation objective in terms of a statistical distance explicitly. 
 %
 Instead one measures -- and uses as feedback to drive model-optimisation -- the discrepancy between
 the predicted and observed targets using an empirical \emph{loss} function, \( \ell: \R \times \gY
@@ -147,7 +147,7 @@ combining aggressive regularisation with (a dynamic form of) importance-weightin
 worst-group generalisation is stressed.
 %
 Theoretical support for these results was later adduced by \cite{zhai2022understanding} with proofs
-showing that equivalence of the implicit biases of these \ac{IW}-based algorithms and \ac{ERM}
+showing that equivalence of the implicit biases of these \ac{IW}-based algorithms and \ac{ERM}.
 %
 Summarily, for all its intuitiveness, importance-weighting, it provably does not alter the solution
 to the optimisation problem defined by the training set, which is to say, solutions that attain

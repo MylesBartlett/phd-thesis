@@ -56,11 +56,11 @@ introduce the aforementioned variable \(E\) to convert the joint distribution \(
 conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying \ac{CBN} determines
 the factorisation of this distribution and thus the nature of the distribution shift in question.
 %
-One can, for example characterise the case of covariate-shift with causal \(f^\star\), as having
+One can, for example characterise the case of covariate shift with causal \(f^\star\), as having
 edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
 P(Y|X)P(X|E)P(E) \). 
 %
-In Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, I go beyond the bivariate (excepting \( E \)) and
+In Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, we go beyond the bivariate (excepting \( E \)) and
 covariate case and consider label-shift problems with an additional auxiliary label \(S\) --
 corresponding to an identifier of some subgroup or spurious feature we wish to be invariant to in
 the name of fairness or generalisation --  in which \(E\) influences the joint distribution \( P(S,
@@ -72,9 +72,9 @@ different distribution shifts for a (causal) prediction task.
 %
 \import{background}{ds_cbns.tex}
 %
-We will see that such a formulation is particularly useful when I come to discuss \acl{DG} in
-\S\ref{sec:dg}, defining a problem setup involving a multitude of source distributions and thus
-going beyond the dyadic source-target setup characterising \ac{DA}.
+% We will see that such a formulation is particularly useful when discussing \acl{DG} in
+% \S\ref{sec:dg}, defining a problem setup involving a multitude of source distributions and thus
+% going beyond the dyadic source-target setup characterising \ac{DA}.
 %
 
 % A popular \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} way of
@@ -83,8 +83,8 @@ going beyond the dyadic source-target setup characterising \ac{DA}.
 % the function that minimises the maximum of said risks.
 I presented in \S\ref{ssec:minimax-fairness}, within the context of minmax fairness, a formulation
 of the bilevel \ac{DRO} objective mathematises the desire to minimise the worst risk, where `worst`
-is computed over a collection of sub-distributions, corresponding in said case of minimax fairness,
-to different subgroups.
+is computed over a collection of sub-distributions, corresponding in said case of minimax fairness
+to different sensitive attributes.
 %
 It is common to couch \ac{DG} in the same terms \citep{arjovsky2019invariant, krueger2021out,
 sagawa2019distributionally}; with some restatement of that objective, using the new calculus, one
@@ -94,9 +94,9 @@ can define the optimal predictor over the (empirical) environment distribution \
 \begin{equation}\label{eq:rob-erm-obj} 
     f^\ast_\text{ robust } =
     %
-    \underset{ f \in \gF }{ \argmin }\, 
+    \underset{ f \in \gF }{ \mathrm{inf} }\, 
     % % %
-    \underset{ e \in \gE}{ \mathrm{max} }\,
+    \underset{ e \in \gE}{ \mathrm{sup} }\,
     % %
     \E_{ P^{tr}( X, Y | E = e ) } [ \gL ( f( X ), Y ) ]. 
     %
@@ -112,11 +112,11 @@ interpolation along the underlying manifold is possible.
 % When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
 % with the robust optimisation literature \citep{ben2009robust}.
 %
-For though generalisation to arbitrary perturbations may be provably hard (or impossible), when
-\(\gE\) encodes prior information about the kinds of perturbations one expects to encounter at
-test-time then incorporating it into the optimisation process can be fruitful, both for allowing
-interpolation within the convex hull defined by \(\gE\) and to an extrapolated region outside of it
-\citep{krueger2021out}.
+To recall, though generalisation to arbitrary perturbations may be provably hard (or impossible;
+\citealp{david2010impossibility}), when \(\gE\) encodes prior information about the kinds of
+perturbations one expects to encounter at test-time then incorporating it into the optimisation
+process can be fruitful, both for allowing interpolation within the convex hull defined by \(\gE\)
+and to an extrapolated region outside of it \citep{krueger2021out}.
 %
 Indeed, one expects that by allowing the model to glean which features are and are not stable
 across environments would allow it to better approximate the true causal structure of the
@@ -124,9 +124,9 @@ prediction task;
 %
 this idea has been explored extensively in recent years in both the causal discovery
 \citep{peters2016causal, bengio2019meta} and \ac{DG} \citep{arjovsky2019invariant,
-ahuja2020invariant, creager2021environment} literature (as I shall elaborate on in \S\ref{sec:dg}),
-with the caveat that a degree of inductive bias or additional information is necessary to provably
-identify the correct causal relations \citep{lin2022zin}.
+ahuja2020invariant, creager2021environment} literature (as discussed in \S\ref{sec:dg}), with the
+caveat that a degree of inductive bias or additional information is necessary to provably identify
+the correct causal relations \citep{lin2022zin}.
 %
 
 % % ------------------------------------------------------------------------------

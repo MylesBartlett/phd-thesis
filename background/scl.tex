@@ -80,7 +80,7 @@ model is not simply variant to the `wrong' features but invariant to the `right'
 simply a matter of a difference in importance but, in reality, a more pernicious matter of
 inclusion/exclusion.
 %
-\marginpar{\textbf{Feature suppression}}
+\marginpar{\textbf{Feature suppression and the multi-view hypothesis}}
 %
 This is to say, if a shortcut solution is robust enough to achieve near-zero loss on the training
 set, then there is little incentive -- owing to gradient starvation \citep{pezeshki2021gradient}
@@ -108,9 +108,9 @@ create such a strong (easy-to-learn and potent) and stable attractor that all en
 members simply converge onto that one corresponding view.
 %
 Domain adversarial learning -- popularised by \cite{ganin2016domain} and a mainstay throughout the
-\ac{DA}, \ac{DG}, and \ac{AF} literature alike -- on the other hand suffers from the problem that for the
-features of the model to be statistically independent of the spurious feature, so must it be
-statistically independent of the target since the target and spurious feature are themselves
+\ac{DA}, \ac{DG}, and \ac{AF} literature alike -- on the other hand suffers from the problem that
+for the features of the model to be statistically independent of the spurious feature, so must it
+be statistically independent of the target since the target and spurious feature are themselves
 strongly correlated, as defined by the \ac{SCL} problem.
 % %
 % % % --------------------------------------------------------------------------------
