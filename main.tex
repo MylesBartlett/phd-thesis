@@ -544,14 +544,17 @@ titlepage,numbers=noenddot,%1headlines,
 \cleardoublepage
 %
 \ctparttext{
-  This part comprises the introduction and background topics deemed relevant to
-  part~\ref{pt:middle}.
+  %
+  This part comprises the introduction to the thesis -- wherein I set the scene for what is to come
+  and the order in which that is to occur -- along with some rudimentary background on those topics
+  thought relevant to part~\ref{pt:middle}.
+  %
 }\part{Beginning}\label{pt:beginning}
 %
-\begin{refsection}[all]
-  \include{introduction}
-  \printbibliography
-\end{refsection}
+% \begin{refsection}[all]
+%   \include{introduction}
+%   \printbibliography
+% \end{refsection}
 %
 \begin{refsection}[background] \include{background/main} \printbibliography \end{refsection}
 %
@@ -559,8 +562,8 @@ titlepage,numbers=noenddot,%1headlines,
 %
 \ctparttext{
   %
-  This part comprises three publications, two peer-reviewed and published at top ML conferences,
-  one forever work-in-progress (but is no less a paper for it, I might opine);
+  This part comprises three publications, two peer-reviewed and published at eminent \emph{ML}
+  conferences, one forever work-in-progress (but is no less a paper for it, I might opine);
   %
   the former have been adapted for this thesis textually, with the view to improve clarity,
   technical correctness, and consistency (both internally and between works) but are limited in
@@ -568,20 +571,20 @@ titlepage,numbers=noenddot,%1headlines,
   %
 }\part{Middle}\label{pt:middle}
 %
-\begin{refsection}[nifr]
-  \include{nifr/main}
-  \printbibliography
-\end{refsection}
-%
-\begin{refsection}[supmatch]
-  \include{supmatch/main}
-  \printbibliography
-\end{refsection}
-%
-\begin{refsection}[okapi]
-  \include{okapi/main}
-  \printbibliography
-\end{refsection}
+% \begin{refsection}[nifr]
+%   \include{nifr/main}
+%   \printbibliography
+% \end{refsection}
+% %
+% \begin{refsection}[supmatch]
+%   \include{supmatch/main}
+%   \printbibliography
+% \end{refsection}
+% %
+% \begin{refsection}[okapi]
+%   \include{okapi/main}
+%   \printbibliography
+% \end{refsection}
 %
 \ctparttext{
   %
@@ -593,10 +596,10 @@ titlepage,numbers=noenddot,%1headlines,
   %
 }\part{End}\label{pt:end}
 %
-\begin{refsection}[all]
-  \include{discussion}
-  \printbibliography
-\end{refsection}
+% \begin{refsection}[all]
+%   \include{discussion}
+%   \printbibliography
+% \end{refsection}
 
 % ********************************************************************
 % Appendix

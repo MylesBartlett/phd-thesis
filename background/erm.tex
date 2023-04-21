@@ -9,12 +9,11 @@ such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \).
 Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
 respectively.
 %
-Based on this assumption, the method of Risk Minimisation seeks the hypothesis \( f^\ast \in \gF \)
-that is the minimiser of the eponymous \emph{risk}, $\gR$, defined according to some statistical
-distance, or \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the predicted,
-\(\hat{Y} \triangleq f(X) \), and ground-truth labels, \(Y\) over the training distribution,
-\(P^{tr}(X,
-Y)\). 
+Based on this assumption, the method of (True) Risk Minimisation seeks the hypothesis \( f^\ast \in
+\gF \) that is the minimiser of the eponymous \emph{risk}, $\gR$, defined according to some
+statistical distance, or \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the
+predicted, \(\hat{Y} \triangleq f(X) \), and ground-truth labels, \(Y\) over the training
+distribution, \(P^{tr}(X, Y)\). 
 %
 A canonical example of such a distance for classifications tasks is the \emph{cross-entropy loss};
 in information-theoretic terms, this can be couched as the amount of information (here, in nats)
@@ -35,8 +34,9 @@ the gradient, leaving just the \acs{KL} term.
 %
 Returning from this brief aside, we can formally define the (population or true) risk as
 %
-\begin{equation}\label{eq:pop_risk} \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ L ( f(X,
-    Y) )].
+\begin{equation}\label{eq:pop_risk} 
+    %
+    \gR (f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } [ \gL ( f(X, Y) )].
     % \gR(f) \triangleq \E_{ (X, Y) \sim P^{tr}(X, Y) } \[ D (f(X), Y) \].
 \end{equation}
 %
@@ -44,7 +44,7 @@ In practice, of course, one does not have access to the true generative distribu
 finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
 observed input-target pairs \( (x, y) \). 
 %
-Thus, we are instead doing \acf{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
+Thus, we are restricted to \acf{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
 is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
 than over the underlying distribution from which those observations were drawn.
 %
@@ -52,12 +52,12 @@ than over the underlying distribution from which those observations were drawn.
 %
 To accommodate this discrepancy, two things need to be accounted for. 
 %
-\textbf{First} we need to  substitute \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
+\textbf{First} the substitution of \( P^{tr}(X, Y) \) with its empirical counterpart, \( \gD^{tr}
 \triangleq \{(x_i, y_i) \}_{i=1}^{N^{tr}} \); since we are now operating over a finite set of \(
 N^{tr} \) tuples, the expectation can be replaced with a finite sum (with normalisation). 
 %
-\textbf{Second}, given the variables are deterministic rather than random, one can no longer frame the
-optimisation objective in terms of a statistical distance explicitly. 
+\textbf{Second}, given the variables are deterministic rather than random, one can no longer frame
+the optimisation objective in terms of a statistical distance explicitly. 
 %
 Instead one measures -- and uses as feedback to drive model-optimisation -- the discrepancy between
 the predicted and observed targets using an empirical \emph{loss} function, \( \ell: \R \times \gY
@@ -70,8 +70,11 @@ over the probability simplex, allowing for capturing of intrinsic uncertainty in
 %
 With the foregoing adjustments in mind, one can then define the standard \ac{ERM} objective as
 % %
-\begin{equation*}\label{eq:emp_risk} \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y)
-\in \gD^{tr}} \ell (f(x), y). \end{equation*}
+\begin{equation*}\label{eq:emp_risk} 
+    %
+    \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y) \in \gD^{tr}} \ell (f(x), y). 
+%
+\end{equation*}
 %
 This version of the objective is simply a uniform (unweighted) average over all training pairs; it
 does not take into account the distribution of the inputs or targets.
@@ -125,30 +128,29 @@ classes to the same end).
 % %
 Under- and over-sampling have long been used as a remedy for class imbalance
 \citep{chawla2002smote} but the former has recently been shown to be effective -- matching or
-exceeding in performance more sophisticated algorithms -- for group robustness and
+exceeding in performance more sophisticated algorithms -- for group-robustness and
 spurious-correlation problems \citep{sagawa2020investigation, idrissi2022simple} in part due to its
 early-stopping effect.
 
-Despite its intuitiveness and long history, with roots in early statistical modelling, the
-practical usefulness of importance-weighted \ac{ERM} in the context of modern \acf{DL} has recently
-been impugned \citep{byrd2019effect, zhai2022understanding}.
+Yet, despite its long and storied history, with roots in early statistical modelling, the practical
+usefulness of importance-weighted \ac{ERM} in the context of modern \acf{DL} has recently been
+impugned \citep{byrd2019effect, zhai2022understanding}.
 %
 \cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
 importance-weighting diminish over the course of training; these effects can be partially recovered
 when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
 decay but without such interventions the converged-upon solution is identical for both
-\ac{IW}-\ac{ERM} and
-vanilla \ac{ERM}. 
+\ac{IW}-\ac{ERM} and standard (unaugmented) \ac{ERM}. 
 %
-Evidence for this was also provided by \cite{sagawa2019distributionally}, who stress the importance
-of combining aggressive regularisation with (a dynamic form of) importance-weighting for strong
-worst-group generalisation.
+Evidence for this was also provided by \cite{sagawa2019distributionally}, wherein the importance of
+combining aggressive regularisation with (a dynamic form of) importance-weighting for strong
+worst-group generalisation is stressed.
 %
-These empirical results were recently supported theoretically by \cite{zhai2022understanding}, who
-prove that the implicit biases of these algorithms and standard \ac{ERM} are indeed equivalent.
+Theoretical support for these results was later adduced by \cite{zhai2022understanding} with proofs
+showing that equivalence of the implicit biases of these \ac{IW}-based algorithms and \ac{ERM}
 %
-Summarily, while importance-weighting may be intuitive, it provably does not alter the solution to
-the optimisation problem defined by the training set, which is to say, solutions that attain
+Summarily, for all its intuitiveness, importance-weighting, it provably does not alter the solution
+to the optimisation problem defined by the training set, which is to say, solutions that attain
 zero-loss are invariant under reweighting.
 %
 This understanding has motivated other approaches, such as those based on polynomially-tailed
@@ -175,26 +177,28 @@ Indeed, the task of accurately estimating \( P(Y | X) \) can be provably solved 
 sufficient amount of \iid{} data drawn from the joint distribution \( P(X,Y) \), yet this only
 solves the problem from the aforementioned statistical perspective, and we will see that this
 perspective is not always aligned with the causal one, which can lead to problems in generalisation
-under certain conditions that crop up disconcertingly often in real-world applications, including
-those that safety-critical.
+under certain conditions that arise disconcertingly often in real-world -- many, moreover,
+safety-critical -- applications.
 %
-This is to say, the predictions of a statistical model should only be trusted when the conditions
-of the training and test distributions are sufficiently similar, and, in short, arbitrary shifts
+This is to say, the predictions of a statistical model are only trustable when the conditions of
+the training and test distributions are sufficiently similar, and, in short, arbitrary shifts
 (interventions on the data-generating distribution) can give rise to arbitrarily bad predictions
 \citep{pearl2009causality, scholkopf2012causal}.
 
-Since the true causal relationships between independent and dependent variables is, generally, not
-\emph{identifiable} given the training data alone, owing to confounding variables, additional
-information, as provided by interventions, or \emph{environments} \citep{peters2016causal}, is
-needed to resolve the statistical ambiguity; this  the tack is popular within the domain
-generalisation literature, wherein domain can be viewed as a different intervention on the true
-distribution.
+The true causal relationships between independent and dependent variables is in general
+\emph{unidentifiable} given the training data alone, due to confounding variables; additional
+information, as provided by interventions, or \emph{environments} \citep{peters2016causal} -- a
+tack popular within the domain generalisation literature, wherein domain can be viewed as a
+different intervention on the true distribution -- is needed to resolve the immanent statistical
+ambiguity.
 %
 By `confounding variable', or \emph{confounder}, I mean some variable that is that is the causal
 parent of two or more other variables and explains the statistical dependency between them despite
 those variables not being causally-related themselves; in the trivariate case this corresponds to
 the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
 and \(Y\) that is eliminated by conditioning on the confounder \(S\).
+%
+\marginpar{\textbf{Short-cuts make for long delays}}
 %
 In the \ac{SCL} problems addressed in Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, we will see
 statistical learning break down in a similar way yet for essentially the opposite reason.
@@ -204,10 +208,10 @@ and \(Y\) in the absence of a causal dependency, we instead of have some spuriou
 on which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to
 be the true causal mechanism.
 %
-I will delve more deeply into what \ac{SCL} is and how the mechanisms that give rise to it in
-\S\ref{sec:shortcut-learning}.
+I will broach more deeply \ac{SCL} is and how the mechanisms that give rise to it in
+\S\ref{sec:shortcut-learning};
 %
-For now, however, we will move onto discussing different types of distribution shift that
+for now, however, we will proceed to characterising some of the types of distribution shift that
 statistical learning has to contend with.
 
 % % (see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that

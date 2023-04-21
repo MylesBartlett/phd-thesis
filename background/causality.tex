@@ -17,9 +17,9 @@ and \ac{DG} alike (i.e. `source' versus 'target'), such terminology is somewhat 
 to capture that the distributions share an underlying structure and how and which variables are
 shifted.
 %
-\marginpar{\textbf{The domain as an exogenous variable}}
+\marginpar{\textbf{Domain as an exogenous variable}}
 %
-It is more arguably flexible then, consistent with \citep{mooij2020joint}, to think of the domain
+It is arguably more flexible then, consistent with \citep{mooij2020joint}, to think of the domain
 as some exogenous latent variable, which, by its conditioning, gives rise to the different observed
 distributions -- or subgraphs in the discrete case -- and explains how one is transformed
 (`shifted') into the other.
@@ -77,12 +77,19 @@ We will see that such a formulation is particularly useful when I come to discus
 going beyond the dyadic source-target setup characterising \ac{DA}.
 %
 
-A common \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} way of
-formulating the robust-prediction problem is as one of bilevel, or minimax, optimisation, where the
-inner loop entails computing the empirical risk over each domain and the outer loop corresponds to
-finding the function that minimises the maximum of said risks.
+% A popular \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} way of
+% formulating the robust-prediction problem is as one of bilevel, or minimax, optimisation, where the
+% inner loop entails computing the risk over each domain and the outer loop corresponds to finding
+% the function that minimises the maximum of said risks.
+I presented in \S\ref{ssec:minimax-fairness}, within the context of minmax fairness, a formulation
+of the bilevel \ac{DRO} objective mathematises the desire to minimise the worst risk, where `worst`
+is computed over a collection of sub-distributions, corresponding in said case of minimax fairness,
+to different subgroups.
 %
-We can then define, accordingly, the optimal predictor as 
+It is common to couch \ac{DG} in the same terms \citep{arjovsky2019invariant, krueger2021out,
+sagawa2019distributionally}; with some restatement of that objective, using the new calculus, one
+can define the optimal predictor over the (empirical) environment distribution \(\gE\) from
+\ref{sec:dg} as
 %
 \begin{equation}\label{eq:rob-erm-obj} 
     f^\ast_\text{ robust } =
@@ -91,32 +98,31 @@ We can then define, accordingly, the optimal predictor as
     % % %
     \underset{ e \in \gE}{ \mathrm{max} }\,
     % %
-    \E_{ P^{tr}( X, Y | E = e ) } [ D ( f( X ), Y ) ]. 
+    \E_{ P^{tr}( X, Y | E = e ) } [ \gL ( f( X ), Y ) ]. 
     %
 \end{equation}
 %
-As discussed at length before, domains/environments can be modelled as deriving from different
-interventions of the causal factorisation of \(P(X, Y\)).
+Given that domains/environments can be modelled as deriving from different interventions of the
+causal factorisation of \(P(X, Y\)), it follows that, for Eq.~\ref{eq:rob-erm-obj} to engender
+successful generalisation to arbitrary domains, \(\gE^\dagger\) outside \(\gE\) (\( \gE^\dagger
+\cap \gE = \varnothing \); i.e. the goal of \ac{DG}), \(\gE\) must be a representative
+(well-covering) set of samples from the generating distribution, \( P(E) \), such that smooth
+interpolation along the underlying manifold is possible.
 %
-It follows that, for Eq.~\ref{eq:rob-erm-obj} to engender successful generalisation to arbitrary
-domains, \(\gE^\dagger\) outside \(\gE\) (\( \gE^\dagger \cap \gE = \varnothing \); i.e. the goal
-of \ac{DG}), \(\gE\) must be a representative (well-covering) set of samples from the generating
-distribution, \( P(E) \), such that smooth interpolation along the underlying manifold is possible.
+% When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
+% with the robust optimisation literature \citep{ben2009robust}.
 %
-When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
-with the robust optimisation literature \citep{ben2009robust}.
+For though generalisation to arbitrary perturbations may be provably hard (or impossible), when
+\(\gE\) encodes prior information about the kinds of perturbations one expects to encounter at
+test-time then incorporating it into the optimisation process can be fruitful, both for allowing
+interpolation within the convex hull defined by \(\gE\) and to an extrapolated region outside of it
+\citep{krueger2021out}.
 %
-While generalisation to arbitrary perturbations is provably hard (or impossible), in general
-\citep{david2010impossibility}, when \(\gE\) encodes prior information about the kinds of
-perturbations one expects to encounter at test-time then incorporating it into the optimisation
-process can be fruitful, both for allowing interpolation within the convex hull defined by the set
-and to an extrapolated region outside of it \citep{krueger2021out}.
+Indeed, one expects that by allowing the model to glean which features are and are not stable
+across environments would allow it to better approximate the true causal structure of the
+prediction task;
 %
-Indeed, it stands to reason that by allowing the model to glean which features are and are not
-stable across environments would allow it to better approximate the true causal structure of the
-prediction task. 
-%
-This idea has been explored extensively in recent years in both the causal discovery
+this idea has been explored extensively in recent years in both the causal discovery
 \citep{peters2016causal, bengio2019meta} and \ac{DG} \citep{arjovsky2019invariant,
 ahuja2020invariant, creager2021environment} literature (as I shall elaborate on in \S\ref{sec:dg}),
 with the caveat that a degree of inductive bias or additional information is necessary to provably
