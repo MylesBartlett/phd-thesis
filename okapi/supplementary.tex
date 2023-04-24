@@ -11,10 +11,10 @@
 We present in Table~\ref{tab:ext_iw_pm_results} an extended version of the results for the iWildCam
 and PovertyMap datasets, relative to those found in Table~\ref{tab:iw_pm_results} in the main text.
 %
-This table includes additional results with the ResNet backbones per \citet{SagWeiLeeGaoetal22}
-(justifying our decision to adopt a ConvNext backbone for our main set of image-dataset results) as
-well as those for an 'offline' version of Okapi (Okapi (offline)) where the matches are generated
-prior to training using features of the respective \ac{ERM} baseline for each dataset. 
+This table includes additional results with the ResNet backbones per \citet{SagWeiLeeGaoetal22} --
+justifying our decision to adopt a ConvNext backbone for our main set of image-dataset results --
+as well as those for an 'offline' version of Okapi (Okapi (offline)) where the matches are
+generated prior to training using features of the respective \ac{ERM} baseline for each dataset. 
 %
 Since the target encoder is necessitated by the need for online match-retrieval, only a single
 encoder is involved in Okapi (offline); in binary cases, the algorithm is then identical to the one
@@ -36,7 +36,7 @@ to generalise to regression tasks such as PovertyMap.
       Examples of input (labelled) images and their 1-NN matched (unlabelled) images retrieved
       using \CNN{} from the PovertyMap-WILDS dataset.
       %
-      Here, we match images from the labelled-train set to images from the OOD-validation set,
+      Here, we match images from the labelled-train set to images from the \ac{OOD}-validation set,
       taking advantage the fact that their domains are disjoint.
   %
   }

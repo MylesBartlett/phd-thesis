@@ -43,8 +43,9 @@ data to learn from.
 %the sensitive attribute $s$ nevertheless appears to improve fairness measures with respect to $s$.
 %However, as pointed out by \cite{locatello2019challenging}, some supervision or inductive bias is
 %needed in order to recognise a well-disentangled representation.
+%
 While annotations for $y$ are often hard to come by (and often noisy;
-see~\citet{kehrenberg2020tuning}), annotations for the sensitive attribute $s$ are usually less so,
+see \citealp{kehrenberg2020tuning}), annotations for the sensitive attribute $s$ are usually less so,
 as $s$ can often be obtained from demographic information provided by census data. 
 %
 We thus consider the setting where the representation is learned from data that is only labelled
@@ -107,7 +108,7 @@ explicitly invariant solely with respect to $s$.
 In our approach, we make use of the (partially labelled) representative set to learn this invariant
 representation.
 
-Despite there being a substantial body of existing literature devoted to the problems of \ac{FRL},
+Despite there being a substantial body of existing literature devoted to the problems of \acf{FRL},
 exactly how the invariance in question is achieved is often overlooked.
 %
 When critical decisions, such as who should receive bail or be released from jail, are being
@@ -139,7 +140,7 @@ still have no better control over what is learned, we might at least diagnose su
 To render our representations interpretable, we rely on a simple transformation we call
 \emph{null-sampling} for mapping invariant representations into the data domain. 
 %
-Previous approaches to \acl{FRL}
+Previous approaches to \ac{FRL}
 (\citealp{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter
 alia) rely upon training \acp{AE} to jointly minimise the reconstruction (maximising \ac{MI} \wrt{}
 \(X\)) and invariance (minimising \ac{MI} \wrt{} \(S\)) losses.

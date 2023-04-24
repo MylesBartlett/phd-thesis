@@ -25,8 +25,9 @@ The appropriate measure of fairness for a given task is domain-specific \citep{l
 there is often not a universally accepted measure. 
 %
 However, \emph{\ac{DP}} is the most widely
-used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. Demographic Parity demands
-$\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. 
+used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. 
+%
+\ac{DP} demands $\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. 
 %
 In the context of fair representations, we measure the Demographic Parity of a downstream
 classifier, $f(\cdot )$, which is trained on the representation $z$, i.e.\  $\Gamma: \gZ \to \gY$.
@@ -37,17 +38,19 @@ As previously stated, the fair representation should be invariant to $s$ ($\to$ 
 be predictive of $y$ ($\to$ accuracy). These desiderata cannot, in general, be simultaneously
 satisfied if $s$ and $y$ are correlated.
 
-The majority of existing methods for fair representations also make use of $y$ labels during
-training, in order to ensure that $z$ remains predictive of $y$. This aspect can, in theory,
-be removed from the methods, but then there is no guarantee that information about $y$ is preserved
-\citep{louizos2016variational}. 
+The majority of existing methods for \ac{FRL} also make use of $y$ labels during training, in order
+to ensure that $z$ remains predictive of $y$. 
+%
+This aspect can, in theory, be removed from the methods, but then there is no guarantee that
+information about $y$ is preserved \citep{louizos2016variational}. 
+%
 % Existing methods designed to create fair representations can, in theory, be extended to the
 % regime in which only the $s$, and not the $y$, labels are available. However, it is not without
 % its drawbacks as, in removing $s$, there is no guarantee that information about $y$ is preserved
 % \cite{louizos2016variational}. For this reason, $y$ is typically supplied during training and the
 % representation encouraged to be predictive of it.
 
-\subsection{Learning fair, transferrable representations}
+\subsection{Learning fair, transferable representations}
 % Outside of computer vision, \cite{madras2018learning} have also worked on removing a problematic
 % spurious correlation.
 In addition to producing fair representations, \citet{madras2018learning} want to ensure the

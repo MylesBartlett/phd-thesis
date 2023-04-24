@@ -18,7 +18,7 @@ Details of each dataset can be found in Appendix~\ref{appx:datasets}.
 Results of our image-data experiments are summarised in Table~\ref{tab:iw_pm_results}. 
 %
 Due to spacial constraints, we defer the full set of results, including those for the `offline'
-(w.r.t. the matching) version of Okapi to Appendix.~\ref{appx:ext_results}. 
+(\wrt{} the matching) version of Okapi to Appendix~\ref{appx:ext_results}. 
 %
 For both datasets in question, we use the same metrics as \citet{SagWeiLeeGaoetal22}: macro-F1 for
 iWildCam and worst-group (with the group defined as urban (U) vs. rural (R)) Pearson correlation
@@ -27,8 +27,8 @@ for Poverty Map.
 For completeness, we include mean squared error (MSE) as a secondary metric for the latter dataset.
 %
 Following \citet{SagWeiLeeGaoetal22}, we compute the mean and standard deviation (shown in
-parentheses) over multiple runs for both ID and OOD test sets, with these runs conducted with 3
-different random seeds and 5 pre-defined cross-validation folds for iWildCam and PovertyMap,
+parentheses) over multiple runs for both \ac{ID} and \ac{OOD} test sets, with these runs conducted
+with 3 different random seeds and 5 pre-defined cross-validation folds for iWildCam and PovertyMap,
 respectively.
 
 We compare Okapi against two baselines, \ac{ERM} and FixMatch \citep{sohn2020fixmatch},
@@ -60,11 +60,12 @@ in the classification task with $32.2$ (ERM) vs $31.0$ (FixMatch) and $33.3$ (ER
 (FixMatch), with ResNet and ConvNeXt architecture respectively. 
 % 
 
-Okapi, convincingly outperforms the baselines, w.r.t the OOD metric of interest, on both datasets. 
+Okapi, convincingly outperforms the baselines, \wrt{} the \ac{OOD} metric of interest, on both
+datasets. 
 %
 We observe an improvement of $+0.9$ macro F1, i.e. $36.1$ vs $35.2$ of Okapi and FixMatch (the best
 baseline for iWildCam) respectively. For the regression task in PovertyMap, Okapi achieves $0.55$
-and $0.33$ on the OOD test set in terms of Pearson correlation and MSE, respectively, in contrast
+and $0.33$ on the \ac{OOD} test set in terms of Pearson correlation and MSE, respectively, in contrast
 to the $0.53$ and $0.33$ of \ac{ERM}.
 %
 At the same time, we note that FixMatch fails to generalise well to this task, yielding by far the
@@ -79,8 +80,9 @@ Remaining consistent with \citet{SagWeiLeeGaoetal22}, we evaluate models accordi
 worst-group accuracy -- the minimum of the conditional accuracies obtained by conditioning on each
 of the 8 dimensions of $s$ -- averaged over 5 replicates. 
 %
-Since there is no canonical ID test split available for this dataset, we report only the results
-only for the OOD split that is, rather than doing so for a custom split to avoid misrepresentation. 
+Since there is no canonical \ac{ID} test split available for this dataset, we report only the
+results only for the \ac{OOD} split that is, rather than doing so for a custom split to avoid
+misrepresentation. 
 %
 We compare Okapi against both \ac{ERM} variants featured in \citet{SagWeiLeeGaoetal22} -- one
 trained on only the official labelled data and one trained with annotated unlabelled data
