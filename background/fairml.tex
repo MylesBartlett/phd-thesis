@@ -3,7 +3,7 @@
 % ********************************************************************************
 Research into \acf{AF} has flourished in recent years, the subfield growing from what was once an
 arguably niche one to one of great prominence, borne by \ac{ML}'s proliferation -- and thus
-increased capacity to affect real lives in consequential ways -- in all sectors of society.
+increased capacity to consequentially affect human lives-- in all sectors of society.
 %
 Indeed, a multitude of high-profile cases/studies have highlighted the discriminatory (unfair)
 nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwin2016machine},
@@ -18,8 +18,8 @@ be \emph{fair}; in this thesis I focus on those corresponding to group definitio
 ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are often used
 interchangeably throughout the literature; I will favour the former).
 %
-I will denote group membership using the random variable \( S: \Omega \to \gS \) -- with
-realisation \(s\) -- and will assume that this variable along with the target variable are discrete
+As a reminder, I denote group membership using the random variable \( S: \Omega \to \gS \) -- with
+realisation \(s\) -- and assume here that said variable and the target variable are both discrete
 (and in most cases binary); this is the most common setup considered in the \ac{AF} literature --
 and toward which many standard metrics of fairness are geared \citep{feldman2015certifying,
 hardt2016equality, woodworth2017learning} -- though there are works that extend notions of -- and
@@ -46,9 +46,9 @@ Simply put, the unified goal of \ac{AF} is to learn some predictor, \(f: \gX \to
 according to some definition, non-discriminatory -- that does not deprive a given individual of
 opportunities by virtue of belonging to a particular sensitive group.
 %
-A frequently-invoked example is that of financial institution employing an automated
-decision-making system to determine which loan applicants should/should not have their applications
-approved.
+A frequently-invoked example is that of a financial institution running an
+automated-decision-making system to determine which loan applicants should/should not have their
+applications approved.
 %
 In addition to financial information (e.g. credit-score history) the input features to \(f\),
 \(\gX\), may encode, explicitly or implicitly, sensitive information such as an individual's gender
@@ -106,7 +106,7 @@ inter alia -- demands that the probability of a positive prediction (positive ra
 That is
 %
 \begin{equation}
-    \forall s \in \gS: P( \hat{Y} = 1 | S = s ) \seq \text{constant},
+    \forall s \in \gS: P( \hat{Y} = 1 | S = s ) \,\seq\, \text{constant},
 \end{equation}
 %
 where \(\hat{Y}\) denotes the random variable corresponding to the predictions of a given
@@ -193,7 +193,7 @@ also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
 %
 \begin{equation}
     %
-    \forall y s \in \gY, \forall s \in \gS: P( \hat{Y}=1|Y=y, S=s ) = P( \hat{Y}=1|Y=y ).
+    \forall y \in \gY, \forall s \in \gS: P( \hat{Y}=1|Y=y, S=s ) = P( \hat{Y}=1|Y=y ).
 \end{equation}
 %
 \marginpar{\textbf{Accuracy-fairness trade-off}}
@@ -219,8 +219,8 @@ only relatively recently (e.g. in \cite{navon2020learning}).
 %
 Indeed, examples of the former include the methods of \cite{louizos2015variational} and
 \cite{madras2018learning} which entail learning a \emph{linear scalarised} solution
-\citep{boyd2004convex},  with position of this solution on the \acf{PF} controlled by a linear
-weighting of loss terms optimising for utility and fairness separately.
+\citep{boyd2004convex},  with position (preference direction) of this solution on the \acf{PF}
+controlled by a linear weighting of loss terms optimising for utility and fairness separately.
 %
 % ------------------------------------------------------------------------------ 
 \subsection{Going beyond the accuracy-fairness trade-off with minimax group
@@ -293,9 +293,8 @@ establishing a causal basis.
 %
 For evaluation of classification tasks, one can align the standard notion of accuracy with minimax
 fairness by conditioning on the sensitive attributes and taking the minimum (worst) over the
-resulting set of \(|\gS|\) values. 
-%
-In the \ac{DRO} literature (where ) this quantity is commonly known as \ac{RobAcc}.
+resulting set of \(|\gS|\) values; in the \ac{DRO} literature this quantity is commonly known as
+\ac{RobAcc}.
 %
 For convenience and clarity, I first reformulate the standard (non-conditional) accuracy as 
 %
@@ -325,13 +324,11 @@ While notions of group fairness consider fairness at the level of demographic gr
 focusses -- as expected of the name -- on fairness at the individual level, and may be pithily
 summarised with the apophthegm `similar individuals should receive similar treatments'.
 %
-As alluded to before, the premise of \ac{IF} greatly resembles the smoothness assumption from
-\ac{SemiSL} that I shall introduce formally in \S\ref{sec:semisl}. 
-%
-Glimpsing ahead, the smoothness assumption can be seen as a \(K\)-Lipschitz constraint on our
-function class; this is the very manner in which the \emph{Fairness Through Awareness} (FTA) -- the
-most general concept of \ac{IF} -- is couched in \cite{dwork2012fairness}, its name contrasting
-with FTU.
+This premise of \ac{IF} greatly resembles the smoothness assumption from \ac{SemiSL} that I shall
+introduce formally in \S\ref{sec:semisl}; glimpsing ahead, however, the smoothness assumption can
+be seen as a \(K\)-Lipschitz constraint on our function class; this is the very manner in which the
+\emph{Fairness Through Awareness} (FTA) -- the most general concept of \ac{IF} -- is couched in
+\cite{dwork2012fairness}, its name contrasting with FTU.
 %
 The central question thus implied by FTA then is what constitutes an appropriate measure of
 similarity -- in both the domain and codomain -- for the population and task being considered;

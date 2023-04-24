@@ -5,7 +5,7 @@ In this section, I provide a brief taxonomy of the types of distribution shift t
 statistical-learning literature and discuss how and in what contexts they might practically emerge.
 %
 To this end, I draw heavily upon the works of \citet{moreno2012unifying} and
-\citet{castro2020causality} in our definitions, noting that the \ac{ML} literature is not of a
+\citet{castro2020causality} in the definitions, noting that the \ac{ML} literature is not of a
 single mind regarding the terminology and its semantics.
 %
 In \S\ref{sec:lens-of-causality} I will reframe these distribution shifts in causal terms by
@@ -50,10 +50,11 @@ and test data; many real-world datasets used for training exhibit long tails, \w
 (or targets generally), in which the most-frequent class can appear orders-of-magnitude more
 frequently than the least-frequent class, while the test data has more even coverage.
 %
-As discussed in \S\ref{sec:iid}, a classic approach to rectifying this kind of shift, in the case
-of the discriminative models we are usually concerned with, is to \acl{IW} the instance losses or,
-near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)} \), or
-simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the case).
+As discussed in \S\ref{sec:erm}, a classic approach to rectifying this kind of shift, in the case
+of the discriminative models we are usually concerned with, is to importance weight the instance
+losses or, near-equivalently, the sampling mechanism, using the ratio \(\frac{P^{te}(Y)}{P^{tr}(Y)}
+\), or simply by the denominator should \( P^{te}(Y)\) not be reliably estimable (as is often the
+case).
 %
 % This can arise from different predispositions in the training and test populations, or from
 % variations in environmental factors.
@@ -87,8 +88,8 @@ subjectivity (alignment via \ac{RLHF} being a prime and topical example of such 
 In addition to the shifts discussed, one can naturally also consider their composition, giving rise
 to \emph{compound shifts}, in which both the marginal and conditional distributions are subject to
 change. Such shifts, however, are unusual in the literature, and, perhaps more pertinently,
-impossible to solve unless one can draw upon strict assumptions, due to the need to decouple the
-constituent shifts (a problem of identifiability).
+impossible to solve without invoking strict assumptions due to the need to decouple the constituent
+shifts (a problem of identifiability).
 %
 % \subsection{Acquisition shift (domain shift).}\label{ssec:acquisition-shift}
 % %
@@ -115,9 +116,9 @@ the conditioning is on the target or some other characteristic, such as a partic
 %
 Thus, sampling bias is not a type of distribution shift in itself, but rather a mechanism by which
 the above-described distribution shifts can emerge, and it is particularly germane to
-Chapters~\ref{ch:nifr} and \ref{ch:supmatch} of this thesis in which I consider extreme cases of
-it in which certain demographics, or outcomes for certain demographics, are omitted from the
-training data, promoting spurious correlations between said demographics and the outcome.
+Chapters~\ref{ch:nifr} and \ref{ch:supmatch} of this thesis in which I consider extreme cases of it
+in which certain demographics, or outcomes for certain demographics, are omitted from the training
+data, promoting \acp{SC} between said demographics and the outcome.
 %
 To give an example, in conducting a local survey there will invariably be subsets of the general
 population which are under-represented, or altogether excluded, from data-collection due to
@@ -125,7 +126,7 @@ availability, willingness, and applicability to the research being conducted; if
 question were a university, then we would expect the population to be significantly younger and
 more liberal than on average.
 %
-Indeed, this a problem is particularly well-noted in experimental psychology, in which cohorts
+Indeed, this problem is particularly well-noted in experimental psychology, in which cohorts
 overwhelmingly consist of a very narrow band of individuals from the so-called WEIRD (White,
 Educated, Industrialized, Rich, Democratic; \citet{henrich2010weirdest}) group.
 %
@@ -134,9 +135,9 @@ journal papers to support broad claims about the general population, despite obv
 its representativity.
 
 %
-A prominent yet more subtle, mechanistically, example of sampling bias can be found in the credit
-scoring literature, in which no feedback is obtained from previously rejected candidates; this
-leads to bias amplification (as the model's past decisions directly shape the training data at
+A prominent yet more subtle, mechanistically, example of sampling bias can be found in the
+credit-scoring literature, in which no feedback is obtained from previously rejected candidates;
+this leads to bias amplification (as the model's past decisions directly shape the training data at
 future iterations) and in the context of fairness, demographic biases incurred due to such feedback
 models have been studied under the guises of Delayed Impact \citep{liu2018delayed} and Residual
 Unfairness \citep{kallus2018residual}.

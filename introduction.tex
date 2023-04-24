@@ -163,7 +163,7 @@ These deficiencies have led to a spate of (in)famous cases, within both academic
 spheres, igniting public concern and redoubling research efforts to allay said concern.
 %
 To illustrate: a 2018 investigation \citep{dastin2018amazon} into the automated-hiring system
-deployed by Amazon revealed said system to overwhelming prefer male candidates to female ones for
+deployed by Amazon revealed said system to vastly prefer male candidates to female ones for
 software-development roles based on their resumes; the same year, \cite{buolamwini2018gender}
 investigated the behaviour of three commercial gender-classification algorithms \wrt{} different
 skin types (`lighter' vs. `darker') and observed marked disparities in the resulting accuracies
@@ -227,7 +227,7 @@ geographic, or inability-to-travel-retrograde-along-the-fourth-dimension nature,
 by which the embers of \acf{UL} have been stoked, into what has become a bustling blaze of
 research in but the short time since this thesis was begun.
 %
-And so this leads us, hopefully not-too-word-weathered, to the final of port in our thematic
+This leads us, hopefully not-too-word-weathered, to the final of port in our thematic
 voyage: though this theme is the first written of in the title -- `Semi-Supervised Methods
 for\dots' -- it is the last I shall write of here.
 %
@@ -288,8 +288,8 @@ of the contributions made by myself and each co{\"a}uthor.
 \subsection*{Chapter 3}%: Null-sampling for Interpretable and Fair Representations}
 %
 In this first of the middle chapters, we tackle what we term an \emph{aggravated fairness problem},
-characterised strong spurious spurious correlations between the sensitive and target attributes, to
-the extent of one-to-one correspondence which is not maintained at test time.
+characterised by strong spurious \acp{SC} between the sensitive and target attributes, to the
+extent of one-to-one correspondence which is not maintained at test time.
 %
 This is, consequently, a \acf{SCL} problem in which the former attribute serves as a proxy
 for the latter attribute, by virtue of its lower-complexity; to ensure generalisability across the
@@ -303,15 +303,15 @@ validity of, the problem from an \ac{AF} perspective, partly motivated by the ca
 censoring adduced in \citet{kallus2018residual}.
 %
 Given the intractability of disentangling the two attributes, we assume the existence of a
-supplementary, dataset that contains all intersectional groups but is annotated only partially, in
+supplementary dataset that contains all intersectional groups but is annotated only partially, in
 the sense that the target annotations are absent -- we assume such data is more easily obtained
 than fully-annotated data, with census data being one potential source, for example.
 %
 This gives rise to a kind of transfer-learning setup in which the quality to be transferred is
-invariance to the sensitive attribute for which we propose to interpretable framework exploiting
+invariance to the sensitive attribute for which we propose an interpretable framework exploiting
 the unique properties of invertible models, in particular their losslessness connoted by their
-bijectivity along with their namesake exact invertibility (whereas more traditional approaches
-based on \acp{AE} furnish only approximate invertibility).
+bijectivity and their namesake exact invertibility (whereas more traditional approaches based on
+\acp{AE} furnish only approximate invertibility).
 %
 
 We demonstrate that these unique properties are practically meritable, giving rise to models that
@@ -325,20 +325,20 @@ dimensions of the inputs.
 %
 \subsection*{Chapter 4}%: Addressing Missing Sources with Adversarial Support-Matching}
 %
-The aforementioned paper only require partially-annotated unbiased data but it required annotations
-nonetheless and there are undoubtedly cases where this is prohibitive.
+The above work required only partially-annotated unbiased data but annotated data nonetheless and
+there are realistically many cases where this requirement may be preclusive.
 %
-In the second chapter, we accordingly consider a relaxed version of the problem -- this time,
-couched in non-\ac{AF}-centric manner -- which is soluble using supplementary data that is unannotated
-in the truest sense, in that neither the sensitive -- here, `subgroup' -- nor target annotations
-are provided.
+Accordingly, in Chatper~\ref{ch:supmatch}, we entertain a relaxed version of the problem -- this
+time, couched in non-\ac{AF}-centric manner -- which is soluble using supplementary data that is
+unannotated in the truest sense, in that neither the sensitive -- here, `subgroup' -- nor target
+annotations are provided.
 %
-The problem is still one of \ac{SCL}, however, the biasing is imposed in a hierarchical (with the
-targets -- specifically classes -- constituting the top level the implied tree, the subgroup the
-bottom level) and asymmetric fashion such that the identifiability is possible; its general
-formulation -- which admits the problem from the previous chapter as a special case -- is as much a
-contribution of the chapter as the solution we ultimately propose to it, a solution predicated on
-the idea of aligning support rather than distributions as historically practised in \acs{DA}
+The problem is still one of \ac{SCL} yet the biasing is imposed in a hierarchical (with the targets
+-- specifically classes -- constituting the top level the implied tree, the subgroup the bottom
+level) and asymmetric fashion such that the identifiability is possible; its general formulation --
+which admits the problem from the previous chapter as a special case -- is as much a contribution
+of the chapter as the solution we ultimately propose to it, a solution predicated on the idea of
+aligning support rather than distributions as historically practised in \acs{DA}
 \citep{ben2006analysis}.
 %
 By `asymmetric' I mean that for we observe all subgroups and classes expected at deployment time
@@ -357,7 +357,7 @@ hierarchical/class-conditional nature, whereas in \ac{UDA} there would be entire
 from the training data yet at the same time no shortcuts between subgroup and targets induced.
 
 %
-In order to accomplish the alluded-to support-alignment, or \emph{support-matching}, we employ
+To accomplish the alluded-to support-alignment, or \emph{support-matching}, we look to
 semi-supervised clustering to estimate the sources in the unannotated dataset, or \emph{deployment
 set}, which we assume to be source-complete \wrt{} the test set, and may even be the test set
 itself in a transductive setting.
@@ -413,4 +413,4 @@ We find the resulting algorithm consistently outperforms baseline methods, inclu
 fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL} methods
 failed to accomplish, and, as in Chapter \ref{ch:nifr}, it comes with a valuable interpretable
 aspect, conferred by the trained-with matching algorithm.
-
+%

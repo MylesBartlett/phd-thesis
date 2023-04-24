@@ -66,10 +66,10 @@ distributional robustness comply -- perhaps subtly -- with this definition as th
 maximiser can be interpreted as a weighting function whose best-response is the one under which
 only the loss of the highest-loss group contributes to the overall loss. 
 %
-Practically, computing the best response for each player over the entire dataset for each iterate is
-computationally intractable for most non-trivial cases, especially so if said players are deep
-neural networks and many iterates are required for convergence, and so some degree of approximation
-is required.
+Practically, computing the best response for each player over the entire dataset for each iterate
+is computationally intractable for most non-trivial cases, especially so if said players are
+\acp{DNNS} and many iterates are required for convergence, and so some degree of approximation is
+required.
 %
 This usually translates to performing only a fixed budget of updates in the minimising/minimising
 direction over random subsets of the data.
@@ -78,7 +78,7 @@ In fact, \cite{ganin2016domain} demonstrated that, in practice, one can ignore b
 dynamics altogether and obtain approximately domain-invariant representations with minimal overhead
 through concurrent (single-step) updates to the players' strategies.
 
-Notable concrete applications of adversarial learning include artificial curiosity
+Notable concrete applications of \ac{AdvL} include artificial curiosity
 \citep{schmidhuber1992learning}, Generative Adversarial Networks (\ac{GAN};
 \cite{goodfellow14generative}), self-play \citep{silver2018general}, adversarial robustness
 \citep{szegedy2013intriguing}, and, most germanely to this thesis, domain-invariant learning
@@ -87,15 +87,15 @@ madras2018learning}.
 %
 \marginpar{\textbf{Adversarial infomin}}
 %
-In the latter applications, adversarial learning is frequently leveraged as an engine for
+In the latter applications, \ac{AdvL} is frequently leveraged as an engine for
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
 related to the domain or sensitive group in \ac{DA}/\ac{DG} and \ac{AF}, respectively.
 %
 For this, both players take the form of a neural network with strategies defined by their
 parameters -- \(\theta_{min} \in \Theta_{min}\) and \(\theta_{min} \in \Theta_{max}\) for the
 learner and adversary, respectively -- which they play according to their respective architectures,
-together constituting the actions \(a_{max}: \gX \times \Theta \to \gZ \) and \(a_{min}: \gZ \time
-\Psi \to \R \).
+together constituting the actions \(a_{min}: \gX \times \Theta_{min} \to \gZ \) and \(a_{max}: \gZ
+\times \Theta_{max} \to \R \).
 %
 I note, incidentally, that due to the continuity and non-convexity of the players in this case, it
 is unfortunately not possible to guarantee the existence of Nash Equilibria for the resulting
@@ -136,11 +136,11 @@ where I have negated the expectation (converting the loss into utility) to remai
 the idea of the adversary being the maximiser and defined the optima over the parameter spaces to
 make clear the idea that the parameters define the chosen strategies. 
 %
-When \(s\) is discrete, \(\ell\) is typically taken to be the standard cross-entropy loss; in this
-case the fixed point of the objective function is attained when the outputs of \(a_{max}\), with
-codomain the appropriate probability simplex, are maximally entropic (the derived predictions no
-better than random), which one hopes holds for all \(\sigma_{max} \in \Sigma_{max}\) and connotes
-the invariance \(Z \perp S\).
+When \(s\) is discrete, \(\ell\) is typically taken to be the standard cross-entropy loss; the
+fixed point of the objective function is attained when the outputs of \(a_{max}\), with codomain
+the appropriate probability simplex, are maximally entropic (the derived predictions no better than
+random), which one hopes holds for all \(\sigma_{max} \in \Sigma_{max}\) and connotes the
+invariance \(Z \perp S\).
 %
 \marginpar{\textbf{Practical challenges}}
 %

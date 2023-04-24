@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{Supervised learning, empirical risk minimisation, and its pitfalls}\label{sec:iid}
+\section{Supervised learning, empirical risk minimisation, and its pitfalls}\label{sec:erm}
 % ********************************************************************************
 %
 Traditional learning algorithms usually assume  that (or are only optimal when) the training and
@@ -16,9 +16,9 @@ predicted, \(\hat{Y} \triangleq f(X) \), and ground-truth labels, \(Y\) over the
 distribution, \(P^{tr}(X, Y)\). 
 %
 A canonical example of such a distance for classifications tasks is the \emph{cross-entropy loss};
-in information-theoretic terms, this can be couched as the amount of information (here, in nats)
-required to identify a sample from the true distribution given a coding scheme optimised for the
-predictive distribution and takes the form
+in information-theoretic terms, this can be couched as the amount of information required to
+identify a sample from the true distribution given a coding scheme optimised for the predictive
+distribution and takes the form
 %
 \begin{equation}
     H(Y, f(X)) \triangleq \E_{P(Y)}[ \log P(f(X)) ].
@@ -44,7 +44,7 @@ In practice, of course, one does not have access to the true generative distribu
 finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
 observed input-target pairs \( (x, y) \). 
 %
-Thus, we are restricted to \acf{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
+Thus, we are restricted to \acl{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
 is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
 than over the underlying distribution from which those observations were drawn.
 %
@@ -89,7 +89,7 @@ Such motivates replacing the unweighted (or, more accurately, `uniformly weighte
 by Eq.~\ref{eq:emp_risk}, with an \ac{IW} variant wherein the loss is weighted
 by \( P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the targets, in
 the discrete (classification) case, or by the empirical density of the target (as given by kernel
-density estimate (KDE), for instance) in the continuous (regression) case.
+density estimation (KDE), for instance) in the continuous (regression) case.
 % %
 Here, we have assumed no foreknowledge of \( P^{te}(Y) \) -- this typically being the case in
 practice -- with the choice of an uninformative, uniform distribution over the domain leading to
@@ -107,7 +107,7 @@ with `\( \cdot \)' denoting regular scalar multiplication (over \(\R\)), noting 
 subsumes the unweighted form, which itself can be recovered by simply fixing \(w\) to \(
 |\gD^{tr}|^{-1} \) for all instances.
 %
-It is also worth noting that these weights can be adaptive; they can be iteratively adjusted over
+It is also worth noting that these weights can be adaptive: they can be iteratively adjusted over
 the course of training according to some parametric or non-parametric function
 \citep{wang2021importance}.
 %
@@ -142,9 +142,9 @@ when used in conjunction regularisation such as dropout, early-stopping and stan
 decay but without such interventions the converged-upon solution is identical for both
 \ac{IW}-\ac{ERM} and standard (unaugmented) \ac{ERM}. 
 %
-Evidence for this was also provided by \cite{sagawa2019distributionally}, wherein the importance of
-combining aggressive regularisation with (a dynamic form of) importance-weighting for strong
-worst-group generalisation is stressed.
+Further empirical evidence for this was provided by \cite{sagawa2019distributionally}, wherein the
+importance of combining aggressive regularisation with (a dynamic form of) importance-weighting for
+strong worst-group generalisation is stressed.
 %
 Theoretical support for these results was later adduced by \cite{zhai2022understanding} with proofs
 showing that equivalence of the implicit biases of these \ac{IW}-based algorithms and \ac{ERM}.
@@ -205,14 +205,14 @@ statistical learning break down in a similar way yet for essentially the opposit
 %
 Namely, instead of having latent variable that explains the statistical dependency between \(X\)
 and \(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\)
-on which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) assumed to
-be the true causal mechanism.
+on which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) (or some
+subset of \(X\)) assumed to be the true causal mechanism.
 %
 I will broach more deeply \ac{SCL} is and how the mechanisms that give rise to it in
 \S\ref{sec:shortcut-learning};
 %
 for now, however, we will proceed to characterising some of the types of distribution shift that
-statistical learning has to contend with.
+statistical learning might contend with.
 
 % % (see \citept{vogel2020weighted} as reference for formulating the traditional ERM setup and that
 % of % its weighted counterpart, also see \cite{shimodaira2000improving, wang2021importance, %
