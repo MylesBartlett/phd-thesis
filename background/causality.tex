@@ -17,12 +17,12 @@ and \ac{DG} alike (i.e. `source' versus 'target'), such terminology is somewhat 
 to capture that the distributions share an underlying structure and how and which variables are
 shifted.
 %
-\marginpar{\textbf{Domain as an exogenous variable}}
+\sidepar{Domain as an exogenous variable}
 %
-It is arguably more flexible then, consistent with \citep{mooij2020joint}, to think of the domain
-as some exogenous latent variable, which, by its conditioning, gives rise to the different observed
-distributions -- or subgraphs in the discrete case -- and explains how one is transformed
-(`shifted') into the other.
+It is arguably more flexible then, consistent with the JCI formulation of \cite{mooij2020joint}, to
+think of the domain as some exogenous latent variable, which, by its conditioning, gives rise to
+the different observed distributions -- or subgraphs in the discrete case -- and explains how one
+is transformed (`shifted') into the other.
 %
 I will denote said variable as \(E\) (for `\textbf{E}nvironment', as it is commonly termed in the
 \ac{DG} literature \citep{arjovsky2019invariant}), which need satisfy only the loose requirement that it
@@ -53,8 +53,9 @@ in \(\xi\) that form a pair with \(v\) as the second element, i.e. \( \{ i | i,j
 
 Without loss of generality, for the prediction task with inputs, \(X\), and targets, \(Y\), we may
 introduce the aforementioned variable \(E\) to convert the joint distribution \(P(X, Y)\) into the
-conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying \ac{CBN} determines
-the factorisation of this distribution and thus the nature of the distribution shift in question.
+conditional joint distribution \( P(X, Y | E ) \); the structure of the underlying \ac{CBN}
+determines the factorisation of this distribution and thus the nature of the distribution shift in
+question.
 %
 One can, for example characterise the case of covariate shift with causal \(f^\star\), as having
 edges  \(E \to X\) and \( X \to Y \), giving rise to the factorisation \( P(X, Y | E) | P(E) =
@@ -67,24 +68,59 @@ the name of fairness or generalisation --  in which \(E\) influences the joint d
 Y) \) but not the marginal distribution \(P(X)\), giving rise to representation bias and, from it,
 \acp{SC}.
 %
-To reify this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN} corresponding to
-different distribution shifts for a (causal) prediction task.
 %
 \import{background}{ds_cbns.tex}
 %
-% We will see that such a formulation is particularly useful when discussing \acl{DG} in
-% \S\ref{sec:dg}, defining a problem setup involving a multitude of source distributions and thus
-% going beyond the dyadic source-target setup characterising \ac{DA}.
-%
+To attempt to crystallise this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN}
+corresponding to different distribution shifts for a (causal) prediction task.
 
-% A popular \citep{arjovsky2019invariant, krueger2021out, sagawa2019distributionally} way of
-% formulating the robust-prediction problem is as one of bilevel, or minimax, optimisation, where the
-% inner loop entails computing the risk over each domain and the outer loop corresponds to finding
-% the function that minimises the maximum of said risks.
+\sidepar{Independent Causal Mechanisms}
+%
+This notion of probabilistic independence embodied by \acp{CBN} is the very basis for the Independent
+Causal Mechanisms (ICM) principle \citep{scholkopf2021toward}, understanding `modules' and `nodes'
+to be synonymous (for nodes can represent factors of arbitrary abstraction).
+%
+Namely, the principle posits that independence between factors implies that changing (intervening
+on) any one mechanism in the system (CBN) leaves all other mechanisms within the same system
+unchanged (invariant), such that in the above-described covariate shift case the labelling
+mechanism, \(X \to Y\), despite influence on the input distribution by the exogenous variable.
+%
+%
+One may further derive from the ICM principle, by coarsening, the Sparse Mechanism Shift
+hypothesis, that small distribution shifts tend to manifest in sparse/local way in the causal
+graph, which is to say, that not all factors should vary simultaneously.
+%
+By virtue of modularity, a world model based on causally-factorised latents is maximally
+compressive in general, and by this I mean it provides the simplest explanation to the complex
+physical world.
+%
+It is much more efficient, for example, to explain changes in the shape of an object as one moves
+around it by a change in vantage point, in terms of a single global transformation, rather than by
+many independent changes in local structure, as would be explained by an \emph{entangled} model.
+%
+The connection between learning causally-faithful models and modern physics thus becomes clear when
+one thinks as modularity being synonymous with invariances, or \emph{symmetries}, it it being
+little exaggeration to say that modern physics is the study of symmetries and the corresponding
+conserved quantities, as predicated by Noether's celebrated theorem \citep{noether1918invariante}.
+%
+In light of this, the statistically- and causally-driven approaches are manifestly at odds with one
+another in the context of \ac{SCL} -- shortcut features provide the simplest, loss-minimising
+solution based on the training distribution, \(P^{tr}(X, Y)\), however they do not provide the
+simplest solution in the causal sense, as evidenced by the lack of generalisability.
+%
+Models that are faithful to the underlying causal structure of the problem are inherently more
+robust to distributional changes, more adaptable as the learned modules can be reconfigured freely
+to cater to the problem at hand, and locally updatable, such that  new information can be
+incorporated without degrading modules adapted for unrelated tasks -- this is particularly
+pertinent in given recent elucidations of the distorting effects of fine-tuning on
+distributional-robustness \citep{andreassen2021evolution, kumar2022finetuning}.
+
 I presented in \S\ref{ssec:minimax-fairness}, within the context of minmax fairness, a formulation
 of the bilevel \ac{DRO} objective mathematises the desire to minimise the worst risk, where `worst`
 is computed over a collection of sub-distributions, corresponding in said case of minimax fairness
 to different sensitive attributes.
+%
+\sidepar{Reformulating the DRO objective}
 %
 It is common to couch \ac{DG} in the same terms \citep{arjovsky2019invariant, krueger2021out,
 sagawa2019distributionally}; with some restatement of that objective, using the new calculus, one

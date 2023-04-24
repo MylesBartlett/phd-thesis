@@ -5,7 +5,7 @@
 non-co{\"o}perative (competitive) systems, or `games' in which two or more `players' compete over
 shared, or at least interdependent, \emph{utility} \citep{fudenberg1991game}.
 %
-% \marginpar{\textbf{Minimax}}
+\sidepar{Minimax}
 %
 In two-player cases -- accounting for the majority of \ac{AdvL} setups (notable exceptions to this
 include those based on self-play in which one computes the best response against a mixture of
@@ -24,7 +24,7 @@ problem, where at the \(t\)th iterate the learner selects (via some optimisation
 \Sigma_{min} \), the strategy that gives the best response, \(\sigma_{min, t}^{\ast}\), to the best
 response of the adversary at the previous iterate, i.e. \( \sigma_{max}^\ast|_{\sigma_{min,t-1}^\ast} \).
 %
-\marginpar{\textbf{Bilevel optimisation}}
+\sidepar{Bilevel optimisation}
 %
 The best response is determined by each players respective utility, as measured by the
 player-specific function \(\pi: \Sigma \to \R^+\), with \(\Sigma\) denoting the space of strategic
@@ -35,7 +35,7 @@ A hallmark of the adversarial regime is that the strategy of maximiser is depend
 state of the minimiser and if the state of the minimiser changes so does the best-response, unless 
 in a state of \emph{Nash Equilibrium} (NE; or at least a local one).  
 %
-\marginpar{\textbf{Nash equilibria}}
+\sidepar{Nash equilibria}
 %
 The concept of a NE is fundamental to game theory, referring to strategic profiles, \(\sigma^\ast \in
 \Sigma^\ast\), from which no player can unilaterally deviate and achieve greater payoff, or,
@@ -68,7 +68,7 @@ only the loss of the highest-loss group contributes to the overall loss.
 %
 Practically, computing the best response for each player over the entire dataset for each iterate
 is computationally intractable for most non-trivial cases, especially so if said players are
-\acp{DNNS} and many iterates are required for convergence, and so some degree of approximation is
+\acp{DNN} and many iterates are required for convergence, and so some degree of approximation is
 required.
 %
 This usually translates to performing only a fixed budget of updates in the minimising/minimising
@@ -85,7 +85,7 @@ Notable concrete applications of \ac{AdvL} include artificial curiosity
 \citep{ganin2016domain, zhao2019learning} and \ac{FRL} \citep{edwards2015censoring,
 madras2018learning}.
 %
-\marginpar{\textbf{Adversarial infomin}}
+\sidepar{Adversarial infomin}
 %
 In the latter applications, \ac{AdvL} is frequently leveraged as an engine for
 (mutual) information-minimisation -- or \emph{infomin} -- where the information to be minimised is that
@@ -142,7 +142,7 @@ the appropriate probability simplex, are maximally entropic (the derived predict
 random), which one hopes holds for all \(\sigma_{max} \in \Sigma_{max}\) and connotes the
 invariance \(Z \perp S\).
 %
-\marginpar{\textbf{Practical challenges}}
+\sidepar{Practical challenges}
 %
 Having the learner play this game without any additional objectives (maximising for utility \wrt{}
 the task of interest) is, of course, inauspicious if the goal is to have a representation that is
@@ -184,7 +184,8 @@ aligning the supports of the training -- which is systematically missing certain
 
 I have already alluded to some of the challenges entailed in adversarial infomin
 approaches; here, I summarise the two most salient ones.
-\marginpar{\textbf{Approximation errors}}
+%
+\sidepar{Approximation errors}
 %
 First, the strength of information-minimisation is proportional to the strength adversary used to
 drive it, and, moreover, a fixed point attained by one adversary is not guaranteed to hold for any
@@ -203,7 +204,7 @@ Indeed, a number of recent studies have shown that many adversarial approaches f
 produce infomin representations when probed \citep{moyer2018invariant, feng2019learning,
 balunovic2021fair}.
 %
-\marginpar{\textbf{Cyclic dynamics}}
+\sidepar{Cyclic dynamics}
 %
 Second, adversarial setups are generally susceptible to cycles (oscillations) in strategy space,
 e.g. where two players repeatedly switch between two non-NE strategies because doing so is mutually

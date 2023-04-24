@@ -1,9 +1,6 @@
 \section{Introduction}
-% We need to stare start with something with more punch
-%r rather than just a f matter-of-fact statement Fair representations are a means of removing
-%potentially sensitive information from training data in order to avoid wrongly relying on the
-%sensitive information for classification.
-Without due consideration for the data collection process, machine learning algorithms can
+%
+Without due consideration for the data-collection process, machine learning algorithms can
 exacerbate biases, or even introduce new ones if proper control is not exerted over their learning
 \citep{holstein2019improving}. 
 %
@@ -15,7 +12,7 @@ Efforts to address this problem algorithmically have been centred on developing 
 definitions of fairness and learning models that satisfy these definitions. 
 %
 One popular definition of fairness used to guide the training of fair classifiers, for example, is
-\emph{demographic parity}, stating that positive outcome rates should be equalised (or
+\acf{DP}, stating that positive outcome rates should be equalised (or
 \emph{invariant}) across protected groups.
 
 In the typical fair-classification setup, we have an input $x \in \gX$, a sensitive attribute $s
@@ -142,9 +139,10 @@ still have no better control over what is learned, we might at least diagnose su
 To render our representations interpretable, we rely on a simple transformation we call
 \emph{null-sampling} for mapping invariant representations into the data domain. 
 %
-Previous approaches to fair representation learning
+Previous approaches to \acl{FRL}
 (\cite{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter alia)
-predominantly rely upon \ac{AE} models to jointly minimise reconstruction loss and invariance. 
+rely upon training \acp{AE} to jointly minimise the reconstruction (maximising \ac{MI} \wrt{}
+\(X\)) and invariance (minimising \ac{MI} \wrt{} \(S\)) losses.
 %
 We discuss first how this can be done with such a model that we refer to as \ac{cVAE}, before
 arguing that the bijectivity of \ac{INN}~\citep{Dinh2014} makes them better suited to this task. 

@@ -48,7 +48,7 @@ Thus, we are restricted to \acl{ERM} (\acs{ERM}; \cite{vapnik1991principles}), d
 is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
 than over the underlying distribution from which those observations were drawn.
 %
-\marginpar{\textbf{\acl{ERM}}}
+\sidepar{\acl{ERM}}
 %
 To accommodate this discrepancy, two things need to be accounted for. 
 %
@@ -79,7 +79,7 @@ With the foregoing adjustments in mind, one can then define the standard \ac{ERM
 This version of the objective is simply a uniform (unweighted) average over all training pairs; it
 does not take into account the distribution of the inputs or targets.
 %
-\marginpar{\textbf{Long-tailedness and importance-weighting}}
+\sidepar{Long-tailedness and importance-weighting}
 %
 This is mentionable as many real-world datasets exhibit significant class class-imbalance
 \citep{zhu2014capturing, van2017devil}, or, more generally, `long-tailedness', which is to say that
@@ -165,7 +165,7 @@ As statistical models are only required model correlations in the data to satisf
 function, they ultimately only capture a superficial representation of the true physical processes
 involved.
 %
-\marginpar{\textbf{The pitfalls of statistical modelling}}
+\sidepar{The pitfalls of statistical modelling}
 %
 In the discriminative case (that this thesis is concerned with), for a given \( X \) and \( Y \) we
 are interested in approximating the conditional distribution \( P(Y|X) \); this  corresponds to
@@ -198,7 +198,7 @@ those variables not being causally-related themselves; in the trivariate case th
 the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
 and \(Y\) that is eliminated by conditioning on the confounder \(S\).
 %
-\marginpar{\textbf{Short-cuts make for long delays}}
+\sidepar{Short-cuts make for long delays}
 %
 In the \ac{SCL} problems addressed in Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, we will see
 statistical learning break down in a similar way yet for essentially the opposite reason.

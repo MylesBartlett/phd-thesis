@@ -1,4 +1,4 @@
-\paragraph{Data Augmentation} We follow \cite{SagWeiLeeGaoetal22} when defining the augmentations
+\paragraph{Data Augmentation.} We follow \cite{SagWeiLeeGaoetal22} when defining the augmentations
 for the the WILDS datasets.
 %
 In the case of PovertyMap-WILDS we corroborate the original finding that data-augmentation
@@ -9,7 +9,7 @@ loss.
 Since Okapi uses an NN-based approach for generating these views, it is decoupled from the
 augmentation strategy and problems that can arise from its misspecification.
 
-\paragraph{Architecture} For our image experiments, contrary to \cite{SagWeiLeeGaoetal22}, we opt
+\paragraph{Architecture.} For our image experiments, contrary to \cite{SagWeiLeeGaoetal22}, we opt
 to use the recently proposed ConvNeXt architecture \citep{liu2022convnet}, finding this change to
 provide large performance gains and to be crucial in enabling semi-supervised methods to surpass
 the ERM baseline.
@@ -23,7 +23,7 @@ the complete predictor both for the target and the propensity score. For our Civ
 experiments, in contrast, we do not diverge from \cite{SagWeiLeeGaoetal22} in our choice of
 architecture, with all models trained with a pre-trained DistilBERT \citep{sanh2019distilbert}.
 
-\paragraph{Optimisation} For optimising all models, we use the AdamW optimiser
+\paragraph{Optimisation.} For optimising all models, we use the AdamW optimiser
 \citep{loshchilov2018decoupled} coupled with a cosine annealing schedule without warm restarts
 \citep{DBLP:conf/iclr/LoshchilovH17}.
 %
@@ -46,7 +46,7 @@ schedule during the first $10\%$ of training to allow a period for the encoder t
 relations between samples through the supervised loss before bootstrapping with the consistency
 loss, with a final value of $1$.
 
-\paragraph{Matching}\label{matching_imp} In order to determine suitable hyperparameters, $\xi$, for
+\paragraph{Matching.}\label{matching_imp} In order to determine suitable hyperparameters, $\xi$, for
 \CNN, we perform a grid-search in the static setting, using a fixed model. Specifically, we use the
 backbone of an ERM-trained model as the encoder with which to generate the queries and keys for
 matching.

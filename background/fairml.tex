@@ -10,13 +10,13 @@ nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwi
 \cite{dastin2018amazon}, and \cite{buolamwini2018gender} -- further spurring research to develop
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
-\marginpar{\textbf{Notions of fairness}}
+\sidepar{Notions of fairness}
 %
 There are many strands of \ac{AF} following different criteria for what it means for a predictor to
 be \emph{fair}; in this thesis I focus on those corresponding to group definitions of fairness
 \citep{barocas2019fairness}, where `group' refers to some demographic group, such as gender or
 ethnicity, that is considered \emph{sensitive} or \emph{protected} (these two terms are often used
-interchangeably throughout the literature; I will favour the former).
+interchangeably throughout the literature; I will generally favour the former).
 %
 As a reminder, I denote group membership using the random variable \( S: \Omega \to \gS \) -- with
 realisation \(s\) -- and assume here that said variable and the target variable are both discrete
@@ -96,7 +96,7 @@ one group are concomitantly being withheld from the other group(s) -- fairness i
 corresponds to a type of resource-allocation problem, from an econometric perspective.
 %
 
-\marginpar{\textbf{Demographic Parity}}
+\sidepar{\acl{DP}}
 %
 The simplest of the triad, \acl{DP} (\acs{DP}; \citealp{zemel2013learning,
 feldman2015certifying}) -- known also as statistical parity, group fairness, disparate impact,
@@ -137,18 +137,17 @@ it violates this condition (or any of the conditions in this section), either in
 differences or ratios  which in non-binary cases can be computed pairwise and then optionally
 summarised by taking the maximum over the resulting set.
 
-%
-\marginpar{\textbf{Mutual-information minimisation}}
-%
-This idea of statistical independence, upon which \ac{DP} hinges, can be expressed generally in
-terms of the \acf{MI} between \(Y\) and \(S\), itself expressible as the KL divergence between the
-joint and product of the marginal distributions:
+This idea of statistical independence, or invariance, upon which \ac{DP} hinges, can be expressed
+generally in terms of the \acf{MI} between \(Y\) and \(S\), itself expressible as the KL divergence
+between the joint and product of the marginal distributions:
 %
 \begin{equation}
     \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
 \end{equation}
 %
 Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be statistical independent.
+%
+\marginpar{Mutual-information minimisation}
 %
 \ac{MI} admits various decompositions into sums of marginal and joint/conditional entropies that
 make it particularly amenable for optimisation purposes. 
@@ -164,7 +163,7 @@ I shall expatiate on \ac{AdvL} broadly, and \wrt{} to its use as an infomin engi
 forgoing -- in \S\ref{sec:advl}.
 
 %
-\marginpar{\textbf{Equality of Opportunity}}
+\marginpar{\acl{EqOp}}
 %
 \Acf{EqOp} relaxes this desideratum of unconditional statistical independence, \(\hat{Y} \perp S\),
 to one of \emph{separation} (or conditional independence), dictating that \(\hat{Y}\) and \(S\)
@@ -182,7 +181,7 @@ Thus, \ac{EqOp} can be written, as above, as
     %
 \end{equation}
 %
-\marginpar{\textbf{Equalised Odds}}
+\sidepar{\acl{EqOd}}
 %
 By making this symmetric \wrt{} \(Y\), such that not only do we demand parity of the \acp{TPR} but
 also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
@@ -196,7 +195,7 @@ also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
     \forall y \in \gY, \forall s \in \gS: P( \hat{Y}=1|Y=y, S=s ) = P( \hat{Y}=1|Y=y ).
 \end{equation}
 %
-\marginpar{\textbf{Accuracy-fairness trade-off}}
+\sidepar{Accuracy-fairness trade-off}
 %
 The inherent trade-off between the utility, as measured by aggregate performance and fairness under
 conceptions of fairness based on \aclp{ER} (\acsp{ER} has long been recognised;

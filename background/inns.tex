@@ -22,7 +22,7 @@
 Chapter~\ref{ch:nifr} of this thesis explores the application of \acp{INN} to \ac{FRL} and so will
 afford some brief discussion to their basic workings here.
 %
-\marginpar{\textbf{Bijectivity}}
+\sidepar{Bijectivity}
 %
 An \acl{INN} \citep{kobyzev2020normalizing}, as the name would so suggest, refers to neural
 networks for which both the usual forward mapping, \(f(\cdot)\), and its inverse \(f(\cdot)\) are
@@ -44,7 +44,7 @@ then \(f\) in its totality, also satisfies this property, allowing us to build a
 under the models to be calculated \emph{exactly}, in contrast to variational methods that only do
 so up to a lower bound (the so-called \ac{ELBO}). 
 %
-\marginpar{\textbf{Normalising flows}}
+\sidepar{\aclp{NF}}
 %
 This calculation is enabled by the change-of-variables theorem, allowing one to track how the
 density of the distribution changes as the INN warps a known (and tractable) base distribution into
@@ -82,7 +82,7 @@ As with \acp{GAN} and \acp{VAE}, to sample from \(P(X)\), one needs only draw a 
 the corresponding base density, \(z \sim P(Z) \), and push that sample through \(f\).
 
 
-\marginpar{\textbf{Losslessness}}
+\sidepar{Losslessness}
 %
 In Chapter~\ref{ch:nifr}, however, it is not the foregoing density-estimation capabilities of INNs
 that we are interested in, rather the diffeomorphic property itself, insofar as it guarantees the
@@ -110,7 +110,7 @@ This allows for obtaining provably fair representations while also obviating the
 challenges that accompany (parametric) adversarial training, though at the cost of an independent
 \ac{INN} for each of the sensitive groups.
 
-\marginpar{\textbf{Practical drawbacks}}
+\sidepar{Practical drawbacks of INNs}
 %
 As discussed, \acp{INN} have a number of unique and compelling properties that would seem to make them
 the choice method for many generative purposes; \acp{INN} do have their share of practical

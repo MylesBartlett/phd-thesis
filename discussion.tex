@@ -39,7 +39,7 @@
 I have introduced three methods, each a solution to a different problem, though with all problems
 conjoined by a notion of distributional robustness.
 %
-\marginpar{\textbf{Synopsis}}
+\sidepar{Synopsis}
 %
 To briefly recount, and thereby set the scene for the discussion to follow: in
 Chapter~\ref{ch:nifr} we proposed an \ac{INN}-based transfer-learning approach -- transferring
@@ -63,7 +63,7 @@ Again, all of these works are mine but not unshared, for I owe much gratitude to
 co{\"a}uthors -- my colleagues, my advisors, my friends -- for allowing this thesis to become what
 it has thus become.
 %
-\marginpar{\textbf{The gift of hindsight}}
+\sidepar{The gift of hindsight}
 %
 I shall begin by discussing, with the gift of hindsight and the wisdom which comes with being
 humbled by experience, the limitations of the works presented, and I will do so candidly: for as I
@@ -118,8 +118,7 @@ or classes that are excluded from annotation but their intersections.
 Nonetheless, this discovery can fail to align with expectation, and we assume in
 Chapter~\ref{ch:supmatch} that the subgroups/targets are sufficiently salient to be well-clustered
 by un-/semi-supervised means -- one would not expect a source formed from gender/pulmonary
-infiltration (subgroup and target attributes, respectively) to lend itself to natural clusters, to
-adduce a fail-case born from experiments conducted on the Chest Xray8 dataset. 
+infiltration (subgroup and target attributes, respectively) to lend itself to natural clusters.
 
 Speaking of the discreteness assumption, we have throughout assumed that the subgroup can be
 represented, innately or by simple preprocessing, by some index; while this accords with much of
@@ -130,8 +129,8 @@ This is particularly germane to the method proposed in Chapter~\ref{ch:supmatch}
 data to both be clusterable and for the sources to be finite (and, practically, small enough to be
 computationally tractable) sets, such that one can balance batches \wrt{} them -- how one might
 extend the method to continuous subgroups is unclear -- the notion perhaps not even sensible -- and
-in order to maintain tractability in pursuit of generality it would seem necessarily give up the
-theoretical guarantees established.
+in order to maintain tractability in pursuit of generality it would seem necessary to cede some, or
+all, of the theoretical guarantees established.
 %
 The adversarial-infomin approach adopted in Chapter~\ref{ch:nifr}, on the other hand, can be
 readily adapted to continuous subgroups, for instance, by substituting cross-entropy with
@@ -145,12 +144,12 @@ and the loss of guarantees incurred by estimating the best-response dynamics wit
 (typically small) number of steps -- but it is apposite that we revisit these points again here,
 retrospectively instead of prospectively.
 %
-\marginpar{\textbf{The iniquities of adversarial infomin}}
+\sidepar{The idiosyncrasies of adversarial infomin}
 %
 Indeed -- as again spoken of before but of which there is again no harm recalling -- said
 deficiencies have been well noted in the infomin-related literature, motivating attempts to develop
 non-adversarial approaches, taking advantage of, for instance, the exact-density-estimation
-afforded by normalising flows \citep{balunovic2021fair}, sliced mutual information
+afforded by \acp{NF} \citep{balunovic2021fair}, sliced mutual information
 \citep{goldfeld2021sliced} to scalably target the infomin objective directly
 \citep{chen2022scalable}, or the information-bottleneck principle \citep{tishby2015deep,
 moyer2018invariant} for which the subgroup attribute plays the part of the \emph{nuisance factor},
@@ -184,7 +183,7 @@ paper to adaptive-configuration of the calipers being an obvious (in motivation 
 implementation) avenue of extension.
 %
 
-\marginpar{\raggedleft\textbf{On the problem of identifiability}}
+\sidepar{On the problem of identifiability}
 %
 A central question that I have perhaps given shorter shrift to than due, is that of the
 identifiability of bias -- a question of two parts: 1) diagnosing those cases warranting
@@ -208,10 +207,10 @@ attempt to remedy failure cases via well-measured and iterative processes.
 The problem of underspecification -- of validating models without access to data representative of
 that to-be-encountered at deployment time, as defines \ac{DG} -- that encapsulates the second
 aspect of the question remains an outstanding one, that has been discussed broadly and in the
-context of \ac{DG} specifically, posing a threat to the validity of inter-method
-comparisons\citep{gulrajani2020search}.
+context of \ac{DG} specifically, posing a threat to the validity of inter-method comparisons
+\citep{gulrajani2020search}.
 %
-\marginpar{\raggedleft\textbf{Interpretability and oversight}}
+\sidepar{Interpretability and oversight}
 %
 In absence of a such validation set by which to quantify biases and generalisation-failures, one
 may draw upon methods from the explainability/interpretability literature \citep{gunning2019xai} to
@@ -233,7 +232,7 @@ excursis is my advocacy (which I am certainly not unique for) for human oversigh
 model-vetting it should beget, irrespective of the theoretical trustability of the methods/data.
  
 %
-\marginpar{\raggedleft\textbf{Theoretical-groundedness}}
+\sidepar{Theoretical-groundedness}
 %
 As far as limitations go, I shall last speak expressly of empirical and theoretical claims, and the
 desire to couple the two.
@@ -258,7 +257,7 @@ techniques, for which (proof-driven) theoretical-grounding would be demonstrably
 %
 \section*{Of what has since become and might yet be}
 %
-\marginpar{\raggedleft\textbf{Learning from human preferences and scaling supervision}}
+\sidepar{Learning from human preferences and scaling supervision}
 %
 Recent work on AI-alignment has proposed `scaling supervision' (understanding `supervision' to mean
 what I called before `oversight') of generative-language models by using human-aligned LLMs not
@@ -308,7 +307,7 @@ superseded).
 % narrow context of AI-alignment, but 
 Beyond this alignment-centric perspective, it is also appropriate to speak of the merits of
 large-scale pre-training, and subsequent fine-tuning, from a non-generative perspective and rather
-in terms of the distributional-robustness representations it may give rise to; whereas the focus
+in terms of the distributionally-robustness representations it may give rise to; whereas the focus
 before was on the language domain, here it will be on the vision one which preponderated in this
 thesis's works, due foremost to its interpretability.
 %
@@ -351,44 +350,4 @@ no annotations for the attribute to-be-invariant to are given or obtainable, how
 provide a promising recourse, one that requires few, if no, assumptions -- one may obtain
 robustness for `free', so to speak -- and little to no (in the zero-shot case) compute be spent on
 training, albeit with the aforementioned caveat on compute standing.
-
-% \marginpar{On the manual and automatic identifiability of bias}
 %
-% Problem of underspecification: how do we know that intervention is required if the validation set
-% is drawn from the same distribution as the training set? The obvious answer is with tools from
-% interpretable/explainable machine-learning (xAI); this demands a human-in-the-loop element but it
-% seems reasonable to expect any system designed for public-facing, critical-decision-making should
-% be subject to rigorous auditing. MaskTune takes advantage of feature-attribute to encourage a
-% model to learn multiple views of the data, rather than just the one generated by a spurious
-% correlation.
-
-% Using pre-trained models to automatically detect biases (according to a `constitution
-% \citep{bai2022constitutional}): for text-based tasks, \ac{RLHF} has emerged as the leading paradigm
-% for aligning the output of generative models with human values (along the competing axes of
-% `helpfulness'  \citep{scheurer2022training}, `harmlessness' \citep{bai2022training} and `honest'). While
-% \ac{RLHF} is annotation-intensive -- though this can be ameliorated with crowdsourcing --
-% \cite{bai2022constitutional} showed that given an existing \ac{RLHF}-trained model, one can improve
-% performance along the harmlessness axis (i.e. de-bias the model) based on the guidance of the
-% \ac{RLHF} model itself, as given by some constitution (a set of values encoded in the form of
-% prompts); this variant of \ac{RLHF} has been appropriately termed RLAIF (Reinforcement Learning from
-% AI feedback).
-% While \ac{RLHF} was initially conceived for, and has been almost-exclusively since applied to,
-% text-generation (giving rise to a wave of AI assistants, most famously embodied by ChatGPT), the
-% paradigm is a fundamentally modality-agnostic, this fact recently capitalised on by
-% \cite{lee2023aligning} in extending \ac{RLHF} to text-to-image generation.
-%
-% One might fancy a further broadening of the paradigm to conventional supervised-learning
-% tasks, wherein the model is constructed to give natural-language explanations (which goes beyond,
-% thinking of vision-language tasks, beyond standard captioning which entail no explanation, only
-% description) for its classification, rather than mere logits; \ac{RLHF}/RLAIF can then be conducted
-% using said explanations.
-%
-% Such an approach, however, if practically realisable, while powerful, would only apply to cases
-% where large-scale pre-training is leverageable, that is those tasks that are not highly
-% task/domain-specific (e.g. medical-imaging tasks and those of a tabular nature generally, for
-% which there is no underlying structure to the input domain); 
-% methods such as those presented in
-% this thesis still have their place even in this brave new world of ML where multi-modal
-% foundation models and RL(HF/AI)F seemingly rule the roost (or at least the headlines).
-% 
-

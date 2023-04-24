@@ -67,7 +67,7 @@ entire input domain, \( \gX \) -- reflecting the inductive process of extrapolat
 focuses on predicting well on a restricted domain defined by the test points -- reflecting the
 transductive process of transferring rules between specific cases. 
 %
-\marginpar{\textbf{Transduction}}
+\sidepar{Transduction}
 %
 That is, the optimisation problem is reduced from finding the (loss-function) minimiser over \(f
 \in \gF \)  to the considerably more tractable problem of finding the minimiser over \(
@@ -125,7 +125,7 @@ fundamental principle, understanding `cluster' to mean `high-density-connectedne
 To elaborate, the \emph{cluster assumption} posits that data-points that are connected by a path
 through density regions should belong to the same class.
 %
-\marginpar{\textbf{Cluster Assumption}}
+\sidepar{Cluster Assumption}
 %
 This is precisely the assumption that drives many traditional (density-based) clustering algorithms
 aiming to separate the data into groups of samples, or `clusters', using density (estimable, for
@@ -143,7 +143,7 @@ not connected by paths through high-density regions belong to different clusters
 the LDS assumption, though this is more commonly expressed in terms of the decision boundary,
 namely that the plane separating any two classes should carve out a region of low density.
 %
-\marginpar{\textbf{Low-density-separation Assumption}}
+\sidepar{Low-density-separation assumption}
 %
 Despite the equivalence, the two afford very different perspectives, from an optimisation
 standpoint. Indeed, the aforementioned density-based clustering algorithms, of which DBSCAN
@@ -158,7 +158,7 @@ Machine's (SVM's) aim of maximising the margin between the decision boundary and
 data-points (the \emph{support vectors}) -- yielding the \emph{maximum margin hyperplane} -- yet
 considers both the (labelled) training and (unlabelled) test data during fitting.
 %
-\marginpar{\textbf{Smoothness Assumption}} 
+\sidepar{Smoothness assumption}
 %
 The final member of the triad, the \emph{smoothness assumption}, can be viewed as imposing a kind
 of local \(K\)-Lipschitz or \(\epsilon\)-isometric constraint on our function class, \( \gF \),
@@ -199,11 +199,11 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
 Following \cite{scholkopf2021toward}, start by supposing that our prediction task follows the
 causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausal, one.
 %
-The independent-causal-mechanisms principle states that modules in a joint distribution's causal
-decomposition do not inform or influence one another, i.e. \(\gI(X, Y) = 0 \); this implies that in
-the when \(X\) is the causal parent to \(Y\), as in the supposed case, a better estimate of
-\(P(X)\) does not yield a better estimate of \(P(Y|X)\) and it is the former that \ac{SemiSL}
-compasses to learn using unlabelled data.
+As discussed in \S\ref{sec:lens-of-causality}, the ICM principle states that modules in a joint
+distribution's causal decomposition do not inform or influence one another, i.e. \(\gI(X, Y) = 0
+\); this implies that in the when \(X\) is the causal parent to \(Y\), as in the supposed case, a
+better estimate of \(P(X)\) does not yield a better estimate of \(P(Y|X)\) and it is the former
+that \ac{SemiSL} compasses to learn using unlabelled data.
 %
 However, that is not to say that \ac{SemiSL} as in its totality is misguided, it merely requires the
 right condition to be met, that condition (which applies to a wide range of real-world problems)

@@ -25,7 +25,7 @@ This is where this thesis begins, a thesis that hopefully satisfies some of the 
 sensibilities regarding what makes a good story; at the very least I hope it bears some scintilla
 of sense, even perhaps an estimate of erudition.
 %
-\marginpar{\raggedleft\textbf{The thesis of stories and the journey without an end}}
+\sidepar{The thesis of stories and the journey without an end}
 %
 When I say \emph{story} I mean not, of course, to say that the contents are in any way fictitious
 or embellished; as a story, this is a work of chapters and bridging those chapters is evolution,
@@ -65,7 +65,7 @@ demons -- indeed, the theme is not quite so elevating -- having the power to rou
 autonomous one.
 
 %
-\marginpar{\raggedleft\textbf{A theme to connect all other themes}}
+\sidepar{A theme to connect all other themes}
 %
 This is a \acf{ML} thesis and the themes are appropriately related to \ac{ML}; if there is
 one central theme that unites all themes across all chapters, it is the \emph{disconnect} between
@@ -98,10 +98,10 @@ reality -- a \emph{dataset} -- does not always -- and often does not -- align wi
 in the general sense that we can presume \emph{true}.
 %
 Modern physics frames the universe in terms of \emph{symmetries} (as permitted by Noether's
-celebrated theorem), in terms of what changes and what does not change subject to a particular
-action or group of actions or \emph{interventions} -- \emph{variances} and \emph{invariances} --
-and this same notion, one of \emph{modularity of subsystems}, is naturally expressible under a
-causal (and group-theoretic) framework.
+celebrated theorem \citep{noether1918invariante}), in terms of what changes and what does not
+change subject to a particular action or group of actions or \emph{interventions} --
+\emph{variances} and \emph{invariances} -- and this same notion, one of \emph{modularity of
+subsystems}, is naturally expressible under a causal (and group-theoretic) framework.
 %
 Through this lens, the \emph{best} model is the one that completely accounts for all observations
 as a function of the fewest variables -- one that is maximally invariant or modular.
@@ -142,10 +142,8 @@ of simplicity (and consistency with the works in this thesis) a \emph{supervised
 (and if otherwise then the response variables are but some (dynamic) subset of the covariate
 variables).
 %
-% This is perhaps slightly reductive but it is nonetheless accurate and all that is important for
-% what I write of next.
-%
-\marginpar{\raggedleft\textbf{A misstep for every marvel: the problem with correlations}}
+\sidepar{A misstep for every marvel: the problem with correlations}
+
 %
 There are \emph{correlations} that are causally-supported, and these are the correlations one hopes
 are learned by one's \ac{ML} algorithm of choice, because they are \emph{real} and thus
@@ -179,7 +177,7 @@ sub-distributions even within the training data, corresponding to different conc
 race in the foregoing examples).
 
 %
-\marginpar{\raggedleft\textbf{The knots and nots of data and bias}}
+\sidepar{The knots and nots of data and bias}
 %
 The solution -- the sword to this Gordian knot -- seems a staggeringly simple one, so simple as to
 perhaps invite the reader to question the whys and wherefores of this thesis and cry: `just collect
@@ -391,8 +389,8 @@ a \ac{SemiSL} slant introduced by then-recent benchmarks \citep{SagWeiLeeGaoetal
 %
 We may distil this focus into the motivating question ``Given annotated training data drawn from a
 finite set of domains, disjoint from those of the test set, might we use additional unannotated
-data from again disjoint (\wrt{} both training and test sets) domains to improve generalisation (to
-the aforesaid unseen domains)?''
+data from again disjoint [\wrt{} both training and test sets] domains to improve generalisation [to
+the aforesaid unseen domains]?''
 %
 
 The springboard for our proposed method was statistical-matching algorithm developed by my
@@ -405,7 +403,7 @@ distributionally-robust manner.
 %
 In the context of the chapter-being-discussed, this algorithm is generalised and embedded in an
 online-learning framework -- motivated by improved efficiency and the finding that the original
-two-stage (offline) framework proved insufficient for problems of the kind in question -- with the
+two-stage (offline) framework proved insufficient for problems of the k[nd in question -- with the
 generated matches used to define matches for a consistency-regularised \ac{SemiSL} objective that
 is task- and modality-agnostic.
 %

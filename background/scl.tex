@@ -12,9 +12,11 @@
 % {The Fellowship of the Ring\\J.R.R. Tolkien}
 %
 %
-While the notoriety of \acf{SCL} in the \ac{ML} sphere is relatively recent, the phenomenon
+While the notoriety of \acf{SCL} in \ac{ML} is relatively recent, the phenomenon
 underpinning it is a fundamental one in statistics, one that may be summed up with the age-old
 fallacy \emph{cum hoc ergo propter hoc}, or \emph{correlation does not imply causation}.
+%
+\sidepar{Simplicity bias}
 %
 \Acp{DNN} define highly expressive function classes, yet the solutions encoded by their parameter
 space need not be commensurately complex; in fact, it is well established that these models -- in
@@ -44,6 +46,8 @@ different flavours of the problem and have successfully developed mitigation str
 The now-canonical example of shortcut-learning in the \ac{DG} literature -- which I will also
 invoke here for its simplicity -- is due to \cite{beery2018recognition}, wherein the task is one of
 distinguishing between cows and camels (binary classification). 
+%
+\sidepar{Corsican cows}
 %
 Since camels preponderate on sandy backgrounds, while, by contrast, cows preponderate on grassy
 backgrounds -- owing to their natural habitats -- the background is a viable shortcut solution
@@ -80,7 +84,7 @@ model is not simply variant to the `wrong' features but invariant to the `right'
 simply a matter of a difference in importance but, in reality, a more pernicious matter of
 inclusion/exclusion.
 %
-\marginpar{\textbf{Feature suppression and the multi-view hypothesis}}
+\sidepar{Feature suppression and the multi-view hypothesis}
 %
 This is to say, if a shortcut solution is robust enough to achieve near-zero loss on the training
 set, then there is little incentive -- owing to gradient starvation \citep{pezeshki2021gradient}
