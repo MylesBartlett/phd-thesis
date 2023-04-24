@@ -186,22 +186,22 @@ I have already alluded to some of the challenges entailed in adversarial infomin
 approaches; here, I summarise the two most salient ones.
 \marginpar{\textbf{Approximation errors}}
 %
-\textbf{First}, the strength of information-minimisation is proportional to the strength
-adversary used to drive it, and, moreover, a fixed point attained by one adversary is not
-guaranteed to hold for any other adversary (differing in architecture, optimisation
-scheme, etc.) unless the fixed point corresponds to the desired invariance. 
+First, the strength of information-minimisation is proportional to the strength adversary used to
+drive it, and, moreover, a fixed point attained by one adversary is not guaranteed to hold for any
+other adversary (differing in architecture, optimisation scheme, etc.) unless the fixed point
+corresponds to the desired invariance. 
 %
-Theory dictates that one computes the best response of each player at each iteration,
-however this is generally infeasible when working with models with many parameters and
-datasets with many samples. 
+Theory dictates that one computes the best response of each player at each iteration, however this
+is generally infeasible when working with models with many parameters and datasets with many
+samples. 
 %
-Thus, approximations are required -- e.g. by limiting the number of updates per iteration
-and by bootstrapping the best response from the previous one -- but these can lead to
-unstable training dynamics or entrapment in bad optima. 
+Thus, approximations are required -- e.g. by limiting the number of updates per iteration and by
+bootstrapping the best response from the previous one -- but these can lead to unstable training
+dynamics or entrapment in bad optima. 
 %
-Indeed, a number of recent studies have shown that many adversarial approaches fail to
-faithfully produce infomin representations when probed \citep{moyer2018invariant,
-feng2019learning, balunovic2021fair}.
+Indeed, a number of recent studies have shown that many adversarial approaches fail to faithfully
+produce infomin representations when probed \citep{moyer2018invariant, feng2019learning,
+balunovic2021fair}.
 %
 \marginpar{\textbf{Cyclic dynamics}}
 %
