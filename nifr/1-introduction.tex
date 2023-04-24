@@ -44,7 +44,7 @@ data to learn from.
 %However, as pointed out by \cite{locatello2019challenging}, some supervision or inductive bias is
 %needed in order to recognise a well-disentangled representation.
 While annotations for $y$ are often hard to come by (and often noisy;
-see~\cite{kehrenberg2020tuning}), annotations for the sensitive attribute $s$ are usually less so,
+see~\citet{kehrenberg2020tuning}), annotations for the sensitive attribute $s$ are usually less so,
 as $s$ can often be obtained from demographic information provided by census data. 
 %
 We thus consider the setting where the representation is learned from data that is only labelled
@@ -140,8 +140,8 @@ To render our representations interpretable, we rely on a simple transformation 
 \emph{null-sampling} for mapping invariant representations into the data domain. 
 %
 Previous approaches to \acl{FRL}
-(\cite{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter alia)
-rely upon training \acp{AE} to jointly minimise the reconstruction (maximising \ac{MI} \wrt{}
+(\citealp{beutel2017data,edwards2016censoring,madras2018learning,louizos2016variational}, inter
+alia) rely upon training \acp{AE} to jointly minimise the reconstruction (maximising \ac{MI} \wrt{}
 \(X\)) and invariance (minimising \ac{MI} \wrt{} \(S\)) losses.
 %
 We discuss first how this can be done with such a model that we refer to as \ac{cVAE}, before

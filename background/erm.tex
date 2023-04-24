@@ -44,7 +44,7 @@ In practice, of course, one does not have access to the true generative distribu
 finite set of realizations of it that together form a \emph{dataset}, \( \gD^{tr} \), consisting of
 observed input-target pairs \( (x, y) \). 
 %
-Thus, we are restricted to \acl{ERM} (\acs{ERM}; \cite{vapnik1991principles}), defined as the risk
+Thus, we are restricted to \acl{ERM} (\acs{ERM}; \citealp{vapnik1991principles}), defined as the risk
 is instead defined over the \emph{empirical} distribution, a finite set of observations, rather
 than over the underlying distribution from which those observations were drawn.
 %
@@ -136,17 +136,17 @@ Yet, despite its long and storied history, with roots in early statistical model
 usefulness of importance-weighted \ac{ERM} in the context of modern \acf{DL} has recently been
 impugned \citep{byrd2019effect, zhai2022understanding}.
 %
-\cite{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
+\citet{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
 importance-weighting diminish over the course of training; these effects can be partially recovered
 when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
 decay but without such interventions the converged-upon solution is identical for both
 \ac{IW}-\ac{ERM} and standard (unaugmented) \ac{ERM}. 
 %
-Further empirical evidence for this was provided by \cite{sagawa2019distributionally}, wherein the
+Further empirical evidence for this was provided by \citet{sagawa2019distributionally}, wherein the
 importance of combining aggressive regularisation with (a dynamic form of) importance-weighting for
 strong worst-group generalisation is stressed.
 %
-Theoretical support for these results was later adduced by \cite{zhai2022understanding} with proofs
+Theoretical support for these results was later adduced by \citet{zhai2022understanding} with proofs
 showing that equivalence of the implicit biases of these \ac{IW}-based algorithms and \ac{ERM}.
 %
 Summarily, for all its intuitiveness, importance-weighting, it provably does not alter the solution
@@ -154,7 +154,7 @@ to the optimisation problem defined by the training set, which is to say, soluti
 zero-loss are invariant under reweighting.
 %
 This understanding has motivated other approaches, such as those based on polynomially-tailed
-losses (for binary classification; \cite{wang2021importance}) and logit-adjustment
+losses (for binary classification; \citealp{wang2021importance}) and logit-adjustment
 \citep{menon2020long}.
 %
 % The view of the latter is to instead aim to shift the classification boundary to be closer to the

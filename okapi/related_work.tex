@@ -64,7 +64,7 @@ A number of recent works have sought to obviate this problem through the use of 
 \citep{dwibedi2021little, koohpayegani2021mean, van2021revisiting}, the latter of which is directly
 relevant to our work.
 %
-Okapi bears closest resemblance to \cite{koohpayegani2021mean} in combining momentum-encoding with
+Okapi bears closest resemblance to \citet{koohpayegani2021mean} in combining momentum-encoding with
 nearest-neighbours lookup to generate the views for a BYOL-style \citep{grill2020bootstrap}
 consistency loss. 
 %
@@ -78,7 +78,7 @@ learning with supervised learning in order to improve the performance of the lat
 when labelled data is limited.
 %
 Many \ac{SemiSL} methods are based on the self-training paradigm which can trace its roots back
-decades to the early work in pattern recognition by \cite{scudder1965probability} and continues to
+decades to the early work in pattern recognition by \citet{scudder1965probability} and continues to
 be relevant in the modern era due to its generality, both within \ac{SemiSL} itself and in related
 fields such as domain adaptation \citep{ganin2016domain}, and fledgling field of \ac{SelfSL}
 \citep{caron2021emerging} discussed above.
@@ -99,7 +99,7 @@ views for a given sample are generated not through data-augmentation but through
 matching \citep{rosenbaum1983central}, with the aim being to achieve invariance to the domain
 rather than a particular series of perturbations.
 %
-Another example of particular relevance to our work is \cite{tarvainen2017mean}, which uses a copy
+Another example of particular relevance to our work is \citet{tarvainen2017mean}, which uses a copy
 of the model with exponentially-averaged weights to generate the targets for the unlabelled data.
 Okapi also uses such a model to produce the targets for its consistency loss, but is more akin to
 momentum-encoding \citep{he2020momentum} in the respect that the loss is imposed on the latent

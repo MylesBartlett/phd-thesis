@@ -90,7 +90,7 @@ The general form of this loss for a given sample can then be written as
 %
 where $d: \R^d \times \R^d \to \R$ is some distance function.
 %
-Here, we follow \cite{grill2020bootstrap} and define $d$ to be the squared Euclidean distance
+Here, we follow \citet{grill2020bootstrap} and define $d$ to be the squared Euclidean distance
 between normalised encodings for our experiments.
 %
 Allowing the $\mr{NN}$ algorithm to select pairs in an unconstrained manner, given the pool of
@@ -174,10 +174,10 @@ prohibitive memory-wise for large values of $N$.
 We address these problems using a fixed-size memory bank, $\gM^{\NM}_z$ storing only the last $\NM$
 (where $\NM \ll N$) encodings from a slow-moving momentum encoder \citep{grill2020bootstrap,
 he2020momentum}, $\textcolor{tecol}{f_{\theta^\prime}}$, which we refer to as the
-\textcolor{tecol}{\emph{target}} encoder, in line with \cite{grill2020bootstrap}, and accordingly
+\textcolor{tecol}{\emph{target}} encoder, in line with \citet{grill2020bootstrap}, and accordingly
 refer to $\textcolor{oecol}{f_\theta}$ as the \textcolor{oecol}{\emph{online}} encoder.
 %
-Unlike \cite{grill2020bootstrap}, however, we make use of neither a projector nor a predictor head
+Unlike \citet{grill2020bootstrap}, however, we make use of neither a projector nor a predictor head
 (in the case of the target encoder) in order to compute the inputs to the consistency loss and
 simply use the output of the backbone as is -- this is possible in our setting due to
 $\gL_\mr{sup}$ preventing representational collapse.

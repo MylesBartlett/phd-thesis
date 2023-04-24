@@ -120,7 +120,7 @@ practically (as far as the methods I introduce are concerned) arbitrary.
 %
 
 The reader has assuredly heard of the many astounding feats accomplished by \ac{ML} in the last
-decade, borne on the winds of the \ac{DL} revolution heralded by \cite{krizhevsky2012imagenet} and
+decade, borne on the winds of the \ac{DL} revolution heralded by \citet{krizhevsky2012imagenet} and
 mediated by advances in highly-parallelisable hardware.
 %
 Indeed, the statistical-learning paradigm has given rise to, no less than, autonomous agents
@@ -162,11 +162,11 @@ spheres, igniting public concern and redoubling research efforts to allay said c
 %
 To illustrate: a 2018 investigation \citep{dastin2018amazon} into the automated-hiring system
 deployed by Amazon revealed said system to vastly prefer male candidates to female ones for
-software-development roles based on their resumes; the same year, \cite{buolamwini2018gender}
+software-development roles based on their r\'esum\'es; the same year, \citet{buolamwini2018gender}
 investigated the behaviour of three commercial gender-classification algorithms \wrt{} different
 skin types (`lighter' vs. `darker') and observed marked disparities in the resulting accuracies
 between lighter-skinned and darker-skinned subjects, and between male and female subjects, with a
-compounding of the two trends; again the same year, \cite{zech2018variable} demonstrated that
+compounding of the two trends; again the same year, \citet{zech2018variable} demonstrated that
 \ac{ML}
 classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
 site-specific tags and the prevalence rates associated thereof.
@@ -286,8 +286,8 @@ of the contributions made by myself and each co{\"a}uthor.
 \subsection*{Chapter 3}%: Null-sampling for Interpretable and Fair Representations}
 %
 In this first of the middle chapters, we tackle what we term an \emph{aggravated fairness problem},
-characterised by strong spurious \acp{SC} between the sensitive and target attributes, to the
-extent of one-to-one correspondence which is not maintained at test time.
+characterised by strong \acp{SC} between the sensitive and target attributes, to the extent of
+one-to-one correspondence which is not maintained at test time.
 %
 This is, consequently, a \acf{SCL} problem in which the former attribute serves as a proxy
 for the latter attribute, by virtue of its lower-complexity; to ensure generalisability across the
@@ -394,10 +394,10 @@ the aforesaid unseen domains]?''
 %
 
 The springboard for our proposed method was statistical-matching algorithm developed by my
-co{\"a}uthors, as appearing in \cite{RomInsShaQua22}, that pairs samples from different (in this
+co{\"a}uthors, as appearing in \citet{RomInsShaQua22}, that pairs samples from different (in this
 case) domains based on certain (robust) statistical criteria. 
 %
-In the context of \cite{RomInsShaQua22}, this algorithm is applied in a pseudo-post-hoc fashion to
+In the context of \citet{RomInsShaQua22}, this algorithm is applied in a pseudo-post-hoc fashion to
 construct a `patched' dataset, with which the initial model is trained anew in a
 distributionally-robust manner.
 %

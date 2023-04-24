@@ -20,9 +20,9 @@ The propensity score distance is defined as the difference between propensity sc
 and $e_j$, of samples $i$ and $j$, i.e. \( \mathrm{PSD}(e_i, e_j) \triangleq \vert e_i - e_j \vert \). 
 %
 In causal inference, the propensity score refers to the probability of sample $i$ belonging to the
-treated group, given its covariates $x_i$ \cite{rosenbaum1983central}; in practice, this
+treated group, given its covariates $x_i$ \citep{rosenbaum1983central}; in practice, this
 conditional probability is rarely known a priori and thus requires estimation, typically via
-logistic regression \cite{stuart2010matching}. 
+logistic regression \citep{stuart2010matching}. 
 %
 We generalise the notion of a propensity score to categorical domains simply by modelling the
 conditional probability for each domain, with  $e_i$ instead a \( |\gS| \)-dimensional probability
@@ -33,14 +33,14 @@ $x_i$ and $x_j$, of a given pair of samples.
 %
 Despite PSD being the more prevalent of the two distances, it is ill-suited to cases in where pairs
 are close in value \wrt{} all covariates and in such cases Euclidean distance should be preferred
-\cite{king2019propensity}. 
+\citep{king2019propensity}. 
 %
 Nevertheless, propensity scores remain a relevant component of NN-based matching for defining
 \emph{calipers} that can reduce the likelihood of false-positive matches.
 %
 
 We make use of two types of caliper, \emph{fixed} and \emph{standard deviation}. The fixed caliper
-\cite{crump2009dealing}, $t_f$, defines a region of common support between the estimated propensity
+\citep{crump2009dealing}, $t_f$, defines a region of common support between the estimated propensity
 score distribution of the two groups; only those samples within the feasible region are admissible
 for matching. For binary problems, the feasible region is symmetric such that we have \( \left\{i
 \, | \, e_i \in (1 - t_{f}, t_{f}) \right\} \) whereas in the more general, categorical case the
@@ -48,7 +48,7 @@ constraint is one-sided, i.e. \( \left\{i \, | \, \lVert e_i \rVert_{\infty} < t
 %
 This selection rule helps by removing samples with extreme propensity scores.
 %
-\cite{rosenbaum1985constructing} defines the maximum discrepancy permitted between paired two samples.
+\citet{rosenbaum1985constructing} defines the maximum discrepancy permitted between paired two samples.
 %
 The discrepancy is usually expressed in terms of estimated PSD as \( \vert e_i - e_j \vert < \sigma
 \cdot t_\sigma \), where \(\sigma\) denotes the mean of the group-wise standard deviations of the

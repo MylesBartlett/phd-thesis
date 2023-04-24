@@ -216,10 +216,10 @@ In absence of a such validation set by which to quantify biases and generalisati
 may draw upon methods from the explainability/interpretability literature \citep{gunning2019xai} to
 determine whether the learned solutions align with the intended solutions; one may, for instance,
 readily diagnose the use of background as a shortcut, per the now-canonical example from
-\cite{beery2018recognition}, with a standard-method-in-that-literature in Grad-cam
-\cite{selvaraju2017grad}, allowing for a targeted intervention (e.g. by augmentation) -- one may
+\citet{beery2018recognition}, with a standard-method-in-that-literature in Grad-cam
+\citep{selvaraju2017grad}, allowing for a targeted intervention (e.g. by augmentation) -- one may
 even use the resulting attribution maps directly for this purpose as proposed by
-\cite{taghanaki2022masktune}.
+\citet{taghanaki2022masktune}.
 %
 It is for this reason that we emphasise the interpretability aspect in Chapter~\ref{ch:nifr}, for
 even if we cannot sufficiently debias a model (if it need be debiased), we might glean when this is
@@ -268,7 +268,7 @@ only as the model-to be-supervised, but also as the supervisor, acting according
 Such AI supervisors exhibit the ability to accurately, and well-calibratedly, detect biases
 violating said constitution in generated responses and provide feedback for redressing them; this
 feedback may be used to further align the supervised model, as substitute for the human-generated
-feedback fuelling the eponymous \acl{RLHF} (\acs{RLHF}; \cite{christiano2017deep,
+feedback fuelling the eponymous \acl{RLHF} (\acs{RLHF}; \citealp{christiano2017deep,
     stiennon2020learning, bai2022training}), analogously termed \acf{RLAIF}.
 %
 While \ac{RLHF} does not allow for sidestepping of annotations (which has been ameliorated by
@@ -295,7 +295,7 @@ might then still have their place in this brave new world of ML where multi-moda
 roost (though most definitely the headlines).
 %
 The premise of scaling supervision, through this process of self-review, as in
-\cite{bai2022constitutional}, may have broader application, however: for image-classification, one
+\citet{bai2022constitutional}, may have broader application, however: for image-classification, one
 could conceive of a model that classifies based on natural-language descriptions of a scene,
 providing a reasoning mechanism that is evaluable by `constitutional' critics and human auditors
 (who, again, should very much remain part of the equation -- they are to be assisted not
@@ -314,7 +314,7 @@ thesis's works, due foremost to its interpretability.
 A host of prominent works attest that large-scale (primarily self-supervised) training improves
 downstream robustness for visual tasks, in both covariate \citep{hendrycks2019using,
 hendrycks2020pretrained, radford2021learning} and target/subgroup senses \citep{liu2021self,
-goyal2022vision}, with \cite{goyal2022vision} showing that the pre-training corpus, if of
+goyal2022vision}, with \citet{goyal2022vision} showing that the pre-training corpus, if of
 sufficient scale (here being on the order of millions of samples), need not be curated for this to
 apply -- curation being the natural enemy of scalability, which begets diversity which itself
 subserves robustness, at least in the \ac{OOD} sense (for it cannot  necessarily imply invariance

@@ -6,8 +6,8 @@ arguably niche one to one of great prominence, borne by \ac{ML}'s proliferation 
 increased capacity to consequentially affect human lives-- in all sectors of society.
 %
 Indeed, a multitude of high-profile cases/studies have highlighted the discriminatory (unfair)
-nature of unchecked \ac{ML} systems -- \cite{kasperkevic2015google}, \cite{angwin2016machine},
-\cite{dastin2018amazon}, and \cite{buolamwini2018gender} -- further spurring research to develop
+nature of unchecked \ac{ML} systems -- \citet{kasperkevic2015google}, \citet{angwin2016machine},
+\citet{dastin2018amazon}, and \citet{buolamwini2018gender} -- further spurring research to develop
 better-aligned algorithms and methods for validating them, and thereby regain public trust.
 
 \sidepar{Notions of fairness}
@@ -82,7 +82,7 @@ and adopting these metrics as measures of invariance, though the method is appli
 correlation problems in general, decontextualised from fairness.
 %
 Chapter~\ref{ch:supmatch} adopts a perspective in line with the \ac{DG} literature
-\cite{sagawa2019distributionally}, a perspective which is known under the guise of \emph{minimax
+\citep{sagawa2019distributionally}, a perspective which is known under the guise of \emph{minimax
 fairness} in the \ac{AF} literature.
 %
 While perhaps obvious, it is relevant to note that that a predictive distribution provably cannot
@@ -210,14 +210,14 @@ utility rather than group parity.
 Given the existence of such a trade-off, the problem of learning a useful classifier subject to
 \ac{ER} constraints induces not one optimal solution (or one equivalence class of optimal
 solutions, more accurately) -- as one would have when focussed on only the utility -- but rather a
-set of \ac{PO} solutions, the discovery of which is the remit of multi-objective
-optimisation (\ac{MOO}; \cite{sawaragi1985theory, deb2013multi}). 
+set of \ac{PO} solutions, the discovery of which is the remit of multi-objective optimisation
+(\ac{MOO}; \citealp{sawaragi1985theory, deb2013multi}). 
 %
 \Ac{MOO} has appeared both implicitly and explicitly throughout the \ac{AF} literature, the latter
-only relatively recently (e.g. in \cite{navon2020learning}). 
+only relatively recently (e.g. in \citet{navon2020learning}). 
 %
-Indeed, examples of the former include the methods of \cite{louizos2015variational} and
-\cite{madras2018learning} which entail learning a \emph{linear scalarised} solution
+Indeed, examples of the former include the methods of \citet{louizos2015variational} and
+\citet{madras2018learning} which entail learning a \emph{linear scalarised} solution
 \citep{boyd2004convex},  with position (preference direction) of this solution on the \acf{PF}
 controlled by a linear weighting of loss terms optimising for utility and fairness separately.
 %
@@ -254,7 +254,7 @@ works well over a range of proximal distributions/problems (also referred to as 
 %
 This desire naturally arises in any regime which naturally contends with some kind of meta
 distribution -- a distribution over distributions -- such as Meta Learning \citep{collins2020task},
-\ac{DG} (as already noted; \cite{sagawa2019distributionally}), or, indeed, \ac{AF}.
+\ac{DG} (as already noted; \citealp{sagawa2019distributionally}), or, indeed, \ac{AF}.
 %
 Given a meta distribution \(\mathfrak{P}(X, Y)\), from which we sample the bivariate distributions \(
 P(X, Y) \), the minimax (\ac{ERM}-based) \ac{DRO} objective can be expressed as 
@@ -327,7 +327,7 @@ This premise of \ac{IF} greatly resembles the smoothness assumption from \ac{Sem
 introduce formally in \S\ref{sec:semisl}; glimpsing ahead, however, the smoothness assumption can
 be seen as a \(K\)-Lipschitz constraint on our function class; this is the very manner in which the
 \emph{Fairness Through Awareness} (FTA) -- the most general concept of \ac{IF} -- is couched in
-\cite{dwork2012fairness}, its name contrasting with FTU.
+\citet{dwork2012fairness}, its name contrasting with FTU.
 %
 The central question thus implied by FTA then is what constitutes an appropriate measure of
 similarity -- in both the domain and codomain -- for the population and task being considered;
@@ -338,7 +338,7 @@ itself far from trivial.
 \subsection{Bias propagation and systematic censoring}\label{ssec:residual-unfairness}
 % ------------------------------------------------------------------------------ 
 I conclude this section with a brief discussion of residual unfairness, as termed by
-\cite{kallus2018residual}, and the problem setting engendering it, owing to its pertinence to both
+\citet{kallus2018residual}, and the problem setting engendering it, owing to its pertinence to both
 Chapter~\ref{ch:nifr} and Chapter~\ref{ch:supmatch}.
 %
 Residual unfairness refers to lingering inter-group disparities, stemming from sampling bias -- in

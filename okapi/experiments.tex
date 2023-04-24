@@ -3,7 +3,7 @@
 %
 \subsection{Datasets}\label{sec:exps_datasets} 
 %
-We evaluate Okapi on three datasets taken from the WILDS 2.0 benchmark \cite{SagWeiLeeGaoetal22}. 
+We evaluate Okapi on three datasets taken from the WILDS 2.0 benchmark \citep{SagWeiLeeGaoetal22}. 
 %
 These span a variety of modalities and tasks, allowing us to showcase the generality of our
 proposed method (Okapi): \textbf{iWildCam} (images, multiclass classification), \textbf{PovertyMap}
@@ -20,20 +20,20 @@ Results of our image-data experiments are summarised in Table~\ref{tab:iw_pm_res
 Due to spacial constraints, we defer the full set of results, including those for the `offline'
 (w.r.t. the matching) version of Okapi to Appendix.~\ref{appx:ext_results}. 
 %
-For both datasets in question, we use the same metrics as \cite{SagWeiLeeGaoetal22}: macro-F1 for
+For both datasets in question, we use the same metrics as \citet{SagWeiLeeGaoetal22}: macro-F1 for
 iWildCam and worst-group (with the group defined as urban (U) vs. rural (R)) Pearson correlation
 for Poverty Map. 
 %
 For completeness, we include mean squared error (MSE) as a secondary metric for the latter dataset.
 %
-Following \cite{SagWeiLeeGaoetal22}, we compute the mean and standard deviation (shown in
+Following \citet{SagWeiLeeGaoetal22}, we compute the mean and standard deviation (shown in
 parentheses) over multiple runs for both ID and OOD test sets, with these runs conducted with 3
 different random seeds and 5 pre-defined cross-validation folds for iWildCam and PovertyMap,
 respectively.
 
 We compare Okapi against two baselines, \ac{ERM} and FixMatch \citep{sohn2020fixmatch},
 both according to our re-implementation and according to the original implementation given in
-\cite{SagWeiLeeGaoetal22}.
+\citet{SagWeiLeeGaoetal22}.
 %
 We note that since FixMatch, in its original form, is only applicable to classification problems
 due to its use of confidence-based thresholding, for the PovertyMap dataset, FixMatch represents a
@@ -42,8 +42,8 @@ trained to simply minimise the MSE between \emph{all} regressed values for the w
 strongly-augmented images.
 %
 As described in Appendix~\ref{appx:implementation}, the main difference between the baselines run
-included in \cite{SagWeiLeeGaoetal22} and our re-runs is in the backbone architecture, with us
-opting for a ConvNeXt  \citep{liu2022convnet} architecture over a ResNet one.
+included in \citet{SagWeiLeeGaoetal22} and our re-runs is in the backbone architecture, with us
+opting for a ConvNeXt \citep{liu2022convnet} architecture over a ResNet one.
 %
 For both datasets, and for both baselines we observe significant improvements stemming the change
 of backbone.
@@ -75,14 +75,14 @@ worst results amongst the evaluated methods.
 \import{./}{tables/cc_results.tex}
 We summarise in Table~\ref{tab:cc_results} the numerical results for the CivilComments dataset.
 %
-Remaining consistent with \cite{SagWeiLeeGaoetal22}, we evaluate models according to the
+Remaining consistent with \citet{SagWeiLeeGaoetal22}, we evaluate models according to the
 worst-group accuracy -- the minimum of the conditional accuracies obtained by conditioning on each
 of the 8 dimensions of $s$ -- averaged over 5 replicates. 
 %
 Since there is no canonical ID test split available for this dataset, we report only the results
 only for the OOD split that is, rather than doing so for a custom split to avoid misrepresentation. 
 %
-We compare Okapi against both \ac{ERM} variants featured in \cite{SagWeiLeeGaoetal22} -- one
+We compare Okapi against both \ac{ERM} variants featured in \citet{SagWeiLeeGaoetal22} -- one
 trained on only the official labelled data and one trained with annotated unlabelled data
 (fully-labelled) -- as well as our re-implementation of the \ac{ERM} variant trained on only the
 labelled data with an identical hyperparameter configuration to the former. 
@@ -94,7 +94,7 @@ We observe marked improvement in the worst-group accuracy of this baseline compa
 reported therein. 
 %
 We attribute this partly to the high variance of the model-selection procedure (inherited from
-\cite{SagWeiLeeGaoetal22}) based on intermittently-computed validation performance (which does not
+\citet{SagWeiLeeGaoetal22}) based on intermittently-computed validation performance (which does not
 consistently align with test performance) to determine the final model. 
 %
 This aside, we observe that Okapi outperforms the \ac{ERM} baseline by a significant margin, to the

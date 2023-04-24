@@ -1,9 +1,9 @@
 \section{Introduction}\label{sec:intro}
 % ------------------------------------- 
 Machine learning models have been deployed for safety-critical applications such as disease
-diagnosis \citep{watson2019clinical} and self-driving cars \citep{yu2020bdd100k}, and in socially
-important contexts such as the allocation of healthcare, education, and credit (e.g.
-\cite{DunYiLanReetal19, HurAde17}). 
+diagnosis \citep{watson2019clinical} and self-driving cars \citep{yu2020bdd100k}, and in
+socially-important contexts such as the allocation of healthcare, education, and credit (e.g.
+\citealp{DunYiLanReetal19, HurAde17}). 
 %
 % Efficiency can be improved, costs can be reduced, and personalisation of services and products
 % can be greatly enhanced -- these are some of the drivers for the rapid development and deployment
@@ -14,7 +14,7 @@ data, and are typically trained to exploit complex relationships and distant cor
 in the training dataset. 
 %
 This strategy has proven to be effective in the setting when we have training (source) and test
-(target) data that are i.i.d.
+(target) data that are \iid{}.
 
 In reality, machine learning models are often deployed on target data whose distribution is
 different from the source distribution they were trained on. 
@@ -39,9 +39,10 @@ that have good OOD performance without sacrificing \ac{ID} performance.
 %It therefore seems natural to exploit as many data from different domains as possible, even if
 %that data is partially or completely unlabelled. 
 
-Our work is a direct response to the empirical conclusions of \cite{SagWeiLeeGaoetal22} for the
-WILDS 2.0 dataset, which extends the WILDS benchmark datasets of \cite{koh2021wilds} through the
-addition of unlabelled data. %
+Our work is a direct response to the empirical conclusions of \citet{SagWeiLeeGaoetal22} for the
+WILDS 2.0 dataset, which extends the WILDS benchmark datasets of \citet{koh2021wilds} through the
+addition of unlabelled data.
+%
 In \citet{SagWeiLeeGaoetal22} a variety of state-of-the-art methods leveraging unlabelled data, including
 domain-invariant, self-training, and self-supervised methods were evaluated for their ability to
 improve OOD generalisation.
@@ -65,7 +66,8 @@ strong generalisation to data from domains outside the training distribution.
 % We need to find a way to identify and link labelled and unlabelled data that correspond to similar
 % statistical units but that need not be the same real-world entity.
 %
-We turn to a statistical matching (SM) framework \cite{RomInsShaQua22,rosenbaum1985constructing, rubin1973matching}, a model-based approach for providing joint information on variables and
+We turn to a statistical matching (SM) framework \cite{RomInsShaQua22,rosenbaum1985constructing,
+rubin1973matching}, a model-based approach for providing joint information on variables and
 indicators collected through multiple sources. 
 %
 SM has been widely utilised to assess the effect of interventions in numerous fields, such as

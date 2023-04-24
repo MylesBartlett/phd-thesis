@@ -36,7 +36,7 @@ meaning by the latter \( f \circ X(\omega) \) for some event \( \omega \in \Omeg
 % -------------------------------------------------------------------------------
 \subsection{Spurious correlations from missing sources}\label{ssec:walkthrough}
 % -------------------------------------------------------------------------------
-The spurious correlation (\ac{SC}; \cite{arjovsky2019invariant}), or shortcut-learning
+The spurious correlation (\ac{SC}; \citealp{arjovsky2019invariant}), or shortcut-learning
 \citep{valle2018deep, geirhos2020shortcut}, problem is characterised by the presence of some
 secondary attribute \(s\) (such as background \citep{beery2018recognition}, texture
 \citep{geirhos2018imagenet}, or gender \citep{sagawa2019distributionally, seyyed2020chexclusion}
@@ -139,7 +139,7 @@ representation, \( z \in \gZ \subset \R^l \), which has the desired property of 
 \( Z \perp S \), while also maximising $\gI(Z; Y)$ so that the representation is useful for
 classification. 
 %
-A popular way of imparting this invariance is with adversarial methods \cite{ganin2016domain,
+A popular way of imparting this invariance is with adversarial methods \citep{ganin2016domain,
 zhao2018adversarial, madras2018learning} where  $f$ is trained to the equilibrium point, $f^\ast$,
 of the (non-convex) minimax equation 
 %
@@ -160,7 +160,7 @@ Under ideal conditions, when all possible pairs of \(s\) and \(y\) are observed,
 corresponds to the point at which \(a\) is maximally entropic and occurs when \(Z\) is invariant to
 \(S\), and only \(S\), while mutual information \wrt{} \(Y\) is jointly maximised -- from an
 optimisation standpoint, the gradients of first and second objectives are non-conflicting (i.e.
-have non-negative inner products; \cite{yu2020gradient}) and there is no trade-off. 
+have non-negative inner products; \citealp{yu2020gradient}) and there is no trade-off. 
 %
 However, in cases where we have missing sources, the waters are muddied: satisfying the first part
 of the objective connotes invariance not only to \(S\), but also to \(Y\), since \(S\) can be

@@ -3,14 +3,14 @@
 	\caption{
 	  An extended comparison between Okapi and different baselines on two benchmark image
 	  datasets. We include both the results of our re-run of the baselines and those of
-	  \cite{SagWeiLeeGaoetal22}. Both ID and OOD performances are reported. For iWildCam we
+	  \citet{SagWeiLeeGaoetal22}. Both ID and OOD performances are reported. For iWildCam we
 	  average over results from 3 different seeds, for PovertyMap we do so over the 5
 	  pre-defined CV folds.
 	  Standard deviations are shown in parentheses.
 	  The additions relative to Table~\ref{tab:iw_pm_results} include results with an offline
 	  variant of Okapi -- where the matches are generated prior to training from the features
 	  of the trained ERM model and then fixed for the course of training -- and with the ResNet
-	  backbones employed by \cite{SagWeiLeeGaoetal22}.
+	  backbones employed by \citet{SagWeiLeeGaoetal22}.
       }
 	\scalebox{0.75}{
 	\begin{tabular}{lllllll}
@@ -22,9 +22,9 @@
 	\midrule
         & ID & OOD & ID & OOD & ID & OOD \\
 	%
-        ERM \cite{SagWeiLeeGaoetal22} & 47.0 (1.4) & 32.2 (1.2) & 0.66 (0.04) & 0.49 (0.06) & - & - \\
+        ERM \citep{SagWeiLeeGaoetal22} & 47.0 (1.4) & 32.2 (1.2) & 0.66 (0.04) & 0.49 (0.06) & - & - \\
         % ERM (w/o data aug) \cite{SagWeiLeeGaoetal22} & 46.7 (0.6) & 30.6 (1.1) & 0.65 (0.03) & 0.50 (0.07) & - & - \\
-        FixMatch \cite{SagWeiLeeGaoetal22} & 46.3 (0.50) & 31.0 (1.3) & 0.54 (0.10) & 0.30 (0.11) & - & - \\
+        FixMatch \citep{SagWeiLeeGaoetal22} & 46.3 (0.50) & 31.0 (1.3) & 0.54 (0.10) & 0.30 (0.11) & - & - \\
 	%
 	\midrule
 	%

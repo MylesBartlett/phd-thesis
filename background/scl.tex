@@ -21,7 +21,7 @@ fallacy \emph{cum hoc ergo propter hoc}, or \emph{correlation does not imply cau
 \Acp{DNN} define highly expressive function classes, yet the solutions encoded by their parameter
 space need not be commensurately complex; in fact, it is well established that these models -- in
 the absence of an countervailing (inductive) bias -- exhibit a \emph{simplicity bias} (SB;
-\cite{valle2018deep}), that is, the tendency to favour simpler solutions, should those solutions
+\citealp{valle2018deep}), that is, the tendency to favour simpler solutions, should those solutions
 serve sufficiently well for the task (as defined by the training set and loss function) at hand.
 %
 While the spate of failures following the deep-learning revolution were surprising -- and at the
@@ -44,7 +44,7 @@ different flavours of the problem and have successfully developed mitigation str
 
 %
 The now-canonical example of shortcut-learning in the \ac{DG} literature -- which I will also
-invoke here for its simplicity -- is due to \cite{beery2018recognition}, wherein the task is one of
+invoke here for its simplicity -- is due to \citet{beery2018recognition}, wherein the task is one of
 distinguishing between cows and camels (binary classification). 
 %
 \sidepar{Corsican cows}
@@ -65,13 +65,13 @@ This is a relatively benign example, but there are many real-world cases where s
 induce life-endangering failures, perhaps most obviously in the medical data domain where one could
 have a pneumonia classifier that has learned to predict pneumonia from X-ray images with
 near-perfect accuracy based solely on a hospital-specific token and the hospitals'
-pneumonia-prevalence rate, as elucidated by \cite{zech2018variable}.
+pneumonia-prevalence rate, as elucidated by \citet{zech2018variable}.
 %
 There are also obvious ethical concerns that arise when the spurious features in question
 correspond to sensitive attributes such as `race' and `gender' \citep{buolamwini2018gender,
 wang2019balanced}, regardless of aggregate downstream performance. 
 %
-The landmark study by \cite{buolamwini2018gender}, for example, revealed significant disparities in
+The landmark study by \citet{buolamwini2018gender}, for example, revealed significant disparities in
 the performance of face analysis algorithms on individuals from marginalised (dark skin, female)
 vs. non-marginalised (light skin, male).
 
@@ -89,7 +89,7 @@ inclusion/exclusion.
 This is to say, if a shortcut solution is robust enough to achieve near-zero loss on the training
 set, then there is little incentive -- owing to gradient starvation \citep{pezeshki2021gradient}
 and the provably-flatter minima of shortcut solutions \citep{scimeca2021shortcut} -- for the model
-to learn alternative `views' (collections of features; \cite{allen2020towards}).
+to learn alternative `views' (collections of features; \citealp{allen2020towards}).
 %
 For instance, if texture is a reliable classification cue given the training data
 \citep{geirhos2018imagenet}, a model can latch onto that cue and ignore (be invariant to) other
@@ -100,7 +100,7 @@ High-frequency cues, such as colour and texture, are readily modulated by (unsta
 in lighting, for instance, making them less reliable cues for object classification in a dynamic
 environment; we are not wont, for example, to classify an object in the shape of a cat as an
 elephant simply because the texture of the latter has been transplanted, \emph{ceteris paribus}, to
-the former, a failure mode (in)famously shown by \cite{geirhos2018imagenet} to apply to
+the former, a failure mode (in)famously shown by \citet{geirhos2018imagenet} to apply to
 ImageNet-trained \acp{DNN}.
 
 With the above in mind, it is obvious why more traditional approaches to improving group- and
@@ -111,7 +111,7 @@ engendered by stochasticity in the weights and optimisation procedure -- yet sho
 create such a strong (easy-to-learn and potent) and stable attractor that all ensemble
 members simply converge onto that one corresponding view.
 %
-Domain adversarial learning -- popularised by \cite{ganin2016domain} and a mainstay throughout the
+Domain adversarial learning -- popularised by \citet{ganin2016domain} and a mainstay throughout the
 \ac{DA}, \ac{DG}, and \ac{AF} literature alike -- on the other hand suffers from the problem that
 for the features of the model to be statistically independent of the spurious feature, so must it
 be statistically independent of the target since the target and spurious feature are themselves

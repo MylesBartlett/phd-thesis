@@ -99,7 +99,7 @@ performance of \texttt{Ours (No Balancing)} is quite close to that of \texttt{Ou
 We suspect this is because balancing is less critical with the increased number of subgroups
 strengthening the training signal. As inter-subgroup ratios do not make for suitable metric for
 non-binary $S$, we instead quantify the invariance of the predictions to the subgroup with the
-\ac{HGRMC} \cite{renyi1959measures}.
+\ac{HGRMC} \citep{renyi1959measures}.
 
 \begin{figure*}[htp]
   \centering
@@ -338,10 +338,10 @@ the number of samples drawn from \(q_f\) for learning.
 
 \begin{proof}
 First, we produce an estimate \(\hat{q}_f\) of \(q_f\) using the algorithm from
-\cite{ashtiani2020near}, which gives us a mixture-of-Gaussian distribution of \(n_y\cdot n_s\)
+\citet{ashtiani2020near}, which gives us a mixture-of-Gaussian distribution of \(n_y\cdot n_s\)
 components with \(TV(q_f, \hat{q}_f)\leq \tilde{O}(\sqrt{1/N})\) with high probability, where \(N\)
 is the number of data points used for learning the estimate. Then, by Lemma 3 from
-\cite{SohDunAngGuetal20}, \emph{there exists} a mapping \(i\) from the components \(k\) of the
+\citet{SohDunAngGuetal20}, \emph{there exists} a mapping \(i\) from the components \(k\) of the
 Gaussian mixture \(\hat{q}_f\) to the \(s\)-\(y\)-combinations in \(q_f\) such that
 %
 \begin{align}
@@ -373,9 +373,9 @@ which is equivalent to just \(\tilde{O}(\sqrt{1/N})\).
 %
 \subsection{Coloured MNIST and biasing parameters}
 %
-The MNIST dataset \cite{lecun1998gradient} consists of 70,000 (60,000 designated for training,
+The MNIST dataset \citep{lecun1998gradient} consists of 70,000 (60,000 designated for training,
 10,000 for testing) images of grey-scale hand-written digits. We colour the digits following the
-procedure outlined in \cite{KehBarThoQua20}, randomly assigning each sample one of ten distinct RGB
+procedure outlined in \citet{KehBarThoQua20}, randomly assigning each sample one of ten distinct RGB
 colours. Each source is then a combination of digit-class (class label) and colour (subgroup label).
 We use no data-augmentation aside from symmetrically zero-padding the images to be of size 32x32.
 % To simulate a more realistic setting, we create artificial imbalance in both $\gD_{dep}$ and
@@ -497,10 +497,10 @@ $\rho = \frac{1}{|\mathcal{B}|} \sum_{x \in B}\mathrm{attention}(f(x), B) \cdot 
 computed according to a learned attention mechanism. 
 %
 The idea of using an attention mechanism for set-wise classification has been previously explored
-to great success by, e.g., \cite{lee2019set}. %\cite{ilse2018attention} and \cite{lee2019set}. 
+to great success by, e.g., \citet{lee2019set}. %\cite{ilse2018attention} and \cite{lee2019set}. 
 %
 We employ an bag-wise attention mechanism based on the scaled dot-product attention of
-\cite{vaswani2017attention}, where in our case we define $K$ and $V$ to be linear projections of
+\citet{vaswani2017attention}, where in our case we define $K$ and $V$ to be linear projections of
 $z$ -- $zW_k$ and $zW_v$, respectively -- and $Q$ to be mean of another linear projection of $z$,
 $zW_q$, taken over the bag dimension.
 
@@ -570,8 +570,8 @@ output is the binary prediction for a given bag of samples.
  \multicolumn{4}{p{17cm}}{
  \footnotesize $^3$ 
  The attention mechanism used for computing the sample-weights within a bag. \emph{Gated} refers to
- gated attention  proposed by \cite{ilse2018attention}, while \emph{SDP} refers to the scaled
- dot-product attention proposed by \cite{vaswani2017attention}.
+ gated attention  proposed by \citet{ilse2018attention}, while \emph{SDP} refers to the scaled
+ dot-product attention proposed by \citet{vaswani2017attention}.
  }
  \end{tabular}
  }
@@ -583,7 +583,7 @@ output is the binary prediction for a given bag of samples.
 
 The hyperparameters and architectures for the \acf{AE} (\texttt{AE}), Predictor and Discriminator
 sub-networks are detailed in Table \ref{tab:hparams} for all three datasets.We train all models
-using \texttt{Adam} \cite{KinBa15}.
+using \texttt{Adam} \citep{KinBa15}.
 
 For the Coloured MNIST and CelebA datasets, the baseline \texttt{ERM}, \texttt{DRO}, \texttt{LfF}
 (in the case of the former) and \texttt{gDRO} (in the case of the latter) models use a
@@ -595,7 +595,7 @@ size $|Y|$ in order to obtain the class-prediction, $\hat{y_i}$, for a given ins
 our method, we simply train a linear classifier on top of $z$; this is sufficient due to
 linear-separability being encouraged during training by the $y$-predictor. For the Adult Income
 dataset, we use an \ac{MLP} composed of a single hidden layer 35 units in size, followed by a SELU
-activation \cite{klambauer2017self}, as both the downstream classifier for our method, and as the
+activation \citep{klambauer2017self}, as both the downstream classifier for our method, and as the
 network architecture of the baselines. All baselines and downstream classifiers alike were trained
 for $60$ epochs with a learning rate of $1 \times 10^{-3}$ and a batch size of $256$.
 
@@ -603,7 +603,7 @@ Since, by design, we do not have labels for all subgroups the model will be test
 against these missing subgroups is what we aim to combat, properly validating, and thus conducting
 hyperparameter selection for models generally, is not straightforward. Indeed, performing
 model-selection for domain generalisation problems is well-known to be a difficult problem
-\cite{gulrajani2021search}. We can use estimates of the mutual information between the
+\citep{gulrajani2021search}. We can use estimates of the mutual information between the
 learned-representation and $s$ and $y$ (which we wish to minimize w.r.t.\ to the former, maximise
 w.r.t.\ the latter) to guide the process, though optimizing the model w.r.t.\ to these metrics
 obtained from only the training set does not guarantee generalisation to the missing subgroups. We
@@ -935,7 +935,7 @@ See Fig.~\ref{fig:cmnist-2v4-partial-add-nomil} and Fig.~\ref{fig:cmnist-2v4-mis
 results on 2-digit Coloured MNIST (under the \emph{subgroup bias} and \emph{missing subgroup}
 settings, respectively) for our method but with the loss computed instance-wise (\texttt{Inst.})\
 as opposed to set-wise, as is typical of adversarial unsupervised domain adaptation methods (e.g.
-\cite{ganin2016domain}).
+\citealp{ganin2016domain}).
 %
 All aspects of the method, other than those directly involved in the loss-computation, were kept
 constant -- this includes the use of hierarchical balancing, despite the necessary removal of the
@@ -962,7 +962,7 @@ pipeline kept the same.
 It should be noted that this is a very na\"ive way of dealing with an unknown number of clusters. 
 %
 There are methods specifically designed for identifying the right number of clusters
-\cite{hamerly2004learning,chazal2013persistence}, and that is what would be used if this situation
+\citep{hamerly2004learning,chazal2013persistence}, and that is what would be used if this situation
 arose in practice.
 
 The results can be found in Fig.~\ref{fig:cmnist-2v4-partial-add} and
@@ -985,18 +985,18 @@ the bags came from, and the encoder cannot properly learn to produce an invarian
 
 \section{Adapting GEORGE}\label{adapting_g}
 %
-As discussed in the main text, GEORGE \cite{SohDunAngGuetal20} was originally developed to address
+As discussed in the main text, GEORGE \citep{SohDunAngGuetal20} was originally developed to address
 the uneven performance resulting from hidden stratification, though hidden stratification of a
 different kind to the one we consider. 
 %
-In \cite{SohDunAngGuetal20} the training set comes with (super-)class labels but without subclass
+In \citet{SohDunAngGuetal20} the training set comes with (super-)class labels but without subclass
 (or \emph{subgroup} in our terminology) labels. 
 %
 The training set is unlabelled with respect to the subclass, but all superclass-subclass
 combinations (or ``sources'') are assumed to be present in the training data and therefore
 discoverable via clustering. 
 %
-(Note that the clustering in \cite{SohDunAngGuetal20} is -- in contrast to our method -- completely
+(Note that the clustering in \citet{SohDunAngGuetal20} is -- in contrast to our method -- completely
 without supervision and there is nothing to guide the clustering towards discovering the subgroups
 of interest, apart from the assumption that they are the most salient.) 
 %
@@ -1041,8 +1041,8 @@ $\mathrm{vec}(A)$ is the vectorisation of matrix $A$.
 %
 After training the clustering model, we can then use it to generate predictions $\hat{Y}^{dep}$, as
 well as the cluster labels $\hat{\Omega}^{dep}$, for the deployment set, and use them together to
-train a robust classifier with gDRO \cite{sagawa2019distributionally}, as in
-\cite{SohDunAngGuetal20}.
+train a robust classifier with gDRO \citep{sagawa2019distributionally}, as in
+\citet{SohDunAngGuetal20}.
 %
 \section{Code}
 %
