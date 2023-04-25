@@ -96,7 +96,7 @@ physical world.
 %
 It is much more efficient, for example, to explain changes in the shape of an object as one moves
 around it by a change in vantage point, in terms of a single global transformation, rather than by
-many independent changes in local structure, as would be explained by an \emph{entangled} model.
+many unconnected changes in local structure, as would be explained by an \emph{entangled} model.
 %
 The connection between learning causally-faithful models and modern physics thus becomes clear when
 one thinks as modularity being synonymous with invariances, or \emph{symmetries}, it it being
@@ -109,9 +109,9 @@ solution based on the training distribution, \(P^{tr}(X, Y)\), however they do n
 simplest solution in the causal sense, as evidenced by the lack of generalisability.
 %
 Models that are faithful to the underlying causal structure of the problem are inherently more
-robust to distributional changes, more adaptable as the learned modules can be reconfigured freely
-to cater to the problem at hand, and locally updatable, such that  new information can be
-incorporated without degrading modules adapted for unrelated tasks -- this is particularly
+robust to distributional changes, more protean as the learned modules can be reconfigured readily
+to cater to the problem at hand, and locally updatable, such that new information can be
+incorporated without degrading modules adapted for orthogonal tasks -- this is particularly
 pertinent in given recent elucidations of the distorting effects of fine-tuning on
 distributional-robustness \citep{andreassen2021evolution, kumar2022finetuning}.
 
@@ -144,9 +144,6 @@ successful generalisation to arbitrary domains, \(\gE^\dagger\) outside \(\gE\) 
 \cap \gE = \varnothing \); i.e. the goal of \ac{DG}), \(\gE\) must be a representative
 (well-covering) set of samples from the generating distribution, \( P(E) \), such that smooth
 interpolation along the underlying manifold is possible.
-%
-% When \(\gE\) is a finite set, as above, one can think of it as \emph{perturbation set}, accordant
-% with the robust optimisation literature \citep{ben2009robust}.
 %
 To recall, though generalisation to arbitrary perturbations may be provably hard (or impossible;
 \citealp{david2010impossibility}), when \(\gE\) encodes prior information about the kinds of
