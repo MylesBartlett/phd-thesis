@@ -430,7 +430,7 @@ Combination   & \multicolumn{2}{c}{Proportion retained} \\ \cmidrule(lr){2-3}
 
 % \subsection{Adult Income biasing parameters}\label{ssec:dataset-construction-adult}
 % For the Adult Income dataset, we do not need to apply any synthetic biasing as the dataset
-% naturally contains some bias w.r.t. $s$. Thus, we instantiate the deployment set as just a random
+% naturally contains some bias \wrt{} $s$. Thus, we instantiate the deployment set as just a random
 % subset of the original dataset. However, explicit balancing of the test set \emph{is} needed to
 % yield meaningful evaluation (namely through the penalizing of biased classifiers) but care needs
 % to be taken in doing so. Balancing the test set such that
@@ -604,8 +604,8 @@ against these missing subgroups is what we aim to combat, properly validating, a
 hyperparameter selection for models generally, is not straightforward. Indeed, performing
 model-selection for domain generalisation problems is well-known to be a difficult problem
 \citep{gulrajani2021search}. We can use estimates of the mutual information between the
-learned-representation and $s$ and $y$ (which we wish to minimize w.r.t.\ to the former, maximise
-w.r.t.\ the latter) to guide the process, though optimizing the model w.r.t.\ to these metrics
+learned-representation and $s$ and $y$ (which we wish to minimize \wrt{} to the former, maximise
+\wrt{} the latter) to guide the process, though optimizing the model w.r.t.\ to these metrics
 obtained from only the training set does not guarantee generalisation to the missing subgroups. We
 can, however, additionally measure the entropy of the predictions on the encoded test set and seek
 to maximise it across all samples, or alternatively train a discriminator of the same kind used for

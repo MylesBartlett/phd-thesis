@@ -18,7 +18,7 @@ distribution shift (adverse to a na\"ively-trained predictor) between \( \gD_l \
 %
 Here, \( \gD_u \) comes from the domain on which \(p_\theta(y | x)\) is to be evaluated, such that
 we have \( \gD_u \triangleq \gD_\mr{OOD} \), where \( \gD_\mr{OOD} \) denotes the target domain,
-that is OOD w.r.t. \( \gD_l \).
+that is \ac{OOD} \wrt{} \( \gD_l \).
 %
 In the most general sense, a \emph{domain}, or \emph{environment} \citep{arjovsky2019invariant,
 creager2021environment} describes some partitioning of the data according to its source or some
@@ -50,9 +50,9 @@ We denote the set of possible domains for the \ac{ID} labelled and unlabelled da
 and $\gS_u \), respectively, and their union as \( \gS \triangleq S_l \cup S_u \).
 %
 Following the setup established in \citet{SagWeiLeeGaoetal22}, \( \gD_u \) is assumed to be
-unlabelled only \wrt{} the targets and not w.r.t the domain labels and thus that both \( \gD_l \)
+unlabelled only \wrt{} the targets and not \wrt{} the domain labels and thus that both \( \gD_l \)
 and \( \gD_u \) can be augmented with the latter to give the re-definitions \( \gD_l \triangleq \{
-  x_i, y_i, s_i \}_{i=1}^{N_l} \) and \( \gD_u \triangleq \{x_i, s_i \}_{i=1}^{N_u} \).
+x_i, y_i, s_i \}_{i=1}^{N_l} \) and \( \gD_u \triangleq \{x_i, s_i \}_{i=1}^{N_u} \).
 
 \subsection{Statistical matching} 
 \import{./}{matching.tex}
