@@ -497,7 +497,7 @@ titlepage,numbers=noenddot,%1headlines,
 % \includeonly{nifr/main}
 % \includeonly{okapi/main}
 % \includeonly{FrontBackmatter/Bibliography}
-% \includeonly{ch/7-discussion}
+% \includeonly{discussion}
 
 
 % ********************************************************************
@@ -554,11 +554,20 @@ titlepage,numbers=noenddot,%1headlines,
 }\part{Beginning}\label{pt:beginning}
 %
 \begin{refsection}[all]
+  %
   \include{introduction}
+  %
   \printbibliography
+  %
 \end{refsection}
 %
-\begin{refsection}[background] \include{background/main} \printbibliography \end{refsection}
+\begin{refsection}[background] 
+  %
+  \include{background/main} 
+  %
+  \printbibliography 
+  %
+\end{refsection}
 %
 \cleardoublepage
 %
