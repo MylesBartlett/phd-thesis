@@ -16,15 +16,16 @@ also being predictive of the class label $y$.
 for transfer to new classification tasks.
 %
 More recent methods are often based on
-\acfp{VAE}~\citep{kingma2013auto,louizos2016variational,edwards2016censoring,beutel2017data}. The
-achieved fairness of the representation can be measured with various fairness metrics. These
+\acfp{VAE}~\citep{kingma2013auto,louizos2016variational,edwards2016censoring,beutel2017data}. 
+%
+The achieved fairness of the representation can be measured with various fairness metrics. These
 measure, however, usually how fair the predictions of a classifier are and not how fair a
 representation is.
 
 The appropriate measure of fairness for a given task is domain-specific \citep{liu2018delayed} and
 there is often not a universally accepted measure. 
 %
-However, \emph{\ac{DP}} is the most widely
+However, \ac{DP} is the most widely
 used~\citep{louizos2016variational,edwards2016censoring,beutel2017data}. 
 %
 \ac{DP} demands $\hat{y} \perp s$ where $\hat{y}$ refers to the predictions of the classifier. 
@@ -141,7 +142,7 @@ this set.
 %
 In contrast, we assume possession of only a single source of \emph{labelled}, albeit
 spuriously-correlated, data, but that we have a second source of data that is free of spurious
-correlations, with the benefit being that it only needs to be labelled \emph{\wrt{} $s$}.
+correlations, with the benefit being that it need only be labelled \wrt{} $s$.
 
 % The model thereby enforces their independence. This is achieved with an adversarial approach,
 % borrowing the gradient reversal technique from \cite{ganin2016domain}.
