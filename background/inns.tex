@@ -29,8 +29,8 @@ so up to a lower bound (the so-called \ac{ELBO}).
 \sidepar{\Aclp{NF}}
 %
 This calculation is enabled by the change-of-variables theorem, allowing one to track how the
-density of the distribution changes as the INN warps a known (and tractable) base distribution into
-a complex, highly-multimodal, one.
+density of the distribution changes as the \ac{INN} warps a known (and tractable) base distribution
+into a complex, highly-multimodal, one.
 %
 Like with \aclp{VAE} (\acsp{VAE}; \citealp{kingma2014auto}), the base density, \(P(Z)\), is generally
 taken to be an Isotropic Gaussian distribution; the posterior density, \(P(X)\), `flows' through
@@ -66,11 +66,12 @@ the corresponding base density, \(z \sim P(Z) \), and push that sample through \
 
 \sidepar{Losslessness}
 %
-In Chapter~\ref{ch:nifr}, however, it is not the foregoing density-estimation capabilities of INNs
-that we are interested in, rather the diffeomorphic property itself, insofar as it guarantees the
-learned representations are \emph{lossless} \wrt{} the inputs, as well as a means to visualise the
-factors of said representations due to its having an exact inverse (whereas auto-encoders have only
-an approximate inverse (the decoder) that must be trained separately from the encoder).
+In Chapter~\ref{ch:nifr}, however, it is not the foregoing density-estimation capabilities of
+\acp{INN} that we are interested in, rather the diffeomorphic property itself, insofar as it
+guarantees the learned representations are \emph{lossless} \wrt{} the inputs, as well as a means to
+visualise the factors of said representations due to its having an exact inverse (whereas
+auto-encoders have only an approximate inverse (the decoder) that must be trained separately from
+the encoder).
 %
 That is to say, while \(f\) may deform manifold \(\gX\) in arbitrarily non-linear ways, since each
 point is mapped uniquely from the domain to codomain only the form of the information contained in
@@ -81,8 +82,8 @@ inputs into spaces much smaller than \(\R^d\) (in line with the \emph{Manifold H
 \citep{fefferman2016testing}).
 %
 Other works have also capitalised on this information-preservation explicitly, e.g.\ both
-\citet{hoogeboom2019integer} and \citet{xie2021enhanced} explore the natural suitability of INNs
-for lossless image compression.
+\citet{hoogeboom2019integer} and \citet{xie2021enhanced} explore the natural suitability of
+\acp{INN} for lossless image compression.
 %
 Contrastingly, in work postdating that done in Chapter~\ref{ch:supmatch}, \acp{NF} have been
 applied applied to \ac{AF} problems with the insight that one can leverage the exact-density
