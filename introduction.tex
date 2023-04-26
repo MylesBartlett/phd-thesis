@@ -402,13 +402,26 @@ construct a `patched' dataset, with which the initial model is trained anew in a
 distributionally-robust manner.
 %
 In the context of the chapter-being-discussed, this algorithm is generalised and embedded in an
-online-learning framework -- motivated by improved efficiency and the finding that the original
-two-stage (offline) framework proved insufficient for problems of the k[nd in question -- with the
-generated matches used to define matches for a consistency-regularised \ac{SemiSL} objective that
-is task- and modality-agnostic.
+online-learning (online) framework -- motivated by improved efficiency and the finding that the
+original two-stage (offline) framework proved insufficient for problems of the kind in question --
+with the generated matches used to define matches for a consistency-regularised \ac{SemiSL}
+objective that is task- and modality-agnostic.
 %
-We find the resulting algorithm consistently outperforms baseline methods, including
-fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL} methods
-failed to accomplish, and, as in Chapter \ref{ch:nifr}, it comes with a valuable interpretable
-aspect, conferred by the trained-with matching algorithm.
+Here, the use of the term `online-learning' is perhaps somewhat-Pickwickian, for I refer not to the
+algorithm \emph{in toto} but to the matching component of it specifically, viewed from a bilevel
+perspective: the former, as characteristic of \emph{offline learning}, may draw upon any given
+sample an arbitrary number of times and draw upon the samples collectively and in an unprescribed
+order (that is, with full control over the sampling mechanism; in the online-learning \emph{seteup}
+the sequence of samples is prescribed and as such may not, and often will not, be \iid{}); the
+latter, conversely, observes only a subset of the dataset (some amortisation) at each
+match-generation step -- this is in contrast to \citet{RomInsShaQua22} where the matching is
+performed over the full dataset in a post-hoc fashion.
+%
+Thus, one should understand the meaning of `online' to be akin to `bootstrapped' and, indeed,
+throughout the paper we use the terms near-interchangeably.
+%
+This aside complete, we find the resulting algorithm consistently outperforms baseline methods,
+including fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL}
+methods failed to accomplish, and, as in Chapter \ref{ch:nifr}, it comes with a valuable
+interpretable aspect, conferred by the trained-with matching algorithm.
 %

@@ -9,7 +9,7 @@ such that one has \( P^{tr}(X, Y) \approx P^{te}(X, Y) \).
 Here, \( P^{tr}(X, Y) \) and \( P^{te}(X, Y) \) denote the (joint) training and test distributions,
 respectively.
 %
-Based on this assumption, the method of (True) Risk Minimisation seeks the hypothesis \( f^\ast \in
+Based on this assumption, the method of (true) risk minimisation seeks the hypothesis \( f^\ast \in
 \gF \) that is the minimiser of the eponymous \emph{risk}, $\gR$, defined according to some
 statistical distance, or \emph{loss}, \( \gL: \R^\Omega \times \gY^\Omega \to \R \) between the
 predicted, \(\hat{Y} \triangleq f(X) \), and ground-truth labels, \(Y\) over the training
@@ -72,7 +72,7 @@ With the foregoing adjustments in mind, one can then define the standard \ac{ERM
 % %
 \begin{equation*}\label{eq:emp_risk} 
     %
-    \hat{\gR(f)}) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y) \in \gD^{tr}} \ell (f(x), y). 
+    \hat{\gR}(f) \triangleq \frac{1}{|\gD^{tr}|}  \sum_{(x, y) \in \gD^{tr}} \ell (f(x), y). 
 %
 \end{equation*}
 %
@@ -81,28 +81,31 @@ does not take into account the distribution of the inputs or targets.
 %
 \sidepar{Long-tailedness and importance-weighting}
 %
-This is mentionable as many real-world datasets exhibit significant class class-imbalance
+This is mentionable as many real-world datasets exhibit significant class-imbalance
 \citep{zhu2014capturing, van2017devil}, or, more generally, `long-tailedness', which is to say that
 the marginal distribution \( P(Y) \) is not uniform over its support.
 % %
 Such motivates replacing the unweighted (or, more accurately, `uniformly weighted') objective given
-by Eq.~\ref{eq:emp_risk}, with an \ac{IW} variant wherein the loss is weighted
-by \( P^{tr}(Y)^{-1} \), or, in the empirical case, by the inverse frequencies of the targets, in
-the discrete (classification) case, or by the empirical density of the target (as given by kernel
-density estimation (KDE), for instance) in the continuous (regression) case.
+by Eq.~\ref{eq:emp_risk}, with an \ac{IW} variant wherein the loss is weighted by \( P^{tr}(Y)^{-1}
+\), or, in the empirical case, by the inverse frequencies of the targets, in the discrete
+(classification) case, or by the empirical density of the target (as given by kernel density
+estimation (KDE), for instance) in the continuous (regression) case.
 % %
 Here, we have assumed no foreknowledge of \( P^{te}(Y) \) -- this typically being the case in
 practice -- with the choice of an uninformative, uniform distribution over the domain leading to
 its elimination from the \ac{IW} term that in general takes the form \( \frac{ P^{te}(Y) }{
 P^{tr}(Y) } \) (or the empirical equivalent).
 
-% %
+%
 Using \( w \in \R^+ \) to denote the weight assigned to instance \(x\) in \( \gD^{tr} \), we can
 then generalise Eq.~\ref{eq:emp_risk} to
 % %
-\begin{equation*} \label{eq:emp_risk_weighted} \hat{\gR}(f) \triangleq \sum_{(x, y) \in \gD^{tr}} w
-\cdot \ell (f(x), y), \end{equation*}
-% %
+\begin{equation*} \label{eq:emp_risk_weighted}
+    %
+    \hat{\gR}(f) \triangleq \sum_{(x, y) \in \gD^{tr}} w \cdot \ell (f(x), y),
+    %
+\end{equation*}
+%
 with `\( \cdot \)' denoting regular scalar multiplication (over \(\R\)), noting that this form
 subsumes the unweighted form, which itself can be recovered by simply fixing \(w\) to \(
 |\gD^{tr}|^{-1} \) for all instances.
