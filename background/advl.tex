@@ -1,5 +1,5 @@
 % ********************************************************************************
-\section{Adversarial Learning}\label{sec:advl}
+\section{\Acl{AdvL}}\label{sec:advl}
 % ********************************************************************************
 \acf{AdvL} is a general paradigm characterising -- in game-theoretical parlance --
 non-co{\"o}perative (competitive) systems, or `games' in which two or more `players' compete over
@@ -186,12 +186,12 @@ aligning the supports of the training -- which is systematically missing certain
 I have already alluded to some of the challenges entailed in adversarial infomin
 approaches; here, I summarise the two most salient ones.
 %
-\sidepar{Approximation errors}
-%
 First, the strength of information-minimisation is proportional to the strength adversary used to
 drive it, and, moreover, a fixed point attained by one adversary is not guaranteed to hold for any
 other adversary (differing in architecture, optimisation scheme, etc.) unless the fixed point
 corresponds to the desired invariance. 
+%
+\sidepar{Approximation errors}
 %
 Theory dictates that one computes the best response of each player at each iteration, however this
 is generally infeasible when working with models with many parameters and datasets with many

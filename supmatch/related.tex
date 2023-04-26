@@ -53,7 +53,7 @@ Furthermore, the discriminator used therein is applied instance-wise; we show in
 \ref{sec:sm-ablations} that allowing the discriminator to model inter-sample relationships has
 tangible addition benefits when performing support-matching.
 
-\paragraph{Multiple instance learning}
+\paragraph{Multiple instance learning.}
 %
 Multiple instance learning \citep{maron1998framework} is a form of weakly-supervised learning in
 which samples are not labelled individually part as part of a set or \emph{bag} of samples.
@@ -69,7 +69,7 @@ Given this labelling scheme, we make use of an adversarial set-classifier to ali
 the training and deployment sets in the representation space of an encoder network.
 %
 
-\paragraph{Positive unlabelled learning}
+\paragraph{Positive unlabelled learning.}
 %
 Learning from positive and unlabelled data, or \emph{PU learning}, refers to the
 binary-classification setup in which the labelled training data consists of only positive samples
@@ -86,6 +86,5 @@ subgroup.
 %
 This is equivalent to requiring that a classifier trained to distinguish between positive and
 negative classes, according to the aforementioned PU learning setup, from the pre-logits layer of
-our desired classifier be maximally entropic -- we propose to use adversarial learning to achieve
-this.
+our desired classifier be maximally entropic -- we propose to use \acl{AdvL} to achieve this.
 %

@@ -478,7 +478,7 @@ titlepage,numbers=noenddot,%1headlines,
 % \usepackage[ruled]{algorithm2e} % http://www.ctan.org/pkg/algorithm2e
 % set `finalizecache' to `true' and `frozencache' to `false' to and compile with vimtex to
 % re-generate pseudocode with minted.
-\usepackage[outputdir=.,finalizecache=true,frozencache=false]{minted} 
+\usepackage[outputdir=.,finalizecache=false,frozencache=true]{minted} 
 \usemintedstyle{vs}
 \usepackage{nicefrac}
 % \usepackage[title,toc,titletoc,page]{appendix}
@@ -488,14 +488,14 @@ titlepage,numbers=noenddot,%1headlines,
 % ************************************
 % only compile a part of the document
 % ************************************
-\includeonly{FrontBackmatter/Titlepage}
-\includeonly{FrontBackmatter/Contents}
+% \includeonly{FrontBackmatter/Titlepage}
+% \includeonly{FrontBackmatter/Contents}
 % \includeonly{ch/1-introduction}
 % \includeonly{ch/2-related-work}
 % \includeonly{ch/3-structure}
 % \includeonly{paper1/paper1}
 % \includeonly{nifr/main}
-\includeonly{okapi/main}
+% \includeonly{okapi/main}
 % \includeonly{FrontBackmatter/Bibliography}
 % \includeonly{discussion}
 

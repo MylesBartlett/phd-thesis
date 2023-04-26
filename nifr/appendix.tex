@@ -317,7 +317,7 @@ Moreover, the non-stationarity of the dynamics can lead to cyclic equilibria, ir
 capacity of the adversary.
 
 When working with a partitioned latent space, this behaviour can be averted by instead encouraging
-$z_b$ to be predictive of $s$, acting as a kind of information ``sink``, as in \citet{JacSmeOya18}.
+$z_b$ to be predictive of $s$, acting as a kind of information ``sink'', as in \citet{JacSmeOya18}.
 %
 However, this does not have the guarantee of making $z_u$ invariant to $s$ - there are often many
 indicators for $s$, not all of which are needed to predict the label perfectly. 
@@ -498,7 +498,7 @@ implicitly captured due to entanglement between the sensitive attribute and othe
 present in the data. 
 %
 We highlight a few examples of such biases manifesting in the \ac{cFlow} model's CelebA null-samples in
-fig.~\ref{fig:celeba_cflow_suppmat}. 
+Fig.~\ref{fig:celeba_cflow_suppmat}. 
 %
 In these cases, make-up and hair style have been inadvertently modified during the null-sampling
 due to the tight correlation between these two attributes and the sensitive attribute, gender, to
@@ -607,7 +607,7 @@ setting.
 In terms of hyperparameters, the only change made was to the KL-divergence's pre-factor, finding it
 necessary to increase it to $1$ to guarantee stability.
 
-The results for the range of $\sigma$ values are shown in fig.~\ref{fig:cmnist-transfer}.
+The results for the range of $\sigma$ values are shown in Fig.~\ref{fig:cmnist-transfer}.
 %
 Unsurprisingly, the performance of both models suffers when the representative and test sets do not
 completely correspond. 
@@ -619,7 +619,7 @@ Although some colour information is retained in the \ac{cFlow} null-samples, sym
 transfer, semantic information is almost entirely retained as well. 
 %
 Conversely, the \ac{cVAE} is very much flawed in this respect; as can be seen in the bottom row of
-fig.~\ref{fig:cmnist-transfer}, for some samples, semantic information is degraded to the point of
+Fig.~\ref{fig:cmnist-transfer}, for some samples, semantic information is degraded to the point of
 the digit's identity being altered. 
 %
 As a result of this semantic degradation, the performance of the downstream classifier is curtailed

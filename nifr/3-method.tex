@@ -1,4 +1,4 @@
-\section{Interpretable Invariances by Null-Sampling}\label{ssec:general}
+\section{Interpretable invariances by null-sampling}\label{ssec:general}
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=0.4\textwidth]{nifr/Figures/diagram.pdf}
@@ -175,8 +175,8 @@ We call this the \emph{representative set}, with random variables $X^{rep}$ and 
 satisfying the condition that \( \gI(S^{rep}; Y^{rep}) \approx 0 \) (or rather, it would if the
 class labels \( Y^{rep} \) were available).
 
-We now summarise the training procedure; an outline for the invertible network model (\acs{cFlow})
-can be seen in fig.~\ref{fig:inn_diagram}.
+We now summarise the training procedure; an outline of the invertible network model (\acs{cFlow})
+can be seen in Fig.~\ref{fig:inn_diagram}.
 %
 First, the encoder network $f$ is trained on \( (X^{rep}, S^{rep}) \), during the first
 phase.
@@ -224,10 +224,10 @@ decoder is conditioned on the spurious attribute.
 We use $\theta_{enc}, \theta_{dec} \in \theta$ to denote the parameters of the encoder and decoder
 sub-networks, respectively. 
 %
-Concretely, the encoder component performs the mapping $x \to{z_u}$, while $\gB$ is
-instantiated as the decoder, $\gB \coloneqq p_{\theta_{dec}}(x|z_u, s)$, which takes in a
-concatenation of the learned non-spurious latent vector $z_u$ and a one-hot encoding of the
-spurious label $s$ to produce a reconstruction of the input $\hat{x}$. 
+Concretely, the encoder component performs the mapping $x \to{z_u}$, while $\gB$ is instantiated as
+the decoder, $\gB \triangleq p_{\theta_{dec}}(x|z_u, s)$, which takes in a concatenation of the
+learned non-spurious latent vector $z_u$ and a one-hot encoding of the spurious label $s$ to
+produce a reconstruction of the input $\hat{x}$. 
 %
 Conditioning on a one-hot encoding of $s$, rather than a single value, as done in
 \citet{madras2018learning}, is the key to visualising invariant representations in the data domain.
@@ -236,24 +236,30 @@ If $\gI(z_u; s)$ is properly minimised, the decoder can only derive its informat
 the label, thereby freeing up $z_u$ from encoding the unwanted information while still allowing for
 reconstruction of the input.
 %
-Thus, by feeding a zero-vector to the decoder we achieve $\hat{x} \perp s$. The full learning
-objective for the \ac{cVAE} is given as
+Thus, by feeding a zero-vector, \(e_s\), to the decoder we achieve $\hat{x} \perp s$. 
+%
+The full learning objective for the \ac{cVAE} is given as
 %
 \begin{align}
+%
 \begin{split}
+    %
     \gL_{\mathrm{cVAE}} =& 
-    \E_{q_{\theta_{enc}}(z_u, b|x)}[
+    \E_{q_{\theta_{enc}}(z_u|x)}[
     \log
-    p_{\theta_{dec}}(x|z, b) - \log p_{\theta_{dec}}(s|z_u)
-    ] \\ &- \beta \KL(q_{\theta_{enc}}(z_u |x) \| p(z_u))
+    p_{\theta_{dec}}(x|z_u, e_s) - \log p_{\theta_{dec}}(s|z_u)
+    ] \\ &- \beta \KL(q_{\theta_{enc}}(z_u |x) \| p(z_u)),
+    %
 \end{split}
+%
+\label{eq:cvae-obj}
 \end{align}
 %
 where $\beta$ is a hyperparameter that determines the trade-off between reconstruction accuracy and
 independence constraints, and $p(z_u)$ is the prior imposed on the variational posterior. 
 %
-For all our experiments, $p(z_u)$ is the standard Isotropic Gaussian prior.
-Fig.~\ref{fig:cvae_diagram} summarises the procedure as a diagram.
+For all our experiments, $p(z_u)$ is the standard isotropic Gaussian prior;
+Fig.~\ref{fig:cvae_diagram} summarises the procedure diagrammatically.
 
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to conflict between the components of the loss.
@@ -309,8 +315,8 @@ probability the network assigns to samples in the training set.
 %
 \paragraph{The Benefits of Bijectivity.}
 %
-Using an invertible network to generate our encoding, $z_u$, carries a number of advantages
-over other approaches. 
+Using an  network to generate our encoding, $z_u$, carries a number of advantages over other
+approaches. 
 %
 Ordinarily, the main benefit of flow-based models is that they permit exact density estimation.
 %

@@ -198,8 +198,7 @@ also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
 \sidepar{Accuracy-fairness trade-off}
 %
 The inherent trade-off between the utility, as measured by aggregate performance and fairness under
-conceptions of fairness based on \aclp{ER} (\acsp{ER} has long been recognised;
-\citealp{kaplow1999conflict}). 
+conceptions of fairness based on \acp{ER}, has long been recognised \citealp{kaplow1999conflict}. 
 %
 With accuracy being the principal measure of said utility in the context of classification, this
 trade-off is commonly referred to as the \emph{accuracy-fairness trade-off}, though as we will see
@@ -207,14 +206,18 @@ in the next subsection, such a trade-off does not apply to fairness in general, 
 notions of fairness defined by \emph{minimax fairness} where one seeks to maximise worst-group
 utility rather than group parity.
 %
-Given the existence of such a trade-off, the problem of learning a useful classifier subject to
-\ac{ER} constraints induces not one optimal solution (or one equivalence class of optimal
-solutions, more accurately) -- as one would have when focussed on only the utility -- but rather a
-set of \ac{PO} solutions, the discovery of which is the remit of multi-objective optimisation
+This accuracy-fairness trade-off can also be said to be a consequence of the fact that the test set
+itself typically shares the training set's biases; if said data were to be bias-free (a condition
+which is often unrealistic) then, in theory, no such trade-off would be implied.
+%
+Nevertheless, given this trade-off does generally apply, the problem of learning a useful
+classifier subject to \ac{ER} constraints induces not one optimal solution (or one equivalence
+class of optimal solutions, more accurately) -- as one would have when focussed on only the utility
+-- but rather a set of \ac{PO} solutions, the discovery of which is the remit of \acl{MOO}
 (\ac{MOO}; \citealp{sawaragi1985theory, deb2013multi}). 
 %
 \Ac{MOO} has appeared both implicitly and explicitly throughout the \ac{AF} literature, the latter
-only relatively recently (e.g.\ in \citet{navon2020learning}). 
+only relatively recently (e.g.\ in \citealp{navon2020learning}). 
 %
 Indeed, examples of the former include the methods of \citet{louizos2015variational} and
 \citet{madras2018learning} which entail learning a \emph{linear scalarised} solution

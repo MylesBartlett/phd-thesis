@@ -121,8 +121,8 @@ which has several practical advantages when training with \ac{SGD}, particularly
 loss is required;
 %
 2) Highly-weighted samples appear in batches commensurately often; when weighting the loss, samples
-belonging to the long-tail will appear in batches rarely, resulting in forgetting and poor
-diversity as said samples are effectively duplicated.
+belonging to the tail will appear in batches rarely, resulting in forgetting and poor diversity as
+said samples are effectively duplicated.
 % %
 One can achieve a similar effect by under-sampling the majority classes, groups, or their
 intersections, such that they are equifrequent, and \iid{} sampling from that subset \(

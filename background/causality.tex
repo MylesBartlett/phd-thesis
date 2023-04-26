@@ -74,19 +74,20 @@ Y) \) but not the marginal distribution \(P(X)\), giving rise to representation 
 To attempt to crystallise this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN}
 corresponding to different distribution shifts for a (causal) prediction task.
 
-\sidepar{Independent Causal Mechanisms}
+\sidepar{Independent causal mechanisms}
 %
-This notion of probabilistic independence embodied by \acp{CBN} is the very basis for the Independent
-Causal Mechanisms (ICM) principle \citep{scholkopf2021toward}, understanding `modules' and `nodes'
-to be synonymous (for nodes can represent factors of arbitrary abstraction).
+This notion of probabilistic independence embodied by \acp{CBN} is the very basis for the
+independent causal mechanisms (ICM) principle \citep{scholkopf2021toward}, understanding `modules'
+and `nodes' to be synonymous (for nodes can represent factors of arbitrary abstraction).
 %
 Namely, the principle posits that independence between factors implies that changing (intervening
 on) any one mechanism in the system (CBN) leaves all other mechanisms within the same system
 unchanged (invariant), such that in the above-described covariate shift case the labelling
-mechanism, \(X \to Y\), despite influence on the input distribution by the exogenous variable.
+mechanism, \(X \to Y\), remains constant, despite influence on the input distribution by the
+exogenous variable.
 %
 %
-One may further derive from the ICM principle, by coarsening, the Sparse Mechanism Shift
+One may further derive from the ICM principle, by coarsening, the sparse mechanism shift
 hypothesis, that small distribution shifts tend to manifest in sparse/local way in the causal
 graph, which is to say, that not all factors should vary simultaneously.
 %
@@ -96,12 +97,15 @@ physical world.
 %
 It is much more efficient, for example, to explain changes in the shape of an object as one moves
 around it by a change in vantage point, in terms of a single global transformation, rather than by
-many unconnected changes in local structure, as would be explained by an \emph{entangled} model.
+many concerted changes in local structure; by the same token, a change in illumination should not
+connote a change in colour (the principle of `colour constancy'), again because the contrary
+explanation, that multiple objects have undergone concerted changes in their spectral properties
+(knowing such properties to not be readily mutable) is significantly more complex/prior-defying.
 %
 The connection between learning causally-faithful models and modern physics thus becomes clear when
-one thinks as modularity being synonymous with invariances, or \emph{symmetries}, it it being
-little exaggeration to say that modern physics is the study of symmetries and the corresponding
-conserved quantities, as predicated by Noether's celebrated theorem \citep{noether1918invariante}.
+one thinks as modularity being synonymous with invariances, or \emph{symmetries}, it being little
+exaggeration to say that modern physics is the study of symmetries and the corresponding conserved
+quantities, as predicated by Noether's celebrated theorem \citep{noether1918invariante}.
 %
 In light of this, the statistically- and causally-driven approaches are manifestly at odds with one
 another in the context of \ac{SCL} -- shortcut features provide the simplest, loss-minimising
@@ -115,12 +119,13 @@ incorporated without degrading modules adapted for orthogonal tasks -- this is p
 pertinent in given recent elucidations of the distorting effects of fine-tuning on
 distributional-robustness \citep{andreassen2021evolution, kumar2022finetuning}.
 
+%
+\sidepar{Reformulating the DRO objective}
+%
 I presented in \S\ref{ssec:minimax-fairness}, within the context of minmax fairness, a formulation
 of the bilevel \ac{DRO} objective mathematises the desire to minimise the worst risk, where `worst`
 is computed over a collection of sub-distributions, corresponding in said case of minimax fairness
 to different sensitive attributes.
-%
-\sidepar{Reformulating the DRO objective}
 %
 It is common to couch \ac{DG} in the same terms \citep{arjovsky2019invariant, krueger2021out,
 sagawa2019distributionally}; with some restatement of that objective, using the new calculus, one
