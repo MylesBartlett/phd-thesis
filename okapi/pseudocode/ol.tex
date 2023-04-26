@@ -6,7 +6,7 @@
          here for illustrative purposes.
     }
     \label{alg:ol_pc}
-    \begin{minted}{python}
+    \begin{minted}[fontsize=\small]{python}
     # online_encoder: online encoder
     # predictor_head: online predictor head
     # propensity_scorer: online propensity scorer
@@ -21,7 +21,7 @@
     # lambda_: loss pre-factor for the unsupervised loss
     # D: Dimensionality of the encodings.
     feature_mb, label_mb = Mb(empty(n_m, D)), Mb(empty(n_m)) # initialise memory banks
-     # load minibatches with B_l labelled (x-y tuples) samples and B_u unlabelled samples
+    # load minibatches with B_l labelled (x-y tuples) samples and B_u unlabelled samples
     for x_l, y, x_u in train_loader:
         # EMA update: \theta^\prime_t = \zeta \theta^\prime_{t - 1} + (1 - \zeta) \theta_t
         ema_update(target_encoder, online_encoder, zeta)

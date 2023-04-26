@@ -22,7 +22,8 @@ as robustness or fairness).
 Such a problem can alternatively be viewed as an alternating (turn-based) bilevel optimisation
 problem, where at the \(t\)th iterate the learner selects (via some optimisation procedure) from \(
 \Sigma_{min} \), the strategy that gives the best response, \(\sigma_{min, t}^{\ast}\), to the best
-response of the adversary at the previous iterate, i.e. \( \sigma_{max}^\ast|_{\sigma_{min,t-1}^\ast} \).
+response of the adversary at the previous iterate, i.e.\ \(
+\sigma_{max}^\ast|_{\sigma_{min,t-1}^\ast} \).
 %
 \sidepar{Bilevel optimisation}
 %
@@ -159,7 +160,7 @@ Assume, for instance, that the task of interest is a classification one, such th
 of the infomin objective defined by Eq.~\ref{eq:adv-infomin} an \emph{infomax} objective \wrt{} the
 ground-truth label \(y\).
 %
-Only if the condition \( \gI(S; Y) \approx 0 \) (i.e. the target labels are uniformly distributed
+Only if the condition \( \gI(S; Y) \approx 0 \) (i.e.\ the target labels are uniformly distributed
 across \(\gS\)) holds can the infomin and infomax objectives be simultaneously satisfied, which is
 to say, in optimisation terms, that the inner product of the gradients of the two respective losses
 (\wrt{} \(\theta_{min}\)) is consistently non-negative and there is no trade-off, governed by the
@@ -170,13 +171,13 @@ the training (source) and test (target) sets, as anatomised by \citet{zhao2019le
 context of \ac{UDA}. 
 %
 Given full observability of \(y\) and \(s\) and consistent support of their joint distribution,
-i.e. \(\text{supp}(\hat{P}^{tr}(S, Y)) = \text{supp}(\hat{P}^{te}(S, Y))\), one can realign the
+i.e.\ \(\text{supp}(\hat{P}^{tr}(S, Y)) = \text{supp}(\hat{P}^{te}(S, Y))\), one can realign the
 objective by computing the infomin component class-conditionally (practically, importance weighting
 based on the empirical distribution \(\hat{P}^{tr}(Y)\)). 
 %
 When this observability does not hold, generally or for a subset of the data (the target domain in
-the case of \ac{UDA}), then matters are complicated, however, and approximations are required (e.g by
-clustering).
+the case of \ac{UDA}), then matters are complicated, however, and approximations are required
+(e.g.\ by clustering).
 %
 In Chapter~\ref{ch:supmatch} we consider a problem of this nature and recast the problem as one of
 aligning the supports of the training -- which is systematically missing certain combinations of
@@ -196,7 +197,7 @@ Theory dictates that one computes the best response of each player at each itera
 is generally infeasible when working with models with many parameters and datasets with many
 samples. 
 %
-Thus, approximations are required -- e.g. by limiting the number of updates per iteration and by
+Thus, approximations are required -- e.g.\ by limiting the number of updates per iteration and by
 bootstrapping the best response from the previous one -- but these can lead to unstable training
 dynamics or entrapment in bad optima. 
 %
@@ -207,8 +208,8 @@ balunovic2021fair}.
 \sidepar{Cyclic dynamics}
 %
 Second, adversarial setups are generally susceptible to cycles (oscillations) in strategy space,
-e.g. where two players repeatedly switch between two non-NE strategies because doing so is mutually
-locally optimal. 
+e.g.\ where two players repeatedly switch between two non-NE strategies because doing so is
+mutually locally optimal. 
 %
 In reinforcement learning, for instance, this has led to the development of fictitious self-play
 algorithms \citep{brown1951iterative, heinrich2015fictitious, vinyals2019grandmaster} wherein each

@@ -50,7 +50,7 @@ A frequently-invoked example is that of a financial institution running an
 automated-decision-making system to determine which loan applicants should/should not have their
 applications approved.
 %
-In addition to financial information (e.g. credit-score history) the input features to \(f\),
+In addition to financial information (e.g.\ credit-score history) the input features to \(f\),
 \(\gX\), may encode, explicitly or implicitly, sensitive information such as an individual's gender
 or ethnicity, with the general assumption being that such information is acausal to the task at
 hand (one's gender should have no impact on one's eligibility for a loan).
@@ -69,7 +69,7 @@ define the concept of `fairness`; indeed what constitutes a `fair` decision depe
 (individual, social, or institutional) value system and the context in question.
 %
 Much of the \ac{AF} literature has focussed on notions of fairness based on enforcing the predictor
-to output equal rates (e.g. of positive or correct predictions) across the sensitive groups.
+to output equal rates (e.g.\ of positive or correct predictions) across the sensitive groups.
 %
 Here, I briefly discuss and formulate \emph{\ac{DP}}, \emph{\ac{EqOp}}, and \emph{\ac{EqOd}} as
 the standard triad of metrics based on this tenet of equalisation of inter-group rates, and do so
@@ -115,7 +115,7 @@ any arbitrary value and does not take into account utility, such that a majority
 classifier would degenerately satisfy the condition. 
 %
 This above constraint is equivalent to requiring, according to the standard notion of statistical
-independence, namely the equality of the conditional and marginal distributions, i.e.
+independence, namely the equality of the conditional and marginal distributions, i.e.\
 %
 \begin{equation}
     P( \hat{Y} = 1 | S) \seq P( \hat{Y} = 1 ).
@@ -214,7 +214,7 @@ set of \ac{PO} solutions, the discovery of which is the remit of multi-objective
 (\ac{MOO}; \citealp{sawaragi1985theory, deb2013multi}). 
 %
 \Ac{MOO} has appeared both implicitly and explicitly throughout the \ac{AF} literature, the latter
-only relatively recently (e.g. in \citet{navon2020learning}). 
+only relatively recently (e.g.\ in \citet{navon2020learning}). 
 %
 Indeed, examples of the former include the methods of \citet{louizos2015variational} and
 \citet{madras2018learning} which entail learning a \emph{linear scalarised} solution
@@ -359,7 +359,7 @@ developers (such that men are significantly more likely to be hired than women) 
 historically preponderating over women in the technology sector.
 %
 Crucially, the nature of the process means that one only observes outcomes -- performance metrics
--- for those individuals that are hired, i.e. we do not have access to counterfactual (what would
+-- for those individuals that are hired, i.e.\ we do not have access to counterfactual (what would
 have been had \(A\) happened instead of \(B\)) information that would provide an avenue for natural
 equilibration.
 %

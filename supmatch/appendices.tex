@@ -497,7 +497,7 @@ $\rho = \frac{1}{|\mathcal{B}|} \sum_{x \in B}\mathrm{attention}(f(x), B) \cdot 
 computed according to a learned attention mechanism. 
 %
 The idea of using an attention mechanism for set-wise classification has been previously explored
-to great success by, e.g., \citet{lee2019set}. %\cite{ilse2018attention} and \cite{lee2019set}. 
+to great success by, e.g.\ \citet{lee2019set}. %\cite{ilse2018attention} and \cite{lee2019set}. 
 %
 We employ an bag-wise attention mechanism based on the scaled dot-product attention of
 \citet{vaswani2017attention}, where in our case we define $K$ and $V$ to be linear projections of
@@ -748,7 +748,7 @@ determined by a grid-search over the space $\{0.01, 0.1, 0.3, 1.0\}$.
     with black signifying a weight of 0, white a weight of 1. 
     %
     Those samples belonging to the missing subgroup are assigned the highest weight as they signal
-    from which dataset (training versus deployment) the bag containing them was drawn from. 
+    from which dataset (training vs.\ deployment) the bag containing them was drawn from. 
 %
 }
   \label{fig:attn_maps}
@@ -770,9 +770,9 @@ training set vs deployment set -- but it is definitely not the intended solution
 Fig.~\ref{fig:celeba-recons} shows visualisations for CelebA. 
 %
 With a successful disentangling, column 3 (visualisation of $z$) should show a version of the image
-that is ``gender-neutral'' (i.e., invariant to gender). 
+that is ``gender-neutral'' (i.e.\ invariant to gender). 
 %
-Furthermore, column 4 (visualisation of $\tilde{s}$) should be invariant to the class label (i.e.,
+Furthermore, column 4 (visualisation of $\tilde{s}$) should be invariant to the class label (i.e.\
 ``smiling''), so the images should either be all with smiles or all without smiles.
 
 Fig.~\ref{fig:attn_maps} shows attention maps for bags from the deployment set. 
@@ -792,11 +792,11 @@ These are computed as the ratio of \ac{TPR} (or \ac{TNR}) on subgroup $s=0$ over
 Similarly to the PR ratio reported in the main paper, these ratios give an indication of how much
 the prediction of the classifier depends on the subgroup label $s$.
 
-Fig.~\ref{fig:cmnist-3dig-4miss-add} shows metrics specific to multivariate $s$ (i.e., non-binary
+Fig.~\ref{fig:cmnist-3dig-4miss-add} shows metrics specific to multivariate $s$ (i.e.\ non-binary
 $s$). 
 %
-We report the minimum (i.e. farthest away from 1) of the pairwise ratios (\ac{TPR}/\ac{TNR} ratio
-min) as well as the largest difference between the raw values (\ac{TPR}/\ac{TNR} diff max). 
+We report the minimum (i.e.\ farthest away from \(1\) of the pairwise ratios (\ac{TPR}/\ac{TNR}
+ratio min) as well as the largest difference between the raw values (\ac{TPR}/\ac{TNR} diff max). 
 %
 Additionally, we compute the \ac{HGRMC} between $S$ and $Y$, serving as a measure of dependence
 defined between two variables with arbitrary support.
@@ -934,7 +934,7 @@ as the denominator. \textbf{Left:} TNR ratio. \textbf{Right}: TNR ratio. }%
 See Fig.~\ref{fig:cmnist-2v4-partial-add-nomil} and Fig.~\ref{fig:cmnist-2v4-miss-s-add-nomil} for
 results on 2-digit Coloured MNIST (under the \emph{subgroup bias} and \emph{missing subgroup}
 settings, respectively) for our method but with the loss computed instance-wise (\texttt{Inst.})\
-as opposed to set-wise, as is typical of adversarial unsupervised domain adaptation methods (e.g.
+as opposed to set-wise, as is typical of adversarial unsupervised domain adaptation methods (e.g.\
 \citealp{ganin2016domain}).
 %
 All aspects of the method, other than those directly involved in the loss-computation, were kept

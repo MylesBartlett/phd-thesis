@@ -164,7 +164,7 @@ The final member of the triad, the \emph{smoothness assumption}, can be viewed a
 of local \(K\)-Lipschitz or \(\epsilon\)-isometric constraint on our function class, \( \gF \),
 local in the sense of applying only to high-density regions of the input space (whereas a global
 smoothness assumption would require even sparse regions of the input space to obey the constraint);
-i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
+i.e.\ for a pair of inputs \( x \) and \( x^\prime \), we have
 %
 \begin{equation}
   %
@@ -185,7 +185,7 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  planes) and with this perspective, we are granted a reformulation of the cluster assumption.
  %
  %
- More generally, we can simply determine any two samples to be similar (e.g. based on a
+ More generally, we can simply determine any two samples to be similar (e.g.\ based on a
  neighbourhood graph) and then seek to minimise the distance between them in \( \gY \), thereby
  partially discretising the problem but allowing for increased flexibility.
  %
@@ -197,10 +197,10 @@ i.e. for a pair of inputs \( x \) and \( x^\prime \), we have
  \subsection{Causal connections: when should(n't) \acl{SemiSL} work?}\label{ssec:semisl-causality}
 % --------------------------------------------------------------------------------
 Following \citet{scholkopf2021toward}, start by supposing that our prediction task follows the
-causal factorisation \( X \to Y\), i.e. it is a causal, rather than an anticausal, one.
+causal factorisation \( X \to Y\), i.e.\ it is a causal, rather than an anticausal, one.
 %
 As discussed in \S\ref{sec:lens-of-causality}, the ICM principle states that modules in a joint
-distribution's causal decomposition do not inform or influence one another, i.e. \(\gI(X, Y) = 0
+distribution's causal decomposition do not inform or influence one another, i.e.\ \(\gI(X, Y) = 0
 \); this implies that in the when \(X\) is the causal parent to \(Y\), as in the supposed case, a
 better estimate of \(P(X)\) does not yield a better estimate of \(P(Y|X)\) and it is the former
 that \ac{SemiSL} compasses to learn using unlabelled data.

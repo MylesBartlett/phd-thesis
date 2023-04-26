@@ -16,8 +16,8 @@ score distance} (PSD) and \emph{Euclidean distance} being two widely-used distan
 here
 -- indirectly (as a means of filtering) and directly, respectively.
 
-The propensity score distance is defined as the difference between propensity scores, $e_i$
-and $e_j$, of samples $i$ and $j$, i.e. \( \mathrm{PSD}(e_i, e_j) \triangleq \vert e_i - e_j \vert \). 
+The propensity score distance is defined as the difference between propensity scores, $e_i$ and
+$e_j$, of samples $i$ and $j$, i.e.\ \( \mathrm{PSD}(e_i, e_j) \triangleq \vert e_i - e_j \vert \). 
 %
 In causal inference, the propensity score refers to the probability of sample $i$ belonging to the
 treated group, given its covariates $x_i$ \citep{rosenbaum1983central}; in practice, this
@@ -40,11 +40,12 @@ Nevertheless, propensity scores remain a relevant component of NN-based matching
 %
 
 We make use of two types of caliper, \emph{fixed} and \emph{standard deviation}. The fixed caliper
-\citep{crump2009dealing}, $t_f$, defines a region of common support between the estimated propensity
-score distribution of the two groups; only those samples within the feasible region are admissible
-for matching. For binary problems, the feasible region is symmetric such that we have \( \left\{i
-\, | \, e_i \in (1 - t_{f}, t_{f}) \right\} \) whereas in the more general, categorical case the
-constraint is one-sided, i.e. \( \left\{i \, | \, \lVert e_i \rVert_{\infty} < t_{f}) \right\} \).
+\citep{crump2009dealing}, $t_f$, defines a region of common support between the estimated
+propensity score distribution of the two groups; only those samples within the feasible region are
+admissible for matching. For binary problems, the feasible region is symmetric such that we have \(
+\left\{i \, | \, e_i \in (1 - t_{f}, t_{f}) \right\} \) whereas in the more general, categorical
+case the constraint is one-sided, i.e.\ \( \left\{i \, | \, \lVert e_i \rVert_{\infty} < t_{f})
+\right\} \).
 %
 This selection rule helps by removing samples with extreme propensity scores.
 %

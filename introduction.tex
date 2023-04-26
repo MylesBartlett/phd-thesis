@@ -79,7 +79,7 @@ occurrence of \(Y\) at an above-chance rate -- such is the indispensable utility
 the quantification of \emph{patterns} (and \ac{ML} is but sophisticated \emph{pattern recognition})
 -- but one cannot reasonably extend this deduction that `\(X\) \emph{predicts} \(Y\)' to the much
 deeper one, `\(X\) \emph{causes} \(Y\)' without employing interventions with the view to eliminate
-confounding factors, i.e. factors causing both (and thereby correlating) \(X\) and \(Y\).
+confounding factors, i.e.\ factors causing both (and thereby correlating) \(X\) and \(Y\).
 %
 I should emphasise -- to stem right away any misconceptions about what this thesis is or aspires to
 be -- that despite their being rooted in it, the themes of this thesis are not \emph{of} causality
@@ -164,11 +164,10 @@ To illustrate: a 2018 investigation \citep{dastin2018amazon} into the automated-
 trialled by Amazon revealed said system to vastly prefer male candidates to female ones for
 software-development roles based on their r\'esum\'es; the same year, \citet{buolamwini2018gender}
 investigated the behaviour of three commercial gender-classification algorithms \wrt{} different
-skin types (`lighter' vs. `darker') and observed marked disparities in the resulting accuracies
+skin types (`lighter' vs\. `darker') and observed marked disparities in the resulting accuracies
 between lighter-skinned and darker-skinned subjects, and between male and female subjects, with a
 compounding of the two trends; again the same year, \citet{zech2018variable} demonstrated that
-\ac{ML}
-classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
+\ac{ML} classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
 site-specific tags and the prevalence rates associated thereof.
 %
 Such systems can be said to \emph{not} be \emph{distributionally robust} as they either fail to
@@ -194,11 +193,10 @@ in us humans.
 %
 There is also little hope of capturing, by camera trap, every species within a given region under
 every condition and in every locale given that different animals have different ecologies
-(nocturnal vs. diurnal, being a clear distinguisher) and there are only so many devices one can
+(nocturnal vs.\ diurnal, being a clear distinguisher) and there are only so many devices one can
 afford to place and thereafter monitor; it may not even be possible to capture every locale alone
 (but wish to later generalise to the thitherto-unseen locales) and in such case we have a pure
-\ac{DG}
-problem.
+\ac{DG} problem.
 %
 While we cannot correct the problem at the source, we can intervene to \emph{mitigate} the
 downstream biases; given that we know what these biases are, we can seek to be \emph{invariant} to
@@ -242,7 +240,7 @@ annotated data, due to statistical entanglement between the target and concept v
 be so -- or to a greater extent, at least -- given better-covering and more diverse, but
 unannotated, data;
 %
-Second, in the context of \ac{DG}, one may view the domains as defining a finite perturbation set,
+second, in the context of \ac{DG}, one may view the domains as defining a finite perturbation set,
 informing our model of the types of invariances it need learn in order to generalise to domains yet
 unseen; by augmenting this perturbation set with said unannotated data we may also aspire to
 augment the robustness of said model.
@@ -422,6 +420,6 @@ throughout the paper we use the terms near-interchangeably.
 %
 This aside complete, we find the resulting algorithm consistently outperforms baseline methods,
 including fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL}
-methods failed to accomplish, and, as in Chapter \ref{ch:nifr}, it comes with a valuable
+methods failed to accomplish, and, as in Chapter~\ref{ch:nifr}, it comes with a valuable
 interpretable aspect, conferred by the trained-with matching algorithm.
 %

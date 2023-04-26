@@ -74,9 +74,9 @@ to generalise to regression tasks such as PovertyMap.
         matching instead the target encoder while experiencing minimal degradation in performance.
         %
         This is particularly relevant when one wishes to perform the matching in only one direction
-        (e.g. \( \gD_l \to \gD_l \)) due to the reduction in redundant encoding, with each
-        encoder only encoding its respective subset of the data (e.g. $f_\theta$ only encodes
-        samples from $\gD_l$, \( f_\theta^\prime \) only encodes samples from \( \gD_u \)
+        (e.g.\ \( \gD_l \to \gD_l \)) due to the reduction in redundant encoding, with each encoder
+        only encoding its respective subset of the data (e.g. $f_\theta$ only encodes samples from
+        $\gD_l$, \( f_\theta^\prime \) only encodes samples from \( \gD_u \)
 \end{enumerate}
 
 
@@ -127,8 +127,8 @@ temperature we smooth the estimated propensity score distribution and thereby re
 Similarly, we can retrieve more pairs by reducing the fixed caliper threshold. 
 %
 We also analyse the case of matching across the two domains photo and art painting. Using a fixed
-caliper defined defined by a threshold \( t_f = 0.1 \) and no temperature scaling (i.e. $\tau=1$) the
-algorithm retrieves 1,142 pairs matching in the direction photo $\to$ art and 1,501 in the
+caliper defined defined by a threshold \( t_f = 0.1 \) and no temperature scaling (i.e.\ $\tau=1$)
+the algorithm retrieves 1,142 pairs matching in the direction photo $\to$ art and 1,501 in the
 direction art $\to$ photo. 
 % 
 

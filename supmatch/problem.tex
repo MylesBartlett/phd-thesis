@@ -8,7 +8,7 @@ description of said problem.
 %
 Let \( x \in \gX \subset \R^d \), \( y \in \gY \) and \( s \in \gS \) denote the observed input
 features, class labels and subgroup labels, respectively, with \( \gY \) and \( \gS \) being
-non-empty, finite sets (i.e. \( \gY, \gS \in \{ A | A \in \gP(V), A \neq \varnothing, |A| <
+non-empty, finite sets (i.e.\ \( \gY, \gS \in \{ A | A \in \gP(V), A \neq \varnothing, |A| <
 \aleph_0 \} \)), and with upper-case letters denoting observed variables' random-variable
 counterparts here (\(X\), \(Y\), and \(S\)) and throughout.
 % the set-builder notation S = {A | A ∈ P(X), A ≠ ∅, |A| < ∞} defines the set of all non-empty,
@@ -23,12 +23,13 @@ train a classifier \( \Gamma:\gX \rightarrow \gY \) that is then deployed on tes
 \triangleq \{ (x_n, s_n, y_n) \}_{n=1}^{N^{te}} \subset (\gX \times \gS \times \gY) \). 
 %
 We use superscript, to denote association of a domain with a correspondingly superscripted dataset,
-e.g. \( \gG^{tr} \) and \( \gG^{te} \) respectively denote the sources in the training and test
+e.g.\ \( \gG^{tr} \) and \( \gG^{te} \) respectively denote the sources in the training and test
 sets.
 %
 Lastly, for some functions, we abuse notation and allow the random and observed variables to be
 interchanged as inputs; we presuppose such functions (and their domain) are Borel measurable and
-thus preserve the type of variable, i.e. a function of a random variable is also a random variable.
+thus preserve the type of variable, i.e.\ a function of a random variable is also a random
+variable.
 %
 For example, given function \(f: \gX \to \R \), we may write both \( f(x) \) and \( f(X) \),
 meaning by the latter \( f \circ X(\omega) \) for some event \( \omega \in \Omega \).
@@ -70,7 +71,7 @@ sources of data \citep{KehBarThoQua20} or multiple environments \citep{arjovsky2
 %
 The \ac{MS} problem can be viewed as a relaxation of this \ac{SC} wherein the elements of \(
 \mathbf{P}^{tr} \) respect the constraint that all columns contain at least one non-zero value,
-i.e. we observe all class labels but not all possible pairs of class and subgroup labels -- we say
+i.e.\ we observe all class labels but not all possible pairs of class and subgroup labels -- we say
 that we have \emph{missing sources}, \(\gM\ \triangleq \gG^{te} \setminus \gG^{tr}\). 
 %
 This setup still leads to spurious correlations but ones that are statistically tractable due to
@@ -159,7 +160,7 @@ between the two constituent objectives.
 Under ideal conditions, when all possible pairs of \(s\) and \(y\) are observed, \(f^\ast\)
 corresponds to the point at which \(a\) is maximally entropic and occurs when \(Z\) is invariant to
 \(S\), and only \(S\), while mutual information \wrt{} \(Y\) is jointly maximised -- from an
-optimisation standpoint, the gradients of first and second objectives are non-conflicting (i.e.
+optimisation standpoint, the gradients of first and second objectives are non-conflicting (i.e.\
 have non-negative inner products; \citealp{yu2020gradient}) and there is no trade-off. 
 %
 However, in cases where we have missing sources, the waters are muddied: satisfying the first part
@@ -211,7 +212,7 @@ We assume a problem of a hierarchical nature.
 %, as illustrated in Fig.~\ref{fig:problem-setup}. 
 %
 While the full set of class labels is observed in both the training and test sets, we do not
-observe all pairs of \(s\) and \(y\) in the former, i.e. \( \gG^{tr} \subset \gG^{te} \) or \(\gM
+observe all pairs of \(s\) and \(y\) in the former, i.e.\ \( \gG^{tr} \subset \gG^{te} \) or \(\gM
 \neq \varnothing \). 
 %
 Equivalently, we say that for some class, \(y^\dagger\), we have \( \gS^{tr}_{Y=y^\dagger} \subset

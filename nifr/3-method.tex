@@ -41,7 +41,7 @@ respectively.
 The fact that both $Y$ and $S$ are predictive of $X$ implies that $\gI(X;Y), \gI(X;S) > 0$, where
 $\gI(\cdot ;\cdot)$ denotes \ac{MI} between two random variables.
 %
-Note, however, that the conditional entropy is non-zero: \( H(S|X) > 0 \), i.e., $S$ is \emph{not}
+Note, however, that the conditional entropy is non-zero: \( H(S|X) > 0 \), i.e.\ $S$ is \emph{not}
 completely determined by $X$.
 
 %The difficulty emerges in the construction of the fully-supervised training dataset in which
@@ -351,9 +351,9 @@ where $z_b$ is required for equality of the output dimension and input dimension
 the bijectivity of the network -- we cannot output $z_u$ alone, but have to output $z_b$
 as well. 
 %
-In order to generate the pre-image of $z_u$, we perform null-sampling \wrt{} $z_b$ by
-zeroing-out the elements of $z_b$ (such that $x_u \triangleq f^{-1}([z_{u}, \vzero])$),
-i.e. setting them to the mean of the prior density, $\gN(z;0, I)$.
+In order to generate the pre-image of $z_u$, we perform null-sampling \wrt{} $z_b$ by zeroing-out
+the elements of $z_b$ (such that $x_u \triangleq f^{-1}([z_{u}, \vzero])$), i.e.\ setting them to
+the mean of the prior density, $\gN(z;0, I)$.
 
 How can ensure that $z_u$ contains the information about $y$ necessary for downstream
 classification?

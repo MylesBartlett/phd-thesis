@@ -17,7 +17,7 @@ them in more general terms.
 % --------------------------------------------------------------------------------
 As the most well-studied of the shifts, covariate shift refers to a change in the marginal
 distribution of the inputs, that is to say we have \( P^{tr}(X) \not\approx P^{te}(X) \) while the
-conditional distribution remains (effectively) unchanged, i.e. \( P^{tr}(Y|X) \approx P^{te}(Y|X)
+conditional distribution remains (effectively) unchanged, i.e.\ \( P^{tr}(Y|X) \approx P^{te}(Y|X)
 \).
 %
 % NOTE: still undecided about the below; maybe this (and target shift, conversely) don't have 
@@ -43,7 +43,7 @@ problem is anticausal (when we have what \citet{moreno2012unifying} term `prior 
 % NOTE: As noted in the note above, we might want to specify that this type of shift only applies
 % to anticausal tasks
 Diametric to the above, target shift describes, as the name suggests, a shift in the marginal
-distribution of the targets, \(Y\), i.e. \( P^{tr}(Y) \not\approx P^{te}(Y) \).
+distribution of the targets, \(Y\), i.e.\ \( P^{tr}(Y) \not\approx P^{te}(Y) \).
 %
 In the classification setting, this means that classes do not appear equifrequently in the training
 and test data; many real-world datasets used for training exhibit long tails, \wrt{} the classes

@@ -21,7 +21,7 @@ Due to spacial constraints, we defer the full set of results, including those fo
 (\wrt{} the matching) version of Okapi to Appendix~\ref{appx:ext_results}. 
 %
 For both datasets in question, we use the same metrics as \citet{SagWeiLeeGaoetal22}: macro-F1 for
-iWildCam and worst-group (with the group defined as urban (U) vs. rural (R)) Pearson correlation
+iWildCam and worst-group (with the group defined as urban (U) vs.\ rural (R)) Pearson correlation
 for Poverty Map. 
 %
 For completeness, we include mean squared error (MSE) as a secondary metric for the latter dataset.
@@ -55,15 +55,15 @@ of backbone.
 % The bigger improvement for the OOD-performances being in FixMatch, with $31.0$ vs $35.2$ for
 % iWildCam and $0.50$ vs $0.54$ for PovertyMap. 
 %
-Moreover, utilising ConvNeXt seems to be crucial in enabling FixMatch to surpass the \ac{ERM} baseline
-in the classification task with $32.2$ (ERM) vs $31.0$ (FixMatch) and $33.3$ (ERM) vs. $35.2$
-(FixMatch), with ResNet and ConvNeXt architecture respectively. 
+Moreover, utilising ConvNeXt seems to be crucial in enabling FixMatch to surpass the \ac{ERM}
+baseline in the classification task with $32.2$ (ERM) vs $31.0$ (FixMatch) and $33.3$ (ERM) vs.\
+$35.2$ (FixMatch), with ResNet and ConvNeXt architecture respectively. 
 % 
 
 Okapi, convincingly outperforms the baselines, \wrt{} the \ac{OOD} metric of interest, on both
 datasets. 
 %
-We observe an improvement of $+0.9$ macro F1, i.e. $36.1$ vs $35.2$ of Okapi and FixMatch (the best
+We observe an improvement of $+0.9$ macro F1, i.e.\ $36.1$ vs $35.2$ of Okapi and FixMatch (the best
 baseline for iWildCam) respectively. For the regression task in PovertyMap, Okapi achieves $0.55$
 and $0.33$ on the \ac{OOD} test set in terms of Pearson correlation and MSE, respectively, in contrast
 to the $0.53$ and $0.33$ of \ac{ERM}.
