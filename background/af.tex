@@ -118,18 +118,19 @@ This above constraint is equivalent to requiring, according to the standard noti
 independence, namely the equality of the conditional and marginal distributions, i.e.\
 %
 \begin{equation}
-    P( \hat{Y} = 1 | S) \seq P( \hat{Y} = 1 ).
+    P( \hat{Y} = 1 | S ) \seq P( \hat{Y} = 1 ).
 \end{equation}
 %
 %
 Since requiring this condition be satisfied exactly is, generally, over-strict when doing
 constrained optimisation, it is common to introduce some relaxation factor, \(\epsilon\), that
-expands the constraint to a feasible region so that with some minor rearrangement we may instead
+expands the constraint to a feasible region so that, with some minor rearrangement we may instead
 write:
 %
 \begin{equation}
-    \forall s \in \gS: \frac{ P(\hat{Y}=1|S=s) } { P(S=s) } \in [ 1 - \epsilon, 1 + \epsilon ]. 
-%
+    %
+    P( \hat{Y} = 1 | S )  - P( \hat{Y} = 1 ) \sin [ -\epsilon, \epsilon ]. 
+    %
 \end{equation}
 %
 We can measure the fairness (one notion of it, at least) of a predictor by evaluating by how much
@@ -141,7 +142,10 @@ This idea of statistical independence, or invariance, upon which \ac{DP} hinges,
 generally in terms of the \acf{MI} between \(\hat{Y}\) and \(S\), itself expressible as the KL
 divergence between the joint and product of the marginal distributions:
 %
-\begin{equation} \gI(\hat{Y};S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
+\begin{equation} 
+    %
+    \gI(\hat{Y};S) \triangleq D_{KL} \Bigl( P(\hat{Y}, S) \Vert P(\hat{Y}) \otimes P(S) \Bigr).
+    %
 \end{equation}
 %
 Iff \( \gI(\hat{Y};S) = 0  \) can the random variables said to be statistically independent.
