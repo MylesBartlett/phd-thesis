@@ -20,10 +20,10 @@ Specifically, we use the ResNet-50 version of CLIP, finding this to work better 
 variants. 
 %
 We inject labelled knowledge into the k-means algorithm by initialising the centroids of the known
-sources the mean of their features in the labelled (training) data. 
+sources to the mean of their features in the labelled (training) data. 
 %
 We find this works reasonably well for the considered datasets; since, the aim of this work is to
-propose a pipeline for effectively leverage unlabelled data for invariance-learning, not to set a
+propose a pipeline for effectively leveraging unlabelled data for invariance-learning, not to set a
 new state-of-the-art in clustering, we adopt this simple clustering method for a practical
 proof-of-concept compared with the artificial approach of injecting noise into the ground-truth
 labels. 

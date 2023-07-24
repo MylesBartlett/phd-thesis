@@ -105,7 +105,7 @@ This setup might appear somewhat benign at first blush, given that all classes a
 training set, however, the fact that \(s\) serves as a proxy for \(y\) in the case of $S=1$
 frustrates our goal of subgroup-invariant classification. 
 %
-The reason for this becomes obvious when decompose a classifier into a mixture of experts (MoE),
+The reason for this becomes obvious when decomposing a classifier into a mixture of experts (MoE),
 where \(s\) indicates which expert to choose for the given sample. 
 %
 Such a model naturally arises in practice due to the tendency of deep neural networks to strongly
@@ -114,7 +114,7 @@ favour shortcut solutions \citep{geirhos2020shortcut}.
 We note that for this, and throughout the paper, we assume that \(s\) is inferable, to some extent,
 from $x$, that is \( \gI(X; S) > 0 \), with \( \gI(\cdot; \cdot) \) denoting the mutual information
 between two variables -- this is almost always the case in practice but we make the dependence
-explicit here by denoting by \( X_Y \) the causally-relevant component of \( X \)), that is
+explicit here by denoting by \( X_Y \) the causally-relevant component of \( X \), that is
 independent of \(S\), and by including \( s \in \{0, 1\} \) explicitly in the set of inputs.
 %
 With this noted, we may then define the MoE classifier, \(c_{MoE}\), that `solves' the training set

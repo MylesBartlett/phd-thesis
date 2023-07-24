@@ -7,7 +7,7 @@ afford some brief discussion to their basic workings here.
 \sidepar{Bijectivity}
 %
 An \acl{INN} \citep{kobyzev2020normalizing}, as the name would so suggest, refers to neural
-networks for which both the usual forward mapping, \(f(\cdot)\), and its inverse \(f(\cdot)\) are
+networks for which both the usual forward mapping, \(f(\cdot)\), and its inverse \(f^{-1}(\cdot)\) are
 defined, with the assumed property that both are differentiable and as such that the function
 belongs to the class of \emph{diffeomorphisms}, \(f \in \text{Diff}(\gX)\). 
 %
@@ -86,8 +86,8 @@ Other works have also capitalised on this information-preservation explicitly, e
 \acp{INN} for lossless image compression.
 %
 Contrastingly, in work postdating that done in Chapter~\ref{ch:supmatch}, \acp{NF} have been
-applied applied to \ac{AF} problems with the insight that one can leverage the exact-density
-computation to define define an optimal adversary \citep{balunovic2021fair, cerrato2022fair}. 
+applied to \ac{AF} problems with the insight that one can leverage the exact-density computation to
+define an optimal adversary \citep{balunovic2021fair, cerrato2022fair}. 
 %
 This allows for obtaining provably fair representations while also obviating the optimisation
 challenges that accompany (parametric) adversarial training, though at the cost of an independent
@@ -99,17 +99,17 @@ As discussed, \acp{INN} have a number of unique and compelling properties that w
 the choice method for many generative purposes; \acp{INN} do have their share of practical
 shortcomings, however. 
 %
-Notably, bijectivity does not come at a cost; while there are some ways of mitigating it, such as
+Notably, bijectivity does not come without cost; while there are some ways of mitigating it, such as
 factoring out parts of the representation at intermittent steps \citep{hoogeboom2019integer}, one
 is constrained to having a latent space that is equidimensional to the input space and when the
 latter is large, as in the case of images, training an \ac{INN} can be computationally challenging.
 %
-Conventional architectures do not suffer this problem as they can make free use of coarsening
-(downsampling) operations throughout their extent.
+Conventional (non-invertible) architectures do not suffer this problem as they can make free use of
+coarsening (downsampling) operations throughout their extent.
 %
-This drawback is further compounded by the fact that the layers making up an \ac{INN} are necessarily
-less expressive than their invertible counterparts and thus more them are needed to achieve
-comparable levels of expressiveness in composition. 
+This drawback is further compounded by the fact that the layers making up an \ac{INN} are
+necessarily less expressive than their non-invertible counterparts, and thus more of them are
+needed to achieve comparable levels of expressiveness in composition. 
 %
 The coupling layers that constitute the atomic building blocks in \citet{dinh2014nice} restrict
 their non-linear, non-invertible functions, to only a subset of the input dimensions at a time so

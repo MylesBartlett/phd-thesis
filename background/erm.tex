@@ -141,9 +141,9 @@ impugned \citep{byrd2019effect, zhai2022understanding}.
 %
 \citet{byrd2019effect} demonstrate that for \emph{over-parametrised} models the effects of
 importance-weighting diminish over the course of training; these effects can be partially recovered
-when used in conjunction regularisation such as dropout, early-stopping and standard \(L_2\) weight
-decay but without such interventions the converged-upon solution is identical for both
-\ac{IW}-\ac{ERM} and standard (unaugmented) \ac{ERM}. 
+when used in conjunction with regularisation such as dropout \citep{srivastava14dropout},
+early-stopping and standard \(L_2\) weight decay but without such interventions the converged-upon
+solution is identical for both \ac{IW}-\ac{ERM} and standard (unaugmented) \ac{ERM}. 
 %
 Further empirical evidence for this was provided by \citet{sagawa2019distributionally}, wherein the
 importance of combining aggressive regularisation with (a dynamic form of) importance-weighting for
@@ -164,7 +164,7 @@ losses (for binary classification; \citealp{wang2021importance}) and logit-adjus
 % dominant (majority) classes and can be realised through the use of per-class margins, either
 % through modifying the loss during training or post-hoc correction \cite{fawcett1996combining} 
 
-As statistical models are only required model correlations in the data to satisfy the loss
+As statistical models are only required to model correlations in the data to satisfy the loss
 function, they ultimately only capture a superficial representation of the true physical processes
 involved.
 %
@@ -195,7 +195,7 @@ tack popular within the domain generalisation literature, wherein domain can be 
 different intervention on the true distribution -- is needed to resolve the immanent statistical
 ambiguity.
 %
-By `confounding variable', or \emph{confounder}, I mean some variable that is that is the causal
+By `confounding variable', or \emph{confounder}, I mean some variable that that is the causal
 parent of two or more other variables and explains the statistical dependency between them despite
 those variables not being causally-related themselves; in the trivariate case this corresponds to
 the fork \(X \from S \to Y \), wherein there exists a spurious (acausal) correlation between \(X\)
@@ -206,12 +206,12 @@ and \(Y\) that is eliminated by conditioning on the confounder \(S\).
 In the \ac{SCL} problems addressed in Chapters~\ref{ch:nifr} and \ref{ch:supmatch}, we will see
 statistical learning break down in a similar way yet for essentially the opposite reason.
 %
-Namely, instead of having latent variable that explains the statistical dependency between \(X\)
-and \(Y\) in the absence of a causal dependency, we instead of have some spurious variable, \(S\)
-on which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) (or some
+Namely, instead of having a latent variable that explains the statistical dependency between \(X\)
+and \(Y\) in the absence of a causal dependency, we instead have some spurious variable, \(S\) on
+which \(Y\) is strongly statistically, but not causally, dependent, with \(X \to Y \) (or some
 subset of \(X\)) assumed to be the true causal mechanism.
 %
-I will broach more deeply \ac{SCL} is and how the mechanisms that give rise to it in
+I will broach more deeply what \ac{SCL} is and how the mechanisms that give rise to it in
 \S\ref{sec:shortcut-learning};
 %
 for now, however, we will proceed to characterising some of the types of distribution shift that

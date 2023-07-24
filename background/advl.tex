@@ -72,7 +72,7 @@ is computationally intractable for most non-trivial cases, especially so if said
 \acp{DNN} and many iterates are required for convergence, and so some degree of approximation is
 required.
 %
-This usually translates to performing only a fixed budget of updates in the minimising/minimising
+This usually translates to performing only a fixed budget of updates in the minimising/maximising
 direction over random subsets of the data.
 %
 In fact, \citet{ganin2016domain} demonstrated that, in practice, one can ignore best-response
@@ -115,7 +115,7 @@ respective to the learner and its adversary:
   \item 
     %
     \textbf{adversary}: maximise the likelihood of a correct determination of the true value of
-    \(s\) associated with given a input \(x\), while having access to only the censored version of
+    \(s\) associated with a given input \(x\), while having access to only the censored version of
     the input, \(z\), given by the learner.
     %
 \end{itemize}

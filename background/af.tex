@@ -85,7 +85,7 @@ Chapter~\ref{ch:supmatch} adopts a perspective in line with the \ac{DG} literatu
 \citep{sagawa2019distributionally}, a perspective which is known under the guise of \emph{minimax
 fairness} in the \ac{AF} literature.
 %
-While perhaps obvious, it is relevant to note that that a predictive distribution provably cannot
+While perhaps obvious, it is relevant to note that a predictive distribution provably cannot
 simultaneously satisfy all three notions of fairness dictated by \ac{DP}, \ac{EqOp} and \ac{EqOp}
 \citep{kleinberg2016inherent}.
 %
@@ -145,7 +145,7 @@ between the joint and product of the marginal distributions:
     \gI(Y;S) \triangleq D_{KL} \Bigl( P(Y, S) \Vert P(Y) \otimes P(S) \Bigr).
 \end{equation}
 %
-Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be statistical independent.
+Iff \( \gI(Y;S) = 0  \) can the random variables said to be statistically independent.
 %
 \marginpar{Mutual-information minimisation}
 %
@@ -153,11 +153,11 @@ Iff \( \gI(Y;S)\), \( \gI(Y;S) = 0  \) can the random variables said to be stati
 make it particularly amenable for optimisation purposes. 
 %
 In invariant-representation learning (encompassing \ac{FRL}, \ac{DA}, and \ac{DG}), for example, a
-common method for imparting independence, \(Z \perp S \) -- which is sufficient for \(Y \perp S\),
-given a predictor head, \(g: \gZ \to \gY \) -- between the representations learned by encoder \(h:
-\gX \to \gZ \) and the sensitive attribute to train \(h\) to maximise the conditional entropy \(
-H(\hat{S}|Z) \) of an adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\) (itself trained
-via \ac{MLE}).
+common method for imparting independence the \(Z \perp S \) -- which is sufficient for \(Y \perp
+S\), given a predictor head, \(g: \gZ \to \gY \) -- between the representations learned by encoder
+\(h: \gX \to \gZ \) and the sensitive attribute is to train \(h\) to maximise the conditional
+entropy \( H(\hat{S}|Z) \) of an adversarial predictor, \(a: \gZ \to \bigtriangleup^{|\gS|}\)
+(itself trained via \ac{MLE}). % NOTE: CORRECTED
 %
 I shall expatiate on \ac{AdvL} broadly, and \wrt{} to its use as an infomin engine -- as in the
 forgoing -- in \S\ref{sec:advl}.
@@ -198,7 +198,7 @@ also \acp{FPR}, we obtain the final of the \ac{ER}-based metrics, \ac{EqOd}
 \sidepar{Accuracy-fairness trade-off}
 %
 The inherent trade-off between the utility, as measured by aggregate performance and fairness under
-conceptions of fairness based on \acp{ER}, has long been recognised \citealp{kaplow1999conflict}. 
+conceptions of fairness based on \acp{ER}, has long been recognised \citep{kaplow1999conflict}. 
 %
 With accuracy being the principal measure of said utility in the context of classification, this
 trade-off is commonly referred to as the \emph{accuracy-fairness trade-off}, though as we will see

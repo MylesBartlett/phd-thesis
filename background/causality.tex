@@ -14,8 +14,8 @@ The background on causality is thus commensurably light and I would refer the re
 
 While the term `domain' typically refers to the observed distributions as a whole in both \ac{DA}
 and \ac{DG} alike (i.e.\ `source' vs.\ 'target'), such terminology is somewhat rigid, as it fails
-to capture that the distributions share an underlying structure and how and which variables are
-shifted.
+to capture that the distributions share an underlying structure, along with how and which variables
+are shifted.
 %
 \sidepar{Domain as an exogenous variable}
 %
@@ -32,10 +32,10 @@ Most simply, in the case of \ac{DA}, \(E\) is simply a binary random variable, s
 \Omega \to \{ \text{source}, \text{target} \}\), with \( \Omega \) being the sample space.
 %
 
-We view then view variables in our prediction task as constituting the nodes \( \gV \) in a
-\acl{CBN} (\acs{CBN}; \citealp{pearl1995bayesian}) where the direction of arrows (directed edges)
-between nodes indicate the direction of causality (e.g.\ \(\rmA \to \rmB \) means that \textbf{A}
-causes (is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
+We then view variables in our prediction task as constituting the nodes \( \gV \) in a \acl{CBN}
+(\acs{CBN}; \citealp{pearl1995bayesian}) where the direction of arrows (directed edges) between
+nodes indicate the direction of causality (e.g.\ \(\rmA \to \rmB \) means that \textbf{A} causes
+(is a parent of) \textbf{B}) while the absence of an edge between two nodes \textbf{A} and
 \textbf{B} indicates independence between them when conditioned on their parents, i.e.\ \( \rmA |
 \text{Pa}(\rmA) \perp \rmB | \text{Pa}(\rmB) \), where \( \text{Pa}(\cdot) \) denotes the causal
 parents of its argument node.
@@ -71,7 +71,7 @@ Y) \) but not the marginal distribution \(P(X)\), giving rise to representation 
 %
 \import{background}{ds_cbns.tex}
 %
-To attempt to crystallise this, I illustrate in Fig.~\ref{fig:ds_cbns} illustrate minimal \acp{CBN}
+To attempt to crystallise this, I illustrate in Fig.~\ref{fig:ds_cbns} minimal \acp{CBN}
 corresponding to different distribution shifts for a (causal) prediction task.
 
 \sidepar{Independent causal mechanisms}

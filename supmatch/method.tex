@@ -135,7 +135,7 @@ necessary to prevent $z$ from being forced to encode $s$ by the reconstruction l
 We note that this need could potentially be obviated through use of self-supervised approaches,
 but refrain from exploring this avenue in the interest of simplicity.
 
-The model, $\Gamma$, is composed of three core modules: 
+The model, \(\Gamma\), is composed of three core modules: 
 1) two \emph{encoder} functions, $f$ (which we refer to
 as the ``debiaser'') and $t$, which share weights and map $x$ to $z \in \gZ$ and
 $\tilde{s} \in \tilde{\gS}$, respectively;
@@ -143,8 +143,10 @@ $\tilde{s} \in \tilde{\gS}$, respectively;
 invert $f$ and $t$; and
 % 3) \emph{predictor} functions $\ell_y$ and $\ell_s$ that predict $y$ and $s$
 % from $z$ and $\tilde{s}$ respectively, and
-3) a \emph{discriminator} function $h: \gZ \to ( 0, 1 )$ that predicts which
-dataset a bag of samples embedded in $\gZ$ was sampled from. 
+3) a \emph{discriminator} function \( h: (\mathfrak{Z} \subseteq \gP(Z)) \to ( 0, 1 ) \) that
+predicts which dataset a bag of samples, \(\gB\ \in \mathfrak{Z}\), embedded in $\gZ$, was sampled
+from, where we have used \( \gP(\cdot) \) to denote the powerset of its argument and thereby a
+domain comprising sets of elements of \(\gZ\). % NOTE: CORRECTED
 % The predictor $\ell_s: \tilde{\gS} \to \bigtriangleup^{|\gS|}$ (with $\bigtriangleup^{|\gS|}$
 % denoting the $|\gS|$-dimensional standard simplex) is usually the identity function, and is
 % primarily listed here for notational symmetry. Fig. \ref{fig:architecture} illustrates how $f$

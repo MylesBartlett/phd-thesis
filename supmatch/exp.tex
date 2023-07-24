@@ -7,9 +7,9 @@ We report the \texttt{Robust Accuracy} -- the minimum accuracy over the subgroup
 datasets.
 % but the Chest-Xray8 dataset. 
 %
-For this dataset, we instead report \texttt{Robust TPR} -- analogously, the minimum \ac{TPR} over the
-subgroups -- as the primary metric given the emphasis on positive classifications in medical
-contexts. 
+% For this dataset, we instead report \texttt{Robust TPR} -- analogously, the minimum \ac{TPR} over the
+% subgroups -- as the primary metric given the emphasis on positive classifications in medical
+% contexts. 
 %
 Additional plots showing the Accuracy, Positive Rate, \ac{TPR}, and \ac{TNR} ratios can be found in
 Appendix~\ref{sec:additional-metrics}.
@@ -141,7 +141,7 @@ then using these labels to train a robust classifier using gDRO.
 subgroup-labels are missing entirely.
 %
 We adapt \texttt{GEORGE} to our setting by modifying the semi-supervised clustering algorithm to
-predict the marginal distributions (\(P(Y|X)\) and \(P(S|X)\) instead of the joint distribution
+predict the marginal distributions (\(P(Y|X)\) and \(P(S|X)\)) instead of the joint distribution
 \(P(Y, S|X)\), allowing us to propagate the class labels from \( D^{tr} \) to \( D^{dep} \) (see
 Appendix~\ref{adapting_g} for details).
 % Following this, gDRO is trained on the combination of the training and deployment sets, with the
