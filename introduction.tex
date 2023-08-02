@@ -168,7 +168,7 @@ skin types (`lighter' vs\. `darker') and observed marked disparities in the resu
 between lighter-skinned and darker-skinned subjects, and between male and female subjects, with a
 compounding of the two trends; again the same year, \citet{zech2018variable} demonstrated that
 \ac{ML} classifiers can predict incidences of pneumonia with near-perfect accuracy based on only
-site-specific tags and the prevalence rates associated thereof.
+site- (hospital-) specific tags and the prevalence rates associated thereof.
 %
 Such systems can be said to \emph{not} be \emph{distributionally robust} as they either fail to
 generalise beyond the training distribution or to exhibit approximate performance-parity between
@@ -318,6 +318,7 @@ fully-annotated datasets are drawn from disparate distributions sharing a sensit
 Moreover, the exact invertibility allows us insight into what the model has learned and diagnose
 potential failures, such as unforeseen entanglements between the sensitive attribute and certain
 dimensions of the inputs.
+% CORRECTION: a reference to the publications could go in here
 %
 \subsection*{Chapter 4}%: Addressing Missing Sources with Adversarial Support-Matching}
 %
@@ -337,8 +338,8 @@ of the chapter as the solution we ultimately propose to it, a solution predicate
 aligning support rather than distributions as historically practised in \acs{DA}
 \citep{ben2006analysis}.
 %
-By `asymmetric' I mean that for we observe all subgroups and classes expected at deployment time
-and for at least one class we observe more than one subgroup. 
+By `asymmetric' I mean that we observe all subgroups and classes expected at deployment time and
+for at least one class we observe more than one subgroup. 
 %
 In this context, we refer to the intersectional groups -- target-subgroup combinations -- as
 `sources' and the aforementioned problem, characterised by their missingness, as one of `missing

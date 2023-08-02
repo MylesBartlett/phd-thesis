@@ -12,9 +12,15 @@ invariant to the subgroup. However, it is easy to learn the wrong invariance if 
 % information.
 To measure the discrepancy in support between the two distributions, we adopt an adversarial
 approach, but one where the adversary is operating on small sets -- which we call \emph{bags} --
-instead of individual samples. These bags need to be balanced with respect to ($s$, $y$), such that
-we can interpret them as approximating $\gG$ as opposed to the joint probability distribution,
-$P(S, Y)$.
+instead of individual samples. 
+%
+These bags need to be balanced with respect to ($s$, $y$), such that we can interpret them as
+approximating $\gG$ as opposed to the joint probability distribution, $P(S, Y)$.
+%
+% CORRECTION: there was a discussion of bags somewhere in this chapter ( i got a bit lost!) but as
+% per the discussion in the viva discuss the influence of bags. potentially could be something to
+% say as future work. Also could mention the use of the mean as the query in the attention
+% mechanism could be good. Discuss with novi if this is novel enough to warrant taking further
 %
 Details on how these bags are constructed can be found in in \S\ref{ssec:sm-realisation} and
 \S\ref{sec:sm-implementation}.
@@ -228,8 +234,8 @@ essential for achieving good and robust (\wrt{} balancing quality) performance.
 % actually enforces is that $z$ generates bags with the same support over $S \times Y$ irrespective
 % of the dataset they were drawn from. To ensure that the disentangling aligns with our objective,
 Our goal is to disentangle $x$ into two subspaces: a subspace $z$, representing the class, and a
-subspaces $\tilde{s}$,
-representing the subgroup.
+subspace $\tilde{s}$, representing the subgroup.
+%
 For the problem to be well-posed, it is crucial that the bags differ only
 in terms of which sources are present and not in terms of other aspects.
 % with respect to the class-subgroup combinations present and not with respect to the shape of the

@@ -73,14 +73,14 @@ For cMNIST, this is easily satisfied as we have complete control over the data g
 For CelebA and  UCI Adult, on the other hand, we have to generate the split from the existing data.
 %
 To this end, we first set aside a randomly selected portion of the dataset from which to sample the
-biased dataset
+biased dataset.
 %
-The portion itself is then split further into two parts: one in which $(s=-1 \land y=-1) \lor (s=+1
-\land y=+1)$ holds true for all samples, call this part $\mathcal{D}_{eq}$, and the other part,
-call it $\mathcal{D}_{opp}$, which contains the remaining samples.
+The resulting portion is then split further into two parts: one in which \( (s=-1 \land y=-1) \lor
+(s=+1 \land y=+1) \) holds true for all samples, call this part \( \mathcal{D}_{eq} \), and the
+other part, call it \( \mathcal{D}_{opp} \), which contains the remaining samples.
 %
 To investigate the behaviour at different levels of correlation, we mix these two subsets according
-to a mixing factor $\eta$.
+to a mixing factor \( \eta \).
 %
 For $\eta \leq \tfrac{1}{2}$, we combine (all of) $\mathcal{D}_{eq}$ with a fraction of $2\eta$
 from $\mathcal{D}_{opp}$.
@@ -136,8 +136,8 @@ sensitive group.
         %
         (b-c): Results of running our approach realised with \ac{cFlow} on the cMNIST dataset.
         %
-        The model learns to retain the shape of the digit shape while removing the relationship
-        with colour.
+        The model learns to retain the shape of the digit while removing the relationship with
+        colour.
         %
         A downstream classifier is now less prone to exploiting correlations between colour and the
         digit label class.
@@ -185,6 +185,8 @@ Our versions of the dataset, on the whole, exhibit much stronger colour bias, to
 mapping the digit's colour and class being bijective. Fig.~\ref{fig:cmnist_chart} shows that the
 model significantly underperforms even the na\"ive baseline, aside from at $\sigma = 0$, where they
 are on par.
+% CORRECTION: need more explanation of the figures here for me. Maybe can expand now you don't have
+% page constraints. In particular comment on whey LN2L does so badly
 
 Inspection of the null-samples shows that both the \ac{cVAE} and \ac{cFlow} model succeed in
 removing almost all colour information, which is supported quantitatively by

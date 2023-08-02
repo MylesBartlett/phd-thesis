@@ -465,16 +465,24 @@ Combination   & \multicolumn{2}{c}{Proportion retained} \\ \cmidrule(lr){2-3}
     % \includegraphics[width=\textwidth]{supmatch/figures/SSL-framework-withPred.pdf}
     \includegraphics[width=\textwidth]{supmatch/figures/illustrations/architecture.pdf}
     \caption{% The main components of our support-matching algorithm, $f$ (debiaser) and $h$
-      (discriminator). The debiaser is trained to produce encodings, $z$ of the data that are
+      The debiaser is trained to produce encodings, $z$ of the data that are
       invariant to the subgroups differences. %source dataset and thereby the subgroups identifying
-      it. In order to determine whether a bag of encodings originates from the training set or the
+      it. 
+      %
+      In order to determine whether a bag of encodings originates from the training set or the
       deployment set, the discriminator performs an attention-weighted aggregation over the bag
-      dimension to model interdependencies between the samples. In the case of Coloured MNIST where
+      dimension to model interdependencies between the samples. 
+      %
+      In the case of Coloured MNIST where
       {\color{purple}purple} fours constitute the missing subgroup, the discriminator can identify
       an encoding of a bag from the training set by the absence of such samples as long as color
-      information is detectable in $z$. %, thereby serving as an error signal for the debiaser. By
-    learning a subgroup invariant representation, the debiaser can hide the origin of the bags from
-  the discriminator.} \label{fig:architecture}
+      information is detectable in $z$. 
+      %, thereby serving as an error signal for the debiaser. 
+      By learning a subgroup invariant representation, the debiaser can conceal the origin of the
+      bags from the discriminator.
+    %
+  } \label{fig:architecture}
+  % CORRECTION: could adjust minorly as per the thesis
 \end{figure*}%
 %
 We give a more detailed explanation of the model used in our method.
@@ -991,8 +999,8 @@ As discussed in the main text, GEORGE \citep{SohDunAngGuetal20} was originally d
 the uneven performance resulting from hidden stratification, though hidden stratification of a
 different kind to the one we consider. 
 %
-In \citet{SohDunAngGuetal20} the training set comes with (super-)class labels but without subclass
-(or \emph{subgroup} in our terminology) labels. 
+In \citet{SohDunAngGuetal20} the training set comes with superclass labels but without subclass (or
+\emph{subgroup} in our terminology) labels. 
 %
 The training set is unlabelled with respect to the subclass, but all superclass-subclass
 combinations (or ``sources'') are assumed to be present in the training data and therefore

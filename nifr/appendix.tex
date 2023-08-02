@@ -89,8 +89,9 @@ We evaluate the performance of all models for mixing factors ($\eta$) of value \
 1\} \). 
 %
 Results shown in \figref{fig:big-adult-chart} show that while our model fails to surpass the
-baseline models in terms of accuracy for the balanced case (and those close to it), we match or
-exceed the baseline as $\eta $ moves the dataset to a more imbalanced setting. 
+baseline models in terms of accuracy for the balanced case (and those close to it), we rival or
+exceed the baseline as an increasing \(\eta\) moves the dataset into a more imbalanced regime. 
+% CORRECTION: can you say why this is?
 %
 In terms of fairness metrics,  our approach generally outperforms the baseline models regardless of
 $\eta$.
@@ -323,7 +324,7 @@ However, this does not have the guarantee of making $z_u$ invariant to $s$ - the
 indicators for $s$, not all of which are needed to predict the label perfectly. 
 %
 Training the network to convergence before taking each gradient step with the representation
-learner is one way one to attempt to tame the unstable minimax dynamics \citep{feng2019learning}. 
+learner is one way to attempt to `tame' the unstable minimax dynamics \citep{feng2019learning}. 
 %
 However, this does not prevent the emergence of the aforementioned cyclicity.
 

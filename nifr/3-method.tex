@@ -22,6 +22,19 @@
         Training procedure for our models. $x$: input, $s$: sensitive attribute, $z_u$: de-biased
         representation, $x_u$: de-biased version of the input in the data domain. The red bar
         indicates a gradient reversal layer, and $\vzero$ the null-sampling operation.
+        %
+        % CORRECTION: 
+        % 1. Could move closer to where referenced in the text and could refer to it more in the
+        % text.
+        %
+        % 2. Maybe add to figure as discussed in the viva -- this refers to the clarity of the
+        % decoder's involvement during training (only the encoder is involved in the
+        % invariance-learning procedure) and of the involvement of null-sampling at this time (i.e.
+        % there is none -- the decoder is fed the ground-truth labels and null-sampling is only
+        % applied at inference-time).
+        %
+        %$ 3. Could also add to the caption and maybe also in the text where you describe the
+        %figure. No page constraints any more!
     }%
     \label{fig:model-diagrams}
 \end{figure*}
@@ -260,6 +273,8 @@ independence constraints, and $p(z_u)$ is the prior imposed on the variational p
 %
 For all our experiments, $p(z_u)$ is the standard isotropic Gaussian prior;
 Fig.~\ref{fig:cvae_diagram} summarises the procedure diagrammatically.
+%
+% CORRECTION: if you've put it in you should explain it
 
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to conflict between the components of the loss.
@@ -268,6 +283,7 @@ Since information about $s$ is only available to the decoder as a binary encodin
 relationship between $s$ and $x$ is highly non-linear and unsummarisable by a simple on-off
 mechanism, as is the case if $s$ is an attribute such as gender, off-loading information to the
 decoder by conditioning is no longer possible. 
+% CORRECTION: see discussion in viva
 %
 As a result, $z_u$ is forced to carry information about $s$ in order to minimise the
 reconstruction error. 
@@ -308,20 +324,20 @@ highly multi-modal, but still normalised, density, using the change-of-variable 
 \end{align}
 %
 where $h_i$ denotes the output of the \(i\)th layer of the network and $p(z)$ is the base density,
-which is again an Isotropic Gaussian. 
+which is again an isotropic Gaussian. 
 %
 Training the \ac{INN} then reduces to maximising $\log p(x)$ over the training set, i.e.\ maximising the
 probability the network assigns to samples in the training set.
 %
 \paragraph{The Benefits of Bijectivity.}
 %
-Using an  network to generate our encoding, $z_u$, carries a number of advantages over other
+Using an \ac{INN} to generate our encoding, $z_u$, carries a number of advantages over other
 approaches. 
 %
 Ordinarily, the main benefit of flow-based models is that they permit exact density estimation.
 %
 However, since we are not interested in sampling from the model's distribution, in our case the
-likelihood term serves as a regulariser, in the same vain as \citet{JacSmeOya18}.
+likelihood term serves as a regulariser, in the same vein as \citet{JacSmeOya18}.
 %
 Critically, this forces the mean of each latent dimension to zero, thereby enabling null-sampling.
 %
@@ -329,6 +345,8 @@ The invertible property of the network guarantees the preservation of all inform
 $y$ which is independent of $s$, regardless of how it is allocated in the output space. 
 %
 Secondly, we conjecture that the encodings are more robust to \ac{OOD} data. 
+%
+% CORRECTION: Say where the evidence for this is in the thesis eg fig 3.12. %
 %
 Whereas an \acf{AE} could map a previously seen input and a previously unseen input to the same
 representation, an invertible network sidesteps this due to the network's bijective property,
