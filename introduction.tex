@@ -286,6 +286,16 @@ of the contributions made by myself and each co{\"a}uthor.
 In this first of the middle chapters, we tackle what we term an \emph{aggravated fairness problem},
 characterised by strong \acp{SC} between the sensitive and target attributes, to the extent of
 one-to-one correspondence which is not maintained at test time.
+\footnote{
+    \corr{
+        %
+    This chapter is based on the paper \citet{kehrenberg2020nullsampling}, published at ECCV 2020;
+    said paper is included here with some changes to the notation and main text with the view to
+    improve clarity, mathematical rigour, and prosaic flow.
+    %
+}
+% CORRECTION: a reference to the publications could go in here
+}
 %
 This is, consequently, a \ac{SCL} problem in which the former attribute serves as a proxy
 for the latter attribute, by virtue of its lower-complexity; to ensure generalisability across the
@@ -318,7 +328,6 @@ fully-annotated datasets are drawn from disparate distributions sharing a sensit
 Moreover, the exact invertibility allows us insight into what the model has learned and diagnose
 potential failures, such as unforeseen entanglements between the sensitive attribute and certain
 dimensions of the inputs.
-% CORRECTION: a reference to the publications could go in here
 %
 \subsection*{Chapter 4}%: Addressing Missing Sources with Adversarial Support-Matching}
 %
@@ -376,6 +385,17 @@ for Chapters \ref{ch:nifr} and \ref{ch:supmatch} respectively) constituted a clo
 to plainly say that their possible test-time values were known and represented -- in some form,
 annotated, partially-annotated, or entirely unannotated -- at training time.
 %
+\footnote{
+    \corr{
+        %
+    This chapter is based on the paper \citet{bartlett2022okapi}, published at NeurIPS 2022; said
+    paper is included here with minimal changes, though certain points have been expanded on for
+    the sake of clarity, here liberated from the dogma of page-limits.
+    %
+    }
+}
+% CORRECTION: a reference to the publications could go in here
+%
 We also assumed that the target played a role in the distribution shift that consequently
 corresponded to one of target and subpopulation/subgroup/domain (all these terms being synonymous
 here and throughout the literature, differing only by context) shift combined yet could not be
@@ -419,8 +439,9 @@ performed over the full dataset in a post-hoc fashion.
 Thus, one should understand the meaning of `online' to be akin to `bootstrapped' and, indeed,
 throughout the paper we use the terms near-interchangeably.
 %
-This aside complete, we find the resulting algorithm consistently outperforms baseline methods,
+This aside aside, we find the resulting algorithm consistently outperforms baseline methods,
 including fully-supervised ones which \citet{SagWeiLeeGaoetal22} showed many existing \ac{SemiSL}
 methods failed to accomplish, and, as in Chapter~\ref{ch:nifr}, it comes with a valuable
 interpretable aspect, conferred by the trained-with matching algorithm.
+
 %

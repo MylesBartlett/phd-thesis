@@ -1,44 +1,4 @@
 \section{Interpretable invariances by null-sampling}\label{ssec:general}
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=0.4\textwidth]{nifr/Figures/diagram.pdf}
-%     \caption{Training procedure using the cFlow model for illustrative purposes.}%
-%     \label{fig:training_diagram}
-% \end{figure}
-\begin{figure*}[tb]
-    \centering
-    \hfill
-    \subfloat[cFlow model.]{%
-        \scalebox{0.4}{\includegraphics[width=\textwidth]{nifr/Figures/inn_diagram_u.pdf}}%
-        \label{fig:inn_diagram}
-    }
-    \hfill
-    \subfloat[cVAE model.]{%
-        \scalebox{0.5}{\includegraphics[width=\textwidth]{nifr/Figures/cvae_diagram_u.pdf}}%
-        \label{fig:cvae_diagram}
-    }
-    \hfill
-    \caption{
-        Training procedure for our models. $x$: input, $s$: sensitive attribute, $z_u$: de-biased
-        representation, $x_u$: de-biased version of the input in the data domain. The red bar
-        indicates a gradient reversal layer, and $\vzero$ the null-sampling operation.
-        %
-        % CORRECTION: 
-        % 1. Could move closer to where referenced in the text and could refer to it more in the
-        % text.
-        %
-        % 2. Maybe add to figure as discussed in the viva -- this refers to the clarity of the
-        % decoder's involvement during training (only the encoder is involved in the
-        % invariance-learning procedure) and of the involvement of null-sampling at this time (i.e.
-        % there is none -- the decoder is fed the ground-truth labels and null-sampling is only
-        % applied at inference-time).
-        %
-        %$ 3. Could also add to the caption and maybe also in the text where you describe the
-        %figure. No page constraints any more!
-    }%
-    \label{fig:model-diagrams}
-\end{figure*}
-
 \subsection{Problem Statement}
 %
 \noindent
@@ -138,12 +98,14 @@ use $\theta$, as before.
 The theoretical objective from Eq.~\ref{eq:objectivetheory} can then be crystallised as
 %
 \begin{align}
+  %
   \min_{ \theta \in \Theta} \max_{\phi \in \Phi}
   \E_{(x, s) \sim P^{tr}_{(x,s)}}[
   \log p_\theta(x)
   -\lambda H( g_\phi ( f_\theta(x) ), e_{s})
   ],
   \label{eq:objectivepractical}
+  %
 \end{align} 
 %
 where we have substituted \( P^{ tr }_{ (X, S) } \) with the empirical training distribution \( P^{
@@ -151,7 +113,7 @@ tr }_{ (x, s) } \), and \( H(\cdot, \cdot) \) denotes the cross-entropy between 
 probabilities and the degenerate target distribution given by the one-hot-encoded labels, $e_{s}
 \in \{0, 1\}^{|\gS|}$.
 %
-In practice, this adversarial term is realised using a Gradient Reversal Layer (GRL;
+In practice, this adversarial term is realised using a Gradient-Reversal Layer (GRL;
 \citealp{ganin2016domain}) between \(z_u\) and \(g\), as is common for adversarial approaches for
 \acl{DA} and \acl{FRL}~\citep{edwards2016censoring}.
 %
@@ -191,7 +153,9 @@ class labels \( Y^{rep} \) were available).
 We now summarise the training procedure; an outline of the invertible network model (\acs{cFlow})
 can be seen in Fig.~\ref{fig:inn_diagram}.
 %
-First, the encoder network $f$ is trained on \( (X^{rep}, S^{rep}) \), during the first
+\import{nifr}{model-diag.tex}
+%
+Textually, first, the encoder network $f$ is trained on \( (X^{rep}, S^{rep}) \), during the first
 phase.
 %
 The trained network is then used to encode the training set, taking in input $x$ and producing the

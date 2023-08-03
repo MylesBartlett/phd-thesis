@@ -14,13 +14,10 @@ To measure the discrepancy in support between the two distributions, we adopt an
 approach, but one where the adversary is operating on small sets -- which we call \emph{bags} --
 instead of individual samples. 
 %
+%
+%
 These bags need to be balanced with respect to ($s$, $y$), such that we can interpret them as
 approximating $\gG$ as opposed to the joint probability distribution, $P(S, Y)$.
-%
-% CORRECTION: there was a discussion of bags somewhere in this chapter ( i got a bit lost!) but as
-% per the discussion in the viva discuss the influence of bags. potentially could be something to
-% say as future work. Also could mention the use of the mean as the query in the attention
-% mechanism could be good. Discuss with novi if this is novel enough to warrant taking further
 %
 Details on how these bags are constructed can be found in in \S\ref{ssec:sm-realisation} and
 \S\ref{sec:sm-implementation}.
@@ -152,7 +149,7 @@ invert $f$ and $t$; and
 3) a \emph{discriminator} function \( h: (\mathfrak{Z} \subseteq \gP(Z)) \to ( 0, 1 ) \) that
 predicts which dataset a bag of samples, \(\gB\ \in \mathfrak{Z}\), embedded in $\gZ$, was sampled
 from, where we have used \( \gP(\cdot) \) to denote the powerset of its argument and thereby a
-domain comprising sets of elements of \(\gZ\). % NOTE: CORRECTED
+domain comprising sets of elements of \(\gZ\).
 % The predictor $\ell_s: \tilde{\gS} \to \bigtriangleup^{|\gS|}$ (with $\bigtriangleup^{|\gS|}$
 % denoting the $|\gS|$-dimensional standard simplex) is usually the identity function, and is
 % primarily listed here for notational symmetry. Fig. \ref{fig:architecture} illustrates how $f$
@@ -221,14 +218,26 @@ along the bag dimension -- that is, its predictions should take into account dep
 samples in a bag while being invariant to the order in which they appear. 
 % We experiment with two different types of attention mechanism for the bag-wise pooling layer of our
 % discriminator, finding them both to work well.
-For aggregating information over the bags, we use a self-attention-based
-\citep{vaswani2017attention} pooling layer in which the query vector is averaged over the bag
-dimension.
-For more details see Appendix~\ref{ssec:attention-mechanism}. 
+\corr{
+To aggregate information over samples within the bags, we employ a self-attention-based
+\citep{vaswani2017attention} pooling layer, with aggregation achieved simply by setting the query
+vector to be the mean of the (projected) representations over the bag dimension.
+%
+For more details, see Appendix~\ref{ssec:attention-mechanism}. 
 %
 Furthermore, in Appendix~\ref{ssec:no-mil}, we validate that having the discriminator operate over
 sets (bags) of samples rather than independent samples (with the same balancing scheme) is
-essential for achieving good and robust (\wrt{} balancing quality) performance.
+essential for achieving good and robust (\wrt{} balancing quality) empirical performance,
+though we note that the two realisations yield minimax objects with theoretically-equivalent optima.
+%
+This observation on the difference in stability between the two realisations may have implications
+for adversarial training more broadly, however we focus on the much narrower scope of the \ac{MS}
+problem and leave it to future work to explore such implications.
+}
+% CORRECTION: there was a discussion of bags somewhere in this chapter ( i got a bit lost!) but as
+% per the discussion in the viva discuss the influence of bags. potentially could be something to
+% say as future work. Also could mention the use of the mean as the query in the attention
+% mechanism could be good. Discuss with novi if this is novel enough to warrant taking further
 
 % Our goal is to make $z$ invariant to the subgroup $s$. However, what the adversarial loss
 % actually enforces is that $z$ generates bags with the same support over $S \times Y$ irrespective
