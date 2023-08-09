@@ -118,11 +118,41 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
   \centering
   \includegraphics[width=1.\textwidth]{figures/CaliperNN_PS_pipeline.pdf}
   \caption{
-    Illustration of our proposed statistical matching algorithm, \CNN{}. Given the anchor image
-    encoding $\mbf{z}$, the corresponding domain label $s$, and propensity score $e$, \CNN{}
-    outputs the closest samples, according to distance $d$, subject to their being from different
-    domains to the anchor.
-    % CORRECTION: could add a little more detail on the steps here
+    \corr{
+      %
+    Illustration of our proposed statistical matching algorithm, \CNN{}. 
+    %
+    Given the encoding, $\mbf{z}$, of anchor (query) image, \(\mbf{x}\), the corresponding domain label
+    $s$, and propensity score $e$, \CNN{} yields the closest samples, according to distance $d$,
+    subject to the constraint that those samples belong to a different a different domain to the
+    anchor (cross-domain constraint), as well as the constraints imposed by the two calipers.
+    %
+    Red crosses denote exclusion of the keys from the pool of candidate-matches, such that the
+    \(k\)-closest (\(k\) being \(1\) here for simplicity's sake and `closeness' determined by
+    \(d\)) unmarked samples become the outputs of the matching algorithm.
+    %
+    Note that the, the matching is bipartite, such that self-matches are proscribed.
+    %
+    The fixed caliper filters samples based on a fixed-value thresholding of the propensity scores,
+    such that samples that have sufficiently (adjudged by the threshold, \(t_{f}\)) extreme
+    propensity scores, which is to say overly-characteristic of their respective domains, are
+    removed from the pool of candidate-matches. 
+    %
+    In the corresponding panel above, the set of samples at this stage is singular, consisting of only the
+    bottom-most image (key).
+    %
+    The standard-deviation (std.) caliper, on the other hand, filters based on an adaptive
+    threshold -- modulated by a predefined pre-factor \(t_{\sigma}\) -- computed from the standard
+    deviation of the propensity scores. 
+    %
+    In the corresponding panel above, exclusion by the std. caliper is denoted with a red cross
+    over the top-most edge, leaving only two candidates keys, the top-most of which is implied to
+    be closest by its selection in the final step.
+  %
+    For more details pertaining the calipers, their provenance, and their rationale, vide \S2.1 of
+    \citet{RomInsShaQua22}.
+}
+    % CORRECTED: could add a little more detail on the steps here
 }
   \label{fig:calipernn_pipeline}
 \end{figure}
@@ -260,11 +290,6 @@ $0$, respectively (such that we have $\gD_l \triangleq \{ x_i, y_i, 1 \}_{i=1}^{
 binary
 forms. 
 %
-Knowing whether this condition is satisfied a priori (and thus whether the use of domain labels can
-be forgone completely from our pipeline) is not unrealistic: one may, for example know that two
-sets of satellite imagery cover two different parts of the world (e.g.\ Africa and Asia) yet not
-know the exact co{\"o}rdinates underlying their respective coverage.
-
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/ol_pipe_new_new.pdf}
@@ -306,6 +331,10 @@ know the exact co{\"o}rdinates underlying their respective coverage.
 %
   }
   \label{fig:okapi-pipeline}
-  % CORRECTION: in a paper this detail would probably be in the body rather than the caption. I
-  % would move  but better too much than too little!
+  %
 \end{figure}
+%
+Knowing whether this condition is satisfied a priori (and thus whether the use of domain labels can
+be forgone completely from our pipeline) is not unrealistic: one may, for example know that two
+sets of satellite imagery cover two different parts of the world (e.g.\ Africa and Asia) yet not
+know the exact co{\"o}rdinates underlying their respective coverage.

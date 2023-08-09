@@ -308,9 +308,15 @@ Critically, this forces the mean of each latent dimension to zero, thereby enabl
 The invertible property of the network guarantees the preservation of all information relevant to
 $y$ which is independent of $s$, regardless of how it is allocated in the output space. 
 %
-Secondly, we conjecture that the encodings are more robust to \ac{OOD} data. 
+\corr{
+  %
+Secondly, we hypothesise that, due to the this information-preserving property, the encodings
+should be more robust to \ac{OOD} data; we provide preliminary empirical evidence for this in
+Appendix~\ref{sec:transfer-learning}.
+  %
+}
 %
-% CORRECTION: Say where the evidence for this is in the thesis eg fig 3.12. %
+% CORRECTED: Say where the evidence for this is in the thesis eg fig 3.12. %
 %
 Whereas an \acf{AE} could map a previously seen input and a previously unseen input to the same
 representation, an invertible network sidesteps this due to the network's bijective property,

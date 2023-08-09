@@ -15,3 +15,11 @@
   function has been clarified in the main text. A note on the instance-wise and bag-wise objectives
   having theoretically- but not empirically-equivalent solutions (as adverted to by the external
   examiner) has been added.
+
+  (p.119) The caption of Fig. 5.1 has been greatly expanded to now contain summaries of the two
+  calipers and explanation of the red crosses (denoting exclusion from the candidate pool) added
+  over the course of the pipeline. Readers in search of more details regarding the calipers and
+  their motivation are referred to the RealPatch paper introducing them.
+
+  (p.54) A reference to the Appendix providing (preliminary) empirical evidence of the hypothesis
+  of increased OOD-robustness has been included here (together with some rephrasing).
