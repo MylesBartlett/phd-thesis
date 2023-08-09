@@ -4,6 +4,9 @@
 - (pp.6,7) Footnotes with references to the publications underpinning Chapters 3 and 5 have been added to
   the chapter summaries at the end of the Introduction.
 
+- (p.19) CelebA example provided in viva has been added to clarify the failure mode of DANN and
+  related methods arising due to correlation between the target and subgroup (domain) attribute.
+
 - (p.51) Fig. 3.1 has been relocated to a point adjacent to the in-text first reference to it.
   The caption has been greatly expanded, now addressing the involvement of null-sampling during
   training (i.e. none), this being a major point of confusion raised by the external examiner
@@ -21,5 +24,13 @@
   over the course of the pipeline. Readers in search of more details regarding the calipers and
   their motivation are referred to the RealPatch paper introducing them.
 
+(p.53) Statement on the shortcomings of relying on a binary mechanism when the underlying subgroup
+attribute is continuous has been clarified/reworked -- the reference to non-linearity has been
+removed due to its being misleading.
+
   (p.54) A reference to the Appendix providing (preliminary) empirical evidence of the hypothesis
   of increased OOD-robustness has been included here (together with some rephrasing).
+
+  (pp.90,91) Conclusion to Chapter 3 has been augmented with details of ongoing work, work that
+  includes efforts to shore up the paucity/syntheticity of the tested-on datasets as well as
+  conduct sensitivity analyses w.r.t. bag.balancing.

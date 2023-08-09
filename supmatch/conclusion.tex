@@ -1,22 +1,101 @@
 %
-We have highlighted the problem that systematic bias or dataset curation can result in one or more
-subgroups having zero labelled data, and by doing so, hope to have stimulated serious consideration
-for it when planning, building, and evaluating systems.
+\corr{
+  %
+In this paper, we formalised the problem that systematic bias or dataset curation resulting in one or more
+subgroups having zero labelled data; we hope our doing so stimulates serious consideration
+for it in the planning, building, and evaluating systems.
 %
-We proposed a two-step approach for addressing the resulting spurious correlations.
+This complements concurrent research by \citet{yang2023change} wherein the same problem (with
+different formalism) is alluded to, but its solution left as an open question.
 %
-First, we construct perfect bags from an unlabelled deployment set via semi-supervised clustering. 
+Contrastingly, we proposed here a two-step approach for addressing the problem within a
+semi-supervised framework. 
 %
-Second, by matching the support of the training and deployment sets in representation space, we
-learn representations with subgroup-invariance.
+The first step entails constructing hierarchically-balanced bags from an unlabelled deployment set
+via one's semi-supervised clustering algorithm of choice.
+%
+The second step then entails matching the support, instead of the raw distributions, of the
+training and deployment sets in representation space, so as to learn subgroup-invariant
+representations, an outcome we prove corresponds to the optimum of the proposed objective function.
 %
 We empirically validate our frame\-work on the Coloured MNIST and CelebA datasets, showing it
 possible to maintain high performance on subgroups with incomplete support.
 %
-Furthermore, we bound the error in the objective due to imperfect clustering.
+Furthermore, we bound the error in the objective incurred due to imperfect clustering and show that
+the proposed set-wise discriminator is empirically more robust to this error than conventional
+instance-wise discriminators.
 %
-Future work includes exploring other \ac{UL} methods and addressing the limitations raised in
-\S\ref{sec:sm-limitations}.
-% CORRECTION:
-% you don't have to add the new data but you could say that 'future work will include ...'
+Future work includes the exploration of other \ac{UL} methods for realising the \ac{MI} component
+of the objective and addressing the limitations raised in \S\ref{sec:sm-limitations}.
+
+\subsection{Dataset representativity}
+%
+The results presented in this version of the paper are for toy (Coloured MNIST) or pseudo-toy
+(CelebA) datasets; though both datasets have featured extensively in the literature on
+distributional-robust learning (\citealp{arjovsky2019invariant, kim2019learning,
+sagawa2019distributionally, creager2021environment}, inter alia) it is natural to doubt the
+representativeness of results on them in relation to real-world problems.  
+%
+To shore up this shortcoming, we have since conducted experiments with two datasets more emblematic
+of real-world realisations of the proposed problem, namely Chest-Xray8 \citep{wang2017chestx} and NICO++
+\citep{zhang2023nico++}.
+%
+The former dataset is appealing as it coincides with the motivating example proffered in
+\S\ref{sec:sm-intro}; the latter is so as its class-subgroup structure allows for demonstration in
+a non-binary (\wrt{} both marginals) setting, whereas the results contained herein were
+preponderantly binary out of both simplicity and convention.
+%
+
+\subsection{Sensitivity analysis \wrt{} bag-balancing}
+%
+As noted, we provided bounds on the error in alignment propagated by the error in
+approximating \( \gD^{dep}\) but empirical analysis of the reification of this is lacking. 
+%
+Accordingly, we have sought to effect this via controlled sensitivity analyses \wrt{} the
+balancing.
+To achieve this, we run our support-matching algorithm with ground-truth labels used for balancing
+but with different proportions (typically \( \{5\%, 10\%, \dots, 50\%\} \)) of said labels
+perturbed (flipped or randomly shifted cyclically). 
+%
+Rather than randomly (uniformly) perturbing the labels by sampling from the set of complementary
+labels -- i.e., \( \tilde{g}_i \sim \mathrm{uniform}(\gG \setminus \{g_i\}) \), with \( g_i \) and
+\( \tilde{g}_i \) denoting the ground-truth and the perturbed labels, respectively -- which yields
+unrealistic perturbations due to the discounting of semantic relationships between groups
+(semantically similar groups are more likely to be confused by a clustering algorithm) we instead
+sample a perturbed label, $\tilde{g}_i$ from $\gG$ with probability proportional to the similarity
+between the featurisation of the associated sample and the \(\tilde{g}_i\)th centroid, \(
+\phi_{\tilde{g}_i} \in \mathbb{R}^d \), with the constraint that the perturbed label does not equal
+the original one. 
+
+%
+The featurisation is performed using a pre-trained (via contrastive captioning) CLIP
+\citep{radford2021learning} visual encoder. 
+%
+Namely, the centroids \( \Phi \in \mathbb{R}^{|\gG| \times d} \) are computed as the
+group-conditional means of these features, over the deployment set, and their similarity with a
+given sample's features is measured using cosine similarity. 
+%
+Assuming \(L_2\)-normalised CLIP features, $\bar z_i^\text{CLIP} \in \mathbb{R}^d$, and prototypes,
+$\bar \Phi$, the sampling scheme used to generate the perturbed label, $\tilde{g}_i$, for a given
+ground-truth label, $g_i$, can be written as
+%
+\begin{align}
+  %
+  \tilde{g}_i \sim \text{Cat}(\gG, \bigtriangleup_\mathbf{w} ), \quad
+  %
+  \bigtriangleup_\mathbf{w} \triangleq  \frac{\mathbf{w}}{\sum_j \mathbf{w}_j} , \quad
+  %
+  \mathbf{w} \triangleq \text{exp}(\bar z_i^\text{CLIP} \cdot \bar \Phi \tau^{-1})
+  \odot (1 - e_{g_i}),
+  %
+\end{align}
+%
+where \( \text{Cat} \) denotes the categorical distribution with support \(\gG\) and sampling
+probabilities \( \bigtriangleup_w \), \( \tau \in \mathbb{R}^+_\ast \) denotes a temperature
+parameter modulating the sharpness of the sampling distribution, \(e_{g_i}\) denotes the one-hot
+encoding of \(g_i\), and \(\odot\) denotes the Hadamard product that is used with \(e_{g_i}\) to
+mask out the \(g_i\)th prototype and thereby enforce \( \tilde{g}_i \neq g_i \).
+%
+% CORRECTED: Include any work that you have done since.
+}
 

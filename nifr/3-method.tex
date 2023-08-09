@@ -243,11 +243,16 @@ Fig.~\ref{fig:cvae_diagram} summarises the procedure diagrammatically.
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to conflict between the components of the loss.
 %
-Since information about $s$ is only available to the decoder as a binary encoding, if the
-relationship between $s$ and $x$ is highly non-linear and unsummarisable by a simple on-off
-mechanism, as is the case if $s$ is an attribute such as gender, off-loading information to the
-decoder by conditioning is no longer possible. 
-% CORRECTION: see discussion in viva
+\corr{
+  %
+Since information about $s$ is only available to the decoder as a binary encoding, should \(s\) be
+fundamentally continuous in nature -- as is so in the case of gender, for individuals exhibit
+varying degrees of femininity/masculinity -- and said encoding a coarsened representation of that
+nature, off-loading information entirely to the decoder by way of conditioning is no longer a valid
+strategy. 
+%
+}
+% CORRECTED: see discussion in viva
 %
 As a result, $z_u$ is forced to carry information about $s$ in order to minimise the
 reconstruction error. 
@@ -255,12 +260,12 @@ reconstruction error.
 The obvious solution to this is to allow the encoder to store information about $s$ in a partition
 of the latent space as in  \citet{creager2019flexibly}. 
 %
-However, we question whether an \ac{AE} is the best choice for this setup, with the view that an
-invertible model is the better tool for the task. 
+However, we question whether an \ac{AE} is the best choice for this setup, and that \acp{INN} might
+not be in inherently more well-positioned for such.
 %
-Using an invertible model affords several guarantees, most notable of which being complete
+Indeed, \acp{INN} afford several guarantees, most germane among these being complete
 information-preservation and freedom from a reconstruction loss, the importance of which we
-expatiate on below.
+expatiate on in the following section.
 
 \subsection{Conditional Flow}\label{cflow}
 %

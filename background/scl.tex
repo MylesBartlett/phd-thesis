@@ -111,13 +111,32 @@ engendered by stochasticity in the weights and optimisation procedure -- yet sho
 create such a strong (easy-to-learn and potent) and stable attractor that all ensemble
 members simply converge onto that one corresponding view.
 %
-Domain adversarial learning -- popularised by \citet{ganin2016domain} and a mainstay throughout the
+Domain adversarial-learning -- popularised by \citet{ganin2016domain} and since a mainstay throughout the
 \ac{DA}, \ac{DG}, and \ac{AF} literature alike -- on the other hand suffers from the problem that
-for the features of the model to be statistically independent of the spurious feature, so must it
+for the features of the model to be statistically independent of the spurious feature, so must they
 be statistically independent of the target since the target and spurious feature are themselves
 strongly correlated, as defined by the \ac{SCL} problem.
-% CORRECTION: could you add an example here to make it clear what you mean as done in the viva
-
+%
+\corr{
+  %
+I shall bestow full formalism to this particular interaction in Chapter~\ref{ch:supmatch}, but will
+draw an example from the group-robustness literature here to attempt to give some clarification.
+%
+The CelebA dataset constitutes a standard benchmark in said literature, with the problem setup
+popularised by \citet{sagawa2019distributionally} one of hair colour (\( \{ \text{not Blond},
+\text{Blond} \} \)) prediction, with gender (\( \{ \text{Female}, \text{Male} \} \)) acting
+as a spurious feature by virtue of blond females preponderating over blond males, such that strong
+aggregate performance can be achieved with a constant, gender-conditioned predictor (a binary
+decision-rule designating all females to be blonde, all males not blond).
+%
+A representation that is statistically independent of (invariant to) gender, but not hair colour,
+satisfies our desideratum but is not a fixed point of the minimax game implied by the adversarial
+learning problem (as I shall elaborate on in \S\ref{sec:advl}) as gender can be predicted with
+above-random accuracy by the adversary based only on hair colour and the skewed statistics of the
+intersectional groups.
+%
+}
+% CORRECTED: could you add an example here to make it clear what you mean as done in the viva
 % %
 % % % --------------------------------------------------------------------------------
 % % \paragraph{Simplicity Bias \citep{valle2018deep, shah2020pitfalls}}

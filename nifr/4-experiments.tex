@@ -178,13 +178,14 @@ dataset which only leaves the luminosity as spurious information.
 %
 We also evaluate the model, with all the associated hyperparameters, from~\citet{kim2019learning}.
 %
-The only difference between the setups is the dataset creation, including the range of $\sigma$
+The only difference between the setups is the dataset creation, including the range of \(\sigma\)
 values we consider.
 %
 Our versions of the dataset, on the whole, exhibit much stronger colour bias, to the point of the
-mapping the digit's colour and class being bijective. Fig.~\ref{fig:cmnist_chart} shows that the
-model significantly underperforms even the na\"ive baseline, aside from at $\sigma = 0$, where they
-are on par.
+mapping the digit's colour and class being bijective. 
+%
+Fig.~\ref{fig:cmnist_chart} shows that the model significantly underperforms even the na\"ive
+baseline, aside from at \(\sigma = 0\), where they are at parity.
 % CORRECTION: need more explanation of the figures here for me. Maybe can expand now you don't have
 % page constraints. In particular comment on whey LN2L does so badly
 
@@ -192,7 +193,7 @@ Inspection of the null-samples shows that both the \ac{cVAE} and \ac{cFlow} mode
 removing almost all colour information, which is supported quantitatively by
 Fig.~\ref{fig:cmnist_chart}, and qualitatively by Fig.~\ref{fig:cmnist}. 
 %
-While the \ac{cVAE} outperforms \ac{cFlow} marginally at low $\sigma$ values, performance degrades
+While the \ac{cVAE} outperforms \ac{cFlow} marginally at low \(\sigma\) values, performance degrades
 %rapidly
 as this increases. 
 %
