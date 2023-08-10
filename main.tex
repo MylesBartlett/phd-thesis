@@ -515,6 +515,7 @@ titlepage,numbers=noenddot,%1headlines,
 % Frontmatter
 %*******************************************************
 % \include{FrontBackmatter/DirtyTitlepage}
+\include{covering-note}
 \include{FrontBackmatter/Titlepage}
 % \include{FrontBackmatter/Titleback}
 \cleardoublepage\include{FrontBackmatter/Dedication}
@@ -585,17 +586,17 @@ titlepage,numbers=noenddot,%1headlines,
   \include{nifr/main}
   \printbibliography
 \end{refsection}
-%
+
 \begin{refsection}[supmatch]
   \include{supmatch/main}
   \printbibliography
 \end{refsection}
-%
+
 \begin{refsection}[okapi]
   \include{okapi/main}
   \printbibliography
 \end{refsection}
-%
+
 \ctparttext{
   %
   This part marks the end of this thesis and the thread of its tale.
@@ -604,12 +605,14 @@ titlepage,numbers=noenddot,%1headlines,
   merits and demerits, their broader context (both contemporaneous and present), and what the
   future may yet hold for the avenues explored given current trends.
   %
-}\part{End}\label{pt:end}
+}
 %
-\begin{refsection}[all]
-  \include{discussion}
-  \printbibliography
-\end{refsection}
+\part{End}\label{pt:end}
+%
+% \begin{refsection}[all]
+%   \include{discussion}
+%   \printbibliography
+% \end{refsection}
 
 % ********************************************************************
 % Appendix
