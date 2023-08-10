@@ -7,10 +7,17 @@
 - (p.19) CelebA example provided in viva has been added to clarify the failure mode of DANN and
   related methods arising due to correlation between the target and subgroup (domain) attribute.
 
+  (p.49) Added conjecture on the sub-ERM performance of the LN2L baseline, namely it being a result
+  of the method's adversarial mutual-information-minimisation driving the encoder towards a
+  digit-invariant solution on account of the strong spurious correlation.
+
 - (p.51) Fig. 3.1 has been relocated to a point adjacent to the in-text first reference to it.
   The caption has been greatly expanded, now addressing the involvement of null-sampling during
   training (i.e. none), this being a major point of confusion raised by the external examiner
   during the viva.
+
+- (p.53) Added explanation about the sub-baseline accuracy of our models being a natural
+  consequence of the accuracy-fairness trade-off.
 
 - (p.70) Personal contributions to Chapter 3 have been elaborated on.
 

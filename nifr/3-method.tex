@@ -215,7 +215,7 @@ reconstruction of the input.
 %
 Thus, by feeding a zero-vector, \(e_s\), to the decoder we achieve $\hat{x} \perp s$. 
 %
-The full learning objective for the \ac{cVAE} is given as
+The complete learning objective for the \ac{cVAE} is then given as
 %
 \begin{align}
 %
@@ -232,13 +232,12 @@ The full learning objective for the \ac{cVAE} is given as
 \label{eq:cvae-obj}
 \end{align}
 %
-where $\beta$ is a hyperparameter that determines the trade-off between reconstruction accuracy and
+where $\beta$ is a hyperparameter governing the trade-off between reconstruction fidelity and
 independence constraints, and $p(z_u)$ is the prior imposed on the variational posterior. 
 %
-For all our experiments, $p(z_u)$ is the standard isotropic Gaussian prior;
-Fig.~\ref{fig:cvae_diagram} summarises the procedure diagrammatically.
+For all our experiments, $p(z_u)$ is the standard isotropic Gaussian prior.
 %
-% CORRECTION: if you've put it in you should explain it
+Fig.~\ref{fig:cvae_diagram} summarises the training and null-sampling procedures diagrammatically.
 
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to conflict between the components of the loss.
