@@ -222,14 +222,56 @@ even use the resulting attribution maps directly for this purpose as proposed by
 It is for this reason that we emphasise the interpretability aspect in Chapter~\ref{ch:nifr}, for
 even if we cannot sufficiently debias a model (if it need be debiased), we might glean when this is
 the case and for what reason without need for quantification.
-%
+%ity
 This is, of course, easier for some domains than others -- images being naturally interpretable due
 to their underlying structure and familiarity (the window through which we, quite literally, see
 the world), whereas tabular data generally affords no such luxuries -- but the bottom line of this
 excursis is my advocacy (which I am certainly not unique for) for human oversight, and the rigorous
 model-vetting it should beget, irrespective of the theoretical trustability of the methods/data.
- 
+
+\sidepar{Dataset representativity}
 %
+\corr{
+    %
+    There is sound argument to made that that the datasets featured in Chapters~\ref{ch:nifr} and
+    \ref{ch:supmatch}, namely Coloured MNIST (cMNIST) and CelebA, do not well represent performance
+    on real-world problems, both due to their nature and their paucity.
+    %
+    The former is clearly synthetic, or at least pseudo-synthetic in the sense that its
+    construction entails applying a known (colour) transformation to an existing -- and
+    characteristically simple -- dataset in MNIST \citep{lecun1994mnist}.
+    %
+    The latter consists of real-world images however their preprocessing (resizing to a relatively
+    low resolution, cropping, etc.) means for a poor approximation for the kinds one would
+    realistically encounter in the wild. 
+    %
+    In Chapter~\ref{ch:nifr}, it would be particularly interesting to extend the transfer-learning
+    experiments presented in \ref{sec:transfer-learning} beyond the synthetic realm, using, for
+    instance, the recently-introduced NICO++ \citep{zhang2023nico++} dataset.
+    %
+    Ongoing work on Chapter~\ref{ch:supmatch}, that attempts to shore up the deficit discussed
+    here, features this very dataset -- adapted to our problem setup -- along with a medical
+    imaging dataset in Chest-Xray8 \citep{wang2017chestx} to bolster the motivation, healthcare
+    being a sector particularly prone to the problem we bring to attention and formalise.
+    %
+    Chapter~\ref{ch:okapi}, in contrast, was elevated greatly by the datasets in question being
+    part of an established benchmark suite (defining an established problem) assembled from
+    pre-existing real-world datasets.
+    %
+}
+% CORRECTED: Include discussion about the syntheticity of the datasets featured in Chapters 3 and 4 and
+% what steps might be, or have already been taken, to redress this drawback.
+%
+% To quote: The datasets tackled in Chapters 3 and 4 are somewhat synthetic in construction,
+% leaving room for more evidence of the value of the proposed solutions. That said, it is not
+% uncommon for research in this area to use similarly contrived benchmarks, hence this point does
+% need to be corrected by the PhD candidate (not least as more realistic datasets have been
+% attempted. 
+%
+% However, it would be good to add to the discussion chapter with a brief (a few paragraphs)
+% discussion of this point (equally could go elsewhere if you feel it would fit better)
+%
+
 \sidepar{Theoretical-groundedness}
 %
 As far as limitations go, I shall last speak expressly of empirical and theoretical claims, and the
@@ -348,14 +390,3 @@ robustness for `free', so to speak -- and little to no (in the zero-shot case) c
 training, albeit with the aforementioned caveat on compute standing.
 %
 
-% CORRECTION Include discussion about the syntheticity of the datasets featured in Chapters 3 and 4 and
-% what steps might be, or have already been taken, to redress this drawback.
-%
-% To quote: The datasets tackled in Chapters 3 and 4 are somewhat synthetic in construction,
-% leaving room for more evidence of the value of the proposed solutions. That said, it is not
-% uncommon for research in this area to use similarly contrived benchmarks, hence this point does
-% need to be corrected by the PhD candidate (not least as more realistic datasets have been
-% attempted. 
-%
-% However, it would be good to add to the discussion chapter with a brief (a few paragraphs)
-% discussion of this point (equally could go elsewhere if you feel it would fit better)
