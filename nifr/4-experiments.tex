@@ -192,12 +192,12 @@ baseline, aside from at \(\sigma = 0\), where they are at parity.
 Ln2L relies upon adversarial \ac{MI}-minimisation in the fashion of \citet{ganin2016domain}; we
 conjecture that the sub-\ac{CNN} performance of Ln2L is consequent of the optimum of this objective
 connoting invariance to both the digit and colour, as one may serve as an effective (with degree
-scaling inversely with \(\sigma\)) for the other for both the classifier and the adversary, in
-absence of partially-unlabelled data to decouple the attributes.
+scaling inversely with \(\sigma\)) proxy for the other for both the classifier and the adversary,
+in absence of partially-unlabelled data to decouple the two.
 %
-We would also expect invariance is also expected of the \ac{CNN} as a by-product of the excessive
+We would also expect \ac{CNN} to exhibit the same invariance as a by-product of the excessive
 variance to colour (that is to say, colour being a shortcut means that digit-information is
-redundant, albeit -- importantly -- not deliberately excised) and the results indicate an
+redundant, yet such information is not deliberately, importantly) and the results indicate an
 increasing noise-level alone more effectively breaks this than the aforementioned,
 explicitly-enforced invariance (which is itself subject to noise, in addition with the predictive
 streams) in tandem with it.

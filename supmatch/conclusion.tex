@@ -38,7 +38,7 @@ representativeness of results on them in relation to real-world problems.
 %
 To shore up this shortcoming, we have since conducted experiments with two datasets more emblematic
 of real-world realisations of the proposed problem, namely Chest-Xray8 \citep{wang2017chestx} and NICO++
-\citep{zhang2023nico++}.
+\citep{zhang2023nicopp}.
 %
 The former dataset is appealing as it coincides with the motivating example proffered in
 \S\ref{sec:sm-intro}; the latter is so as its class-subgroup structure allows for demonstration in
@@ -72,7 +72,7 @@ The featurisation is performed using a pre-trained (via contrastive captioning) 
 \citep{radford2021learning} visual encoder. 
 %
 Namely, the centroids \( \Phi \in \mathbb{R}^{|\gG| \times d} \) are computed as the
-group-conditional means of these features, over the deployment set, and their similarity with a
+group-conditional means of the features, over the deployment set, and their similarity with a
 given sample's features is measured using cosine similarity. 
 %
 Assuming \(L_2\)-normalised CLIP features, $\bar z_i^\text{CLIP} \in \mathbb{R}^d$, and prototypes,
