@@ -233,30 +233,31 @@ model-vetting it should beget, irrespective of the theoretical trustability of t
 %
 \corr{
     %
-    There is sound argument to made that that the datasets featured in Chapters~\ref{ch:nifr} and
+    There is sound argument to made that the datasets featured in Chapters~\ref{ch:nifr} and
     \ref{ch:supmatch}, namely Coloured MNIST (cMNIST) and CelebA, do not well represent performance
-    on real-world problems, both due to their nature and their paucity.
+    on real-world problems, both due to their nature and their fewness.
     %
     The former is clearly synthetic, or at least pseudo-synthetic in the sense that its
     construction entails applying a known (colour) transformation to an existing -- and
-    characteristically simple -- dataset in MNIST \citep{lecun1994mnist}.
+    characteristically simple -- dataset in MNIST \citep{lecun1998gradient}.
     %
-    The latter consists of real-world images however their preprocessing (resizing to a relatively
-    low resolution and tight cropping) means for a poor approximation for the kinds one would
-    realistically encounter in the wild. 
+    The latter consists of real-world images however their preprocessing (e.g. low resolution)
+    means for a poor approximation of the kinds one would realistically encounter in the wild, and
+    there remains the fact that sub-sampling is required to align the dataset with the
+    aforementioned chapters' respective problem setups. 
     %
     In Chapter~\ref{ch:nifr}, it would be particularly interesting to extend the transfer-learning
-    experiments presented in \ref{sec:transfer-learning} beyond the synthetic realm, using, for
-    instance, the recently-introduced NICO++ \citep{zhang2023nicopp} dataset.
+    experiments presented in Appendix~\ref{sec:transfer-learning} beyond the synthetic realm,
+    using, for instance, the recently-introduced NICO++ \citep{zhang2023nicopp} dataset.
     %
     Ongoing work on Chapter~\ref{ch:supmatch}, that attempts to shore up the deficit discussed
-    here, features this very dataset -- adapted to our problem setup -- along with a medical
-    imaging dataset in Chest-Xray8 \citep{wang2017chestx} to bolster the motivation, healthcare
-    being a sector particularly prone to the problem we bring to attention and formalise.
+    here, features this very dataset along with a medical imaging dataset in Chest-Xray8
+    \citep{wang2017chestx}, chosen to bolster motivation for the highlighted and formalised problem
+    setup, one which we estimate healthcare being particularly prone to.
     %
-    Chapter~\ref{ch:okapi}, in contrast, was elevated greatly by the datasets in question being
-    part of an established benchmark suite (defining an established problem) assembled from
-    pre-existing real-world datasets.
+    Chapter~\ref{ch:okapi}, in contrast, is elevated greatly by the featured datasets being part of
+    an established benchmark suite (defining an established problem) assembled from pre-existing
+    real-world datasets.
     %
 }
 % CORRECTED: Include discussion about the syntheticity of the datasets featured in Chapters 3 and 4 and

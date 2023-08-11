@@ -34,15 +34,17 @@ The results presented in this version of the paper are for toy (Coloured MNIST) 
 (CelebA) datasets; though both datasets have featured extensively in the literature on
 distributional-robust learning (\citealp{arjovsky2019invariant, kim2019learning,
 sagawa2019distributionally, creager2021environment}, inter alia) it is natural to doubt the
-representativeness of results on them in relation to real-world problems.  
+representativeness of results on them in relation to real-world problems, particularly so as
+sub-sampling is required to align them with our \ac{MS} problem.
 %
-To shore up this shortcoming, we have since conducted experiments with two datasets more emblematic
-of real-world realisations of the proposed problem, namely Chest-Xray8 \citep{wang2017chestx} and NICO++
-\citep{zhang2023nicopp}.
+%
+To attempt to shore up this shortcoming (if only partially), we have since conducted experiments
+with two datasets more emblematic of real-world realisations of the proposed problem, namely
+Chest-Xray8 \citep{wang2017chestx} and NICO++ \citep{zhang2023nicopp}.
 %
 The former dataset is appealing as it coincides with the motivating example proffered in
 \S\ref{sec:sm-intro}; the latter is so as its class-subgroup structure allows for demonstration in
-a non-binary (\wrt{} both marginals) setting, whereas the results contained herein were
+a non-binary (\wrt{} both marginals) setting, whereas the results contained herein are
 preponderantly binary out of both simplicity and convention.
 %
 

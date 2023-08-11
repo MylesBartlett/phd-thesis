@@ -52,7 +52,7 @@ Detailed information regarding model architectures can be found in \S\ref{sec:ar
         \emph{DP diff} measures fairness with respect to demographic parity.
         %
         A perfectly fair model has a \emph{DP diff} of 0, thus the closer to top-left the better it
-        is in terms of we accuracy-fairness trade-off.
+        is in terms of the accuracy-fairness trade-off.
         %
         Only values $\eta=0$ and $\eta=1$ correspond to the scenario of a strongly biased training
         set.
@@ -197,15 +197,14 @@ in absence of partially-unlabelled data to decouple the two.
 %
 We would also expect \ac{CNN} to exhibit the same invariance as a by-product of the excessive
 variance to colour (that is to say, colour being a shortcut means that digit-information is
-redundant, yet such information is not deliberately, importantly) and the results indicate an
-increasing noise-level alone more effectively breaks this than the aforementioned,
-explicitly-enforced invariance (which is itself subject to noise, in addition with the predictive
-streams) in tandem with it.
+redundant, yet such information is not deliberately excised, importantly) and the results indicate
+an increasing noise-level alone more effectively breaks this than does the aforementioned,
+explicitly-enforced invariance (which is itself subject to noise) in tandem with it.
 %
 This degenerate behaviour of Ln2L may be attenuated with more judicious choice of pre-factor on
-said \ac{MI}-minimisation term, though the problem hyperparameter selection for \ac{DG} problems is
-challenging in its own right \citep{gulrajani2020search}; our method requires minimal consideration
-in this respect due to non-conflicting objectives.
+said \ac{MI}-minimisation term, though the problem of hyperparameter-selection for \ac{DG} problems
+is challenging in its own right \citep{gulrajani2020search}; our method requires minimal
+consideration in this respect due to non-conflicting objectives.
 }
 % CORRECTED: need more explanation of the figures here for me. Maybe can expand now you don't have
 % page constraints. In particular comment on whey LN2L does so badly

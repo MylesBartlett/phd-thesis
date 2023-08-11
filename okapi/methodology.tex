@@ -122,20 +122,18 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
       %
     Illustration of our proposed statistical matching algorithm, \CNN{}. 
     %
-    Given the encoding, $\mbf{z}$, of anchor (query) image, \(\mbf{x}\), the corresponding domain label
+    Given the encoding, $\mbf{z}$, of some anchor (query) image, the corresponding domain label
     $s$, and propensity score $e$, \CNN{} yields the closest samples, according to distance $d$,
     subject to the constraint that those samples belong to a different a different domain to the
     anchor (cross-domain constraint), as well as the constraints imposed by the two calipers.
     %
     Red crosses denote exclusion of the keys from the pool of candidate-matches, such that the
-    \(k\)-closest (\(k\) being \(1\) here for simplicity's sake and `closeness' determined by
-    \(d\)) unmarked samples become the outputs of the matching algorithm.
-    %
-    Note that the, the matching is bipartite, such that self-matches are proscribed.
+    \(k\)-closest (\(k\) being \(1\) here for simplicity's sake) unmarked samples become the
+    outputs of the matching algorithm.
     %
     The fixed caliper filters samples based on a fixed-value thresholding of the propensity scores,
     such that samples that have sufficiently (adjudged by the threshold, \(t_{f}\)) extreme
-    propensity scores, which is to say overly-characteristic of their respective domains, are
+    propensity scores, which is to say are overly-characteristic of their respective domains, are
     removed from the pool of candidate-matches. 
     %
     In the corresponding sub-figure above, the set of samples at this stage is singular, consisting
