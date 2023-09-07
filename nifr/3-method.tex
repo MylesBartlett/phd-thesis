@@ -243,17 +243,12 @@ Fig.~\ref{fig:cvae_diagram} summarises the training and null-sampling procedures
 While we show this setup can indeed work for simple problems, as~\citet{madras2018learning} before
 us have, we show that it lacks scalability due to conflict between the components of the loss.
 %
-\corr{
-  %
 Since information about $s$ is only available to the decoder as a binary encoding, should \(s\) be
 fundamentally continuous in nature -- as is so in the case of gender, for individuals exhibit
 varying degrees of femininity/masculinity -- and said encoding a coarsened representation of that
 nature, off-loading information entirely to the decoder by way of conditioning is no longer a valid
 strategy. 
-%
-}
 % CORRECTED: see discussion in viva
-%
 As a result, $z_u$ is forced to carry information about $s$ in order to minimise the
 reconstruction error. 
 
@@ -313,16 +308,10 @@ Critically, this forces the mean of each latent dimension to zero, thereby enabl
 The invertible property of the network guarantees the preservation of all information relevant to
 $y$ which is independent of $s$, regardless of how it is allocated in the output space. 
 %
-\corr{
-  %
 Secondly, we hypothesise that, due to the this information-preserving property, the encodings
 should be more robust to \ac{OOD} data; we provide preliminary empirical evidence for this in
 Appendix~\ref{sec:transfer-learning}.
-  %
-}
-%
 % CORRECTED: Say where the evidence for this is in the thesis eg fig 3.12. %
-%
 Whereas an \acf{AE} could map a previously seen input and a previously unseen input to the same
 representation, an invertible network sidesteps this due to the network's bijective property,
 ensuring all relevant information is stored somewhere. 

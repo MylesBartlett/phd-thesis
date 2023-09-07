@@ -93,19 +93,16 @@ baseline models in terms of accuracy for the balanced case (and those close to i
 exceed the baseline as an increasing \(\eta\) moves the dataset into a more imbalanced regime, that
 is as ``gender'' and ``salary'' grow more correlated.
 %
-\corr{
-    %
-    The former observation is a natural consequence of the \emph{accuracy-fairness trade-off}
-    \citep{kaplow1999conflict}, a trade-off that applies here, in the case of the Adult dataset,
-    due to the immanence of systemic bias -- in this case the propensity of males to earn more (at
-    the time of the census data's collection) -- and thereby the induction of causal dependence
-    between ``gender'' and ``salary'', yet not to the image datasets where the analogous attributes
-    are statistically entangled but causally independent -- i.e. while females may be more likely
-    to be have blonde hair, the observations thereof are fundamentally independent (given an
-    individual's gender and nothing else, one can do no better than randomly guess their hair colour,
-    assuming the relevant intersectional groups are balanced). 
+The former observation is a natural consequence of the \emph{accuracy-fairness trade-off}
+\citep{kaplow1999conflict}, a trade-off that applies here, in the case of the Adult dataset,
+due to the immanence of systemic bias -- in this case, the propensity of males to earn more (at
+the time of the census data's collection) -- and thereby the induction of causal dependence
+between ``gender'' and ``salary'', yet not to the image datasets where the analogous attributes
+are statistically entangled but causally independent -- i.e. while females may be more likely
+to be have blonde hair, the observations thereof are fundamentally independent (given an
+individual's gender and nothing else, one can do no better than randomly guess their hair colour,
+assuming the relevant intersectional groups are balanced). 
 %
-}
 % CORRECTED: can you say why this is?
 %
 Indeed, in terms of fairness metrics, our model generally outperforms the baseline models

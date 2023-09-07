@@ -1,15 +1,12 @@
 %
-\corr{
-  %
-In this paper, we formalised the problem that systematic bias or dataset curation resulting in one or more
-subgroups having zero labelled data; we hope our doing so stimulates serious consideration
-for it in the planning, building, and evaluating systems.
+In this paper, we formalised the problem of systematic bias or dataset curation resulting in one or
+more subgroups having zero labelled data; we hope our doing so stimulates serious consideration for
+it in the planning, building, and evaluating systems.
 %
 This complements concurrent research by \citet{yang2023change} wherein the same problem (with
 different formalism) is alluded to, but its solution left as an open question.
 %
-Contrastingly, we proposed here a two-step approach for addressing the problem within a
-semi-supervised framework. 
+We proposed a two-step approach for addressing the problem within a semi-supervised framework. 
 %
 The first step entails constructing hierarchically-balanced bags from an unlabelled deployment set
 via one's semi-supervised clustering algorithm of choice.
@@ -43,9 +40,9 @@ with two datasets more emblematic of real-world realisations of the proposed pro
 Chest-Xray8 \citep{wang2017chestx} and NICO++ \citep{zhang2023nicopp}.
 %
 The former dataset is appealing as it coincides with the motivating example proffered in
-\S\ref{sec:sm-intro}; the latter is so as its class-subgroup structure allows for demonstration in
-a non-binary (\wrt{} both marginals) setting, whereas the results contained herein are
-preponderantly binary out of both simplicity and convention.
+\S\ref{sec:sm-intro}; the latter as its class-subgroup structure allows for demonstration in a
+non-binary (\wrt{} both marginals) setting, whereas the results contained herein are preponderantly
+binary out of both simplicity and convention.
 %
 
 \subsection{Sensitivity analysis \wrt{} bag-balancing}
@@ -99,5 +96,3 @@ encoding of \(g_i\), and \(\odot\) denotes the Hadamard product that is used wit
 mask out the \(g_i\)th prototype and thereby enforce \( \tilde{g}_i \neq g_i \).
 %
 % CORRECTED: Include any work that you have done since.
-}
-

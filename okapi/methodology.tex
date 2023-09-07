@@ -118,14 +118,13 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
   \centering
   \includegraphics[width=1.\textwidth]{figures/CaliperNN_PS_pipeline.pdf}
   \caption{
-    \corr{
-      %
+    %
     Illustration of our proposed statistical matching algorithm, \CNN{}. 
     %
     Given the encoding, $\mbf{z}$, of some anchor (query) image, the corresponding domain label
     $s$, and propensity score $e$, \CNN{} yields the closest samples, according to distance $d$,
-    subject to the constraint that those samples belong to a different a different domain to the
-    anchor (cross-domain constraint), as well as the constraints imposed by the two calipers.
+    subject to the constraint that those samples belong to a different domain to the anchor
+    (cross-domain constraint), as well as the constraints imposed by the two calipers.
     %
     Red crosses denote exclusion of the keys from the pool of candidate-matches, such that the
     \(k\)-closest (\(k\) being \(1\) here for simplicity's sake) unmarked samples become the
@@ -136,20 +135,19 @@ Appendix~\ref{appx:pseudocode} for reference pseudocode.
     propensity scores, which is to say are overly-characteristic of their respective domains, are
     removed from the pool of candidate-matches. 
     %
-    In the corresponding sub-figure above, the set of samples at this stage is singular, consisting
+    In the corresponding sub-figure, the set of samples at this stage is singular, consisting
     of only the bottom-most image (key).
     %
     The standard-deviation (std.) caliper, on the other hand, filters based on an adaptive
     threshold -- modulated by a predefined pre-factor \(t_{\sigma}\) -- computed from the standard
     deviation of the propensity scores. 
     %
-    In the corresponding sub-figure above, exclusion by the std. caliper is denoted with a red
+    In the corresponding sub-figure, exclusion by the std. caliper is denoted with a red
     cross over the top-most edge, leaving only two candidates keys, the top-most of which is
     implied to be closest by its selection in the final step.
   %
     For more details pertaining the calipers, their provenance, and their rationale, vide \S2.1 of
     \citet{RomInsShaQua22}.
-}
     % CORRECTED: could add a little more detail on the steps here
 }
   \label{fig:calipernn_pipeline}

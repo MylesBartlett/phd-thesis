@@ -218,7 +218,6 @@ along the bag dimension -- that is, its predictions should take into account dep
 samples in a bag while being invariant to the order in which they appear. 
 % We experiment with two different types of attention mechanism for the bag-wise pooling layer of our
 % discriminator, finding them both to work well.
-\corr{
 To aggregate information over samples within the bags, we employ a self-attention-based
 \citep{vaswani2017attention} pooling layer, with aggregation achieved simply by setting the query
 vector to be the mean of the (projected) representations over the bag dimension.
@@ -233,7 +232,6 @@ though we note that the two realisations yield minimax objects with theoreticall
 This observation on the difference in stability between the two realisations may have implications
 for adversarial training more broadly, however we focus on the narrow scope of the \ac{MS} problem
 here and leave it to future work to explore such implications.
-}
 % CORRECTED: there was a discussion of bags somewhere in this chapter ( i got a bit lost!) but as
 % per the discussion in the viva discuss the influence of bags. potentially could be something to
 % say as future work. Also could mention the use of the mean as the query in the attention

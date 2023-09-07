@@ -58,7 +58,11 @@ titlepage,numbers=noenddot,%1headlines,
 % 2. Personal data and user ad-hoc commands (insert your own data here)
 % ****************************************************************************************************
 \DeclareRobustCommand{\sidepar}[1]{\marginpar{\textnormal{#1}}}
-\newcommand{\myTitle}{Semi-Supervised Methods for\texorpdfstring{\\}{}Distributionally-Robust Learning}
+\newcommand{\myTitle}{
+  %
+  Semi-Supervised Methods for\texorpdfstring{\\}{}Distributionally-Robust Learning
+  %
+}
 % \newcommand{\mySubtitle}{\xspace}
 \newcommand{\myDegree}{A thesis submitted for the degree of Doctor of Philosophy.\xspace}
 \newcommand{\myName}{Myles Bartlett\xspace}
@@ -69,7 +73,7 @@ titlepage,numbers=noenddot,%1headlines,
 % \newcommand{\myDepartment}{Put data here\xspace}
 \newcommand{\myUni}{University of Sussex\xspace}
 \newcommand{\myLocation}{Brighton\xspace}
-\newcommand{\myTime}{April 2023\xspace}
+\newcommand{\myTime}{September 2023\xspace}
 \newcommand{\myVersion}{Thesis v1.0-rc1}
 \newcommand{\corr}[1]{{\color{blue}#1}}
 
@@ -515,7 +519,7 @@ titlepage,numbers=noenddot,%1headlines,
 % Frontmatter
 %*******************************************************
 % \include{FrontBackmatter/DirtyTitlepage}
-\include{covering-note}
+% \include{covering-note} % list of corrections
 \include{FrontBackmatter/Titlepage}
 % \include{FrontBackmatter/Titleback}
 \cleardoublepage\include{FrontBackmatter/Dedication}
